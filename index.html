@@ -1,1300 +1,1413 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ML Padel — Coaching Padel à La Réunion | Mathias Laval</title>
-  <meta name="description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
-
-  <!-- Open Graph / Social Media -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ml-padel.com/">
-  <meta property="og:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
-  <meta property="og:description" content="Coaching padel personnalisé. Joueur classé Top 1% en France. Cours, stages, academie.">
-  <meta property="og:image" content="https://ml-padel.com/og-image.jpg">
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://ml-padel.com/">
-  <meta property="twitter:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
-  <meta property="twitter:description" content="Coaching padel personnalisé. Joueur classé Top 1% en France. Cours, stages, academie.">
-  <meta property="twitter:image" content="https://ml-padel.com/og-image.jpg">
-
-  <!-- Favicon (inline SVG) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a1628' width='100' height='100'/><text x='50' y='65' font-family='serif' font-size='60' font-weight='900' fill='%23f5f2eb' text-anchor='middle'>ML</text><circle cx='75' cy='30' r='4' fill='%23c9a84c'/></svg>">
-
-  <!-- React & React-DOM from CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Babel Standalone -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Padel — Coaching Padel à La Réunion | Mathias Laval</title>
+    <meta name="description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
+    <meta property="og:description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mlpadel.com">
+    <meta property="og:image" content="https://mlpadel.com/og-image.jpg">
+    <meta property="og:image:alt" content="ML Padel - Coaching Padel à La Réunion">
+    <meta property="og:locale" content="fr_FR">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
+    <meta name="twitter:description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
+    
+    <!-- Favicon (Inline SVG) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a1628' width='100' height='100'/><text x='50' y='60' font-size='70' font-weight='bold' fill='%23c9a84c' text-anchor='middle' font-family='serif'>ML</text></svg>">
+    
+    <!-- React & ReactDOM from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel Standalone -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-  <div id="root"></div>
+    <div id="root"></div>
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+    <script type="text/babel">
+const { useState, useEffect, useRef } = React;
 
-    /* ─── Palette Bleu Nuit & Or – ML_PADEL ─── */
-    const NAVY = "#0a1628";
-    const NAVY_MID = "#0f1f3d";
-    const NAVY_LIGHT = "#162d50";
-    const GOLD = "#c9a84c";
-    const GOLD_LIGHT = "#e0cb82";
-    const GOLD_PALE = "#f0e6c8";
-    const CREAM = "#f5f2eb";
-    const WARM_WHITE = "#faf9f6";
-    const SAND = "#f7f3ec";
-    const TEXT_DARK = "#1a1e2a";
-    const TEXT_MED = "#4a4f5e";
-    const TEXT_LIGHT = "#7a7f8e";
-    const WHITE = "#ffffff";
+/* ─── Palette Bleu Nuit & Or – ML_PADEL ─── */
+const NAVY = "#0a1628";
+const NAVY_MID = "#0f1f3d";
+const NAVY_LIGHT = "#162d50";
+const GOLD = "#c9a84c";
+const GOLD_LIGHT = "#e0cb82";
+const GOLD_PALE = "#f0e6c8";
+const CREAM = "#f5f2eb";
+const WARM_WHITE = "#faf9f6";
+const SAND = "#f7f3ec";
+const TEXT_DARK = "#1a1e2a";
+const TEXT_MED = "#4a4f5e";
+const TEXT_LIGHT = "#7a7f8e";
+const WHITE = "#ffffff";
 
-    const CALCOM_BASE = "https://cal.com/ml-padel";
-    const CALCOM = {
-      indiv: `${CALCOM_BASE}/indiv`,
-      packIndiv10: `${CALCOM_BASE}/pack-individuel-10h`,
-      packIndiv15: `${CALCOM_BASE}/pack-individuel-15h`,
-      collectif: `${CALCOM_BASE}/collectif`,
-      packCollectif10: `${CALCOM_BASE}/pack-collectif-10h`,
-      packCollectif15: `${CALCOM_BASE}/pack-collectif-15h`,
-      masterclass4: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs`,
-      masterclass8: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs`,
-      stage: `${CALCOM_BASE}/stage-adulte`,
-      general: CALCOM_BASE,
-    };
-    const WHATSAPP_BASE = "https://wa.me/262692627372";
-    const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
-    const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite reserver un cours de padel 🎾");
-    const INSTAGRAM = "https://instagram.com/ml_padel";
-    const PHONE = "0692 62 73 72";
-    const PHONE_LINK = "tel:+262692627372";
-    const EMAIL = "mathias.laval38@gmail.com";
+const CALCOM_BASE = "https://cal.com/ml-padel";
+const CALCOM = {
+  indiv: `${CALCOM_BASE}/indiv`,
+  packIndiv10: `${CALCOM_BASE}/pack-individuel-10h`,
+  packIndiv15: `${CALCOM_BASE}/pack-individuel-15h`,
+  collectif: `${CALCOM_BASE}/collectif`,
+  packCollectif10: `${CALCOM_BASE}/pack-collectif-10h`,
+  packCollectif15: `${CALCOM_BASE}/pack-collectif-15h`,
+  masterclass4: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs`,
+  masterclass8: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs`,
+  stage: `${CALCOM_BASE}/stage-adulte`,
+  general: CALCOM_BASE,
+};
+const WHATSAPP_BASE = "https://wa.me/262692627372";
+const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
+const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite réserver un cours de padel 🎾");
+const INSTAGRAM = "https://instagram.com/ml_padel";
+const PHONE = "0692 62 73 72";
+const PHONE_LINK = "tel:+262692627372";
+const EMAIL = "mathias.laval38@gmail.com";
 
-    /* ─── Fonts & Global CSS ─── */
-    const fontLink = (
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior:smooth; }
-        body { font-family:'DM Sans',sans-serif; background:${WARM_WHITE}; color:${TEXT_DARK}; }
-        ::-webkit-scrollbar { width:5px; }
-        ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
-        ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-        @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
-        @media(max-width:768px){
-          .nav-desktop{display:none!important}
-          .nav-mobile-btn{display:flex!important}
-          .hero-cta-row{flex-direction:column!important;align-items:stretch!important}
-          .about-grid{flex-direction:column!important}
-          .about-photo{min-height:260px!important;flex:auto!important}
-          .pricing-tabs{gap:2px!important;padding:3px!important}
-          .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
-          .wallet-cards{grid-template-columns:1fr!important}
-          .stats-grid{grid-template-columns:1fr!important}
-        }
-      `}</style>
-    );
-
-    /* ─── Hooks ─── */
-    function useInView(threshold=0.12){
-      const ref=useRef(null);
-      const[inView,setInView]=useState(false);
-      useEffect(()=>{
-        const el=ref.current;if(!el)return;
-        const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting)setInView(true)},{threshold});
-        obs.observe(el);return()=>obs.disconnect();
-      },[threshold]);
-      return[ref,inView];
+/* ─── Fonts & Global CSS ─── */
+const fontLink = (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:${WARM_WHITE}; color:${TEXT_DARK}; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
+    ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+    @media(max-width:768px){
+      .nav-desktop{display:none!important}
+      .nav-mobile-btn{display:flex!important}
+      .hero-cta-row{flex-direction:column!important;align-items:stretch!important}
+      .about-grid{flex-direction:column!important}
+      .about-photo{min-height:260px!important;flex:auto!important}
+      .pricing-tabs{gap:2px!important;padding:3px!important}
+      .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
+      .wallet-cards{grid-template-columns:1fr!important}
+      .stats-grid{grid-template-columns:1fr!important}
+      .stagiaires-grid{grid-template-columns:repeat(2,1fr)!important}
     }
+  `}</style>
+);
 
-    function AnimatedSection({children,style={},delay=0}){
-      const[ref,inView]=useInView();
-      return(
-        <div ref={ref} style={{
-          opacity:inView?1:0,
-          transform:inView?"translateY(0)":"translateY(24px)",
-          transition:`all 0.6s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
-          ...style,
-        }}>{children}</div>
-      );
-    }
+/* ─── Hooks ─── */
+function useInView(threshold=0.08){
+  const ref=useRef(null);
+  const[inView,setInView]=useState(false);
+  useEffect(()=>{
+    const el=ref.current;if(!el)return;
+    const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting)setInView(true)},{threshold});
+    obs.observe(el);return()=>obs.disconnect();
+  },[threshold]);
+  return[ref,inView];
+}
 
-    /* ─── SVG Icons ─── */
-    const Icon={
-      check:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
-      star:()=><svg width="15" height="15" viewBox="0 0 24 24" fill={GOLD} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
-      mapPin:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
-      calendar:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
-      instagram:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>,
-      whatsapp:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>,
-      chevDown:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>,
-      phone:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
-    };
+function AnimatedSection({children,style={},delay=0}){
+  const[ref,inView]=useInView();
+  return(
+    <div ref={ref} style={{
+      opacity:inView?1:0,
+      transform:inView?"translateY(0)":"translateY(40px)",
+      transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
+      ...style,
+    }}>{children}</div>
+  );
+}
 
-    /* ─── Logo Component ─── */
-    function Logo({size=36, showText=true, textColor=WHITE}) {
-      return (
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <div style={{
-            width:size, height:size, borderRadius:8,
-            background:NAVY, border:`2px solid ${GOLD}`,
-            display:"flex", alignItems:"center", justifyContent:"center",
-            position:"relative", overflow:"hidden",
-          }}>
-            <span style={{
-              fontFamily:"'Playfair Display',serif", fontWeight:900,
-              fontSize:size*0.42, color:CREAM, letterSpacing:-1, lineHeight:1,
-              position:"relative", zIndex:2,
-            }}>ML</span>
-            <div style={{
-              position:"absolute", right:-2, top:"50%", transform:"translateY(-50%) rotate(-30deg)",
-              width:size*0.45, height:size*0.7, borderRadius:"40% 40% 5% 5%",
-              border:`1.5px solid ${GOLD}88`, opacity:0.5,
-            }}/>
-          </div>
-          {showText && (
-            <div style={{display:"flex",flexDirection:"column",lineHeight:1}}>
-              <span style={{
-                fontFamily:"'Playfair Display',serif", fontWeight:900,
-                fontSize:size*0.38, color:textColor, letterSpacing:0.5,
-              }}>ML</span>
-              <span style={{
-                fontFamily:"'DM Sans',sans-serif", fontWeight:700,
-                fontSize:size*0.28, color:GOLD, letterSpacing:3, marginTop:1,
-              }}>PADEL</span>
-            </div>
-          )}
+/* ─── SVG Icons ─── */
+const Icon={
+  check:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  star:()=><svg width="15" height="15" viewBox="0 0 24 24" fill={GOLD} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  mapPin:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  calendar:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
+  instagram:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>,
+  whatsapp:()=><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>,
+  chevDown:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>,
+  phone:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+};
+
+/* ─── Logo Component ─── */
+function Logo({size=36, showText=true, textColor=WHITE}) {
+  return (
+    <div style={{display:"flex",alignItems:"center",gap:10}}>
+      {/* Stylized ML PADEL logo mark */}
+      <div style={{
+        width:size, height:size, borderRadius:8,
+        background:NAVY, border:`2px solid ${GOLD}`,
+        display:"flex", alignItems:"center", justifyContent:"center",
+        position:"relative", overflow:"hidden",
+      }}>
+        <span style={{
+          fontFamily:"'Playfair Display',serif", fontWeight:900,
+          fontSize:size*0.42, color:CREAM, letterSpacing:-1, lineHeight:1,
+          position:"relative", zIndex:2,
+        }}>ML</span>
+        {/* Gold racket accent */}
+        <div style={{
+          position:"absolute", right:-2, top:"50%", transform:"translateY(-50%) rotate(-30deg)",
+          width:size*0.45, height:size*0.7, borderRadius:"40% 40% 5% 5%",
+          border:`1.5px solid ${GOLD}88`, opacity:0.5,
+        }}/>
+      </div>
+      {showText && (
+        <div style={{display:"flex",flexDirection:"column",lineHeight:1}}>
+          <span style={{
+            fontFamily:"'Playfair Display',serif", fontWeight:900,
+            fontSize:size*0.38, color:textColor, letterSpacing:0.5,
+          }}>ML</span>
+          <span style={{
+            fontFamily:"'DM Sans',sans-serif", fontWeight:700,
+            fontSize:size*0.28, color:GOLD, letterSpacing:3, marginTop:1,
+          }}>PADEL</span>
         </div>
-      );
-    }
+      )}
+    </div>
+  );
+}
 
-    /* ─── Navbar ─── */
-    function Navbar(){
-      const[scrolled,setScrolled]=useState(false);
-      const[menuOpen,setMenuOpen]=useState(false);
-      useEffect(()=>{
-        const fn=()=>setScrolled(window.scrollY>50);
-        window.addEventListener("scroll",fn);
-        return()=>window.removeEventListener("scroll",fn);
-      },[]);
+/* ─── Padel Court Background ─── */
+function PadelBackground(){
+  return(
+    <div style={{
+      position:"fixed",inset:0,zIndex:0,pointerEvents:"none",opacity:0.018,
+      background:`
+        linear-gradient(90deg, ${NAVY} 1px, transparent 1px),
+        linear-gradient(${NAVY} 1px, transparent 1px),
+        linear-gradient(135deg, ${NAVY} 50%, transparent 50%),
+        linear-gradient(-135deg, ${NAVY} 50%, transparent 50%)
+      `,
+      backgroundSize:"120px 120px, 120px 120px, 170px 170px, 170px 170px",
+      backgroundPosition:"0 0, 0 0, 0 0, 0 0",
+    }}/>
+  );
+}
 
-      const links=[
-        {label:"Tarifs",href:"#tarifs"},
-        {label:"Wallet",href:"#wallet"},
-        {label:"Galerie",href:"#galerie"},
-        {label:"FAQ",href:"#faq"},
-        {label:"Contact",href:"#contact"},
-      ];
+/* ─── Navbar ─── */
+function Navbar(){
+  const[scrolled,setScrolled]=useState(false);
+  const[menuOpen,setMenuOpen]=useState(false);
+  useEffect(()=>{
+    const fn=()=>setScrolled(window.scrollY>50);
+    window.addEventListener("scroll",fn);
+    return()=>window.removeEventListener("scroll",fn);
+  },[]);
 
-      return(
-        <nav style={{
-          position:"fixed",top:0,left:0,right:0,zIndex:1000,
-          background:scrolled?`${WARM_WHITE}f0`:"transparent",
-          backdropFilter:scrolled?"blur(20px)":"none",
-          borderBottom:scrolled?`1px solid ${GOLD}18`:"none",
-          transition:"all 0.4s",padding:"0 24px",
-        }}>
-          <div style={{
-            maxWidth:1200,margin:"0 auto",
-            display:"flex",alignItems:"center",justifyContent:"space-between",
-            height:scrolled?58:72,transition:"height 0.3s",
-          }}>
-            <a href="#hero" style={{textDecoration:"none"}}>
-              <Logo size={scrolled?32:36} textColor={scrolled?NAVY:WHITE} />
-            </a>
+  const links=[
+    {label:"Tarifs",href:"#tarifs"},
+    {label:"Wallet",href:"#wallet"},
+    {label:"Galerie",href:"#galerie"},
+    {label:"FAQ",href:"#faq"},
+    {label:"Contact",href:"#contact"},
+  ];
 
-            <div style={{display:"flex",alignItems:"center",gap:28}} className="nav-desktop">
-              {links.map(l=>(
-                <a key={l.href} href={l.href} style={{
-                  color:scrolled?TEXT_MED:"rgba(255,255,255,0.8)",
-                  textDecoration:"none",fontSize:13,fontWeight:600,letterSpacing:0.5,
-                  transition:"color 0.3s",
-                }}
-                onMouseEnter={e=>e.target.style.color=GOLD}
-                onMouseLeave={e=>e.target.style.color=scrolled?TEXT_MED:"rgba(255,255,255,0.8)"}
-                >{l.label}</a>
-              ))}
-              <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                color:NAVY,padding:"10px 24px",borderRadius:50,
-                textDecoration:"none",fontWeight:700,fontSize:13,
-                boxShadow:`0 4px 15px ${GOLD}44`,transition:"all 0.3s",
-              }}
-              onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 6px 25px ${GOLD}55`}}
-              onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 4px 15px ${GOLD}44`}}
-              >Reserver</a>
-            </div>
+  return(
+    <nav style={{
+      position:"fixed",top:0,left:0,right:0,zIndex:1000,
+      background:scrolled?`${WARM_WHITE}f0`:"transparent",
+      backdropFilter:scrolled?"blur(20px)":"none",
+      borderBottom:scrolled?`1px solid ${GOLD}18`:"none",
+      transition:"all 0.4s",padding:"0 24px",
+    }}>
+      <div style={{
+        maxWidth:1200,margin:"0 auto",
+        display:"flex",alignItems:"center",justifyContent:"space-between",
+        height:scrolled?58:72,transition:"height 0.3s",
+      }}>
+        <a href="#hero" style={{textDecoration:"none"}}>
+          <Logo size={scrolled?32:36} textColor={scrolled?NAVY:WHITE} />
+        </a>
 
-            <button onClick={()=>setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{
-              display:"none",background:"none",border:"none",cursor:"pointer",
-              flexDirection:"column",gap:5,padding:8,
-            }}>
-              {[0,1,2].map(i=>(
-                <span key={i} style={{
-                  display:"block",width:24,height:2,
-                  background:scrolled?NAVY:GOLD,
-                  transition:"all 0.3s",
-                  transform:menuOpen?(i===0?"rotate(45deg) translate(5px,5px)":i===2?"rotate(-45deg) translate(5px,-5px)":"scaleX(0)"):"none",
-                }}/>
-              ))}
-            </button>
-          </div>
-
-          {menuOpen&&(
-            <div style={{
-              background:`${WARM_WHITE}f8`,backdropFilter:"blur(20px)",
-              padding:"20px 24px",borderTop:`1px solid ${GOLD}22`,
-              display:"flex",flexDirection:"column",gap:12,
-            }}>
-              {links.map(l=>(
-                <a key={l.href} href={l.href} onClick={()=>setMenuOpen(false)} style={{
-                  color:TEXT_DARK,textDecoration:"none",fontSize:15,fontWeight:600,
-                  padding:"10px 0",borderBottom:`1px solid ${GOLD}15`,
-                }}>{l.label}</a>
-              ))}
-              <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} style={{
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                color:NAVY,padding:"14px 24px",borderRadius:50,
-                textDecoration:"none",fontWeight:700,fontSize:14,textAlign:"center",marginTop:8,
-              }}>Reserver un cours</a>
-            </div>
-          )}
-        </nav>
-      );
-    }
-
-    /* ─── Hero ─── */
-    function Hero(){
-      return(
-        <section id="hero" style={{
-          minHeight:"100vh",position:"relative",overflow:"hidden",
-          display:"flex",alignItems:"center",justifyContent:"center",
-          background:`linear-gradient(165deg, ${NAVY} 0%, ${NAVY_MID} 45%, ${NAVY_LIGHT} 100%)`,
-        }}>
-          <div style={{
-            position:"absolute",top:"-10%",right:"-5%",width:500,height:500,borderRadius:"50%",
-            background:`radial-gradient(circle,${GOLD}12,transparent 70%)`,
-          }}/>
-          <div style={{
-            position:"absolute",bottom:"10%",left:"-8%",width:350,height:350,borderRadius:"50%",
-            background:`radial-gradient(circle,${GOLD}08,transparent 70%)`,
-          }}/>
-          <div style={{
-            position:"absolute",inset:0,opacity:0.03,
-            backgroundImage:`linear-gradient(${GOLD} 1px,transparent 1px),linear-gradient(90deg,${GOLD} 1px,transparent 1px)`,
-            backgroundSize:"70px 70px",
-          }}/>
-
-          <div style={{
-            position:"relative",zIndex:1,textAlign:"center",
-            padding:"140px 24px 100px",maxWidth:850,margin:"0 auto",
-          }}>
-            <div style={{
-              display:"inline-flex",alignItems:"center",gap:8,
-              background:`${GOLD}15`,border:`1px solid ${GOLD}30`,
-              borderRadius:50,padding:"8px 20px",marginBottom:32,
-              animation:"fadeUp 0.7s ease-out",
-            }}>
-              <span style={{display:"flex",color:GOLD}}><Icon.mapPin/></span>
-              <span style={{fontSize:11,color:GOLD_PALE,fontWeight:600,letterSpacing:1.5,textTransform:"uppercase"}}>
-                La Reunion 974 &middot; 4Padel Saint-Louis
-              </span>
-            </div>
-
-            <h1 style={{
-              fontFamily:"'Playfair Display',serif",fontWeight:900,
-              fontSize:"clamp(34px,6.5vw,68px)",lineHeight:1.08,
-              color:CREAM,marginBottom:24,
-              animation:"fadeUp 0.8s ease-out 0.15s both",
-            }}>
-              Coaching padel<br/>
-              <span style={{
-                background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD_PALE})`,
-                backgroundSize:"200% auto",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
-                animation:"shimmer 4s linear infinite",
-              }}>personnalise</span>
-            </h1>
-
-            <p style={{
-              fontSize:"clamp(15px,2.2vw,18px)",color:`${CREAM}99`,
-              maxWidth:520,margin:"0 auto 40px",lineHeight:1.7,
-              animation:"fadeUp 0.8s ease-out 0.3s both",
-            }}>
-              Methode structuree, coaching adapte a ton niveau, resultats concrets.
-              <br/>Saison 2026 – 2027 ouverte aux inscriptions.
-            </p>
-
-            <div className="hero-cta-row" style={{
-              display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",
-              animation:"fadeUp 0.8s ease-out 0.45s both",
-            }}>
-              <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                color:NAVY,padding:"16px 36px",borderRadius:50,
-                textDecoration:"none",fontWeight:700,fontSize:16,
-                boxShadow:`0 8px 32px ${GOLD}44`,transition:"all 0.3s",
-              }}
-              onMouseEnter={e=>{e.target.style.transform="translateY(-2px)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
-              onMouseLeave={e=>{e.target.style.transform="translateY(0)";e.target.style.boxShadow=`0 8px 32px ${GOLD}44`}}
-              >Reserver un cours</a>
-
-              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
-                background:`${CREAM}10`,backdropFilter:"blur(10px)",
-                color:CREAM,padding:"16px 36px",borderRadius:50,
-                textDecoration:"none",fontWeight:600,fontSize:16,
-                border:`1px solid ${CREAM}25`,transition:"all 0.3s",
-              }}
-              onMouseEnter={e=>{e.target.style.background=`${CREAM}18`;e.target.style.borderColor=GOLD}}
-              onMouseLeave={e=>{e.target.style.background=`${CREAM}10`;e.target.style.borderColor=`${CREAM}25`}}
-              >Contacter via WhatsApp</a>
-            </div>
-
-            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
-              display:"inline-flex",alignItems:"center",gap:8,
-              marginTop:48,color:`${CREAM}55`,textDecoration:"none",fontSize:14,
-              transition:"color 0.3s",animation:"fadeUp 0.8s ease-out 0.6s both",
+        <div style={{display:"flex",alignItems:"center",gap:28}} className="nav-desktop">
+          {links.map(l=>(
+            <a key={l.href} href={l.href} style={{
+              color:scrolled?TEXT_MED:"rgba(255,255,255,0.8)",
+              textDecoration:"none",fontSize:13,fontWeight:600,letterSpacing:0.5,
+              transition:"color 0.3s",
             }}
             onMouseEnter={e=>e.target.style.color=GOLD}
-            onMouseLeave={e=>e.target.style.color=`${CREAM}55`}
+            onMouseLeave={e=>e.target.style.color=scrolled?TEXT_MED:"rgba(255,255,255,0.8)"}
+            >{l.label}</a>
+          ))}
+          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+            background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            color:NAVY,padding:"10px 24px",borderRadius:50,
+            textDecoration:"none",fontWeight:700,fontSize:13,
+            boxShadow:`0 4px 15px ${GOLD}44`,transition:"all 0.3s",
+          }}
+          onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 6px 25px ${GOLD}55`}}
+          onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 4px 15px ${GOLD}44`}}
+          >Réserver</a>
+        </div>
+
+        <button onClick={()=>setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{
+          display:"none",background:"none",border:"none",cursor:"pointer",
+          flexDirection:"column",gap:5,padding:8,
+        }}>
+          {[0,1,2].map(i=>(
+            <span key={i} style={{
+              display:"block",width:24,height:2,
+              background:scrolled?NAVY:GOLD,
+              transition:"all 0.3s",
+              transform:menuOpen?(i===0?"rotate(45deg) translate(5px,5px)":i===2?"rotate(-45deg) translate(5px,-5px)":"scaleX(0)"):"none",
+            }}/>
+          ))}
+        </button>
+      </div>
+
+      {menuOpen&&(
+        <div style={{
+          background:`${WARM_WHITE}f8`,backdropFilter:"blur(20px)",
+          padding:"20px 24px",borderTop:`1px solid ${GOLD}22`,
+          display:"flex",flexDirection:"column",gap:12,
+        }}>
+          {links.map(l=>(
+            <a key={l.href} href={l.href} onClick={()=>setMenuOpen(false)} style={{
+              color:TEXT_DARK,textDecoration:"none",fontSize:15,fontWeight:600,
+              padding:"10px 0",borderBottom:`1px solid ${GOLD}15`,
+            }}>{l.label}</a>
+          ))}
+          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} style={{
+            background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            color:NAVY,padding:"14px 24px",borderRadius:50,
+            textDecoration:"none",fontWeight:700,fontSize:14,textAlign:"center",marginTop:8,
+          }}>Réserver un cours</a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+/* ─── Hero ─── */
+function Hero(){
+  return(
+    <section id="hero" style={{
+      minHeight:"100vh",position:"relative",overflow:"hidden",
+      display:"flex",alignItems:"center",justifyContent:"center",
+      background:`linear-gradient(165deg, ${NAVY} 0%, ${NAVY_MID} 45%, ${NAVY_LIGHT} 100%)`,
+      zIndex:1,
+    }}>
+      {/* Decorative elements */}
+      <div style={{
+        position:"absolute",top:"-10%",right:"-5%",width:500,height:500,borderRadius:"50%",
+        background:`radial-gradient(circle,${GOLD}12,transparent 70%)`,
+      }}/>
+      <div style={{
+        position:"absolute",bottom:"10%",left:"-8%",width:350,height:350,borderRadius:"50%",
+        background:`radial-gradient(circle,${GOLD}08,transparent 70%)`,
+      }}/>
+      <div style={{
+        position:"absolute",inset:0,opacity:0.03,
+        backgroundImage:`linear-gradient(${GOLD} 1px,transparent 1px),linear-gradient(90deg,${GOLD} 1px,transparent 1px)`,
+        backgroundSize:"70px 70px",
+      }}/>
+
+      <div style={{
+        position:"relative",zIndex:1,textAlign:"center",
+        padding:"140px 24px 100px",maxWidth:850,margin:"0 auto",
+      }}>
+        {/* Badge location */}
+        <div style={{
+          display:"inline-flex",alignItems:"center",gap:8,
+          background:`${GOLD}15`,border:`1px solid ${GOLD}30`,
+          borderRadius:50,padding:"8px 20px",marginBottom:32,
+          animation:"fadeUp 0.7s ease-out",
+        }}>
+          <span style={{display:"flex",color:GOLD}}><Icon.mapPin/></span>
+          <span style={{fontSize:11,color:GOLD_PALE,fontWeight:600,letterSpacing:1.5,textTransform:"uppercase"}}>
+            La Reunion 974 &middot; 4Padel Saint-Louis
+          </span>
+        </div>
+
+        <h1 style={{
+          fontFamily:"'Playfair Display',serif",fontWeight:900,
+          fontSize:"clamp(34px,6.5vw,68px)",lineHeight:1.08,
+          color:CREAM,marginBottom:24,
+          animation:"fadeUp 0.8s ease-out 0.15s both",
+        }}>
+          Coaching padel<br/>
+          <span style={{
+            background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD_PALE})`,
+            backgroundSize:"200% auto",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
+            animation:"shimmer 4s linear infinite",
+          }}>personnalisé</span>
+        </h1>
+
+        <p style={{
+          fontSize:"clamp(15px,2.2vw,18px)",color:`${CREAM}99`,
+          maxWidth:520,margin:"0 auto 40px",lineHeight:1.7,
+          animation:"fadeUp 0.8s ease-out 0.3s both",
+        }}>
+          Méthode structurée, coaching adapté à ton niveau, résultats concrets.
+          <br/>Saison 2026 – 2027 ouverte aux inscriptions.
+        </p>
+
+        <div className="hero-cta-row" style={{
+          display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",
+          animation:"fadeUp 0.8s ease-out 0.45s both",
+        }}>
+          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+            background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            color:NAVY,padding:"16px 36px",borderRadius:50,
+            textDecoration:"none",fontWeight:700,fontSize:16,
+            boxShadow:`0 8px 32px ${GOLD}44`,transition:"all 0.3s",
+          }}
+          onMouseEnter={e=>{e.target.style.transform="translateY(-2px)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
+          onMouseLeave={e=>{e.target.style.transform="translateY(0)";e.target.style.boxShadow=`0 8px 32px ${GOLD}44`}}
+          >Réserver un cours</a>
+
+          <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
+            background:`${CREAM}10`,backdropFilter:"blur(10px)",
+            color:CREAM,padding:"16px 36px",borderRadius:50,
+            textDecoration:"none",fontWeight:600,fontSize:16,
+            border:`1px solid ${CREAM}25`,transition:"all 0.3s",
+          }}
+          onMouseEnter={e=>{e.target.style.background=`${CREAM}18`;e.target.style.borderColor=GOLD}}
+          onMouseLeave={e=>{e.target.style.background=`${CREAM}10`;e.target.style.borderColor=`${CREAM}25`}}
+          >Contacter via WhatsApp</a>
+        </div>
+
+        <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
+          display:"inline-flex",alignItems:"center",gap:8,
+          marginTop:48,color:`${CREAM}55`,textDecoration:"none",fontSize:14,
+          transition:"color 0.3s",animation:"fadeUp 0.8s ease-out 0.6s both",
+        }}
+        onMouseEnter={e=>e.target.style.color=GOLD}
+        onMouseLeave={e=>e.target.style.color=`${CREAM}55`}
+        >
+          <Icon.instagram/> @ml_padel
+        </a>
+      </div>
+
+      {/* Wave bottom */}
+      <svg style={{position:"absolute",bottom:-1,left:0,width:"100%"}} viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill={WARM_WHITE}/>
+      </svg>
+    </section>
+  );
+}
+
+/* ─── About / Coach ─── */
+function About(){
+  const stats=[
+    {num:"500+",label:"élèves en 1 an"},
+    {num:"10 ans",label:"d'expérience coaching"},
+    {num:"976 FR",label:"Top 1% classement"},
+  ];
+
+  return(
+    <section style={{padding:"80px 24px",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+      <AnimatedSection>
+        <div className="about-grid" style={{display:"flex",gap:48,alignItems:"center",flexWrap:"wrap"}}>
+          {/* Photo placeholder */}
+          <div className="about-photo" style={{
+            flex:"0 0 300px",minHeight:380,borderRadius:20,
+            background:`linear-gradient(135deg,${NAVY}08,${GOLD}08)`,
+            border:`2px solid ${GOLD}20`,
+            display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:12,
+            position:"relative",overflow:"hidden",
+          }}>
+            <div style={{fontSize:80,opacity:0.12}}>🎾</div>
+            <span style={{color:TEXT_LIGHT,fontSize:13,fontWeight:500,padding:"0 20px",textAlign:"center"}}>
+              Photo Mathias Laval — Coach Padel
+            </span>
+            <div style={{
+              position:"absolute",bottom:0,left:0,right:0,height:4,
+              background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
+            }}/>
+          </div>
+
+          <div style={{flex:1,minWidth:280}}>
+            <span style={{
+              color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,
+              textTransform:"uppercase",display:"block",marginBottom:12,
+            }}>Coach certifié &middot; 4Padel Academy</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,3.5vw,38px)",
+              fontWeight:900,marginBottom:16,lineHeight:1.15,color:TEXT_DARK,
+            }}>
+              Mathias Laval
+            </h2>
+            <p style={{color:TEXT_MED,lineHeight:1.8,fontSize:15,marginBottom:20}}>
+              Joueur classé <strong>Top 1% en France</strong> (N°976 FrMF DFMP), je mets mon expertise
+              au service de ta progression. Méthode structurée, coaching individualisé — du débutant
+              au compétiteur confirmé. Base au <strong>4Padel Saint-Louis, La Reunion</strong>.
+            </p>
+
+            <div className="stats-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
+              {stats.map((s,i)=>(
+                <div key={i} style={{
+                  background:WHITE,borderRadius:14,padding:"16px 12px",textAlign:"center",
+                  boxShadow:"0 2px 10px rgba(0,0,0,0.04)",border:`1px solid ${GOLD}15`,
+                }}>
+                  <div style={{
+                    fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:900,color:GOLD,marginBottom:2,
+                  }}>{s.num}</div>
+                  <div style={{fontSize:11,color:TEXT_LIGHT,fontWeight:500}}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* Mon approche */}
+      <AnimatedSection>
+        <div style={{
+          maxWidth:900,margin:"40px auto 0",
+          background:WHITE,borderRadius:20,padding:"36px 32px",
+          border:`1.5px solid ${GOLD}20`,boxShadow:`0 4px 24px ${GOLD}08`,
+        }}>
+          <h3 style={{
+            fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,
+            marginBottom:16,color:TEXT_DARK,
+          }}>
+            Mon <span style={{color:GOLD}}>approche</span>
+          </h3>
+          <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
+            Moi c'est Mathias Laval, joueur de padel classé au mieux <strong>976e joueur français</strong> et coach depuis plus de <strong>10 ans</strong>. Au fil de mes expériences de coaching en club et en entreprise, j'ai développé un sens aigu de l'humain et de la pédagogie.
+          </p>
+          <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
+            Mon obsession ? Donner du <strong>sens</strong> à votre progression. Chaque exercice, chaque conseil a un objectif clair. Installé sur l'île depuis plus d'un an, je suis à votre entière disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
+          </p>
+          <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
+            Au programme : du <strong style={{color:GOLD}}>rire</strong>, de la <strong style={{color:GOLD}}>bienveillance</strong>, de l'<strong style={{color:GOLD}}>exigence</strong> et de la <strong style={{color:GOLD}}>répétition</strong>. Alors, prêt à tenir votre engagement et à passer le cap de niveau que vous vous êtes fixé ?
+          </p>
+          <p style={{
+            color:GOLD,fontFamily:"'Playfair Display',serif",fontWeight:700,
+            fontSize:16,marginTop:16,fontStyle:"italic",
+          }}>
+            Rendez-vous sur le terrain pour en savoir plus !
+          </p>
+        </div>
+      </AnimatedSection>
+    </section>
+  );
+}
+
+/* ─── Tarifs / Pricing ─── */
+function Pricing(){
+  const[tab,setTab]=useState("individuel");
+
+  const tabs=[
+    {key:"individuel",label:"Individuels"},
+    {key:"collectif",label:"Collectifs"},
+    {key:"packs",label:"Packs 10h"},
+    {key:"academie",label:"Académie"},
+    {key:"stages",label:"Stages"},
+  ];
+
+  const data={
+    individuel:[
+      {title:"Cours individuel",price:"55",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+    ],
+    collectif:[
+      {title:"Duo",price:"70",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Exercices tactiques","Match dirigé","Niveaux homogènes"],link:CALCOM.collectif},
+      {title:"Trio",price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Rotations stratégiques","Travail de placement","Ambiance & progression"],popular:true,link:CALCOM.collectif},
+      {title:"Quatuor",price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Format match réel","Coaching collectif","Tarif le plus accessible"],link:CALCOM.collectif},
+    ],
+    packs:[
+      {title:"Pack Individuel 10h",price:"495",unit:"€",desc:"10 × 1h · Soit 49,50€/h",features:["Économie de 55€ (–10%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–10%",popular:true,subPrice:"soit 49,50€/h au lieu de 55€",link:CALCOM.packIndiv10},
+      {title:"Pack Duo 10h",price:"315",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 630€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–10%",link:CALCOM.packCollectif10},
+      {title:"Pack Trio 10h",price:"225",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 675€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–10%",link:CALCOM.packCollectif10},
+      {title:"Pack Quatuor 10h",price:"180",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 720€",features:["Économie de 10%","Soit 18€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectif10},
+    ],
+    academie:[
+      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:wa("Bonjour Mathias, je souhaite m'inscrire à l'engagement annuel Académie 🎾")},
+      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",link:wa("Bonjour Mathias, je souhaite m'inscrire à l'engagement semestriel Académie 🎾")},
+    ],
+    stages:[
+      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage},
+      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage},
+      {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4},
+      {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8},
+      {title:"Stage Ocean Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Reunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
+    ],
+  };
+
+  const items=data[tab];
+
+  return(
+    <section id="tarifs" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+              Tarifs Saison 2026 – 2027
+            </span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,40px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Trouve la formule <span style={{color:GOLD}}>idéale</span>
+            </h2>
+          </div>
+
+          <div className="pricing-tabs" style={{
+            display:"flex",justifyContent:"center",gap:4,marginBottom:40,
+            background:WHITE,borderRadius:50,padding:4,
+            boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 40px",
+            border:`1px solid ${GOLD}15`,
+          }}>
+            {tabs.map(t=>(
+              <button key={t.key} onClick={()=>setTab(t.key)} style={{
+                padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
+                background:tab===t.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                color:tab===t.key?NAVY:TEXT_MED,
+                fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",
+                transition:"all 0.3s",
+              }}>{t.label}</button>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        <div style={{
+          display:"grid",
+          gridTemplateColumns:`repeat(auto-fit,minmax(250px,1fr))`,
+          gap:18,
+        }}>
+          {items.map((o,i)=>(
+            <AnimatedSection key={`${tab}-${i}`} delay={i*0.18}>
+              <div style={{
+                background:WHITE,
+                border:`${o.popular?3:2}px solid ${o.popular?GOLD+"40":"#eee"}`,
+                borderRadius:18,padding:26,position:"relative",
+                transition:"all 0.35s cubic-bezier(0.16,1,0.3,1)",
+                opacity:o.soon?0.6:1,
+                minHeight:320,
+                display:"flex",
+                flexDirection:"column",
+                boxShadow:o.popular?`0 0 30px ${GOLD}22`:"none",
+              }}
+              onMouseEnter={e=>{
+                if(!o.soon){
+                  e.currentTarget.style.transform="translateY(-5px)";
+                  e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}15`;
+                  e.currentTarget.style.borderColor=GOLD;
+                }
+              }}
+              onMouseLeave={e=>{
+                e.currentTarget.style.transform="translateY(0)";
+                e.currentTarget.style.boxShadow=o.popular?`0 0 30px ${GOLD}22`:"none";
+                e.currentTarget.style.borderColor=o.popular?GOLD+"40":"#eee";
+              }}
+              >
+                {o.popular&&!o.soon&&(
+                  <div style={{
+                    position:"absolute",top:-10,right:18,
+                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                    color:NAVY,padding:"3px 12px",borderRadius:50,
+                    fontSize:10,fontWeight:700,letterSpacing:0.5,
+                  }}>POPULAIRE</div>
+                )}
+                {o.badge&&!o.popular&&!o.soon&&(
+                  <div style={{
+                    position:"absolute",top:-10,left:18,
+                    background:NAVY,color:GOLD,
+                    padding:"3px 12px",borderRadius:50,
+                    fontSize:10,fontWeight:700,
+                  }}>{o.badge}</div>
+                )}
+                {o.badge&&o.popular&&(
+                  <div style={{
+                    position:"absolute",top:-10,left:18,
+                    background:NAVY,color:GOLD,
+                    padding:"3px 12px",borderRadius:50,
+                    fontSize:10,fontWeight:700,
+                  }}>{o.badge}</div>
+                )}
+                {o.soon&&(
+                  <div style={{
+                    position:"absolute",top:-10,right:18,
+                    background:TEXT_LIGHT,color:WHITE,padding:"3px 12px",borderRadius:50,
+                    fontSize:10,fontWeight:700,
+                  }}>BIENTÔT</div>
+                )}
+
+                <h3 style={{
+                  fontFamily:"'Playfair Display',serif",fontSize:17,
+                  fontWeight:700,marginBottom:5,color:TEXT_DARK,
+                }}>{o.title}</h3>
+                <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14}}>{o.desc}</p>
+
+                <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
+                  <span style={{
+                    fontFamily:"'Playfair Display',serif",fontSize:o.soon?20:34,
+                    fontWeight:900,color:o.soon?TEXT_LIGHT:GOLD,
+                  }}>{o.price}</span>
+                  {o.unit&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
+                </div>
+                {o.subPrice&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
+
+                <div style={{margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
+                  {o.features.map((f,fi)=>(
+                    <div key={fi} style={{
+                      display:"flex",alignItems:"center",gap:8,
+                      padding:"4px 0",fontSize:13,color:TEXT_MED,
+                    }}>
+                      <Icon.check/> {f}
+                    </div>
+                  ))}
+                </div>
+
+                {!o.soon&&(
+                  <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+                    display:"block",textAlign:"center",padding:"11px 0",
+                    borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
+                    background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                    color:o.popular?NAVY:GOLD,
+                    border:o.popular?"none":`1.5px solid ${GOLD}40`,
+                    transition:"all 0.3s",
+                    marginTop:"auto",
+                  }}
+                  onMouseEnter={e=>{
+                    if(!o.popular){e.target.style.background=`${GOLD}10`}
+                    e.target.style.transform="scale(1.02)";
+                  }}
+                  onMouseLeave={e=>{
+                    if(!o.popular){e.target.style.background="transparent"}
+                    e.target.style.transform="scale(1)";
+                  }}
+                  >Réserver</a>
+                )}
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Horaires & Disponibilités ─── */
+function Horaires(){
+  const slots=[
+    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Lun – Ven · 6h – 16h",note:"Heures creuses uniquement",color:GOLD},
+    {icon:"🎓",label:"Académie adulte",horaire:"Lun – Jeu · 16h – 22h",note:"Séances hebdomadaires en soirée",color:"#6c9bcf"},
+    {icon:"🏕️",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complète ou week-end",color:"#e07b5a"},
+  ];
+
+  return(
+    <section style={{padding:"48px 24px 0",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{
+            background:WHITE,borderRadius:18,border:`1.5px solid ${GOLD}20`,
+            padding:"28px 32px",boxShadow:`0 4px 20px ${GOLD}08`,
+          }}>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
+              <Icon.calendar/>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,color:TEXT_DARK}}>
+                Horaires & <span style={{color:GOLD}}>disponibilités</span>
+              </h3>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:14}}>
+              {slots.map((s,i)=>(
+                <div key={i} style={{
+                  display:"flex",gap:12,alignItems:"flex-start",
+                  padding:"14px 16px",borderRadius:12,
+                  background:`${s.color}08`,border:`1px solid ${s.color}18`,
+                }}>
+                  <span style={{fontSize:22,lineHeight:1,marginTop:2}}>{s.icon}</span>
+                  <div>
+                    <div style={{fontSize:13,fontWeight:700,color:TEXT_DARK,marginBottom:3}}>{s.label}</div>
+                    <div style={{fontSize:14,fontWeight:800,color:s.color}}>{s.horaire}</div>
+                    <div style={{fontSize:11,color:TEXT_LIGHT,marginTop:2}}>{s.note}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Wallet / Credits ─── */
+function Wallet(){
+  const tiers=[
+    {amount:100,bonus:5,credits:105,label:"100€"},
+    {amount:200,bonus:10,credits:220,label:"200€"},
+    {amount:300,bonus:15,credits:345,label:"300€",best:true},
+  ];
+
+  const uses=[
+    {name:"Cours individuel (1h)",credits:"55 cr."},
+    {name:"Collectif 4j (1h)",credits:"20 cr./pers"},
+    {name:"Stage vacances",credits:"150 cr."},
+    {name:"Masterclass WE",credits:"100 cr."},
+  ];
+
+  return(
+    <section id="wallet" style={{
+      padding:"80px 24px",
+      background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,
+      color:CREAM,
+      position:"relative",
+      zIndex:1,
+    }}>
+      <div style={{maxWidth:1000,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+              Wallet ML_Padel &middot; Système de crédits
+            </span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:CREAM,
+            }}>
+              Chargez. Jouez. <span style={{color:GOLD}}>Économisez.</span>
+            </h2>
+            <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
+              1 crédit = 1€ — Plus vous chargez, plus vous gagnez de crédits bonus.
+              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        {/* How it works */}
+        <AnimatedSection delay={0.1}>
+          <div style={{
+            display:"flex",justifyContent:"center",gap:28,marginBottom:48,flexWrap:"wrap",
+          }}>
+            {[
+              {n:"1",t:"Chargez votre wallet avec le montant de votre choix"},
+              {n:"2",t:"Recevez vos crédits bonus immédiatement selon le palier"},
+              {n:"3",t:"Utilisez vos crédits sur toutes les prestations"},
+            ].map((s,i)=>(
+              <div key={i} style={{display:"flex",alignItems:"center",gap:12,maxWidth:250}}>
+                <div style={{
+                  width:30,height:30,borderRadius:"50%",flexShrink:0,
+                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                  display:"flex",alignItems:"center",justifyContent:"center",
+                  fontWeight:800,fontSize:14,color:NAVY,
+                }}>{s.n}</div>
+                <span style={{fontSize:13,color:`${CREAM}88`,lineHeight:1.5}}>{s.t}</span>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        {/* Example */}
+        <AnimatedSection delay={0.15}>
+          <div style={{
+            background:`${GOLD}12`,border:`1px solid ${GOLD}25`,borderRadius:14,
+            padding:"14px 20px",textAlign:"center",marginBottom:32,
+          }}>
+            <span style={{fontSize:13,color:`${CREAM}90`}}>
+              Exemple : je crédite <strong style={{color:GOLD}}>500€</strong> → 300€ (345 cr.) + 200€ (220 cr.) = <strong style={{color:GOLD}}>565 crédits</strong> au total
+            </span>
+          </div>
+        </AnimatedSection>
+
+        {/* Tier cards */}
+        <div className="wallet-cards" style={{
+          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,
+        }}>
+          {tiers.map((t,i)=>(
+            <AnimatedSection key={i} delay={i*0.1}>
+              <div style={{
+                background:`${CREAM}06`,border:`1.5px solid ${t.best?GOLD+"55":`${CREAM}12`}`,
+                borderRadius:18,padding:"28px 20px",textAlign:"center",
+                position:"relative",transition:"all 0.3s",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-4px)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD+"55":`${CREAM}12`;e.currentTarget.style.transform="translateY(0)"}}
+              >
+                {t.best&&(
+                  <div style={{
+                    position:"absolute",top:-10,right:14,
+                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                    padding:"3px 11px",borderRadius:50,fontSize:10,fontWeight:800,letterSpacing:0.3,
+                  }}>MEILLEURE VALEUR</div>
+                )}
+                <div style={{
+                  fontFamily:"'Playfair Display',serif",fontSize:30,fontWeight:900,color:GOLD,marginBottom:4,
+                }}>{t.label}</div>
+                <div style={{fontSize:11,color:`${CREAM}45`,marginBottom:14,textTransform:"uppercase",letterSpacing:1}}>Chargement</div>
+
+                <div style={{
+                  background:`${GOLD}20`,borderRadius:10,padding:"10px 0",marginBottom:14,
+                }}>
+                  <span style={{fontSize:18,fontWeight:800,color:GOLD}}>+{t.bonus}%</span>
+                  <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de crédits bonus</span>
+                </div>
+
+                <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
+                  Vous obtenez <strong style={{color:GOLD}}>{t.credits} crédits</strong>
+                </p>
+                <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8}}>
+                  Payable en 1 fois
+                </p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        {/* Usage table */}
+        <AnimatedSection delay={0.3}>
+          <div style={{
+            background:`${CREAM}04`,borderRadius:14,padding:"22px 24px",
+            border:`1px solid ${CREAM}08`,
+          }}>
+            <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:15,fontWeight:700,marginBottom:14,color:CREAM}}>
+              Utilisez vos crédits
+            </h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {uses.map((u,i)=>(
+                <div key={i} style={{
+                  display:"flex",justifyContent:"space-between",alignItems:"center",
+                  padding:"10px 14px",background:`${CREAM}04`,borderRadius:10,
+                }}>
+                  <span style={{fontSize:13,color:`${CREAM}70`}}>{u.name}</span>
+                  <span style={{
+                    fontSize:13,fontWeight:700,color:GOLD,
+                    background:`${GOLD}15`,padding:"3px 10px",borderRadius:8,
+                  }}>{u.credits}</span>
+                </div>
+              ))}
+            </div>
+            <p style={{fontSize:11,color:`${CREAM}30`,marginTop:14,textAlign:"center"}}>
+              Crédits valables 12 mois &middot; Non remboursables &middot; Non transférables &middot; Non cumulable avec toute réduction ou promotion &middot; Paiement en 1 fois
+            </p>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Instagram / Réseaux ─── */
+function InstagramSection(){
+  return(
+    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:40}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+              Suivez-nous
+            </span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Retrouvez ML Padel sur <span style={{color:GOLD}}>Instagram</span>
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.15}>
+          <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
+            display:"block",borderRadius:20,overflow:"hidden",
+            border:`2px solid ${GOLD}25`,boxShadow:`0 8px 32px ${NAVY}10`,
+            transition:"all 0.3s",textDecoration:"none",
+            background:WHITE,
+          }}
+          onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}20`}}
+          onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 8px 32px ${NAVY}10`}}
+          >
+            {/* Instagram preview image */}
+            <div style={{
+              aspectRatio:"16/9",
+              background:`linear-gradient(135deg,${NAVY}10,${GOLD}10)`,
+              display:"flex",alignItems:"center",justifyContent:"center",
+              flexDirection:"column",gap:12,padding:40,
+            }}>
+              <div style={{fontSize:60,opacity:0.15}}>📸</div>
+              <span style={{fontSize:14,fontWeight:600,color:TEXT_MED}}>@ml_padel</span>
+              <span style={{fontSize:12,color:TEXT_LIGHT}}>Videos, coaching, stages & coulisses</span>
+            </div>
+
+            {/* Bottom bar */}
+            <div style={{
+              display:"flex",alignItems:"center",justifyContent:"center",gap:10,
+              padding:"16px 24px",
+              background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            }}>
+              <Icon.instagram/>
+              <span style={{fontWeight:700,fontSize:15,color:NAVY}}>Suivre @ml_padel sur Instagram</span>
+            </div>
+          </a>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Galerie Photos ─── */
+function Gallery(){
+  const photos=[
+    {label:"En action — coup droit",desc:"Mathias sur le terrain 4Padel Saint-Louis",bg:`${GOLD}12`},
+    {label:"En action — revers",desc:"Coaching en situation de jeu réelle",bg:`${NAVY}08`},
+    {label:"Portrait coach",desc:"Mathias Laval — Coach Padel, raquette Babolat",bg:`${GOLD}08`},
+  ];
+
+  return(
+    <section id="galerie" style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Galerie</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Sur le <span style={{color:GOLD}}>terrain</span>
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <div style={{
+          display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:18,
+        }}>
+          {photos.map((p,i)=>(
+            <AnimatedSection key={i} delay={i*0.15}>
+              <div style={{
+                borderRadius:18,overflow:"hidden",
+                background:p.bg,border:`1px solid ${GOLD}15`,
+                aspectRatio:i===2?"3/4":"4/3",
+                display:"flex",alignItems:"center",justifyContent:"center",
+                flexDirection:"column",gap:8,padding:24,transition:"all 0.3s",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}12`}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
+              >
+                <div style={{fontSize:56,opacity:0.12}}>🎾</div>
+                <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{p.label}</span>
+                <span style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center"}}>{p.desc}</span>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        <AnimatedSection delay={0.3}>
+          <div style={{textAlign:"center",marginTop:28}}>
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
+              display:"inline-flex",alignItems:"center",gap:8,
+              color:GOLD,textDecoration:"none",fontSize:13,fontWeight:600,transition:"color 0.3s",
+            }}
+            onMouseEnter={e=>e.target.style.color=NAVY}
+            onMouseLeave={e=>e.target.style.color=GOLD}
             >
-              <Icon.instagram/> @ml_padel
+              <Icon.instagram/> Plus de contenu sur @ml_padel
+            </a>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Nos Stagiaires ─── */
+function Stagiaires(){
+  const stages=[
+    {label:"Stage vacances mars 2026",emoji:"🎾"},
+    {label:"Stage vacances février 2026",emoji:"🎾"},
+    {label:"Stage avril 2026",emoji:"🎾"},
+    {label:"Stage mai 2026",emoji:"🎾"},
+    {label:"Stage juin 2026",emoji:"🎾"},
+    {label:"Stage juillet 2026",emoji:"🎾"},
+  ];
+
+  return(
+    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Progression</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Nos <span style={{color:GOLD}}>stagiaires</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:14,marginTop:12}}>en action</p>
+          </div>
+        </AnimatedSection>
+
+        <div className="stagiaires-grid" style={{
+          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:32,
+        }}>
+          {stages.map((s,i)=>(
+            <AnimatedSection key={i} delay={i*0.12}>
+              <div style={{
+                borderRadius:16,border:`2px solid ${GOLD}18`,
+                padding:28,display:"flex",flexDirection:"column",alignItems:"center",
+                justifyContent:"center",gap:12,background:WHITE,
+                transition:"all 0.3s",minHeight:220,
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-3px)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=GOLD+"18";e.currentTarget.style.transform="translateY(0)"}}
+              >
+                <div style={{fontSize:48}}>{s.emoji}</div>
+                <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK,textAlign:"center"}}>{s.label}</span>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        <AnimatedSection delay={0.4}>
+          <div style={{textAlign:"center"}}>
+            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
+              display:"inline-flex",alignItems:"center",gap:8,
+              color:GOLD,textDecoration:"none",fontSize:14,fontWeight:600,transition:"color 0.3s",
+            }}
+            onMouseEnter={e=>e.target.style.color=NAVY}
+            onMouseLeave={e=>e.target.style.color=GOLD}
+            >
+              <Icon.instagram/> Découvrir plus sur Instagram
+            </a>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Testimonials ─── */
+function Testimonials(){
+  const items=[
+    {name:"Aina Chassan",role:"Avis Google · 5/5",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
+    {name:"Jules Mattei",role:"Stage Niv 5",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
+    {name:"Didier Delongprez",role:"Stage Niv 3",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
+    {name:"Francois",role:"Stage Niv 3",date:"Décembre 2025",text:"Ce stage m'a été profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
+    {name:"Nathalie",role:"Stage Niv 3",date:"Novembre 2025",text:"C'était une très belle semaine. Je me suis régalée ! Merci pour ton coaching !"},
+    {name:"Laurence Wolff Ollivier",role:"Stage Niv 3",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
+    {name:"Cathy",role:"Stage Niv 3",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'était vraiment cool ce stage. Maintenant y'a plus qu'à !"},
+    {name:"Karine Sharifi",role:"Stage Niv 3",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
+  ];
+
+  return(
+    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Témoignages</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Ils ont <span style={{color:GOLD}}>progressé</span>
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:18}}>
+          {items.map((t,i)=>(
+            <AnimatedSection key={i} delay={i*0.12}>
+              <div style={{
+                background:WHITE,border:`1px solid ${GOLD}15`,borderRadius:18,padding:26,
+                transition:"all 0.3s",height:"100%",display:"flex",flexDirection:"column",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD+"44";e.currentTarget.style.transform="translateY(-3px)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=GOLD+"15";e.currentTarget.style.transform="translateY(0)"}}
+              >
+                <div style={{display:"flex",alignItems:"center",gap:4,marginBottom:8}}>
+                  {[1,2,3,4,5].map(s=><Icon.star key={s}/>)}
+                </div>
+                <div style={{fontSize:11,color:TEXT_LIGHT,fontWeight:600,marginBottom:8}}>{t.date}</div>
+                {t.google&&<span style={{marginLeft:0,fontSize:11,color:TEXT_LIGHT,fontWeight:600,marginBottom:8}}>Google</span>}
+                <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.7,fontStyle:"italic",marginBottom:18,flex:1}}>
+                  &laquo; {t.text} &raquo;
+                </p>
+                <div style={{display:"flex",alignItems:"center",gap:10}}>
+                  <div style={{
+                    width:34,height:34,borderRadius:"50%",
+                    background:`linear-gradient(135deg,${GOLD}33,${GOLD}11)`,
+                    display:"flex",alignItems:"center",justifyContent:"center",
+                    fontWeight:700,color:GOLD,fontSize:14,flexShrink:0,
+                  }}>{t.name[0]}</div>
+                  <div>
+                    <div style={{fontWeight:700,fontSize:13,color:TEXT_DARK}}>{t.name}</div>
+                    <div style={{color:TEXT_LIGHT,fontSize:11}}>{t.role}</div>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── How It Works ─── */
+function HowItWorks(){
+  const steps=[
+    {n:"01",icon:"🎯",title:"Choisis ton format",desc:"Individuel, collectif, académie ou stage selon tes objectifs"},
+    {n:"02",icon:"📅",title:"Réserve en ligne",desc:"Créneau dispo en temps réel via Cal.com ou WhatsApp"},
+    {n:"03",icon:"🚀",title:"Progresse",desc:"Coaching structuré, feedback, résultats mesurables"},
+  ];
+
+  return(
+    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Comment ça marche</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              3 étapes <span style={{color:GOLD}}>simples</span>
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:20}}>
+          {steps.map((s,i)=>(
+            <AnimatedSection key={i} delay={i*0.15}>
+              <div style={{
+                textAlign:"center",padding:"32px 22px",
+                background:WHITE,borderRadius:18,border:`1px solid ${GOLD}12`,
+                boxShadow:"0 2px 10px rgba(0,0,0,0.03)",transition:"all 0.3s",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 8px 28px ${GOLD}12`}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 2px 10px rgba(0,0,0,0.03)"}}
+              >
+                <div style={{
+                  display:"inline-flex",alignItems:"center",justifyContent:"center",
+                  width:36,height:36,borderRadius:10,
+                  background:`${GOLD}12`,color:GOLD,fontWeight:800,fontSize:13,
+                  fontFamily:"'Playfair Display',serif",marginBottom:14,
+                }}>{s.n}</div>
+                <div style={{fontSize:34,marginBottom:10}}>{s.icon}</div>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:700,marginBottom:8,color:TEXT_DARK}}>{s.title}</h3>
+                <p style={{color:TEXT_LIGHT,fontSize:13,lineHeight:1.6}}>{s.desc}</p>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── FAQ ─── */
+function FAQ(){
+  const[openIdx,setOpenIdx]=useState(null);
+  const items=[
+    {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prérequis. J'accueille tous les niveaux, du débutant complet au compétiteur confirmé. Le coaching est adapté à ton profil."},
+    {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, La Reunion (974)."},
+    {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
+    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel. Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Crédits utilisables sur les cours unitaires et stages. Non cumulable avec toute réduction ou promotion. Crédits valables 12 mois."},
+    {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
+    {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
+    {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
+  ];
+
+  return(
+    <section id="faq" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:720,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>FAQ</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Questions <span style={{color:GOLD}}>fréquentes</span>
+            </h2>
+          </div>
+        </AnimatedSection>
+
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {items.map((item,i)=>(
+            <AnimatedSection key={i} delay={i*0.06}>
+              <div
+                onClick={()=>setOpenIdx(openIdx===i?null:i)}
+                style={{
+                  background:WHITE,border:`1.5px solid ${openIdx===i?GOLD+"44":GOLD+"12"}`,
+                  borderRadius:14,overflow:"hidden",cursor:"pointer",transition:"all 0.3s",
+                }}
+              >
+                <div style={{
+                  display:"flex",justifyContent:"space-between",alignItems:"center",
+                  padding:"15px 20px",
+                }}>
+                  <span style={{fontWeight:600,fontSize:14,color:TEXT_DARK}}>{item.q}</span>
+                  <span style={{
+                    color:GOLD,transition:"transform 0.3s",flexShrink:0,marginLeft:12,
+                    transform:openIdx===i?"rotate(180deg)":"rotate(0)",display:"flex",
+                  }}><Icon.chevDown/></span>
+                </div>
+                <div style={{
+                  maxHeight:openIdx===i?200:0,
+                  overflow:"hidden",transition:"max-height 0.4s ease",
+                }}>
+                  <p style={{padding:"0 20px 15px",color:TEXT_MED,fontSize:13,lineHeight:1.7}}>{item.a}</p>
+                </div>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Contact / CTA ─── */
+function Contact(){
+  const contactItems=[
+    {icon:<Icon.phone/>,label:PHONE,href:PHONE_LINK,sub:"Appel direct"},
+    {icon:<Icon.whatsapp/>,label:"WhatsApp",href:WHATSAPP_LINK,sub:"Réponse rapide"},
+    {icon:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,label:EMAIL,href:`mailto:${EMAIL}`,sub:"Par email"},
+  ];
+
+  return(
+    <section id="contact" style={{
+      padding:"80px 24px",
+      background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
+      color:CREAM,
+      position:"relative",
+      zIndex:1,
+    }}>
+      <div style={{maxWidth:700,margin:"0 auto",textAlign:"center"}}>
+        <AnimatedSection>
+          <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Contact</span>
+          <h2 style={{
+            fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+            fontWeight:900,marginTop:8,marginBottom:12,color:CREAM,
+          }}>
+            Prêt à <span style={{color:GOLD}}>progresser</span> ?
+          </h2>
+          <p style={{color:`${CREAM}65`,fontSize:15,marginBottom:36,lineHeight:1.6}}>
+            Réserve ton créneau en ligne ou contacte-moi directement.
+          </p>
+
+          {/* CTA buttons */}
+          <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:40}}>
+            <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+              display:"inline-flex",alignItems:"center",gap:10,
+              background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+              color:NAVY,padding:"16px 32px",borderRadius:50,
+              textDecoration:"none",fontWeight:700,fontSize:15,
+              boxShadow:`0 8px 30px ${GOLD}44`,transition:"all 0.3s",
+            }}
+            onMouseEnter={e=>e.target.style.transform="scale(1.05)"}
+            onMouseLeave={e=>e.target.style.transform="scale(1)"}
+            >
+              <span style={{display:"flex"}}><Icon.calendar/></span> Réserver en ligne
+            </a>
+            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
+              display:"inline-flex",alignItems:"center",gap:10,
+              background:"#25D366",color:WHITE,padding:"16px 32px",
+              borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:15,
+              boxShadow:"0 8px 30px rgba(37,211,102,0.3)",transition:"all 0.3s",
+            }}
+            onMouseEnter={e=>e.target.style.transform="scale(1.05)"}
+            onMouseLeave={e=>e.target.style.transform="scale(1)"}
+            >
+              <span style={{display:"flex"}}><Icon.whatsapp/></span> WhatsApp
             </a>
           </div>
 
-          <svg style={{position:"absolute",bottom:-1,left:0,width:"100%"}} viewBox="0 0 1440 80" fill="none" preserveAspectRatio="none">
-            <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill={WARM_WHITE}/>
-          </svg>
-        </section>
-      );
-    }
-
-    /* ─── About / Coach ─── */
-    function About(){
-      const stats=[
-        {num:"500+",label:"eleves en 1 an"},
-        {num:"10 ans",label:"d'experience coaching"},
-        {num:"976 FR",label:"Top 1% classement"},
-      ];
-
-      return(
-        <section style={{padding:"80px 24px",maxWidth:1100,margin:"0 auto"}}>
-          <AnimatedSection>
-            <div className="about-grid" style={{display:"flex",gap:48,alignItems:"center",flexWrap:"wrap"}}>
-              <div className="about-photo" style={{
-                flex:"0 0 300px",minHeight:380,borderRadius:20,
-                background:`linear-gradient(135deg,${NAVY}08,${GOLD}08)`,
-                border:`2px solid ${GOLD}20`,
-                display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:12,
-                position:"relative",overflow:"hidden",
-              }}>
-                <div style={{fontSize:80,opacity:0.12}}>🎾</div>
-                <span style={{color:TEXT_LIGHT,fontSize:13,fontWeight:500,padding:"0 20px",textAlign:"center"}}>
-                  Photo Mathias Laval — Coach Padel
-                </span>
-                <div style={{
-                  position:"absolute",bottom:0,left:0,right:0,height:4,
-                  background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
-                }}/>
-              </div>
-
-              <div style={{flex:1,minWidth:280}}>
-                <span style={{
-                  color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,
-                  textTransform:"uppercase",display:"block",marginBottom:12,
-                }}>Coach certifie &middot; 4Padel Academy</span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,3.5vw,38px)",
-                  fontWeight:900,marginBottom:16,lineHeight:1.15,color:TEXT_DARK,
-                }}>
-                  Mathias Laval
-                </h2>
-                <p style={{color:TEXT_MED,lineHeight:1.8,fontSize:15,marginBottom:20}}>
-                  Joueur classe <strong>Top 1% en France</strong> (N°976 FrMF DFMP), je mets mon expertise
-                  au service de ta progression. Methode structuree, coaching individualise — du debutant
-                  au competiteur confirme. Base au <strong>4Padel Saint-Louis, La Reunion</strong>.
-                </p>
-
-                <div className="stats-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
-                  {stats.map((s,i)=>(
-                    <div key={i} style={{
-                      background:WHITE,borderRadius:14,padding:"16px 12px",textAlign:"center",
-                      boxShadow:"0 2px 10px rgba(0,0,0,0.04)",border:`1px solid ${GOLD}15`,
-                    }}>
-                      <div style={{
-                        fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:900,color:GOLD,marginBottom:2,
-                      }}>{s.num}</div>
-                      <div style={{fontSize:11,color:TEXT_LIGHT,fontWeight:500}}>{s.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection>
-            <div style={{
-              maxWidth:900,margin:"40px auto 0",
-              background:WHITE,borderRadius:20,padding:"36px 32px",
-              border:`1.5px solid ${GOLD}20`,boxShadow:`0 4px 24px ${GOLD}08`,
-            }}>
-              <h3 style={{
-                fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,
-                marginBottom:16,color:TEXT_DARK,
-              }}>
-                Mon <span style={{color:GOLD}}>approche</span>
-              </h3>
-              <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
-                Moi c'est Mathias Laval, joueur de padel classe au mieux <strong>976e joueur francais</strong> et coach depuis plus de <strong>10 ans</strong>. Au fil de mes experiences de coaching en club et en entreprise, j'ai developpe un sens aigu de l'humain et de la pedagogie.
-              </p>
-              <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
-                Mon obsession ? Donner du <strong>sens</strong> a votre progression. Chaque exercice, chaque conseil a un objectif clair. Installe sur l'ile depuis plus d'un an, je suis a votre entiere disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
-              </p>
-              <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
-                Au programme : du <strong style={{color:GOLD}}>rire</strong>, de la <strong style={{color:GOLD}}>bienveillance</strong>, de l'<strong style={{color:GOLD}}>exigence</strong> et de la <strong style={{color:GOLD}}>repetition</strong>. Alors, pret a tenir votre engagement et a passer le cap de niveau que vous vous etes fixe ?
-              </p>
-              <p style={{
-                color:GOLD,fontFamily:"'Playfair Display',serif",fontWeight:700,
-                fontSize:16,marginTop:16,fontStyle:"italic",
-              }}>
-                Rendez-vous sur le terrain pour en savoir plus !
-              </p>
-            </div>
-          </AnimatedSection>
-        </section>
-      );
-    }
-
-    /* ─── Tarifs / Pricing ─── */
-    function Pricing(){
-      const[tab,setTab]=useState("individuel");
-
-      const tabs=[
-        {key:"individuel",label:"Individuels"},
-        {key:"collectif",label:"Collectifs"},
-        {key:"packs",label:"Packs 10h"},
-        {key:"academie",label:"Academie"},
-        {key:"stages",label:"Stages"},
-      ];
-
-      const data={
-        individuel:[
-          {title:"Cours individuel",price:"55",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalise","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
-        ],
-        collectif:[
-          {title:"Duo",price:"70",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Exercices tactiques","Match dirige","Niveaux homogenes"],link:CALCOM.collectif},
-          {title:"Trio",price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Rotations strategiques","Travail de placement","Ambiance & progression"],popular:true,link:CALCOM.collectif},
-          {title:"Quatuor",price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Format match reel","Coaching collectif","Tarif le plus accessible"],link:CALCOM.collectif},
-        ],
-        packs:[
-          {title:"Pack Individuel 10h",price:"495",unit:"€",desc:"10 × 1h · Soit 49,50€/h",features:["Economie de 55€ (–10%)","Flexibilite des creneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–10%",popular:true,subPrice:"soit 49,50€/h au lieu de 55€",link:CALCOM.packIndiv10},
-          {title:"Pack Duo 10h",price:"315",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 630€",features:["Economie de 10%","Creneaux flexibles","Paiement en euros (hors wallet)"],badge:"–10%",link:CALCOM.packCollectif10},
-          {title:"Pack Trio 10h",price:"225",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 675€",features:["Economie de 10%","Creneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–10%",link:CALCOM.packCollectif10},
-          {title:"Pack Quatuor 10h",price:"180",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 720€",features:["Economie de 10%","Soit 18€/pers/seance","Le meilleur rapport qualite-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectif10},
-        ],
-        academie:[
-          {title:"Academie adulte",price:"30",unit:"€/seance",desc:"1h30 · 4 joueurs · 25 seances/an · Lun au Jeu 16h-22h",features:["Seances regulieres","Progression structuree","Groupe de niveau"],popular:true,subPrice:"soit 20€/h",link:wa("Bonjour Mathias, je souhaite m'inscrire a l'Academie adulte 🎾")},
-          {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre a juin · Inter-vacances scolaires",features:["Place reservee a l'annee","Economie vs seances unitaires","Priorite sur les creneaux"],badge:"ECONOMIQUE",link:wa("Bonjour Mathias, je souhaite m'inscrire a l'engagement annuel Academie 🎾")},
-        ],
-        stages:[
-          {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptes","Ideal vacances scolaires"],link:CALCOM.stage},
-          {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Economie de 20%","Plus de creneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage},
-          {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement cible"],link:CALCOM.masterclass4},
-          {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif reduit"],link:CALCOM.masterclass8},
-          {title:"Stage Ocean Indien",price:"Bientot",unit:"",desc:"Multi-jours · Reunion, Maurice, Afrique du Sud",features:["Experience immersive","Destinations paradisiaques","Padel & decouverte"],soon:true},
-        ],
-      };
-
-      const items=data[tab];
-
-      return(
-        <section id="tarifs" style={{padding:"80px 24px",background:WARM_WHITE}}>
-          <div style={{maxWidth:1100,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-                  Tarifs Saison 2026 – 2027
-                </span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,40px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  Trouve la formule <span style={{color:GOLD}}>ideale</span>
-                </h2>
-              </div>
-
-              <div className="pricing-tabs" style={{
-                display:"flex",justifyContent:"center",gap:4,marginBottom:40,
-                background:WHITE,borderRadius:50,padding:4,
-                boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 40px",
-                border:`1px solid ${GOLD}15`,
-              }}>
-                {tabs.map(t=>(
-                  <button key={t.key} onClick={()=>setTab(t.key)} style={{
-                    padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
-                    background:tab===t.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
-                    color:tab===t.key?NAVY:TEXT_MED,
-                    fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",
-                    transition:"all 0.3s",
-                  }}>{t.label}</button>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <div style={{
-              display:"grid",
-              gridTemplateColumns:`repeat(auto-fit,minmax(250px,1fr))`,
-              gap:18,
-            }}>
-              {items.map((o,i)=>(
-                <AnimatedSection key={`${tab}-${i}`} delay={i*0.08}>
-                  <div style={{
-                    background:WHITE,
-                    border:`2px solid ${o.popular?GOLD+"40":"#eee"}`,
-                    borderRadius:18,padding:26,position:"relative",
-                    transition:"all 0.35s cubic-bezier(0.16,1,0.3,1)",
-                    opacity:o.soon?0.6:1,
-                  }}
-                  onMouseEnter={e=>{
-                    if(!o.soon){
-                      e.currentTarget.style.transform="translateY(-5px)";
-                      e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}15`;
-                      e.currentTarget.style.borderColor=GOLD;
-                    }
-                  }}
-                  onMouseLeave={e=>{
-                    e.currentTarget.style.transform="translateY(0)";
-                    e.currentTarget.style.boxShadow="none";
-                    e.currentTarget.style.borderColor=o.popular?GOLD+"40":"#eee";
-                  }}
-                  >
-                    {o.popular&&!o.soon&&(
-                      <div style={{
-                        position:"absolute",top:-10,right:18,
-                        background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                        color:NAVY,padding:"3px 12px",borderRadius:50,
-                        fontSize:10,fontWeight:700,letterSpacing:0.5,
-                      }}>POPULAIRE</div>
-                    )}
-                    {o.badge&&!o.popular&&!o.soon&&(
-                      <div style={{
-                        position:"absolute",top:-10,left:18,
-                        background:NAVY,color:GOLD,
-                        padding:"3px 12px",borderRadius:50,
-                        fontSize:10,fontWeight:700,
-                      }}>{o.badge}</div>
-                    )}
-                    {o.badge&&o.popular&&(
-                      <div style={{
-                        position:"absolute",top:-10,left:18,
-                        background:NAVY,color:GOLD,
-                        padding:"3px 12px",borderRadius:50,
-                        fontSize:10,fontWeight:700,
-                      }}>{o.badge}</div>
-                    )}
-                    {o.soon&&(
-                      <div style={{
-                        position:"absolute",top:-10,right:18,
-                        background:TEXT_LIGHT,color:WHITE,padding:"3px 12px",borderRadius:50,
-                        fontSize:10,fontWeight:700,
-                      }}>BIENTOT</div>
-                    )}
-
-                    <h3 style={{
-                      fontFamily:"'Playfair Display',serif",fontSize:17,
-                      fontWeight:700,marginBottom:5,color:TEXT_DARK,
-                    }}>{o.title}</h3>
-                    <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14}}>{o.desc}</p>
-
-                    <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
-                      <span style={{
-                        fontFamily:"'Playfair Display',serif",fontSize:o.soon?20:34,
-                        fontWeight:900,color:o.soon?TEXT_LIGHT:GOLD,
-                      }}>{o.price}</span>
-                      {o.unit&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
-                    </div>
-                    {o.subPrice&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
-
-                    <div style={{margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
-                      {o.features.map((f,fi)=>(
-                        <div key={fi} style={{
-                          display:"flex",alignItems:"center",gap:8,
-                          padding:"4px 0",fontSize:13,color:TEXT_MED,
-                        }}>
-                          <Icon.check/> {f}
-                        </div>
-                      ))}
-                    </div>
-
-                    {!o.soon&&(
-                      <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
-                        display:"block",textAlign:"center",padding:"11px 0",
-                        borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
-                        background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
-                        color:o.popular?NAVY:GOLD,
-                        border:o.popular?"none":`1.5px solid ${GOLD}40`,
-                        transition:"all 0.3s",
-                      }}
-                      onMouseEnter={e=>{
-                        if(!o.popular){e.target.style.background=`${GOLD}10`}
-                        e.target.style.transform="scale(1.02)";
-                      }}
-                      onMouseLeave={e=>{
-                        if(!o.popular){e.target.style.background="transparent"}
-                        e.target.style.transform="scale(1)";
-                      }}
-                      >Reserver</a>
-                    )}
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Horaires & Disponibilites ─── */
-    function Horaires(){
-      const slots=[
-        {icon:"👤",label:"Cours individuels & collectifs",horaire:"Lun – Ven · 6h – 16h",note:"Heures creuses uniquement",color:GOLD},
-        {icon:"🎓",label:"Academie adulte",horaire:"Lun – Jeu · 16h – 22h",note:"Seances hebdomadaires en soiree",color:"#6c9bcf"},
-        {icon:"🏕️",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complete ou week-end",color:"#e07b5a"},
-      ];
-
-      return(
-        <section style={{padding:"48px 24px 0",background:WARM_WHITE}}>
-          <div style={{maxWidth:900,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{
-                background:WHITE,borderRadius:18,border:`1.5px solid ${GOLD}20`,
-                padding:"28px 32px",boxShadow:`0 4px 20px ${GOLD}08`,
-              }}>
-                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
-                  <Icon.calendar/>
-                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,color:TEXT_DARK}}>
-                    Horaires & <span style={{color:GOLD}}>disponibilites</span>
-                  </h3>
-                </div>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:14}}>
-                  {slots.map((s,i)=>(
-                    <div key={i} style={{
-                      display:"flex",gap:12,alignItems:"flex-start",
-                      padding:"14px 16px",borderRadius:12,
-                      background:`${s.color}08`,border:`1px solid ${s.color}18`,
-                    }}>
-                      <span style={{fontSize:22,lineHeight:1,marginTop:2}}>{s.icon}</span>
-                      <div>
-                        <div style={{fontSize:13,fontWeight:700,color:TEXT_DARK,marginBottom:3}}>{s.label}</div>
-                        <div style={{fontSize:14,fontWeight:800,color:s.color}}>{s.horaire}</div>
-                        <div style={{fontSize:11,color:TEXT_LIGHT,marginTop:2}}>{s.note}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Wallet / Credits ─── */
-    function Wallet(){
-      const tiers=[
-        {amount:100,bonus:5,credits:105,label:"100€"},
-        {amount:200,bonus:10,credits:220,label:"200€"},
-        {amount:300,bonus:15,credits:345,label:"300€",best:true},
-      ];
-
-      const uses=[
-        {name:"Cours individuel (1h)",credits:"55 cr."},
-        {name:"Collectif 4j (1h)",credits:"20 cr./pers"},
-        {name:"Stage vacances",credits:"150 cr."},
-        {name:"Masterclass WE",credits:"100 cr."},
-      ];
-
-      return(
-        <section id="wallet" style={{
-          padding:"80px 24px",
-          background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,
-          color:CREAM,
-        }}>
-          <div style={{maxWidth:1000,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-                  Wallet ML_Padel &middot; Systeme de credits
-                </span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:CREAM,
-                }}>
-                  Chargez. Jouez. <span style={{color:GOLD}}>Economisez.</span>
-                </h2>
-                <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
-                  1 credit = 1€ — Plus vous chargez, plus vous gagnez de credits bonus.
-                  Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute reduction ou promotion.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.1}>
-              <div style={{
-                display:"flex",justifyContent:"center",gap:28,marginBottom:48,flexWrap:"wrap",
-              }}>
-                {[
-                  {n:"1",t:"Chargez votre wallet avec le montant de votre choix"},
-                  {n:"2",t:"Recevez vos credits bonus immediatement selon le palier"},
-                  {n:"3",t:"Utilisez vos credits sur toutes les prestations"},
-                ].map((s,i)=>(
-                  <div key={i} style={{display:"flex",alignItems:"center",gap:12,maxWidth:250}}>
-                    <div style={{
-                      width:30,height:30,borderRadius:"50%",flexShrink:0,
-                      background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                      display:"flex",alignItems:"center",justifyContent:"center",
-                      fontWeight:800,fontSize:14,color:NAVY,
-                    }}>{s.n}</div>
-                    <span style={{fontSize:13,color:`${CREAM}88`,lineHeight:1.5}}>{s.t}</span>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.15}>
-              <div style={{
-                background:`${GOLD}12`,border:`1px solid ${GOLD}25`,borderRadius:14,
-                padding:"14px 20px",textAlign:"center",marginBottom:32,
-              }}>
-                <span style={{fontSize:13,color:`${CREAM}90`}}>
-                  Exemple : je credite <strong style={{color:GOLD}}>500€</strong> → 300€ (345 cr.) + 200€ (220 cr.) = <strong style={{color:GOLD}}>565 credits</strong> au total
-                </span>
-              </div>
-            </AnimatedSection>
-
-            <div className="wallet-cards" style={{
-              display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,
-            }}>
-              {tiers.map((t,i)=>(
-                <AnimatedSection key={i} delay={i*0.1}>
-                  <div style={{
-                    background:`${CREAM}06`,border:`1.5px solid ${t.best?GOLD+"55":`${CREAM}12`}`,
-                    borderRadius:18,padding:"28px 20px",textAlign:"center",
-                    position:"relative",transition:"all 0.3s",
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-4px)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD+"55":`${CREAM}12`;e.currentTarget.style.transform="translateY(0)"}}
-                  >
-                    {t.best&&(
-                      <div style={{
-                        position:"absolute",top:-10,right:14,
-                        background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-                        padding:"3px 11px",borderRadius:50,fontSize:10,fontWeight:800,letterSpacing:0.3,
-                      }}>MEILLEURE VALEUR</div>
-                    )}
-                    <div style={{
-                      fontFamily:"'Playfair Display',serif",fontSize:30,fontWeight:900,color:GOLD,marginBottom:4,
-                    }}>{t.label}</div>
-                    <div style={{fontSize:11,color:`${CREAM}45`,marginBottom:14,textTransform:"uppercase",letterSpacing:1}}>Chargement</div>
-
-                    <div style={{
-                      background:`${GOLD}20`,borderRadius:10,padding:"10px 0",marginBottom:14,
-                    }}>
-                      <span style={{fontSize:18,fontWeight:800,color:GOLD}}>+{t.bonus}%</span>
-                      <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de credits bonus</span>
-                    </div>
-
-                    <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
-                      Vous obtenez <strong style={{color:GOLD}}>{t.credits} credits</strong>
-                    </p>
-                    <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8}}>
-                      Payable en 1 fois
-                    </p>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-
-            <AnimatedSection delay={0.3}>
-              <div style={{
-                background:`${CREAM}04`,borderRadius:14,padding:"22px 24px",
-                border:`1px solid ${CREAM}08`,
-              }}>
-                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:15,fontWeight:700,marginBottom:14,color:CREAM}}>
-                  Utilisez vos credits
-                </h3>
-                <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
-                  {uses.map((u,i)=>(
-                    <div key={i} style={{
-                      display:"flex",justifyContent:"space-between",alignItems:"center",
-                      padding:"10px 14px",background:`${CREAM}04`,borderRadius:10,
-                    }}>
-                      <span style={{fontSize:13,color:`${CREAM}70`}}>{u.name}</span>
-                      <span style={{
-                        fontSize:13,fontWeight:700,color:GOLD,
-                        background:`${GOLD}15`,padding:"3px 10px",borderRadius:8,
-                      }}>{u.credits}</span>
-                    </div>
-                  ))}
-                </div>
-                <p style={{fontSize:11,color:`${CREAM}30`,marginTop:14,textAlign:"center"}}>
-                  Credits valables 12 mois &middot; Non remboursables &middot; Non transferables &middot; Non cumulable avec toute reduction ou promotion &middot; Paiement en 1 fois
-                </p>
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Instagram / Reseaux ─── */
-    function InstagramSection(){
-      return(
-        <section style={{padding:"80px 24px",background:SAND}}>
-          <div style={{maxWidth:700,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:40}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-                  Suivez-nous
-                </span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  Retrouvez ML Padel sur <span style={{color:GOLD}}>Instagram</span>
-                </h2>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.15}>
-              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
-                display:"block",borderRadius:20,overflow:"hidden",
-                border:`2px solid ${GOLD}25`,boxShadow:`0 8px 32px ${NAVY}10`,
-                transition:"all 0.3s",textDecoration:"none",
-                background:WHITE,
+          {/* Contact info cards */}
+          <div style={{
+            display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,
+            marginBottom:32,
+          }}>
+            {contactItems.map((c,i)=>(
+              <a key={i} href={c.href} target={c.href.startsWith("http")?"_blank":undefined} rel="noopener noreferrer" style={{
+                display:"flex",alignItems:"center",gap:10,
+                padding:"14px 16px",borderRadius:12,
+                background:`${CREAM}06`,border:`1px solid ${CREAM}10`,
+                textDecoration:"none",transition:"all 0.3s",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}20`}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 8px 32px ${NAVY}10`}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD+"44";e.currentTarget.style.background=`${CREAM}10`}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=`${CREAM}10`;e.currentTarget.style.background=`${CREAM}06`}}
               >
-                <div style={{
-                  aspectRatio:"16/9",
-                  background:`linear-gradient(135deg,${NAVY}10,${GOLD}10)`,
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  flexDirection:"column",gap:12,padding:40,
-                }}>
-                  <div style={{fontSize:60,opacity:0.15}}>📸</div>
-                  <span style={{fontSize:14,fontWeight:600,color:TEXT_MED}}>@ml_padel</span>
-                  <span style={{fontSize:12,color:TEXT_LIGHT}}>Videos, coaching, stages & coulisses</span>
-                </div>
-
-                <div style={{
-                  display:"flex",alignItems:"center",justifyContent:"center",gap:10,
-                  padding:"16px 24px",
-                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                }}>
-                  <Icon.instagram/>
-                  <span style={{fontWeight:700,fontSize:15,color:NAVY}}>Suivre @ml_padel sur Instagram</span>
+                <div style={{color:GOLD,display:"flex",flexShrink:0}}>{c.icon}</div>
+                <div style={{textAlign:"left"}}>
+                  <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3}}>{c.label}</div>
+                  <div style={{fontSize:11,color:`${CREAM}45`}}>{c.sub}</div>
                 </div>
               </a>
-            </AnimatedSection>
+            ))}
           </div>
-        </section>
-      );
-    }
 
-    /* ─── Galerie Photos ─── */
-    function Gallery(){
-      const photos=[
-        {label:"En action — coup droit",desc:"Mathias sur le terrain 4Padel Saint-Louis",bg:`${GOLD}12`},
-        {label:"En action — revers",desc:"Coaching en situation de jeu reelle",bg:`${NAVY}08`},
-        {label:"Portrait coach",desc:"Mathias Laval — Coach Padel, raquette Babolat",bg:`${GOLD}08`},
-      ];
-
-      return(
-        <section id="galerie" style={{padding:"80px 24px",background:SAND}}>
-          <div style={{maxWidth:1100,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Galerie</span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  Sur le <span style={{color:GOLD}}>terrain</span>
-                </h2>
-              </div>
-            </AnimatedSection>
-
-            <div style={{
-              display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:18,
-            }}>
-              {photos.map((p,i)=>(
-                <AnimatedSection key={i} delay={i*0.1}>
-                  <div style={{
-                    borderRadius:18,overflow:"hidden",
-                    background:p.bg,border:`1px solid ${GOLD}15`,
-                    aspectRatio:i===2?"3/4":"4/3",
-                    display:"flex",alignItems:"center",justifyContent:"center",
-                    flexDirection:"column",gap:8,padding:24,transition:"all 0.3s",
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}12`}}
-                  onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
-                  >
-                    <div style={{fontSize:56,opacity:0.12}}>🎾</div>
-                    <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{p.label}</span>
-                    <span style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center"}}>{p.desc}</span>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-
-            <AnimatedSection delay={0.3}>
-              <div style={{textAlign:"center",marginTop:28}}>
-                <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-flex",alignItems:"center",gap:8,
-                  color:GOLD,textDecoration:"none",fontSize:13,fontWeight:600,transition:"color 0.3s",
-                }}
-                onMouseEnter={e=>e.target.style.color=NAVY}
-                onMouseLeave={e=>e.target.style.color=GOLD}
-                >
-                  <Icon.instagram/> Plus de contenu sur @ml_padel
-                </a>
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── How It Works ─── */
-    function HowItWorks(){
-      const steps=[
-        {n:"01",icon:"🎯",title:"Choisis ton format",desc:"Individuel, collectif, academie ou stage selon tes objectifs"},
-        {n:"02",icon:"📅",title:"Reserve en ligne",desc:"Creneau dispo en temps reel via Cal.com ou WhatsApp"},
-        {n:"03",icon:"🚀",title:"Progresse",desc:"Coaching structure, feedback, resultats mesurables"},
-      ];
-
-      return(
-        <section style={{padding:"80px 24px",background:WARM_WHITE}}>
-          <div style={{maxWidth:900,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Comment ca marche</span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  3 etapes <span style={{color:GOLD}}>simples</span>
-                </h2>
-              </div>
-            </AnimatedSection>
-
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:20}}>
-              {steps.map((s,i)=>(
-                <AnimatedSection key={i} delay={i*0.12}>
-                  <div style={{
-                    textAlign:"center",padding:"32px 22px",
-                    background:WHITE,borderRadius:18,border:`1px solid ${GOLD}12`,
-                    boxShadow:"0 2px 10px rgba(0,0,0,0.03)",transition:"all 0.3s",
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 8px 28px ${GOLD}12`}}
-                  onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 2px 10px rgba(0,0,0,0.03)"}}
-                  >
-                    <div style={{
-                      display:"inline-flex",alignItems:"center",justifyContent:"center",
-                      width:36,height:36,borderRadius:10,
-                      background:`${GOLD}12`,color:GOLD,fontWeight:800,fontSize:13,
-                      fontFamily:"'Playfair Display',serif",marginBottom:14,
-                    }}>{s.n}</div>
-                    <div style={{fontSize:34,marginBottom:10}}>{s.icon}</div>
-                    <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:16,fontWeight:700,marginBottom:8,color:TEXT_DARK}}>{s.title}</h3>
-                    <p style={{color:TEXT_LIGHT,fontSize:13,lineHeight:1.6}}>{s.desc}</p>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Testimonials ─── */
-    function Testimonials(){
-      const items=[
-        {name:"Aina Chassan",role:"Avis Google · 5/5",text:"Tres bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas releve. Je recommande.",google:true},
-        {name:"Jules Mattei",role:"Stage Niv 5",text:"Merci Mathias de nous avoir ainsi accompagnes cette semaine, avec professionnalisme et bonne humeur. Ca permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
-        {name:"Didier Delongprez",role:"Stage Niv 3",text:"Un reel plaisir de participer a ce stage avec un groupe homogene et avec beaucoup d'entrain. J'ai beaucoup appris grace a tes conseils tres precieux et pertinents mais surtout bravo pour ta pedagogie."},
-        {name:"Francois",role:"Stage Niv 3",text:"Ce stage m'a ete profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
-        {name:"Nathalie",role:"Stage Niv 3",text:"C'etait une tres belle semaine. Je me suis regalee ! Merci pour ton coaching !"},
-        {name:"Laurence Wolff Ollivier",role:"Stage Niv 3",text:"Merci a toi de t'etre adapte a nous ! C'etait sympa. Quand on aura tout assimile, on progressera."},
-        {name:"Cathy",role:"Stage Niv 3",text:"Merci Mathias pour ta patience et tes conseils, c'etait vraiment cool ce stage. Maintenant y'a plus qu'a !"},
-        {name:"Karine Sharifi",role:"Stage Niv 3",text:"Excellente semaine... merci pour les conseils et les infos. A nous de nous y mettre. Merci a Mathias et merci les filles pour la bonne ambiance. A plus la team."},
-      ];
-
-      return(
-        <section style={{padding:"80px 24px",background:SAND}}>
-          <div style={{maxWidth:1100,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Temoignages</span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  Ils ont <span style={{color:GOLD}}>progresse</span>
-                </h2>
-              </div>
-            </AnimatedSection>
-
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:18}}>
-              {items.map((t,i)=>(
-                <AnimatedSection key={i} delay={i*0.06}>
-                  <div style={{
-                    background:WHITE,border:`1px solid ${GOLD}15`,borderRadius:18,padding:26,
-                    transition:"all 0.3s",height:"100%",display:"flex",flexDirection:"column",
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD+"44";e.currentTarget.style.transform="translateY(-3px)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=GOLD+"15";e.currentTarget.style.transform="translateY(0)"}}
-                  >
-                    <div style={{display:"flex",alignItems:"center",gap:4,marginBottom:12}}>
-                      {[1,2,3,4,5].map(s=><Icon.star key={s}/>)}
-                      {t.google&&<span style={{marginLeft:6,fontSize:11,color:TEXT_LIGHT,fontWeight:600}}>Google</span>}
-                    </div>
-                    <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.7,fontStyle:"italic",marginBottom:18,flex:1}}>
-                      &laquo; {t.text} &raquo;
-                    </p>
-                    <div style={{display:"flex",alignItems:"center",gap:10}}>
-                      <div style={{
-                        width:34,height:34,borderRadius:"50%",
-                        background:`linear-gradient(135deg,${GOLD}33,${GOLD}11)`,
-                        display:"flex",alignItems:"center",justifyContent:"center",
-                        fontWeight:700,color:GOLD,fontSize:14,flexShrink:0,
-                      }}>{t.name[0]}</div>
-                      <div>
-                        <div style={{fontWeight:700,fontSize:13,color:TEXT_DARK}}>{t.name}</div>
-                        <div style={{color:TEXT_LIGHT,fontSize:11}}>{t.role}</div>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── FAQ ─── */
-    function FAQ(){
-      const[openIdx,setOpenIdx]=useState(null);
-      const items=[
-        {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prerequis. J'accueille tous les niveaux, du debutant complet au competiteur confirme. Le coaching est adapte a ton profil."},
-        {q:"Ou se deroulent les cours ?",a:"Au 4Padel Saint-Louis, La Reunion (974)."},
-        {q:"Faut-il amener son materiel ?",a:"Non, le materiel (raquette + balles) peut etre fourni. Si tu as ta propre raquette, amene-la pour un coaching optimal."},
-        {q:"Comment fonctionne le systeme Wallet ?",a:"Vous chargez votre wallet ML_Padel. Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de credits bonus. 1 credit = 1€. Cumulable a chaque palier. Credits utilisables sur les cours unitaires et stages. Non cumulable avec toute reduction ou promotion. Credits valables 12 mois."},
-        {q:"Quels moyens de paiement ?",a:"Especes, CB, cheque. Pour le wallet, paiement en 1 fois."},
-        {q:"Des cours pour les enfants ?",a:"Oui, a partir de 10 ans. Seances adaptees avec pedagogie ludique et progressive."},
-        {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'a 24h avant le creneau. Au-dela, le cours est du. Report facile via Cal.com."},
-      ];
-
-      return(
-        <section id="faq" style={{padding:"80px 24px",background:WARM_WHITE}}>
-          <div style={{maxWidth:720,margin:"0 auto"}}>
-            <AnimatedSection>
-              <div style={{textAlign:"center",marginBottom:48}}>
-                <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>FAQ</span>
-                <h2 style={{
-                  fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                  fontWeight:900,marginTop:8,color:TEXT_DARK,
-                }}>
-                  Questions <span style={{color:GOLD}}>frequentes</span>
-                </h2>
-              </div>
-            </AnimatedSection>
-
-            <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              {items.map((item,i)=>(
-                <AnimatedSection key={i} delay={i*0.04}>
-                  <div
-                    onClick={()=>setOpenIdx(openIdx===i?null:i)}
-                    style={{
-                      background:WHITE,border:`1.5px solid ${openIdx===i?GOLD+"44":GOLD+"12"}`,
-                      borderRadius:14,overflow:"hidden",cursor:"pointer",transition:"all 0.3s",
-                    }}
-                  >
-                    <div style={{
-                      display:"flex",justifyContent:"space-between",alignItems:"center",
-                      padding:"15px 20px",
-                    }}>
-                      <span style={{fontWeight:600,fontSize:14,color:TEXT_DARK}}>{item.q}</span>
-                      <span style={{
-                        color:GOLD,transition:"transform 0.3s",flexShrink:0,marginLeft:12,
-                        transform:openIdx===i?"rotate(180deg)":"rotate(0)",display:"flex",
-                      }}><Icon.chevDown/></span>
-                    </div>
-                    <div style={{
-                      maxHeight:openIdx===i?200:0,
-                      overflow:"hidden",transition:"max-height 0.4s ease",
-                    }}>
-                      <p style={{padding:"0 20px 15px",color:TEXT_MED,fontSize:13,lineHeight:1.7}}>{item.a}</p>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Contact / CTA ─── */
-    function Contact(){
-      const contactItems=[
-        {icon:<Icon.phone/>,label:PHONE,href:PHONE_LINK,sub:"Appel direct"},
-        {icon:<Icon.whatsapp/>,label:"WhatsApp",href:WHATSAPP_LINK,sub:"Reponse rapide"},
-        {icon:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,label:EMAIL,href:`mailto:${EMAIL}`,sub:"Par email"},
-      ];
-
-      return(
-        <section id="contact" style={{
-          padding:"80px 24px",
-          background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
-          color:CREAM,
-        }}>
-          <div style={{maxWidth:700,margin:"0 auto",textAlign:"center"}}>
-            <AnimatedSection>
-              <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Contact</span>
-              <h2 style={{
-                fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-                fontWeight:900,marginTop:8,marginBottom:12,color:CREAM,
-              }}>
-                Pret a <span style={{color:GOLD}}>progresser</span> ?
-              </h2>
-              <p style={{color:`${CREAM}65`,fontSize:15,marginBottom:36,lineHeight:1.6}}>
-                Reserve ton creneau en ligne ou contacte-moi directement.
-              </p>
-
-              <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:40}}>
-                <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-flex",alignItems:"center",gap:10,
-                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                  color:NAVY,padding:"16px 32px",borderRadius:50,
-                  textDecoration:"none",fontWeight:700,fontSize:15,
-                  boxShadow:`0 8px 30px ${GOLD}44`,transition:"all 0.3s",
-                }}
-                onMouseEnter={e=>e.target.style.transform="scale(1.05)"}
-                onMouseLeave={e=>e.target.style.transform="scale(1)"}
-                >
-                  <span style={{display:"flex"}}><Icon.calendar/></span> Reserver en ligne
-                </a>
-                <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-flex",alignItems:"center",gap:10,
-                  background:"#25D366",color:WHITE,padding:"16px 32px",
-                  borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:15,
-                  boxShadow:"0 8px 30px rgba(37,211,102,0.3)",transition:"all 0.3s",
-                }}
-                onMouseEnter={e=>e.target.style.transform="scale(1.05)"}
-                onMouseLeave={e=>e.target.style.transform="scale(1)"}
-                >
-                  <span style={{display:"flex"}}><Icon.whatsapp/></span> WhatsApp
-                </a>
-              </div>
-
-              <div style={{
-                display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,
-                marginBottom:32,
-              }}>
-                {contactItems.map((c,i)=>(
-                  <a key={i} href={c.href} target={c.href.startsWith("http")?"_blank":undefined} rel="noopener noreferrer" style={{
-                    display:"flex",alignItems:"center",gap:10,
-                    padding:"14px 16px",borderRadius:12,
-                    background:`${CREAM}06`,border:`1px solid ${CREAM}10`,
-                    textDecoration:"none",transition:"all 0.3s",
-                  }}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD+"44";e.currentTarget.style.background=`${CREAM}10`}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor=`${CREAM}10`;e.currentTarget.style.background=`${CREAM}06`}}
-                  >
-                    <div style={{color:GOLD,display:"flex",flexShrink:0}}>{c.icon}</div>
-                    <div style={{textAlign:"left"}}>
-                      <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3}}>{c.label}</div>
-                      <div style={{fontSize:11,color:`${CREAM}45`}}>{c.sub}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-
-              <div style={{
-                display:"flex",alignItems:"center",justifyContent:"center",gap:6,
-                color:`${CREAM}45`,fontSize:13,marginBottom:16,
-              }}>
-                <Icon.mapPin/> 4Padel Saint-Louis &middot; La Reunion (974)
-              </div>
-              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
-                display:"inline-flex",alignItems:"center",gap:6,
-                color:`${CREAM}50`,textDecoration:"none",fontSize:13,transition:"color 0.3s",
-              }}
-              onMouseEnter={e=>e.currentTarget.style.color=GOLD}
-              onMouseLeave={e=>e.currentTarget.style.color=`${CREAM}50`}
-              ><Icon.instagram/> @ml_padel</a>
-            </AnimatedSection>
-          </div>
-        </section>
-      );
-    }
-
-    /* ─── Footer ─── */
-    function Footer(){
-      return(
-        <footer style={{
-          padding:"28px 24px",borderTop:`1px solid ${CREAM}08`,
-          background:NAVY,color:`${CREAM}40`,
-        }}>
+          {/* Location + socials */}
           <div style={{
-            maxWidth:1100,margin:"0 auto",
-            display:"flex",justifyContent:"space-between",alignItems:"center",
-            flexWrap:"wrap",gap:14,fontSize:12,
+            display:"flex",alignItems:"center",justifyContent:"center",gap:6,
+            color:`${CREAM}45`,fontSize:13,marginBottom:16,
           }}>
-            <Logo size={26} textColor={`${CREAM}60`}/>
-            <div style={{display:"flex",gap:18}}>
-              <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>Mentions legales</a>
-              <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>CGV</a>
-              <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{color:`${CREAM}40`,textDecoration:"none"}}>Instagram</a>
-            </div>
-            <span style={{fontSize:11,color:`${CREAM}25`}}>
-              © {new Date().getFullYear()} ML Padel &middot; La Reunion
-            </span>
+            <Icon.mapPin/> 4Padel Saint-Louis &middot; La Reunion (974)
           </div>
-        </footer>
-      );
-    }
+          <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
+            display:"inline-flex",alignItems:"center",gap:6,
+            color:`${CREAM}50`,textDecoration:"none",fontSize:13,transition:"color 0.3s",
+          }}
+          onMouseEnter={e=>e.currentTarget.style.color=GOLD}
+          onMouseLeave={e=>e.currentTarget.style.color=`${CREAM}50`}
+          ><Icon.instagram/> @ml_padel</a>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
 
-    /* ─── App ─── */
-    function MLPadel(){
-      return(
-        <div style={{background:WARM_WHITE,minHeight:"100vh",overflowX:"hidden"}}>
-          {fontLink}
-          <Navbar/>
-          <Hero/>
-          <About/>
-          <Pricing/>
-          <Horaires/>
-          <Wallet/>
-          <InstagramSection/>
-          <Gallery/>
-          <HowItWorks/>
-          <Testimonials/>
-          <FAQ/>
-          <Contact/>
-          <Footer/>
+/* ─── Footer ─── */
+function Footer(){
+  return(
+    <footer style={{
+      padding:"28px 24px",borderTop:`1px solid ${CREAM}08`,
+      background:NAVY,color:`${CREAM}40`,
+      position:"relative",
+      zIndex:1,
+    }}>
+      <div style={{
+        maxWidth:1100,margin:"0 auto",
+        display:"flex",justifyContent:"space-between",alignItems:"center",
+        flexWrap:"wrap",gap:14,fontSize:12,
+      }}>
+        <Logo size={26} textColor={`${CREAM}60`}/>
+        <div style={{display:"flex",gap:18}}>
+          <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>Mentions légales</a>
+          <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>CGV</a>
+          <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{color:`${CREAM}40`,textDecoration:"none"}}>Instagram</a>
         </div>
-      );
-    }
+        <span style={{fontSize:11,color:`${CREAM}25`}}>
+          © {new Date().getFullYear()} ML Padel &middot; La Reunion
+        </span>
+      </div>
+    </footer>
+  );
+}
 
-    // Render React app
-    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(MLPadel));
-  </script>
+/* ─── App ─── */
+function MLPadel(){
+  return(
+    <div style={{background:WARM_WHITE,minHeight:"100vh",overflowX:"hidden"}}>
+      {fontLink}
+      <PadelBackground/>
+      <Navbar/>
+      <Hero/>
+      <About/>
+      <Pricing/>
+      <Horaires/>
+      <Wallet/>
+      <InstagramSection/>
+      <Gallery/>
+      <Stagiaires/>
+      <Testimonials/>
+      <HowItWorks/>
+      <FAQ/>
+      <Contact/>
+      <Footer/>
+    </div>
+  );
+}
+
+        ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(MLPadel));
+    </script>
 </body>
 </html>
