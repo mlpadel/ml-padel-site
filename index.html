@@ -1,40 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ML Padel — Coaching Padel à La Réunion | Mathias Laval</title>
-    <meta name="description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
-    
-    <!-- Open Graph Tags -->
-    <meta property="og:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
-    <meta property="og:description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mlpadel.com">
-    <meta property="og:image" content="https://mlpadel.com/og-image.jpg">
-    <meta property="og:image:alt" content="ML Padel - Coaching Padel à La Réunion">
-    <meta property="og:locale" content="fr_FR">
-    
-    <!-- Twitter Card Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ML Padel — Coaching Padel à La Réunion | Mathias Laval">
-    <meta name="twitter:description" content="Coaching padel personnalisé à La Réunion. Mathias Laval, joueur classé Top 1% en France, propose des cours individuels, collectifs, stages et masterclass. Saison 2026-2027 ouverte.">
-    
-    <!-- Favicon (Inline SVG) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a1628' width='100' height='100'/><text x='50' y='60' font-size='70' font-weight='bold' fill='%23c9a84c' text-anchor='middle' font-family='serif'>ML</text></svg>">
-    
-    <!-- React & ReactDOM from CDN -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel Standalone -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ML Padel — Coaching à La Réunion</title>
+<meta name="description" content="ML Padel — Coaching de padel à La Réunion par Mathias Laval, coach diplômé d'état. Cours individuels, collectifs, stages et académie au 4Padel Saint-Louis."/>
+<meta name="theme-color" content="#0a1628"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-const { useState, useEffect, useRef } = React;
-
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef, useCallback, useMemo } = React;
 /* ─── Palette Bleu Nuit & Or – ML_PADEL ─── */
 const NAVY = "#0a1628";
 const NAVY_MID = "#0f1f3d";
@@ -177,17 +158,30 @@ function Logo({size=36, showText=true, textColor=WHITE}) {
 /* ─── Padel Court Background ─── */
 function PadelBackground(){
   return(
-    <div style={{
-      position:"fixed",inset:0,zIndex:0,pointerEvents:"none",opacity:0.018,
-      background:`
-        linear-gradient(90deg, ${NAVY} 1px, transparent 1px),
-        linear-gradient(${NAVY} 1px, transparent 1px),
-        linear-gradient(135deg, ${NAVY} 50%, transparent 50%),
-        linear-gradient(-135deg, ${NAVY} 50%, transparent 50%)
-      `,
-      backgroundSize:"120px 120px, 120px 120px, 170px 170px, 170px 170px",
-      backgroundPosition:"0 0, 0 0, 0 0, 0 0",
-    }}/>
+    <div style={{position:"fixed",inset:0,zIndex:0,pointerEvents:"none",opacity:0.04}}>
+      <svg width="100%" height="100%" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <rect x="80" y="40" width="640" height="420" rx="8" fill="none" stroke={NAVY} strokeWidth="2"/>
+        <line x1="400" y1="40" x2="400" y2="460" stroke={NAVY} strokeWidth="1.5"/>
+        <line x1="80" y1="250" x2="720" y2="250" stroke={GOLD} strokeWidth="2" strokeDasharray="8 4"/>
+        <line x1="200" y1="40" x2="200" y2="460" stroke={NAVY} strokeWidth="0.8"/>
+        <line x1="600" y1="40" x2="600" y2="460" stroke={NAVY} strokeWidth="0.8"/>
+        <line x1="80" y1="150" x2="720" y2="150" stroke={NAVY} strokeWidth="0.8"/>
+        <line x1="80" y1="350" x2="720" y2="350" stroke={NAVY} strokeWidth="0.8"/>
+        <circle cx="300" cy="180" r="12" fill={NAVY} opacity="0.3"/>
+        <line x1="300" y1="192" x2="300" y2="225" stroke={NAVY} strokeWidth="2" opacity="0.3"/>
+        <line x1="285" y1="205" x2="315" y2="200" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <line x1="290" y1="225" x2="280" y2="255" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <line x1="310" y1="225" x2="320" y2="255" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <circle cx="500" cy="320" r="12" fill={NAVY} opacity="0.3"/>
+        <line x1="500" y1="332" x2="500" y2="365" stroke={NAVY} strokeWidth="2" opacity="0.3"/>
+        <line x1="485" y1="345" x2="520" y2="340" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <line x1="490" y1="365" x2="480" y2="395" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <line x1="510" y1="365" x2="520" y2="395" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
+        <circle cx="380" cy="260" r="5" fill={GOLD} opacity="0.4"/>
+        <rect x="80" y="40" width="10" height="420" fill={NAVY} opacity="0.08"/>
+        <rect x="710" y="40" width="10" height="420" fill={NAVY} opacity="0.08"/>
+      </svg>
+    </div>
   );
 }
 
@@ -473,7 +467,7 @@ function About(){
             Mon <span style={{color:GOLD}}>approche</span>
           </h3>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
-            Moi c'est Mathias Laval, joueur de padel classé au mieux <strong>976e joueur français</strong> et coach depuis plus de <strong>10 ans</strong>. Au fil de mes expériences de coaching en club et en entreprise, j'ai développé un sens aigu de l'humain et de la pédagogie.
+            Bonjour, je me présente en deux mots : Laval Mathias, joueur de padel classé au mieux <strong>976e joueur français</strong> et coach diplômé d'état depuis plus de <strong>10 ans</strong>. Au fil de mes expériences de coaching en club et en entreprise, j'ai développé un sens aigu de l'humain et de la pédagogie.
           </p>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
             Mon obsession ? Donner du <strong>sens</strong> à votre progression. Chaque exercice, chaque conseil a un objectif clair. Installé sur l'île depuis plus d'un an, je suis à votre entière disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
@@ -735,9 +729,9 @@ function Horaires(){
 /* ─── Wallet / Credits ─── */
 function Wallet(){
   const tiers=[
-    {amount:100,bonus:5,credits:105,label:"100€"},
-    {amount:200,bonus:10,credits:220,label:"200€"},
-    {amount:300,bonus:15,credits:345,label:"300€",best:true},
+    {amount:100,bonus:5,credits:105,label:"100€",stripe:"https://buy.stripe.com/5kQdR23dp9LZdfm1oNa7C00"},
+    {amount:200,bonus:10,credits:220,label:"200€",stripe:"https://buy.stripe.com/9B69AM4ht7DR5MU2sRa7C01"},
+    {amount:300,bonus:15,credits:345,label:"300€",best:true,stripe:"https://buy.stripe.com/28E6oAbJV1ftfnu4AZa7C02"},
   ];
 
   const uses=[
@@ -845,9 +839,19 @@ function Wallet(){
                 <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
                   Vous obtenez <strong style={{color:GOLD}}>{t.credits} crédits</strong>
                 </p>
-                <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8}}>
+                <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8,marginBottom:14}}>
                   Payable en 1 fois
                 </p>
+                <a href={t.stripe} target="_blank" rel="noopener noreferrer" style={{
+                  display:"inline-block",padding:"10px 28px",
+                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                  color:NAVY,borderRadius:50,fontSize:13,fontWeight:800,
+                  textDecoration:"none",letterSpacing:0.5,
+                  transition:"all 0.3s",
+                }}
+                onMouseEnter={e=>e.currentTarget.style.transform="scale(1.05)"}
+                onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
+                >Recharger</a>
               </div>
             </AnimatedSection>
           ))}
@@ -879,6 +883,211 @@ function Wallet(){
             <p style={{fontSize:11,color:`${CREAM}30`,marginTop:14,textAlign:"center"}}>
               Crédits valables 12 mois &middot; Non remboursables &middot; Non transférables &middot; Non cumulable avec toute réduction ou promotion &middot; Paiement en 1 fois
             </p>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Mon Wallet — Espace Client ─── */
+function WalletClient(){
+  const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
+  const[phone,setPhone]=useState("");
+  const[client,setClient]=useState(null);
+  const[loading,setLoading]=useState(false);
+  const[error,setError]=useState("");
+  const[success,setSuccess]=useState("");
+  const[prestation,setPrestation]=useState("indiv");
+  const[dateRes,setDateRes]=useState("");
+  const[creneau,setCreneau]=useState("");
+  const[booking,setBooking]=useState(false);
+
+  const prestations=[
+    {key:"indiv",label:"Cours individuel 1h",credits:55},
+    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35},
+    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25},
+    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20},
+    {key:"stage",label:"Stage vacances",credits:150},
+    {key:"masterclass4",label:"Masterclass WE 4j",credits:100},
+    {key:"masterclass8",label:"Masterclass WE 8j",credits:80},
+  ];
+
+  const checkBalance=async()=>{
+    if(!phone||phone.length<10){setError("Entrez un numéro valide");return}
+    if(!WALLET_API){setError("Système wallet en cours de configuration");return}
+    setLoading(true);setError("");setClient(null);setSuccess("");
+    try{
+      const r=await fetch(WALLET_API+"?action=balance&phone="+encodeURIComponent(phone));
+      const d=await r.json();
+      if(d.success)setClient(d.client);
+      else setError(d.error||"Wallet non trouvé");
+    }catch(err){setError("Erreur de connexion")}
+    setLoading(false);
+  };
+
+  const bookWithWallet=async()=>{
+    if(!client||!dateRes){setError("Sélectionnez une date");return}
+    if(!WALLET_API){setError("Système wallet en cours de configuration");return}
+    const p=prestations.find(x=>x.key===prestation);
+    if(client.solde<p.credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+p.credits+" cr.)");return}
+    setBooking(true);setError("");setSuccess("");
+    try{
+      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"debit",phone,prestation,date:dateRes,creneau,nbPersonnes:1})});
+      const d=await r.json();
+      if(d.success){
+        setSuccess("Réservation confirmée ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setClient({...client,solde:d.nouveauSolde});
+      }else setError(d.error||"Erreur lors de la réservation");
+    }catch(err){setError("Erreur de connexion")}
+    setBooking(false);
+  };
+
+  const selectedP=prestations.find(x=>x.key===prestation);
+
+  return(
+    <section style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{
+            background:`${CREAM}06`,borderRadius:20,border:`1.5px solid ${GOLD}25`,
+            padding:"32px 28px",boxShadow:`0 8px 32px ${GOLD}10`,
+          }}>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+                Espace client
+              </span>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,marginTop:6,color:CREAM}}>
+                Mon <span style={{color:GOLD}}>Wallet</span>
+              </h3>
+              <p style={{fontSize:13,color:`${CREAM}55`,marginTop:6}}>
+                Consultez votre solde et réservez directement avec vos crédits
+              </p>
+            </div>
+
+            {/* Lookup par téléphone */}
+            <div style={{display:"flex",gap:10,marginBottom:16}}>
+              <input
+                type="tel" placeholder="Votre n° de téléphone (ex: 0692...)"
+                value={phone} onChange={e=>setPhone(e.target.value)}
+                onKeyDown={e=>e.key==="Enter"&&checkBalance()}
+                style={{
+                  flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
+                  background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                  outline:"none",
+                }}
+              />
+              <button onClick={checkBalance} disabled={loading} style={{
+                padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
+                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
+              }}>
+                {loading?"...":"Consulter"}
+              </button>
+            </div>
+
+            {error&&<div style={{background:"#ff4444 18",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
+            {success&&<div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
+
+            {/* Résultat client */}
+            {client&&(
+              <div style={{marginTop:8}}>
+                <div style={{
+                  display:"flex",justifyContent:"space-between",alignItems:"center",
+                  padding:"18px 20px",borderRadius:14,
+                  background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:20,
+                }}>
+                  <div>
+                    <div style={{fontSize:15,fontWeight:700,color:CREAM}}>{client.prenom} {client.nom}</div>
+                    <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>ID : {client.id}</div>
+                  </div>
+                  <div style={{textAlign:"right"}}>
+                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
+                      {client.solde.toFixed(1)}
+                    </div>
+                    <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
+                  </div>
+                </div>
+
+                {/* Formulaire de réservation */}
+                <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
+                  <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:14}}>
+                    Réserver avec mes crédits
+                  </h4>
+
+                  {/* Choix prestation */}
+                  <div style={{marginBottom:12}}>
+                    <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Prestation</label>
+                    <select value={prestation} onChange={e=>setPrestation(e.target.value)} style={{
+                      width:"100%",padding:"12px 14px",borderRadius:10,
+                      border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,
+                      color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                      outline:"none",appearance:"none",
+                    }}>
+                      {prestations.map(p=>(
+                        <option key={p.key} value={p.key} style={{background:NAVY,color:CREAM}}>
+                          {p.label} — {p.credits} cr.
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Date + créneau */}
+                  <div style={{display:"flex",gap:10,marginBottom:12}}>
+                    <div style={{flex:1}}>
+                      <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date souhaitée</label>
+                      <input type="date" value={dateRes} onChange={e=>setDateRes(e.target.value)} style={{
+                        width:"100%",padding:"12px 14px",borderRadius:10,
+                        border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,
+                        color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",
+                      }}/>
+                    </div>
+                    <div style={{flex:1}}>
+                      <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau (optionnel)</label>
+                      <input type="text" placeholder="ex: 9h-10h" value={creneau} onChange={e=>setCreneau(e.target.value)} style={{
+                        width:"100%",padding:"12px 14px",borderRadius:10,
+                        border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,
+                        color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",
+                      }}/>
+                    </div>
+                  </div>
+
+                  {/* Récap + bouton */}
+                  <div style={{
+                    display:"flex",justifyContent:"space-between",alignItems:"center",
+                    padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,
+                    marginBottom:14,
+                  }}>
+                    <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
+                    <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(client.solde-selectedP.credits).toFixed(1)} cr.</strong></span>
+                  </div>
+
+                  <button onClick={bookWithWallet} disabled={booking||client.solde<selectedP.credits||!dateRes} style={{
+                    width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
+                    background:client.solde>=selectedP.credits&&dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
+                    color:client.solde>=selectedP.credits&&dateRes?NAVY:`${CREAM}30`,
+                    fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                    transition:"all 0.3s",opacity:booking?0.6:1,
+                  }}>
+                    {booking?"Réservation en cours...":client.solde<selectedP.credits?"Solde insuffisant":"Réserver et débiter "+selectedP.credits+" crédits"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Exclusions */}
+            <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}03`,border:`1px solid ${CREAM}08`}}>
+              <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Crédits utilisables sur :</div>
+              <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
+                ✓ Cours individuels à l'unité &middot; ✓ Cours collectifs à l'unité &middot; ✓ Stages vacances &middot; ✓ Masterclass week-end
+              </div>
+              <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
+              <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
+                ✗ Packs 10h (déjà –10%) &middot; ✗ Académie annuelle (750€) &middot; ✗ Académie semestrielle (420€) &middot; ✗ Toute promotion en cours
+              </div>
+            </div>
           </div>
         </AnimatedSection>
       </div>
@@ -1199,7 +1408,8 @@ function FAQ(){
     {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prérequis. J'accueille tous les niveaux, du débutant complet au compétiteur confirmé. Le coaching est adapté à ton profil."},
     {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, La Reunion (974)."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
-    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel. Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Crédits utilisables sur les cours unitaires et stages. Non cumulable avec toute réduction ou promotion. Crédits valables 12 mois."},
+    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre numéro de téléphone, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
+    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
     {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
     {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
@@ -1395,6 +1605,7 @@ function MLPadel(){
       <Pricing/>
       <Horaires/>
       <Wallet/>
+      <WalletClient/>
       <InstagramSection/>
       <Gallery/>
       <Stagiaires/>
@@ -1407,7 +1618,8 @@ function MLPadel(){
   );
 }
 
-        ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(MLPadel));
-    </script>
+
+ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
+</script>
 </body>
 </html>
