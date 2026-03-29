@@ -37,7 +37,9 @@ const CALCOM = {
   packIndiv10: `${CALCOM_BASE}/pack-individuel-10h`,
   packIndiv15: `${CALCOM_BASE}/pack-individuel-15h`,
   collectif: `${CALCOM_BASE}/collectif`,
-  packCollectif10: `${CALCOM_BASE}/pack-collectif-10h`,
+  packCollectifDuo: `${CALCOM_BASE}/pack-collectif-10h`,
+  packCollectifTrio: `${CALCOM_BASE}/pack-collectif-10h-trio`,
+  packCollectifQuatuor: `${CALCOM_BASE}/pack-collectif-10h-quator`,
   packCollectif15: `${CALCOM_BASE}/pack-collectif-15h`,
   masterclass4: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs`,
   masterclass8: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs`,
@@ -118,72 +120,45 @@ const Icon={
 
 /* ─── Logo Component ─── */
 function Logo({size=36, showText=true, textColor=WHITE}) {
+  const s = size * 1.6;
   return (
-    <div style={{display:"flex",alignItems:"center",gap:10}}>
-      {/* Stylized ML PADEL logo mark */}
-      <div style={{
-        width:size, height:size, borderRadius:8,
-        background:NAVY, border:`2px solid ${GOLD}`,
-        display:"flex", alignItems:"center", justifyContent:"center",
-        position:"relative", overflow:"hidden",
-      }}>
-        <span style={{
-          fontFamily:"'Playfair Display',serif", fontWeight:900,
-          fontSize:size*0.42, color:CREAM, letterSpacing:-1, lineHeight:1,
-          position:"relative", zIndex:2,
-        }}>ML</span>
-        {/* Gold racket accent */}
-        <div style={{
-          position:"absolute", right:-2, top:"50%", transform:"translateY(-50%) rotate(-30deg)",
-          width:size*0.45, height:size*0.7, borderRadius:"40% 40% 5% 5%",
-          border:`1.5px solid ${GOLD}88`, opacity:0.5,
-        }}/>
-      </div>
-      {showText && (
-        <div style={{display:"flex",flexDirection:"column",lineHeight:1}}>
-          <span style={{
-            fontFamily:"'Playfair Display',serif", fontWeight:900,
-            fontSize:size*0.38, color:textColor, letterSpacing:0.5,
-          }}>ML</span>
-          <span style={{
-            fontFamily:"'DM Sans',sans-serif", fontWeight:700,
-            fontSize:size*0.28, color:GOLD, letterSpacing:3, marginTop:1,
-          }}>PADEL</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ─── Padel Court Background ─── */
-function PadelBackground(){
-  return(
-    <div style={{position:"fixed",inset:0,zIndex:0,pointerEvents:"none",opacity:0.04}}>
-      <svg width="100%" height="100%" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect x="80" y="40" width="640" height="420" rx="8" fill="none" stroke={NAVY} strokeWidth="2"/>
-        <line x1="400" y1="40" x2="400" y2="460" stroke={NAVY} strokeWidth="1.5"/>
-        <line x1="80" y1="250" x2="720" y2="250" stroke={GOLD} strokeWidth="2" strokeDasharray="8 4"/>
-        <line x1="200" y1="40" x2="200" y2="460" stroke={NAVY} strokeWidth="0.8"/>
-        <line x1="600" y1="40" x2="600" y2="460" stroke={NAVY} strokeWidth="0.8"/>
-        <line x1="80" y1="150" x2="720" y2="150" stroke={NAVY} strokeWidth="0.8"/>
-        <line x1="80" y1="350" x2="720" y2="350" stroke={NAVY} strokeWidth="0.8"/>
-        <circle cx="300" cy="180" r="12" fill={NAVY} opacity="0.3"/>
-        <line x1="300" y1="192" x2="300" y2="225" stroke={NAVY} strokeWidth="2" opacity="0.3"/>
-        <line x1="285" y1="205" x2="315" y2="200" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <line x1="290" y1="225" x2="280" y2="255" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <line x1="310" y1="225" x2="320" y2="255" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <circle cx="500" cy="320" r="12" fill={NAVY} opacity="0.3"/>
-        <line x1="500" y1="332" x2="500" y2="365" stroke={NAVY} strokeWidth="2" opacity="0.3"/>
-        <line x1="485" y1="345" x2="520" y2="340" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <line x1="490" y1="365" x2="480" y2="395" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <line x1="510" y1="365" x2="520" y2="395" stroke={NAVY} strokeWidth="1.5" opacity="0.3"/>
-        <circle cx="380" cy="260" r="5" fill={GOLD} opacity="0.4"/>
-        <rect x="80" y="40" width="10" height="420" fill={NAVY} opacity="0.08"/>
-        <rect x="710" y="40" width="10" height="420" fill={NAVY} opacity="0.08"/>
+    <div style={{display:"flex",alignItems:"center",gap:0}}>
+      <svg width={s*2.2} height={s*1.1} viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+        {/* M and L letters */}
+        <text x="5" y="68" fontFamily="'Playfair Display',serif" fontWeight="900" fontSize="72" fill={textColor} letterSpacing="-2">ML</text>
+        {/* Padel racket integrated with L */}
+        <g transform="translate(108,8) rotate(25,30,45)">
+          {/* Racket head */}
+          <ellipse cx="30" cy="28" rx="22" ry="30" fill="none" stroke={GOLD} strokeWidth="3"/>
+          {/* Racket holes */}
+          <circle cx="22" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="30" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="38" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="18" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="26" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="34" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="42" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="20" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="28" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="36" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="42" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="22" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="30" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="38" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          {/* Racket handle */}
+          <rect x="26" y="56" width="8" height="22" rx="3" fill={GOLD}/>
+          {/* Ball */}
+          <circle cx="38" cy="50" r="5" fill={GOLD} opacity="0.8"/>
+        </g>
+        {/* PADEL text */}
+        <text x="30" y="100" fontFamily="'Playfair Display',serif" fontWeight="800" fontSize="30" fill={GOLD} letterSpacing="8">PADEL</text>
       </svg>
     </div>
   );
 }
+
+/* ─── Padel Court Background — SUPPRIMÉ ─── */
+function PadelBackground(){ return null; }
 
 /* ─── Navbar ─── */
 function Navbar(){
@@ -467,7 +442,7 @@ function About(){
             Mon <span style={{color:GOLD}}>approche</span>
           </h3>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
-            Bonjour, je me présente en deux mots : Laval Mathias, joueur de padel classé au mieux <strong>976e joueur français</strong> et coach diplômé d'état depuis plus de <strong>10 ans</strong>. Au fil de mes expériences de coaching en club et en entreprise, j'ai développé un sens aigu de l'humain et de la pédagogie.
+            Bienvenu à toutes et à tous sur mon site ML_PADEL avec comme coach diplômé d'état depuis plus de <strong>10 ans</strong> Laval Mathias. Classé au mieux à la <strong>976ème place nationale</strong>, j'ai toujours à cœur l'enseignement et la transmission de compétences dans de nombreux domaines. Aujourd'hui c'est avec une passion immense que je me mets à votre disposition pour vous faire évoluer dans votre projet padel.
           </p>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
             Mon obsession ? Donner du <strong>sens</strong> à votre progression. Chaque exercice, chaque conseil a un objectif clair. Installé sur l'île depuis plus d'un an, je suis à votre entière disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
@@ -510,13 +485,13 @@ function Pricing(){
     ],
     packs:[
       {title:"Pack Individuel 10h",price:"495",unit:"€",desc:"10 × 1h · Soit 49,50€/h",features:["Économie de 55€ (–10%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–10%",popular:true,subPrice:"soit 49,50€/h au lieu de 55€",link:CALCOM.packIndiv10},
-      {title:"Pack Duo 10h",price:"315",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 630€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–10%",link:CALCOM.packCollectif10},
-      {title:"Pack Trio 10h",price:"225",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 675€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–10%",link:CALCOM.packCollectif10},
-      {title:"Pack Quatuor 10h",price:"180",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 720€",features:["Économie de 10%","Soit 18€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectif10},
+      {title:"Pack Duo 10h",price:"315",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 630€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–10%",link:CALCOM.packCollectifDuo},
+      {title:"Pack Trio 10h",price:"225",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 675€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–10%",link:CALCOM.packCollectifTrio},
+      {title:"Pack Quatuor 10h",price:"180",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 720€",features:["Économie de 10%","Soit 18€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
     ],
     academie:[
-      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:wa("Bonjour Mathias, je souhaite m'inscrire à l'engagement annuel Académie 🎾")},
-      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",link:wa("Bonjour Mathias, je souhaite m'inscrire à l'engagement semestriel Académie 🎾")},
+      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"#",isAcademie:true},
+      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcademie:true,link:"#"},
     ],
     stages:[
       {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage},
@@ -670,7 +645,7 @@ function Pricing(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >Réserver</a>
+                  >{o.isAcademie?"Remplir le formulaire":"Réserver"}</a>
                 )}
               </div>
             </AnimatedSection>
@@ -914,12 +889,14 @@ function WalletClient(){
   ];
 
   const checkBalance=async()=>{
-    if(!phone||phone.length<10){setError("Entrez un numéro valide");return}
+    const cleanP=phone.replace(/[\s\-\.]/g,"");
+    if(!cleanP||cleanP.length<10){setError("Entrez un numéro valide (ex: 0692627372)");return}
     if(!WALLET_API){setError("Système wallet en cours de configuration");return}
     setLoading(true);setError("");setClient(null);setSuccess("");
     try{
-      const r=await fetch(WALLET_API+"?action=balance&phone="+encodeURIComponent(phone));
-      const d=await r.json();
+      const r=await fetch(WALLET_API+"?action=balance&phone="+encodeURIComponent(cleanP),{redirect:"follow"});
+      const txt=await r.text();
+      let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
       if(d.success)setClient(d.client);
       else setError(d.error||"Wallet non trouvé");
     }catch(err){setError("Erreur de connexion")}
@@ -1285,14 +1262,14 @@ function Stagiaires(){
 /* ─── Testimonials ─── */
 function Testimonials(){
   const items=[
-    {name:"Aina Chassan",role:"Avis Google · 5/5",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
-    {name:"Jules Mattei",role:"Stage Niv 5",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
-    {name:"Didier Delongprez",role:"Stage Niv 3",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
-    {name:"Francois",role:"Stage Niv 3",date:"Décembre 2025",text:"Ce stage m'a été profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
-    {name:"Nathalie",role:"Stage Niv 3",date:"Novembre 2025",text:"C'était une très belle semaine. Je me suis régalée ! Merci pour ton coaching !"},
-    {name:"Laurence Wolff Ollivier",role:"Stage Niv 3",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
-    {name:"Cathy",role:"Stage Niv 3",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'était vraiment cool ce stage. Maintenant y'a plus qu'à !"},
-    {name:"Karine Sharifi",role:"Stage Niv 3",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
+    {name:"Aina",role:"Avis Google",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
+    {name:"Jules",role:"Stage",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
+    {name:"Didier",role:"Stage",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
+    {name:"Francois",role:"Stage",date:"Décembre 2025",text:"Ce stage m'a été profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
+    {name:"Nathalie",role:"Stage",date:"Novembre 2025",text:"C'était une très belle semaine. Je me suis régalée ! Merci pour ton coaching !"},
+    {name:"Laurence",role:"Stage",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
+    {name:"Cathy",role:"Stage",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'était vraiment cool ce stage. Maintenant y'a plus qu'à !"},
+    {name:"Karine",role:"Stage",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
   ];
 
   return(
