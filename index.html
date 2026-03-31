@@ -78,6 +78,8 @@ const fontLink = (
       .wallet-cards{grid-template-columns:1fr!important}
       .stats-grid{grid-template-columns:1fr!important}
       .stagiaires-grid{grid-template-columns:repeat(2,1fr)!important}
+      #galerie .gallery-grid{grid-template-columns:repeat(2,1fr)!important}
+      #galerie .gallery-grid>div{grid-column:span 1!important}
     }
   `}</style>
 );
@@ -261,9 +263,21 @@ function Hero(){
     <section id="hero" style={{
       minHeight:"100vh",position:"relative",overflow:"hidden",
       display:"flex",alignItems:"center",justifyContent:"center",
-      background:`linear-gradient(165deg, ${NAVY} 0%, ${NAVY_MID} 45%, ${NAVY_LIGHT} 100%)`,
+      background:NAVY,
       zIndex:1,
     }}>
+      {/* Background photo */}
+      <div style={{
+        position:"absolute",inset:0,
+        backgroundImage:`url('./_LAVAL006.JPG')`,
+        backgroundSize:"cover",backgroundPosition:"center 30%",
+        opacity:0.25,
+      }}/>
+      {/* Gradient overlay */}
+      <div style={{
+        position:"absolute",inset:0,
+        background:`linear-gradient(165deg, ${NAVY}ee 0%, ${NAVY_MID}cc 45%, ${NAVY_LIGHT}99 100%)`,
+      }}/>
       {/* Decorative elements */}
       <div style={{
         position:"absolute",top:"-10%",right:"-5%",width:500,height:500,borderRadius:"50%",
@@ -379,15 +393,12 @@ function About(){
           {/* Photo placeholder */}
           <div className="about-photo" style={{
             flex:"0 0 300px",minHeight:380,borderRadius:20,
-            background:`linear-gradient(135deg,${NAVY}08,${GOLD}08)`,
             border:`2px solid ${GOLD}20`,
-            display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:12,
             position:"relative",overflow:"hidden",
           }}>
-            <div style={{fontSize:80,opacity:0.12}}>🎾</div>
-            <span style={{color:TEXT_LIGHT,fontSize:13,fontWeight:500,padding:"0 20px",textAlign:"center"}}>
-              Photo Mathias Laval — Coach Padel
-            </span>
+            <img src="./_LAVAL002.JPG" alt="Mathias Laval — Coach Padel" style={{
+              width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:380,
+            }}/>
             <div style={{
               position:"absolute",bottom:0,left:0,right:0,height:4,
               background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
@@ -877,7 +888,6 @@ function WalletClient(){
   const[showCal,setShowCal]=useState(false);
   const[booking,setBooking]=useState(false);
   const calRef=useRef(null);
-  const calLoadedRef=useRef(false);
 
   const prestations=[
     {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"ml-padel/indiv"},
@@ -889,23 +899,20 @@ function WalletClient(){
     {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"ml-padel/masterclass-week-end-2-jours-8-joueurs"},
   ];
 
-  // Charger le script Cal.com une seule fois
+  // Écouter les messages postMessage de Cal.com pour détecter une réservation réussie
   useEffect(()=>{
-    if(calLoadedRef.current)return;
-    const script=document.createElement("script");
-    script.src="https://app.cal.com/embed/embed.js";
-    script.async=true;
-    script.onload=()=>{
-      calLoadedRef.current=true;
-      if(window.Cal){
-        window.Cal("init",{origin:"https://cal.com"});
-        // Écouter les réservations réussies
-        window.Cal("on",{action:"bookingSuccessful",callback:(e)=>{
-          handleBookingSuccess(e);
-        }});
+    const handler=(e)=>{
+      if(e.origin&&e.origin.includes("cal.com")){
+        try{
+          const data=typeof e.data==="string"?JSON.parse(e.data):e.data;
+          if(data&&(data.type==="bookingSuccessful"||(data.action==="bookingSuccessful"))){
+            handleBookingSuccess(data);
+          }
+        }catch(ex){}
       }
     };
-    document.head.appendChild(script);
+    window.addEventListener("message",handler);
+    return()=>window.removeEventListener("message",handler);
   },[]);
 
   // Référence stable pour le handler de booking
@@ -957,29 +964,18 @@ function WalletClient(){
     setLoading(false);
   };
 
-  // Afficher le calendrier Cal.com inline
+  // Afficher le calendrier Cal.com via iframe
   const openCalendar=()=>{
     const p=prestations.find(x=>x.key===prestation);
     if(!p||!client)return;
     if(client.solde<p.credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+p.credits+" cr.)");return}
     setError("");setSuccess("");setShowCal(true);
+  };
 
-    // Injecter le calendrier Cal.com dans le container
-    setTimeout(()=>{
-      const container=document.getElementById("cal-wallet-embed");
-      if(container&&window.Cal){
-        container.innerHTML="";
-        window.Cal("inline",{
-          elementOrSelector:"#cal-wallet-embed",
-          calLink:p.calLink,
-          config:{
-            theme:"dark",
-            styles:{branding:{brandColor:"#c9a84c"}},
-            hideEventTypeDetails:false,
-          },
-        });
-      }
-    },100);
+  const getCalIframeSrc=()=>{
+    const p=prestations.find(x=>x.key===prestation);
+    if(!p)return "";
+    return `https://cal.com/${p.calLink}?embed=true&theme=dark&layout=month_view`;
   };
 
   const selectedP=prestations.find(x=>x.key===prestation);
@@ -1121,7 +1117,13 @@ function WalletClient(){
                       background:`${CREAM}04`,borderRadius:14,overflow:"hidden",
                       border:`1px solid ${GOLD}15`,minHeight:500,
                     }}>
-                      <div id="cal-wallet-embed" ref={calRef} style={{width:"100%",minHeight:500}}/>
+                      <iframe
+                        src={getCalIframeSrc()}
+                        style={{width:"100%",height:600,border:"none",borderRadius:14}}
+                        frameBorder="0"
+                        allow="payment"
+                        loading="lazy"
+                      />
                     </div>
 
                     <p style={{fontSize:11,color:`${CREAM}30`,marginTop:10,textAlign:"center"}}>
@@ -1210,9 +1212,14 @@ function InstagramSection(){
 /* ─── Galerie Photos ─── */
 function Gallery(){
   const photos=[
-    {label:"En action — coup droit",desc:"Mathias sur le terrain 4Padel Saint-Louis",bg:`${GOLD}12`},
-    {label:"En action — revers",desc:"Coaching en situation de jeu réelle",bg:`${NAVY}08`},
-    {label:"Portrait coach",desc:"Mathias Laval — Coach Padel, raquette Babolat",bg:`${GOLD}08`},
+    {src:"./_LAVAL001.JPG",alt:"Mathias en action — coup droit",span:"wide"},
+    {src:"./_LAVAL005.JPG",alt:"Coaching sur le terrain",span:"normal"},
+    {src:"./_LAVAL007.JPG",alt:"Frappe en puissance",span:"normal"},
+    {src:"./_LAVAL008.JPG",alt:"Jeu au filet",span:"wide"},
+    {src:"./_LAVAL009.JPG",alt:"Préparation du service",span:"normal"},
+    {src:"./_LAVAL011.JPG",alt:"Match en situation réelle",span:"normal"},
+    {src:"./_LAVAL006.JPG",alt:"En pleine action",span:"normal"},
+    {src:"./_LAVAL002.JPG",alt:"Mathias Laval — Coach Padel",span:"normal"},
   ];
 
   return(
@@ -1230,30 +1237,47 @@ function Gallery(){
           </div>
         </AnimatedSection>
 
-        <div style={{
-          display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:18,
+        <div className="gallery-grid" style={{
+          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,
         }}>
           {photos.map((p,i)=>(
-            <AnimatedSection key={i} delay={i*0.15}>
+            <div key={i} style={{gridColumn:p.span==="wide"?"span 2":"span 1"}}>
+            <AnimatedSection delay={i*0.08}>
               <div style={{
-                borderRadius:18,overflow:"hidden",
-                background:p.bg,border:`1px solid ${GOLD}15`,
-                aspectRatio:i===2?"3/4":"4/3",
-                display:"flex",alignItems:"center",justifyContent:"center",
-                flexDirection:"column",gap:8,padding:24,transition:"all 0.3s",
+                borderRadius:16,overflow:"hidden",
+                border:`1px solid ${GOLD}18`,
+                aspectRatio:p.span==="wide"?"16/9":"3/4",
+                position:"relative",cursor:"pointer",transition:"all 0.3s",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}12`}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
               onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
               >
-                <div style={{fontSize:56,opacity:0.12}}>🎾</div>
-                <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{p.label}</span>
-                <span style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center"}}>{p.desc}</span>
+                <img src={p.src} alt={p.alt} loading="lazy" style={{
+                  width:"100%",height:"100%",objectFit:"cover",display:"block",
+                }}/>
+                <div style={{
+                  position:"absolute",bottom:0,left:0,right:0,
+                  padding:"28px 16px 12px",
+                  background:"linear-gradient(transparent, rgba(10,22,40,0.7))",
+                }}>
+                  <span style={{color:CREAM,fontSize:12,fontWeight:600}}>{p.alt}</span>
+                </div>
               </div>
             </AnimatedSection>
+            </div>
           ))}
         </div>
 
-        <AnimatedSection delay={0.3}>
+        {/* Vidéo */}
+        <AnimatedSection delay={0.4}>
+          <div style={{marginTop:24,borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}18`}}>
+            <video controls preload="metadata" poster="./_LAVAL001.JPG" style={{width:"100%",display:"block",borderRadius:16}}>
+              <source src="./_LAVAL012.mp4" type="video/mp4"/>
+            </video>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.5}>
           <div style={{textAlign:"center",marginTop:28}}>
             <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
               display:"inline-flex",alignItems:"center",gap:8,
