@@ -77,9 +77,7 @@ const fontLink = (
       .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
       .wallet-cards{grid-template-columns:1fr!important}
       .stats-grid{grid-template-columns:1fr!important}
-      .stagiaires-grid{grid-template-columns:repeat(2,1fr)!important}
       #galerie .gallery-grid{grid-template-columns:repeat(2,1fr)!important}
-      #galerie .gallery-grid>div{grid-column:span 1!important}
     }
   `}</style>
 );
@@ -105,6 +103,53 @@ function AnimatedSection({children,style={},delay=0}){
       transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
       ...style,
     }}>{children}</div>
+  );
+}
+
+/* ─── Carousel Component ─── */
+function Carousel({images,height=320,autoPlay=4000}){
+  const[idx,setIdx]=useState(0);
+  const len=images.length;
+  useEffect(()=>{
+    if(!autoPlay||len<=1)return;
+    const t=setInterval(()=>setIdx(p=>(p+1)%len),autoPlay);
+    return()=>clearInterval(t);
+  },[autoPlay,len]);
+  return(
+    <div style={{position:"relative",overflow:"hidden",borderRadius:18,border:`1px solid ${GOLD}18`,height}}>
+      <div style={{display:"flex",transition:"transform 0.6s cubic-bezier(0.25,1,0.5,1)",transform:`translateX(-${idx*100}%)`,height:"100%"}}>
+        {images.map((img,i)=>(
+          <div key={i} style={{minWidth:"100%",height:"100%",position:"relative"}}>
+            {img.src?(
+              <img src={img.src} alt={img.alt||""} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+            ):(
+              <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:`linear-gradient(135deg,${NAVY}08,${GOLD}08)`,flexDirection:"column",gap:8}}>
+                <span style={{fontSize:40,opacity:0.15}}>📸</span>
+                <span style={{color:TEXT_LIGHT,fontSize:13}}>{img.alt||"Photo à venir"}</span>
+              </div>
+            )}
+            {img.caption&&<div style={{position:"absolute",bottom:0,left:0,right:0,padding:"24px 16px 12px",background:"linear-gradient(transparent,rgba(10,22,40,0.7))"}}>
+              <span style={{color:CREAM,fontSize:13,fontWeight:600}}>{img.caption}</span>
+            </div>}
+          </div>
+        ))}
+      </div>
+      {len>1&&<div style={{position:"absolute",bottom:10,left:"50%",transform:"translateX(-50%)",display:"flex",gap:6}}>
+        {images.map((_,i)=>(
+          <button key={i} onClick={()=>setIdx(i)} style={{width:i===idx?20:8,height:8,borderRadius:4,border:"none",background:i===idx?GOLD:`${CREAM}40`,cursor:"pointer",transition:"all 0.3s",padding:0}}/>
+        ))}
+      </div>}
+    </div>
+  );
+}
+
+/* ─── Photo Banner (transition entre sections) ─── */
+function PhotoBanner({src,alt,height=280,overlay=true}){
+  return(
+    <div style={{width:"100%",height,position:"relative",overflow:"hidden",zIndex:1}}>
+      <img src={src} alt={alt||""} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+      {overlay&&<div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,${NAVY}33 0%,transparent 30%,transparent 70%,${NAVY}33 100%)`}}/>}
+    </div>
   );
 }
 
@@ -396,7 +441,7 @@ function About(){
             border:`2px solid ${GOLD}20`,
             position:"relative",overflow:"hidden",
           }}>
-            <img src="./_LAVAL002.JPG" alt="Mathias Laval — Coach Padel" style={{
+            <img src="./photo de profil.JPG" alt="Mathias Laval — Coach Padel" style={{
               width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:380,
             }}/>
             <div style={{
@@ -469,8 +514,24 @@ function About(){
           </p>
         </div>
       </AnimatedSection>
+
+      {/* Carrousel action PALLAP */}
+      <AnimatedSection delay={0.2}>
+        <div style={{maxWidth:700,margin:"40px auto 0"}}>
+          <Carousel images={[
+            {src:"./3 balles main gauche engagement.JPG",caption:"Engagement — 3 balles en main"},
+            {src:"./coup droit action.JPG",caption:"Coup droit en action"},
+            {src:"./après frappe coup droit.JPG",caption:"Après frappe — coup droit"},
+          ]} height={420}/>
+        </div>
+      </AnimatedSection>
     </section>
   );
+}
+
+/* ─── Transition Photo après About ─── */
+function TransitionAbout(){
+  return <PhotoBanner src="./position d_attention.JPG" alt="Position d'attention sur le terrain"/>;
 }
 
 /* ─── Tarifs / Pricing ─── */
@@ -665,6 +726,31 @@ function Pricing(){
       </div>
     </section>
   );
+}
+
+/* ─── Carrousel Coaching (après Pricing) ─── */
+function CoachingCarousel(){
+  return(
+    <section style={{padding:"40px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:20}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Nos élèves en action</span>
+          </div>
+          <Carousel images={[
+            {src:null,alt:"Photo à venir"},
+            {src:"./Math avec enfants.JPG",caption:"Coaching enfants — initiation padel"},
+            {src:null,alt:"Photo à venir"},
+          ]} height={380}/>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Transition Photo après Pricing ─── */
+function TransitionPricing(){
+  return <PhotoBanner src="./engagement dynamique.JPG" alt="Engagement dynamique"/>;
 }
 
 /* ─── Horaires & Disponibilités ─── */
@@ -1181,16 +1267,16 @@ function InstagramSection(){
           onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}20`}}
           onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 8px 32px ${NAVY}10`}}
           >
-            {/* Instagram preview image */}
+            {/* Instagram profile photo */}
             <div style={{
               aspectRatio:"16/9",
-              background:`linear-gradient(135deg,${NAVY}10,${GOLD}10)`,
+              background:WHITE,
               display:"flex",alignItems:"center",justifyContent:"center",
-              flexDirection:"column",gap:12,padding:40,
+              padding:24,overflow:"hidden",
             }}>
-              <div style={{fontSize:60,opacity:0.15}}>📸</div>
-              <span style={{fontSize:14,fontWeight:600,color:TEXT_MED}}>@ml_padel</span>
-              <span style={{fontSize:12,color:TEXT_LIGHT}}>Videos, coaching, stages & coulisses</span>
+              <img src="./Profil instagram.png" alt="Profil Instagram @ml_padel" style={{
+                width:"100%",height:"100%",objectFit:"contain",
+              }}/>
             </div>
 
             {/* Bottom bar */}
@@ -1209,17 +1295,21 @@ function InstagramSection(){
   );
 }
 
-/* ─── Galerie Photos ─── */
+/* ─── Galerie Photos (vrac) ─── */
 function Gallery(){
   const photos=[
-    {src:"./_LAVAL001.JPG",alt:"Mathias en action — coup droit",span:"wide"},
-    {src:"./_LAVAL005.JPG",alt:"Coaching sur le terrain",span:"normal"},
-    {src:"./_LAVAL007.JPG",alt:"Frappe en puissance",span:"normal"},
-    {src:"./_LAVAL008.JPG",alt:"Jeu au filet",span:"wide"},
-    {src:"./_LAVAL009.JPG",alt:"Préparation du service",span:"normal"},
-    {src:"./_LAVAL011.JPG",alt:"Match en situation réelle",span:"normal"},
-    {src:"./_LAVAL006.JPG",alt:"En pleine action",span:"normal"},
-    {src:"./_LAVAL002.JPG",alt:"Mathias Laval — Coach Padel",span:"normal"},
+    {src:"./volée action.JPG",alt:"Volée en action"},
+    {src:"./engagement.JPG",alt:"Engagement"},
+    {src:"./explication.JPG",alt:"Explication tactique"},
+    {src:"./avant coup droit.JPG",alt:"Avant coup droit"},
+    {src:"./Math avec 2 enfants.JPG",alt:"Coaching avec 2 enfants"},
+    {src:"./engagement dynamique.JPG",alt:"Engagement dynamique"},
+    {src:"./partenaire charly finale.JPG",alt:"Partenaire Charly — finale"},
+    {src:"./partenaire galloo.JPG",alt:"Partenaire Galloo"},
+    {src:"./position d_attention.JPG",alt:"Position d'attention"},
+    {src:"./coup droit action.JPG",alt:"Coup droit en action"},
+    {src:"./après frappe coup droit.JPG",alt:"Après frappe coup droit"},
+    {src:"./3 balles main gauche engagement.JPG",alt:"3 balles — engagement"},
   ];
 
   return(
@@ -1241,15 +1331,14 @@ function Gallery(){
           display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,
         }}>
           {photos.map((p,i)=>(
-            <div key={i} style={{gridColumn:p.span==="wide"?"span 2":"span 1"}}>
-            <AnimatedSection delay={i*0.08}>
+            <AnimatedSection key={i} delay={i*0.06}>
               <div style={{
-                borderRadius:16,overflow:"hidden",
+                borderRadius:14,overflow:"hidden",
                 border:`1px solid ${GOLD}18`,
-                aspectRatio:p.span==="wide"?"16/9":"3/4",
+                aspectRatio:"1/1",
                 position:"relative",cursor:"pointer",transition:"all 0.3s",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.03)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
               onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
               >
                 <img src={p.src} alt={p.alt} loading="lazy" style={{
@@ -1257,27 +1346,17 @@ function Gallery(){
                 }}/>
                 <div style={{
                   position:"absolute",bottom:0,left:0,right:0,
-                  padding:"28px 16px 12px",
+                  padding:"24px 12px 10px",
                   background:"linear-gradient(transparent, rgba(10,22,40,0.7))",
                 }}>
-                  <span style={{color:CREAM,fontSize:12,fontWeight:600}}>{p.alt}</span>
+                  <span style={{color:CREAM,fontSize:11,fontWeight:600}}>{p.alt}</span>
                 </div>
               </div>
             </AnimatedSection>
-            </div>
           ))}
         </div>
 
-        {/* Vidéo */}
         <AnimatedSection delay={0.4}>
-          <div style={{marginTop:24,borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}18`}}>
-            <video controls preload="metadata" poster="./_LAVAL001.JPG" style={{width:"100%",display:"block",borderRadius:16}}>
-              <source src="./_LAVAL012.mp4" type="video/mp4"/>
-            </video>
-          </div>
-        </AnimatedSection>
-
-        <AnimatedSection delay={0.5}>
           <div style={{textAlign:"center",marginTop:28}}>
             <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
               display:"inline-flex",alignItems:"center",gap:8,
@@ -1295,68 +1374,114 @@ function Gallery(){
   );
 }
 
-/* ─── Nos Stagiaires ─── */
-function Stagiaires(){
-  const stages=[
-    {label:"Stage vacances mars 2026",emoji:"🎾"},
-    {label:"Stage vacances février 2026",emoji:"🎾"},
-    {label:"Stage avril 2026",emoji:"🎾"},
-    {label:"Stage mai 2026",emoji:"🎾"},
-    {label:"Stage juin 2026",emoji:"🎾"},
-    {label:"Stage juillet 2026",emoji:"🎾"},
+/* ─── Sponsor PALLAP ─── */
+function Sponsor(){
+  const PALLAP_URL="https://pallapsport.com/fr?srsltid=AfmBOopTTQfTo90RBqQETenG08l5H3HcTOXWRm91E8jA6ix2JzC4TWjl&country=FR";
+  const products=[
+    {name:"Raquettes padel",img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=600"},
+    {name:"Textiles",img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=600"},
+    {name:"Accessoires",img:"https://pallapsport.com/cdn/shop/files/SURGRIP_LOT_DE_3.png?v=1710925894&width=600"},
+    {name:"Sacs padel",img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=600"},
   ];
-
   return(
     <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:1100,margin:"0 auto"}}>
+      <div style={{maxWidth:1000,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Progression</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Partenaire officiel</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              Nos <span style={{color:GOLD}}>stagiaires</span>
+              Mon <span style={{color:GOLD}}>sponsor</span>
             </h2>
-            <p style={{color:TEXT_MED,fontSize:14,marginTop:12}}>en action</p>
           </div>
         </AnimatedSection>
 
-        <div className="stagiaires-grid" style={{
-          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:32,
-        }}>
-          {stages.map((s,i)=>(
-            <AnimatedSection key={i} delay={i*0.12}>
+        {/* Logo + présentation */}
+        <AnimatedSection delay={0.1}>
+          <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
+            display:"block",borderRadius:20,overflow:"hidden",
+            border:`2px solid ${GOLD}20`,background:WHITE,
+            textDecoration:"none",transition:"all 0.3s",marginBottom:32,
+            boxShadow:`0 4px 24px ${NAVY}08`,
+          }}
+          onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}15`}}
+          onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 4px 24px ${NAVY}08`}}
+          >
+            <div style={{padding:"32px 40px",textAlign:"center"}}>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:TEXT_DARK,marginBottom:12}}>
+                PALLAP<span style={{color:GOLD}}>SPORT</span>
+              </h3>
+              <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,maxWidth:600,margin:"0 auto"}}>
+                Fier d'être partenaire de PALLAP, marque spécialisée dans l'équipement padel de haute qualité.
+                Raquettes, textiles et accessoires pensés pour la performance.
+              </p>
               <div style={{
-                borderRadius:16,border:`2px solid ${GOLD}18`,
-                padding:28,display:"flex",flexDirection:"column",alignItems:"center",
-                justifyContent:"center",gap:12,background:WHITE,
-                transition:"all 0.3s",minHeight:220,
-              }}
-              onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-3px)"}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=GOLD+"18";e.currentTarget.style.transform="translateY(0)"}}
-              >
-                <div style={{fontSize:48}}>{s.emoji}</div>
-                <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK,textAlign:"center"}}>{s.label}</span>
+                display:"inline-block",marginTop:16,padding:"10px 28px",borderRadius:50,
+                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                color:NAVY,fontWeight:700,fontSize:13,
+              }}>
+                Visiter pallapsport.com
               </div>
-            </AnimatedSection>
-          ))}
-        </div>
+            </div>
+          </a>
+        </AnimatedSection>
 
-        <AnimatedSection delay={0.4}>
-          <div style={{textAlign:"center"}}>
-            <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
-              display:"inline-flex",alignItems:"center",gap:8,
-              color:GOLD,textDecoration:"none",fontSize:14,fontWeight:600,transition:"color 0.3s",
-            }}
-            onMouseEnter={e=>e.target.style.color=NAVY}
-            onMouseLeave={e=>e.target.style.color=GOLD}
-            >
-              <Icon.instagram/> Découvrir plus sur Instagram
-            </a>
+        {/* Carrousel produits */}
+        <AnimatedSection delay={0.2}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
+            {products.map((p,i)=>(
+              <a key={i} href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
+                borderRadius:16,overflow:"hidden",background:WHITE,
+                border:`1px solid ${GOLD}15`,textDecoration:"none",
+                transition:"all 0.3s",textAlign:"center",padding:"20px 12px",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow=`0 8px 24px ${GOLD}12`}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none"}}
+              >
+                <div style={{height:120,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:12}}>
+                  <img src={p.img} alt={p.name} style={{maxHeight:"100%",maxWidth:"100%",objectFit:"contain"}} loading="lazy"/>
+                </div>
+                <span style={{fontSize:12,fontWeight:700,color:TEXT_DARK}}>{p.name}</span>
+              </a>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        {/* Remerciement */}
+        <AnimatedSection delay={0.3}>
+          <div style={{
+            marginTop:32,textAlign:"center",padding:"24px 28px",borderRadius:16,
+            background:`linear-gradient(135deg,${NAVY}06,${GOLD}06)`,
+            border:`1px solid ${GOLD}15`,
+          }}>
+            <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,fontStyle:"italic"}}>
+              "Un grand merci à <strong>PALLAP</strong> pour leur confiance et leur soutien.
+              Ensemble, nous partageons la même passion : rendre le padel accessible et performant pour tous."
+            </p>
+            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, ML Padel</p>
           </div>
         </AnimatedSection>
       </div>
+    </section>
+  );
+}
+
+/* ─── Photos du centre (avant Contact) ─── */
+function CentrePhotos(){
+  return(
+    <section style={{padding:"0 0",position:"relative",zIndex:1}}>
+      <AnimatedSection>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
+          <div style={{aspectRatio:"16/9",overflow:"hidden"}}>
+            <img src="./droneclub.JPG" alt="Vue drone du club 4Padel" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+          </div>
+          <div style={{aspectRatio:"16/9",overflow:"hidden"}}>
+            <img src="./devanture.JPG" alt="Devanture Le Five — 4Padel" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+          </div>
+        </div>
+      </AnimatedSection>
     </section>
   );
 }
@@ -1681,16 +1806,20 @@ function MLPadel(){
       <Navbar/>
       <Hero/>
       <About/>
+      <TransitionAbout/>
       <Pricing/>
+      <CoachingCarousel/>
+      <TransitionPricing/>
       <Horaires/>
       <Wallet/>
       <WalletClient/>
       <InstagramSection/>
       <Gallery/>
-      <Stagiaires/>
+      <Sponsor/>
       <Testimonials/>
       <HowItWorks/>
       <FAQ/>
+      <CentrePhotos/>
       <Contact/>
       <Footer/>
     </div>
