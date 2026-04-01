@@ -314,7 +314,7 @@ function Hero(){
       {/* Background photo */}
       <div style={{
         position:"absolute",inset:0,
-        backgroundImage:`url('./coup droit action.JPG')`,
+        backgroundImage:`url('./coup-droit-action.JPG')`,
         backgroundSize:"cover",backgroundPosition:"center 30%",
         opacity:0.25,
       }}/>
@@ -441,7 +441,7 @@ function About(){
             border:`2px solid ${GOLD}20`,
             position:"relative",overflow:"hidden",
           }}>
-            <img src="./photo de profil.JPG" alt="Mathias Laval — Coach Padel" style={{
+            <img src="./photo-profil.JPG" alt="Mathias Laval — Coach Padel" style={{
               width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:380,
             }}/>
             <div style={{
@@ -519,9 +519,9 @@ function About(){
       <AnimatedSection delay={0.2}>
         <div style={{maxWidth:700,margin:"40px auto 0"}}>
           <Carousel images={[
-            {src:"./3 balles engagement principal gauche.JPG",caption:"Engagement — 3 balles en main"},
-            {src:"./coup droit action.JPG",caption:"Coup droit en action"},
-            {src:"./après frappe coup droit.JPG",caption:"Après frappe — coup droit"},
+            {src:"./3balles-engagement.JPG",caption:"Engagement — 3 balles en main"},
+            {src:"./coup-droit-action.JPG",caption:"Coup droit en action"},
+            {src:"./apres-frappe.JPG",caption:"Après frappe — coup droit"},
           ]} height={420}/>
         </div>
       </AnimatedSection>
@@ -531,7 +531,7 @@ function About(){
 
 /* ─── Transition Photo après About ─── */
 function TransitionAbout(){
-  return <PhotoBanner src="./position d_attention.JPG" alt="Position d'attention sur le terrain"/>;
+  return <PhotoBanner src="./position-attention.JPG" alt="Position d'attention sur le terrain"/>;
 }
 
 /* ─── Tarifs / Pricing ─── */
@@ -739,7 +739,7 @@ function CoachingCarousel(){
           </div>
           <Carousel images={[
             {src:null,alt:"Photo à venir"},
-            {src:"./Mathématiques avec enfants.JPG",caption:"Coaching enfants — initiation padel"},
+            {src:"./math-enfants.JPG",caption:"Coaching enfants — initiation padel"},
             {src:null,alt:"Photo à venir"},
           ]} height={380}/>
         </AnimatedSection>
@@ -750,7 +750,7 @@ function CoachingCarousel(){
 
 /* ─── Transition Photo après Pricing ─── */
 function TransitionPricing(){
-  return <PhotoBanner src="./engagement dynamique.JPG" alt="Engagement dynamique"/>;
+  return <PhotoBanner src="./engagement-dynamique.JPG" alt="Engagement dynamique"/>;
 }
 
 /* ─── Horaires & Disponibilités ─── */
@@ -1298,18 +1298,18 @@ function InstagramSection(){
 /* ─── Galerie Photos (vrac) ─── */
 function Gallery(){
   const photos=[
-    {src:"./action volée.jpg",alt:"Volée en action"},
+    {src:"./action-volee.jpg",alt:"Volée en action"},
     {src:"./engagement.JPG",alt:"Engagement"},
     {src:"./explication.JPG",alt:"Explication tactique"},
-    {src:"./avant coup droit.JPG",alt:"Avant coup droit"},
-    {src:"./Math avec 2 enfants.JPG",alt:"Coaching avec 2 enfants"},
-    {src:"./engagement dynamique.JPG",alt:"Engagement dynamique"},
-    {src:"./partenaire charly finale.jpg",alt:"Partenaire Charly — finale"},
-    {src:"./partenaire galloo.jpg",alt:"Partenaire Galloo"},
-    {src:"./position d_attention.JPG",alt:"Position d'attention"},
-    {src:"./coup droit action.JPG",alt:"Coup droit en action"},
-    {src:"./après frappe coup droit.JPG",alt:"Après frappe coup droit"},
-    {src:"./3 balles engagement principal gauche.JPG",alt:"3 balles — engagement"},
+    {src:"./avant-coup-droit.JPG",alt:"Avant coup droit"},
+    {src:"./math-2-enfants.JPG",alt:"Coaching avec 2 enfants"},
+    {src:"./engagement-dynamique.JPG",alt:"Engagement dynamique"},
+    {src:"./partenaire-charly.jpg",alt:"Partenaire Charly — finale"},
+    {src:"./partenaire-galloo.jpg",alt:"Partenaire Galloo"},
+    {src:"./position-attention.JPG",alt:"Position d'attention"},
+    {src:"./coup-droit-action.JPG",alt:"Coup droit en action"},
+    {src:"./apres-frappe.JPG",alt:"Après frappe coup droit"},
+    {src:"./3balles-engagement.JPG",alt:"3 balles — engagement"},
   ];
 
   return(
