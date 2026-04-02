@@ -917,14 +917,14 @@ function WalletClient(){
   const bookWithWallet=async()=>{
     if(!client||!dateRes){setError("Sélectionnez une date");return}
     const p=prestations.find(x=>x.key===prestation);
-    if(client.solde<p.credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+p.credits+" cr.)");return}
+    if(client.solde<p.credits){setError("Solde insuffisant ("+(Number(client.solde)||0).toFixed(1)+" cr. < "+p.credits+" cr.)");return}
     setBooking(true);setError("");setSuccess("");
     try{
       const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
         body:JSON.stringify({action:"debit",email,prestation,date:dateRes,creneau})});
       const d=await r.json();
       if(d.success){
-        setSuccess("Réservation confirmée ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setSuccess("Réservation confirmée ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+(Number(d.nouveauSolde)||0).toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
       }else setError(d.error||"Erreur lors de la réservation");
     }catch(err){setError("Erreur de connexion")}
@@ -1050,7 +1050,7 @@ function WalletClient(){
                     <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>{client.email}</div>
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>{client.solde.toFixed(1)}</div>
+                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>{(Number(client.solde)||0).toFixed(1)}</div>
                     <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
                   </div>
                 </div>
@@ -1075,7 +1075,7 @@ function WalletClient(){
                   </div>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:14}}>
                     <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
-                    <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(client.solde-selectedP.credits).toFixed(1)} cr.</strong></span>
+                    <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(Number(client.solde||0)-Number(selectedP.credits||0)).toFixed(1)} cr.</strong></span>
                   </div>
                   <button onClick={bookWithWallet} disabled={booking||client.solde<selectedP.credits||!dateRes} style={{
                     width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
@@ -1114,7 +1114,7 @@ function WalletClient(){
                         </div>
                         <div style={{textAlign:"right"}}>
                           <div style={{fontSize:13,fontWeight:700,color:"#ff8a80"}}>-{h.debit} cr.</div>
-                          <div style={{fontSize:10,color:`${CREAM}35`}}>→ {h.soldeApres.toFixed(1)} cr.</div>
+                          <div style={{fontSize:10,color:`${CREAM}35`}}>→ {(Number(h.soldeApres)||0).toFixed(1)} cr.</div>
                         </div>
                       </div>
                     ))}
@@ -1213,65 +1213,32 @@ function Gallery(){
 
 /* ─── Nos Stagiaires with real photos ─── */
 
+
 /* --- Boutique Pallap -- Partenaire Officiel --- */
 function PallapShop(){
   const PALLAP_URL="https://pallapsport.com/fr?country=FR";
   const PALLAP_CYAN="#00c8ff";
-  const [activeCat,setActiveCat]=useState(0);
-  const [carouselIdx,setCarouselIdx]=useState(0);
 
-  const bannerImages=[
-    "./Bandeau-pallap.png",
-    "./pallap-raquette-elite-velocity.png",
-    "./pallap-raquette-velocity-star.png",
-    "./pallap-textile.png",
-    "./accessoire-pallap.png"
+  const sections=[
+    {
+      title:"Raquettes",
+      desc:"Du débutant au compétiteur, des raquettes conçues pour la performance et le confort.",
+      img:"./pallap-raquette-elite-velocity.png",
+      range:"189,95 – 299,95"
+    },
+    {
+      title:"Textile",
+      desc:"T-shirts, shorts et jupes techniques dry-fit pour homme et femme.",
+      img:"./pallap-textile.png",
+      range:"29,95 – 34,95"
+    },
+    {
+      title:"Accessoires",
+      desc:"Sacs, casquettes, chaussettes grip et surgrips pour compléter votre équipement.",
+      img:"./accessoire-pallap.png",
+      range:"6,95 – 69,95"
+    }
   ];
-
-  useEffect(()=>{
-    const t=setInterval(()=>setCarouselIdx(p=>(p+1)%bannerImages.length),4000);
-    return ()=>clearInterval(t);
-  },[]);
-
-  const categories=[
-    {
-      title:"Raquettes",icon:"🏓",
-      items:[
-        {name:"Power Pro",detail:"MADE IN SPAIN",price:"299,95",stars:4,img:"./pallap-raquette-elite-velocity.png"},
-        {name:"Power Elite",detail:"MADE IN SPAIN",price:"269,95",stars:5,img:"./pallap-raquette-elite-velocity.png"},
-        {name:"Velocity Pro",detail:"",price:"299,95",stars:5,img:"./pallap-raquette-velocity-star.png"},
-        {name:"Velocity Elite",detail:"MADE IN SPAIN",price:"269,95",stars:5,img:"./pallap-raquette-velocity-star.png"},
-        {name:"Power Star",detail:"",price:"189,95",stars:4,img:"./pallap-raquette-velocity-star.png"},
-        {name:"Velocity Star",detail:"",price:"189,95",stars:4,img:"./pallap-raquette-velocity-star.png"},
-      ],
-    },
-    {
-      title:"Textile",icon:"👕",
-      items:[
-        {name:"Tech T-Shirt Homme",detail:"",price:"34,95",stars:0,img:"./pallap-textile.png"},
-        {name:"Short Mesh Homme",detail:"",price:"29,95",stars:0,img:"./pallap-textile.png"},
-        {name:"Tech Tee Femme",detail:"",price:"34,95",stars:0,img:"./pallap-textile.png"},
-        {name:"Skort Femme",detail:"",price:"29,95",stars:5,img:"./pallap-textile.png"},
-      ],
-    },
-    {
-      title:"Accessoires",icon:"🎒",
-      items:[
-        {name:"Mid Racket Bag",detail:"",price:"69,95",stars:4,img:"./accessoire-pallap.png"},
-        {name:"Mini Accessory Bag",detail:"",price:"6,95",stars:0,img:"./accessoire-pallap.png"},
-        {name:"CAP",detail:"3 coloris",price:"19,95",stars:0,img:"./accessoire-pallap.png"},
-        {name:"Padel Socks Grip",detail:"",price:"19,95",stars:0,img:"./accessoire-pallap.png"},
-      ],
-    },
-  ];
-
-  const StarRow=({count})=>(
-    React.createElement("div",{style:{display:"flex",gap:2}},
-      [1,2,3,4,5].map(s=>
-        React.createElement("span",{key:s,style:{color:s<=count?"#f5a623":"#d0d0d0",fontSize:12}},s<=count?"★":"☆")
-      )
-    )
-  );
 
   return(
     <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
@@ -1279,83 +1246,45 @@ function PallapShop(){
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
             <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Partenaire officiel</span>
-            <h2 style={{
-              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
-              fontWeight:900,marginTop:8,color:TEXT_DARK,
-            }}>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
               Boutique <span style={{color:PALLAP_CYAN}}>pallap</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:15,marginTop:10,maxWidth:580,margin:"10px auto 0"}}>
-              Equipez-vous avec du materiel de qualite professionnelle. Raquettes, textile et accessoires disponibles sur commande.
+              Equipez-vous avec du materiel de qualite professionnelle, disponible sur commande.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* Carrousel banniere */}
+        {/* Banniere */}
         <AnimatedSection delay={0.05}>
-          <div style={{position:"relative",width:"100%",borderRadius:18,overflow:"hidden",marginBottom:36,aspectRatio:"3/1",background:"linear-gradient(135deg,#0a1628,#00c8ff22)"}}>
-            {bannerImages.map((src,i)=>(
-              <img key={i} src={src} alt={"Pallap "+i} loading="lazy" style={{
-                position:"absolute",top:0,left:0,width:"100%",height:"100%",objectFit:"contain",
-                opacity:carouselIdx===i?1:0,
-                transform:carouselIdx===i?"scale(1)":"scale(1.08)",
-                transition:"opacity 0.8s ease, transform 0.8s ease",
-              }}/>
-            ))}
-            <div style={{position:"absolute",bottom:12,left:"50%",transform:"translateX(-50%)",display:"flex",gap:8,zIndex:2}}>
-              {bannerImages.map((_,i)=>(
-                <button key={i} onClick={()=>setCarouselIdx(i)} style={{
-                  width:carouselIdx===i?24:8,height:8,borderRadius:4,border:"none",cursor:"pointer",
-                  background:carouselIdx===i?PALLAP_CYAN:"rgba(255,255,255,0.4)",
-                  transition:"all 0.3s",
-                }}/>
-              ))}
-            </div>
-          </div>
+          <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{display:"block",borderRadius:18,overflow:"hidden",marginBottom:40}}>
+            <img src="./Bandeau-pallap.png" alt="Pallap Sport" loading="lazy" style={{width:"100%",display:"block",borderRadius:18}}/>
+          </a>
         </AnimatedSection>
 
-        {/* Category tabs */}
-        <AnimatedSection delay={0.1}>
-          <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:36,flexWrap:"wrap"}}>
-            {categories.map((cat,i)=>(
-              <button key={i} onClick={()=>setActiveCat(i)} style={{
-                padding:"10px 22px",borderRadius:50,border:"none",cursor:"pointer",
-                fontSize:14,fontWeight:600,fontFamily:"'DM Sans','Montserrat',sans-serif",
-                display:"flex",alignItems:"center",gap:6,transition:"all 0.3s",
-                background:activeCat===i?NAVY:(NAVY+"0d"),
-                color:activeCat===i?WHITE:TEXT_DARK,
-                boxShadow:activeCat===i?("0 4px 20px "+NAVY+"4d"):"none",
-              }}>
-                <span>{cat.icon}</span> {cat.title}
-              </button>
-            ))}
-          </div>
-        </AnimatedSection>
-
-        {/* Product grid */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:18}}>
-          {categories[activeCat].items.map((item,i)=>(
-            <AnimatedSection key={activeCat+"-"+i} delay={i*0.08}>
+        {/* 3 sections */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:24}}>
+          {sections.map((s,i)=>(
+            <AnimatedSection key={i} delay={i*0.12}>
               <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
-                background:WHITE,borderRadius:16,padding:20,
+                background:WHITE,borderRadius:18,overflow:"hidden",
                 border:"1px solid "+NAVY+"0d",transition:"all 0.35s",
-                display:"flex",flexDirection:"column",gap:8,textDecoration:"none",
+                display:"flex",flexDirection:"column",textDecoration:"none",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px "+PALLAP_CYAN+"26";e.currentTarget.style.borderColor=PALLAP_CYAN+"66"}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=NAVY+"0d"}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-6px)";e.currentTarget.style.boxShadow="0 16px 40px "+PALLAP_CYAN+"22"}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none"}}
               >
-                <div style={{
-                  width:"100%",aspectRatio:"1",borderRadius:12,
-                  background:"linear-gradient(135deg,"+NAVY+"0a 0%,"+PALLAP_CYAN+"14 100%)",
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  overflow:"hidden",marginBottom:4,
-                }}>
-                  <img src={item.img} alt={item.name} loading="lazy" style={{maxHeight:"80%",maxWidth:"80%",objectFit:"contain"}}/>
+                <div style={{aspectRatio:"4/3",background:"linear-gradient(135deg,"+NAVY+"08,"+PALLAP_CYAN+"10)",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+                  <img src={s.img} alt={s.title} loading="lazy" style={{maxHeight:"85%",maxWidth:"85%",objectFit:"contain"}}/>
                 </div>
-                <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{item.name}</span>
-                {item.detail && <span style={{fontSize:11,fontWeight:600,color:PALLAP_CYAN,textTransform:"uppercase",letterSpacing:1}}>{item.detail}</span>}
-                {item.stars>0 && <StarRow count={item.stars}/>}
-                <span style={{fontSize:18,fontWeight:800,color:NAVY,marginTop:4}}>{"€"}{item.price} <span style={{fontSize:11,fontWeight:400,color:TEXT_LIGHT}}>EUR</span></span>
+                <div style={{padding:"20px 24px"}}>
+                  <h3 style={{fontSize:20,fontWeight:800,color:TEXT_DARK,marginBottom:6,fontFamily:"'Playfair Display',serif"}}>{s.title}</h3>
+                  <p style={{fontSize:13,color:TEXT_MED,lineHeight:1.6,marginBottom:12}}>{s.desc}</p>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontSize:16,fontWeight:800,color:NAVY}}>{s.range} €</span>
+                    <span style={{fontSize:12,fontWeight:600,color:PALLAP_CYAN}}>Voir →</span>
+                  </div>
+                </div>
               </a>
             </AnimatedSection>
           ))}
@@ -1376,12 +1305,9 @@ function PallapShop(){
             >
               Voir la boutique pallap
             </a>
-            <span style={{fontSize:12,color:TEXT_LIGHT}}>
-              Commandez en ligne ou contactez-nous pour un conseil personnalise
-            </span>
+            <span style={{fontSize:12,color:TEXT_LIGHT}}>Commandez en ligne ou contactez-nous pour un conseil personnalisé</span>
             <a href={wa("Bonjour Mathias, je suis interesse(e) par du materiel pallap")} target="_blank" rel="noopener noreferrer" style={{
-              color:GOLD,fontSize:13,fontWeight:600,textDecoration:"none",
-              display:"inline-flex",alignItems:"center",gap:6,
+              color:GOLD,fontSize:13,fontWeight:600,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:6,
             }}>
               <Icon.whatsapp/> Demander un conseil
             </a>
