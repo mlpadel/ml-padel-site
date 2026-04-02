@@ -1235,7 +1235,7 @@ function PallapShop(){
 
   const categories=[
     {
-      title:"Raquettes",icon:"\u{1F3D3}",
+      title:"Raquettes",icon:"🏓",
       items:[
         {name:"Power Pro",detail:"MADE IN SPAIN",price:"299,95",stars:4,img:"./pallap-raquette-elite-velocity.png"},
         {name:"Power Elite",detail:"MADE IN SPAIN",price:"269,95",stars:5,img:"./pallap-raquette-elite-velocity.png"},
@@ -1246,7 +1246,7 @@ function PallapShop(){
       ],
     },
     {
-      title:"Textile",icon:"\u{1F455}",
+      title:"Textile",icon:"👕",
       items:[
         {name:"Tech T-Shirt Homme",detail:"",price:"34,95",stars:0,img:"./pallap-textile.png"},
         {name:"Short Mesh Homme",detail:"",price:"29,95",stars:0,img:"./pallap-textile.png"},
@@ -1255,7 +1255,7 @@ function PallapShop(){
       ],
     },
     {
-      title:"Accessoires",icon:"\u{1F392}",
+      title:"Accessoires",icon:"🎒",
       items:[
         {name:"Mid Racket Bag",detail:"",price:"69,95",stars:4,img:"./accessoire-pallap.png"},
         {name:"Mini Accessory Bag",detail:"",price:"6,95",stars:0,img:"./accessoire-pallap.png"},
@@ -1268,7 +1268,7 @@ function PallapShop(){
   const StarRow=({count})=>(
     React.createElement("div",{style:{display:"flex",gap:2}},
       [1,2,3,4,5].map(s=>
-        React.createElement("span",{key:s,style:{color:s<=count?"#f5a623":"#d0d0d0",fontSize:12}},s<=count?"\u2605":"\u2606")
+        React.createElement("span",{key:s,style:{color:s<=count?"#f5a623":"#d0d0d0",fontSize:12}},s<=count?"★":"☆")
       )
     )
   );
@@ -1355,7 +1355,7 @@ function PallapShop(){
                 <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{item.name}</span>
                 {item.detail && <span style={{fontSize:11,fontWeight:600,color:PALLAP_CYAN,textTransform:"uppercase",letterSpacing:1}}>{item.detail}</span>}
                 {item.stars>0 && <StarRow count={item.stars}/>}
-                <span style={{fontSize:18,fontWeight:800,color:NAVY,marginTop:4}}>{"\u20AC"}{item.price} <span style={{fontSize:11,fontWeight:400,color:TEXT_LIGHT}}>EUR</span></span>
+                <span style={{fontSize:18,fontWeight:800,color:NAVY,marginTop:4}}>{"€"}{item.price} <span style={{fontSize:11,fontWeight:400,color:TEXT_LIGHT}}>EUR</span></span>
               </a>
             </AnimatedSection>
           ))}
@@ -1399,7 +1399,7 @@ function PallapShop(){
               Un grand merci a <strong style={{color:PALLAP_CYAN}}>PALLAP</strong> pour leur confiance et leur soutien.
               Ensemble, nous partageons la meme passion : rendre le padel accessible et performant pour tous.
             </p>
-            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>\u2014 Mathias Laval, ML Padel</p>
+            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, ML Padel</p>
           </div>
         </AnimatedSection>
       </div>
