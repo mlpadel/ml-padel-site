@@ -122,19 +122,19 @@ const fontLink = (
 html { scroll-behavior: smooth; }
 section { position: relative; overflow: visible; }
 
-/* Gradient doux entre sections */
+/* Transition subtile entre sections */
+section { position: relative; }
 section::after {
   content: "";
   position: absolute;
-  bottom: -1px;
-  left: 0; right: 0;
-  height: 60px;
-  background: linear-gradient(180deg, transparent 0%, #0a1628 100%);
+  bottom: 0;
+  left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.12), transparent);
   pointer-events: none;
   z-index: 1;
 }
 section:last-of-type::after { display: none; }
-
 /* Animation d'apparition au scroll */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -1456,10 +1456,10 @@ function PallapShop(){
         {/* Remerciement */}
         <div style={{textAlign:"center",padding:"20px 0",borderTop:"1px solid #e0dcd4"}}>
           <p style={{fontStyle:"italic",color:"#888",fontSize:13,marginBottom:4}}>
-            Fier ambassadeur Pallap Sport a La Reunion
+            Fier ambassadeur Pallap Sport pour la saison 2026-2027. Raquettes made in Spain, livraison à La Réunion bientôt disponible.
           </p>
           <p style={{fontWeight:700,color:"#0a1628",fontSize:14}}>
-            -- Mathias Laval, ML Padel
+            — Mathias Laval, ML Padel
           </p>
         </div>
       </div>
@@ -1528,14 +1528,14 @@ function Stagiaires(){
 /* ─── Testimonials with Carousel ─── */
 function Testimonials(){
   const items=[
-    {name:"Aina Chassan",role:"Avis Google · 5/5",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
-    {name:"Jules Mattei",role:"Stage Niv 5",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
-    {name:"Didier Delongprez",role:"Stage Niv 3",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
+    {name:"Aina",role:"Avis Google · 5/5",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
+    {name:"Jules",role:"Stage Niv 5",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
+    {name:"Didier",role:"Stage Niv 3",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
     {name:"Francois",role:"Stage Niv 3",date:"Décembre 2025",text:"Ce stage m'a été profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
     {name:"Nathalie",role:"Stage Niv 3",date:"Novembre 2025",text:"C'était une très belle semaine. Je me suis régalée ! Merci pour ton coaching !"},
-    {name:"Laurence Wolff Ollivier",role:"Stage Niv 3",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
+    {name:"Laurence Ollivier",role:"Stage Niv 3",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
     {name:"Cathy",role:"Stage Niv 3",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'était vraiment cool ce stage. Maintenant y'a plus qu'à !"},
-    {name:"Karine Sharifi",role:"Stage Niv 3",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
+    {name:"Karine",role:"Stage Niv 3",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
   ];
 
   return(
