@@ -191,26 +191,7 @@ function SectionDivider({flip=false,color1,color2}){
     d:flip?"M0,80 C360,0 1080,0 1440,80 L1440,0 L0,0 Z":"M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z",
     fill:flip?color1:color2,opacity:0.6
   })));
-}){
-  const[ref,inView]=useInView();
-  const transforms={
-    up:"translateY(40px)",
-    down:"translateY(-40px)",
-    left:"translateX(-40px)",
-    right:"translateX(40px)",
-    scale:"scale(0.92)",
-  };
-  return(
-    <div ref={ref} style={{
-      opacity:inView?1:0,
-      transform:inView?"none":transforms[direction]||transforms.up,
-      transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
-      ...style,
-    }}>{children}</div>
-  );
-}
 
-/* ─── Carousel Component ─── */
 function Carousel({children,itemWidth=320,gap=18,showArrows=true,showDots=true}){
   const trackRef=useRef(null);
   const[current,setCurrent]=useState(0);
