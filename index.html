@@ -1466,6 +1466,47 @@ function PallapShop(){
     </section>
   );
 }
+function Evenements(){
+  return(
+    <section id="evenements" style={{padding:"70px 20px 50px",maxWidth:900,margin:"0 auto",textAlign:"center"}}>
+      <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,36px)",color:CREAM,marginBottom:8}}>
+        Événements <span style={{color:GOLD}}>& Stages</span>
+      </h2>
+      <p style={{color:"rgba(245,242,235,0.5)",fontSize:14,marginBottom:40}}>Nos prochains rendez-vous padel</p>
+
+      {/* Stage Mai 2026 */}
+      <div style={{background:"rgba(201,168,76,0.04)",border:"1px solid rgba(201,168,76,0.15)",borderRadius:20,padding:"32px 28px",maxWidth:700,margin:"0 auto",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:0,left:0,right:0,height:4,background:"linear-gradient(90deg,transparent,#c9a84c,transparent)"}}/>
+        
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:16}}>
+          <span style={{fontSize:28}}>🎾</span>
+          <span style={{fontFamily:"'Playfair Display',serif",fontSize:20,color:GOLD,letterSpacing:1}}>STAGE VACANCES</span>
+        </div>
+
+        <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(22px,3.5vw,30px)",color:CREAM,marginBottom:6}}>
+          Mai 2026 <span style={{fontSize:"0.6em",color:"rgba(245,242,235,0.5)"}}>| 11 au 16 mai</span>
+        </h3>
+        <p style={{color:"rgba(245,242,235,0.6)",fontSize:14,marginBottom:20}}>5 sessions de 1H30 — Du lundi au vendredi — Coach ML Padel</p>
+
+        <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:10,marginBottom:24}}>
+          <span style={{background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.25)",borderRadius:30,padding:"6px 16px",fontSize:12,color:GOLD}}>7h-8h30 — Niv 3/4-4/5</span>
+          <span style={{background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.25)",borderRadius:30,padding:"6px 16px",fontSize:12,color:GOLD}}>17h-18h30 — Niv 1/2-2/3</span>
+          <span style={{background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.25)",borderRadius:30,padding:"6px 16px",fontSize:12,color:GOLD}}>18h30-20h — Niv 3/4-4/5</span>
+          <span style={{background:"rgba(201,168,76,0.1)",border:"1px solid rgba(201,168,76,0.25)",borderRadius:30,padding:"6px 16px",fontSize:12,color:GOLD}}>20h-21h30 — Niv 4/5-5/6</span>
+        </div>
+
+        <div style={{display:"flex",justifyContent:"center",gap:20,marginBottom:28,flexWrap:"wrap"}}>
+          <div style={{background:"linear-gradient(135deg,#c9a84c,#e8d48b)",color:NAVY,padding:"8px 20px",borderRadius:30,fontWeight:700,fontSize:13}}>☀️ Matin : 120€</div>
+          <div style={{background:"linear-gradient(135deg,#c9a84c,#e8d48b)",color:NAVY,padding:"8px 20px",borderRadius:30,fontWeight:700,fontSize:13}}>🌙 Soir : 150€</div>
+        </div>
+
+        <a href="/stage-mai-2026.html" style={{display:"inline-block",background:"linear-gradient(135deg,#c9a84c,#e8d48b)",color:NAVY,fontWeight:700,fontSize:16,padding:"14px 40px",borderRadius:30,textDecoration:"none",letterSpacing:0.5,transition:"transform 0.2s,box-shadow 0.2s",boxShadow:"0 4px 15px rgba(201,168,76,0.3)"}}>
+          S'inscrire au stage →
+        </a>
+      </div>
+    </section>
+  )
+}
 function Stagiaires(){
   const stages=[
     {label:"Stage vacances mars 2026",img:IMG_ENFANTS1},
@@ -1904,6 +1945,9 @@ function MLPadel(){
       <><div className="section-divider"/><div className="section-dot"/></>
       <Gallery/>
       <PallapShop/>
+      
+      <><div className="section-divider"/><div className="section-dot"/></>
+      <Evenements/>
       
       <><div className="section-divider"/><div className="section-dot"/></>
       <Stagiaires/>
