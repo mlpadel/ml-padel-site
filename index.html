@@ -1724,9 +1724,9 @@ function GiftCard(){
     if(!form.senderEmail.includes("@")||!form.recipientEmail.includes("@")){setError("Emails invalides");return}
     setLoading(true);setError("");
     try{
-      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"giftcard",...form,amount:parseFloat(form.amount)})});
-      const d=await r.json();
+      const url=WALLET_API+"?action=giftcard&from="+encodeURIComponent(form.senderEmail)+"&to="+encodeURIComponent(form.recipientEmail)+"&montant="+encodeURIComponent(Math.round(parseFloat(form.amount)))+"&message="+encodeURIComponent(form.senderName+" pour "+form.recipientName+": "+(form.message||""));
+      const r=await fetch(url,{redirect:"follow"});
+      const txt=await r.text();let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setLoading(false);return;}
       if(d.success) setResult(d);
       else setError(d.error||"Erreur");
     }catch(e){setError("Erreur de connexion")}
