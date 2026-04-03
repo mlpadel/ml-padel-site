@@ -117,7 +117,37 @@ const fontLink = (
       .hero-photo-mobile{display:none!important}
       .carousel-arrows{display:flex!important}
     }
-  `}</style>
+  `}
+/* Transitions fluides entre sections */
+html { scroll-behavior: smooth; }
+section { position: relative; }
+section::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.6) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+section:last-of-type::after { display: none; }
+
+/* Fade-in animation for scroll reveal */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Lignes décoratives subtiles entre sections */
+.section-divider {
+  height: 1px;
+  margin: 0 auto;
+  max-width: 200px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+}
+</style>
 );
 
 /* ─── Hooks ─── */
@@ -133,6 +163,39 @@ function useInView(threshold=0.08){
 }
 
 function AnimatedSection({children,style={},delay=0,direction="up"}){
+  const ref=useRef(null);
+  const[visible,setVisible]=useState(false);
+  useEffect(()=>{
+    const el=ref.current;if(!el)return;
+    const obs=new IntersectionObserver(([entry])=>{
+      if(entry.isIntersecting){setVisible(true);obs.unobserve(el)}
+    },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+    obs.observe(el);
+    return()=>obs.disconnect();
+  },[]);
+  const offsets={up:"translateY(32px)",down:"translateY(-32px)",left:"translateX(-32px)",right:"translateX(32px)"};
+  return React.createElement("div",{ref,style:{
+    ...style,
+    opacity:visible?1:0,
+    transform:visible?"none":offsets[direction]||offsets.up,
+    transition:"opacity 0.7s cubic-bezier(.16,1,.3,1) "+delay+"s, transform 0.7s cubic-bezier(.16,1,.3,1) "+delay+"s",
+    willChange:"opacity,transform",
+  }},children);
+}
+
+function SectionDivider({flip=false,color1,color2}){
+  return React.createElement("div",{style:{
+    height:80,
+    background:"linear-gradient(180deg,"+(flip?color2:color1)+" 0%,"+(flip?color1:color2)+" 100%)",
+    position:"relative",overflow:"hidden",
+  }},React.createElement("svg",{
+    viewBox:"0 0 1440 80",preserveAspectRatio:"none",
+    style:{position:"absolute",bottom:0,left:0,width:"100%",height:"100%"}
+  },React.createElement("path",{
+    d:flip?"M0,80 C360,0 1080,0 1440,80 L1440,0 L0,0 Z":"M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z",
+    fill:flip?color1:color2,opacity:0.6
+  })));
+}){
   const[ref,inView]=useInView();
   const transforms={
     up:"translateY(40px)",
@@ -870,42 +933,52 @@ function WalletClient(){
     {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"ml-padel/masterclass-week-end-2-jours-8-joueurs"},
   ];
 
-  // Cal.com postMessage listener
+// Cal.com postMessage listener — refs pour éviter stale closures
+  const emailRef=useRef(email);
+  const clientRef=useRef(client);
+  const prestationRef=useRef(prestation);
+  useEffect(()=>{emailRef.current=email},[email]);
+  useEffect(()=>{clientRef.current=client},[client]);
+  useEffect(()=>{prestationRef.current=prestation},[prestation]);
+
   useEffect(()=>{
     const handler=(e)=>{
-      if(e.origin&&e.origin.includes("cal.com")){
-        try{
-          const data=typeof e.data==="string"?JSON.parse(e.data):e.data;
-          if(data&&(data.type==="bookingSuccessful"||(data.action==="bookingSuccessful"))){
-            handleCalBooking();
-          }
-        }catch(ex){}
-      }
+      try{
+        const raw=typeof e.data==="string"?JSON.parse(e.data):e.data;
+        const action=raw&&(raw.action||raw.type||(raw.Cal&&raw.Cal.action));
+        if(action==="bookingSuccessful"){
+          handleCalBooking();
+        }
+      }catch(ex){}
     };
     window.addEventListener("message",handler);
     return()=>window.removeEventListener("message",handler);
   },[]);
 
   const handleCalBooking=async()=>{
-    if(!client||!email)return;
-    const p=prestations.find(x=>x.key===prestation);
+    const curEmail=emailRef.current;
+    const curClient=clientRef.current;
+    const curPrestation=prestationRef.current;
+    if(!curClient||!curEmail)return;
+    const p=prestations.find(x=>x.key===curPrestation);
     if(!p)return;
     setBooking(true);setError("");
     try{
       const dateStr=new Date().toISOString().split("T")[0];
-      const r=await fetch(WALLET_API+"?action=debit&email="+encodeURIComponent(email)+"&prestation="+encodeURIComponent(prestation)+"&date="+encodeURIComponent(dateStr)+"&creneau=Via+Cal.com&nbPersonnes=1");
+      const url=WALLET_API+"?action=debit&email="+encodeURIComponent(curEmail)+"&prestation="+encodeURIComponent(curPrestation)+"&date="+encodeURIComponent(dateStr)+"&creneau=Via+Cal.com&nbPersonnes=1";
+      const r=await fetch(url,{redirect:"follow"});
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
       if(d.success){
-        setSuccess("Reservation Cal.com confirmee ! "+p.label+" - "+(Number(d.debit)||0)+" cr. debites. Nouveau solde : "+(Number(d.nouveauSolde)||0).toFixed(1)+" cr.");
-        setClient({...client,solde:d.nouveauSolde});
+        setSuccess("R\u00e9servation confirm\u00e9e via Cal.com ! "+p.label+" \u2014 "+d.debit+" cr. d\u00e9bit\u00e9s. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setClient({...curClient,solde:d.nouveauSolde});
         setShowCal(false);
       }else{
-        setError(d.error||"Erreur lors du debit wallet");
+        setError(d.error||"Erreur lors du d\u00e9bit wallet");
       }
     }catch(err){setError("Erreur de connexion au wallet")}
     setBooking(false);
-  };
+  }
 
   const openCalendar=()=>{
     const p=prestations.find(x=>x.key===prestation);
@@ -1816,13 +1889,21 @@ function MLPadel(){
       <Horaires/>
       <Wallet/>
       <WalletClient/>
+      
+      <div className="section-divider"/>
       <Gallery/>
       <PallapShop/>
+      
+      <div className="section-divider"/>
       <Stagiaires/>
       <Testimonials/>
       <HowItWorks/>
       <GiftCard/>
+      
+      <div className="section-divider"/>
       <FAQ/>
+      
+      <div className="section-divider"/>
       <Contact/>
       <MentionsLegales/>
       <Footer/>
