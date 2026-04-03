@@ -1108,58 +1108,81 @@ function WalletClient(){
                   </div>
                 </div>
 
+                {!showCal?(
                 <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
-                  <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:14}}>Réserver avec mes crédits</h4>
-                  <div style={{marginBottom:12}}>
+                  <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:14}}>
+                    Réserver avec mes crédits
+                  </h4>
+                  <div style={{marginBottom:16}}>
                     <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Prestation</label>
-                    <select value={prestation} onChange={e=>setPrestation(e.target.value)} style={{...inputStyle,appearance:"none"}}>
-                      {prestations.map(p=><option key={p.key} value={p.key} style={{background:NAVY,color:CREAM}}>{p.label} — {p.credits} cr.</option>)}
+                    <select value={prestation} onChange={e=>setPrestation(e.target.value)} style={{
+                      width:"100%",padding:"12px 14px",borderRadius:10,
+                      border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,
+                      color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                      outline:"none",appearance:"none",
+                    }}>
+                      {prestations.map(p=>(
+                        <option key={p.key} value={p.key} style={{background:NAVY,color:CREAM}}>
+                          {p.label} — {p.credits} cr.
+                        </option>
+                      ))}
                     </select>
                   </div>
-                  <div style={{display:"flex",gap:10,marginBottom:12}}>
-                    <div style={{flex:1}}>
-                      <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date souhaitée</label>
-                      <input type="date" value={dateRes} onChange={e=>setDateRes(e.target.value)} style={inputStyle}/>
-                    </div>
-                    <div style={{flex:1}}>
-                      <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau (optionnel)</label>
-                      <input type="text" placeholder="ex: 9h-10h" value={creneau} onChange={e=>setCreneau(e.target.value)} style={inputStyle}/>
-                    </div>
-                  </div>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:14}}>
-                    <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
-                    <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(Number(client.solde||0)-Number(selectedP.credits||0)).toFixed(1)} cr.</strong></span>
-                  </div>
-                  <button onClick={bookWithWallet} disabled={booking||client.solde<selectedP.credits||!dateRes} style={{
-                    width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
-                    background:client.solde>=selectedP.credits&&dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
-                    color:client.solde>=selectedP.credits&&dateRes?NAVY:`${CREAM}30`,
-                    fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s",opacity:booking?0.6:1,
+                  <div style={{
+                    display:"flex",justifyContent:"space-between",alignItems:"center",
+                    padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,
+                    marginBottom:14,
                   }}>
-                    {booking?"Réservation en cours...":client.solde<selectedP.credits?"Solde insuffisant":"Réserver et débiter "+selectedP.credits+" crédits"}
+                    <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
+                    <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(client.solde-selectedP.credits).toFixed(1)} cr.</strong></span>
+                  </div>
+                  <button onClick={openCalendar} disabled={client.solde<selectedP.credits} style={{
+                    width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
+                    background:client.solde>=selectedP.credits?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
+                    color:client.solde>=selectedP.credits?NAVY:`${CREAM}30`,
+                    fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                    transition:"all 0.3s",display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+                  }}>
+                    <Icon.calendar/>
+                    {client.solde<selectedP.credits?"Solde insuffisant":"Voir les disponibilités et réserver"}
                   </button>
-                    <div style={{textAlign:"center",margin:"12px 0 0",fontSize:12,color:CREAM+"50"}}>ou</div>
-                    <button onClick={openCalendar} style={{
-                      width:"100%",padding:"14px",borderRadius:14,border:"1.5px solid "+GOLD+"40",cursor:"pointer",
-                      background:"transparent",color:GOLD,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
-                      marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",gap:8,
-                    }}>
-                      <Icon.calendar/> Voir les disponibilites Cal.com
-                    </button>
-                    {showCal&&(
-                      <div style={{marginTop:16}}>
-                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
-                          <span style={{fontSize:13,fontWeight:700,color:CREAM}}>Choisissez un creneau</span>
-                          <button onClick={()=>setShowCal(false)} style={{background:"none",border:"1px solid "+CREAM+"20",borderRadius:8,color:CREAM+"60",padding:"6px 14px",cursor:"pointer",fontSize:12,fontFamily:"'DM Sans',sans-serif"}}>Retour</button>
-                        </div>
-                        {booking&&(<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"12px 16px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600,textAlign:"center"}}>Debit wallet en cours...</div>)}
-                        <div style={{background:CREAM+"04",borderRadius:14,overflow:"hidden",border:"1px solid "+GOLD+"15",minHeight:500}}>
-                          <iframe src={getCalIframeSrc()} style={{width:"100%",height:600,border:"none",borderRadius:14}} frameBorder="0" allow="payment" loading="lazy"/>
-                        </div>
-                        <p style={{fontSize:11,color:CREAM+"30",marginTop:10,textAlign:"center"}}>Vos credits seront debites automatiquement a la confirmation de la reservation</p>
-                      </div>
-                    )}
                 </div>
+                ):(
+                <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                    <h4 style={{fontSize:14,fontWeight:700,color:CREAM}}>
+                      Choisissez un créneau — {selectedP.label} ({selectedP.credits} cr.)
+                    </h4>
+                    <button onClick={()=>setShowCal(false)} style={{
+                      background:"none",border:`1px solid ${CREAM}20`,borderRadius:8,
+                      color:`${CREAM}60`,padding:"6px 14px",cursor:"pointer",fontSize:12,
+                      fontFamily:"'DM Sans',sans-serif",
+                    }}>
+                      ← Retour
+                    </button>
+                  </div>
+                  {booking&&(
+                    <div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"12px 16px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600,textAlign:"center"}}>
+                      Débit wallet en cours...
+                    </div>
+                  )}
+                  <div style={{
+                    background:`${CREAM}04`,borderRadius:14,overflow:"hidden",
+                    border:`1px solid ${GOLD}15`,minHeight:500,
+                  }}>
+                    <iframe
+                      src={getCalIframeSrc()}
+                      style={{width:"100%",height:600,border:"none",borderRadius:14}}
+                      frameBorder="0"
+                      allow="payment"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p style={{fontSize:11,color:`${CREAM}30`,marginTop:10,textAlign:"center"}}>
+                    Vos crédits seront débités automatiquement à la confirmation de la réservation
+                  </p>
+                </div>
+                )}
 
                 {/* Lien recharger si solde faible */}
                 {client.solde<55&&(
