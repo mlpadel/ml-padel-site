@@ -350,7 +350,7 @@ function Navbar(){
 
 /* ─── Hero with real photos ─── */
 function Hero(){
-  const heroImages=[IMG_SMASH,IMG_ACTION_REVERS,IMG_VOLEE];
+  const heroImages=["./position-attention.JPG","./engagement-dynamique.JPG","./3balles-engagement.JPG","./avant-coup-droit.JPG","./coup-droit-action.JPG","./apres-frappe.JPG","./engagement.JPG","./action-volee.jpg","./explication.JPG"];
   const[heroIdx,setHeroIdx]=useState(0);
   useEffect(()=>{
     const t=setInterval(()=>setHeroIdx(p=>(p+1)%heroImages.length),5000);
