@@ -117,37 +117,33 @@ const fontLink = (
       .hero-photo-mobile{display:none!important}
       .carousel-arrows{display:flex!important}
     }
-  `}
-/* Transitions fluides entre sections */
-html { scroll-behavior: smooth; }
-section { position: relative; }
-section::after {
-  content: "";
-  position: absolute;
-  bottom: -40px;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.6) 50%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-section:last-of-type::after { display: none; }
-
-/* Fade-in animation for scroll reveal */
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to { opacity: 1; transform: none; }
-}
-
-/* Lignes décoratives subtiles entre sections */
-.section-divider {
-  height: 1px;
-  margin: 0 auto;
-  max-width: 200px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-}
-</style>
+  
+    /* Transitions fluides entre sections */
+    html { scroll-behavior: smooth; }
+    section { position: relative; }
+    section::after {
+      content: "";
+      position: absolute;
+      bottom: -40px;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.6) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    section:last-of-type::after { display: none; }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: none; }
+    }
+    .section-divider {
+      height: 1px;
+      margin: 0 auto;
+      max-width: 200px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    }
+  `}</style>
 );
 
 /* ─── Hooks ─── */
