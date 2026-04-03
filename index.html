@@ -192,6 +192,8 @@ function SectionDivider({flip=false,color1,color2}){
     fill:flip?color1:color2,opacity:0.6
   })));
 
+}
+
 function Carousel({children,itemWidth=320,gap=18,showArrows=true,showDots=true}){
   const trackRef=useRef(null);
   const[current,setCurrent]=useState(0);
