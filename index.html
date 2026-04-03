@@ -849,6 +849,8 @@ function WalletClient(){
   const[dateRes,setDateRes]=useState("");
   const[creneau,setCreneau]=useState("");
   const[booking,setBooking]=useState(false);
+  const[showCal,setShowCal]=useState(false);
+  const calRef=useRef(null);
   const[cooldown,setCooldown]=useState(0);
   const[history,setHistory]=useState([]);
 
@@ -859,14 +861,65 @@ function WalletClient(){
   },[cooldown]);
 
   const prestations=[
-    {key:"indiv",label:"Cours individuel 1h",credits:55},
-    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35},
-    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25},
-    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20},
-    {key:"stage",label:"Stage vacances",credits:150},
-    {key:"masterclass4",label:"Masterclass WE 4j",credits:100},
-    {key:"masterclass8",label:"Masterclass WE 8j",credits:80},
+    {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"ml-padel/indiv"},
+    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35,calLink:"ml-padel/collectif"},
+    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25,calLink:"ml-padel/collectif"},
+    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20,calLink:"ml-padel/collectif"},
+    {key:"stage",label:"Stage vacances",credits:150,calLink:"ml-padel/stage-adulte"},
+    {key:"masterclass4",label:"Masterclass WE 4j",credits:100,calLink:"ml-padel/masterclass-week-end-2-jours-4-joueurs"},
+    {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"ml-padel/masterclass-week-end-2-jours-8-joueurs"},
   ];
+
+  // Cal.com postMessage listener
+  useEffect(()=>{
+    const handler=(e)=>{
+      if(e.origin&&e.origin.includes("cal.com")){
+        try{
+          const data=typeof e.data==="string"?JSON.parse(e.data):e.data;
+          if(data&&(data.type==="bookingSuccessful"||(data.action==="bookingSuccessful"))){
+            handleCalBooking();
+          }
+        }catch(ex){}
+      }
+    };
+    window.addEventListener("message",handler);
+    return()=>window.removeEventListener("message",handler);
+  },[]);
+
+  const handleCalBooking=async()=>{
+    if(!client||!email)return;
+    const p=prestations.find(x=>x.key===prestation);
+    if(!p)return;
+    setBooking(true);setError("");
+    try{
+      const dateStr=new Date().toISOString().split("T")[0];
+      const r=await fetch(WALLET_API+"?action=debit&email="+encodeURIComponent(email)+"&prestation="+encodeURIComponent(prestation)+"&date="+encodeURIComponent(dateStr)+"&creneau=Via+Cal.com&nbPersonnes=1");
+      const txt=await r.text();
+      let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
+      if(d.success){
+        setSuccess("Reservation Cal.com confirmee ! "+p.label+" - "+(Number(d.debit)||0)+" cr. debites. Nouveau solde : "+(Number(d.nouveauSolde)||0).toFixed(1)+" cr.");
+        setClient({...client,solde:d.nouveauSolde});
+        setShowCal(false);
+      }else{
+        setError(d.error||"Erreur lors du debit wallet");
+      }
+    }catch(err){setError("Erreur de connexion au wallet")}
+    setBooking(false);
+  };
+
+  const openCalendar=()=>{
+    const p=prestations.find(x=>x.key===prestation);
+    if(!p||!client)return;
+    if(client.solde<p.credits){setError("Solde insuffisant ("+(Number(client.solde)||0).toFixed(1)+" cr. < "+p.credits+" cr.)");return}
+    setError("");setSuccess("");setShowCal(true);
+  };
+
+  const getCalIframeSrc=()=>{
+    const p=prestations.find(x=>x.key===prestation);
+    if(!p)return "";
+    return "https://cal.com/"+p.calLink+"?embed=true&theme=dark&layout=month_view";
+  };
+
 
   const sendOtp=async()=>{
     if(!email||!email.includes("@")){setError("Entrez un email valide");return}
@@ -1085,6 +1138,27 @@ function WalletClient(){
                   }}>
                     {booking?"Réservation en cours...":client.solde<selectedP.credits?"Solde insuffisant":"Réserver et débiter "+selectedP.credits+" crédits"}
                   </button>
+                    <div style={{textAlign:"center",margin:"12px 0 0",fontSize:12,color:CREAM+"50"}}>ou</div>
+                    <button onClick={openCalendar} style={{
+                      width:"100%",padding:"14px",borderRadius:14,border:"1.5px solid "+GOLD+"40",cursor:"pointer",
+                      background:"transparent",color:GOLD,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                      marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+                    }}>
+                      <Icon.calendar/> Voir les disponibilites Cal.com
+                    </button>
+                    {showCal&&(
+                      <div style={{marginTop:16}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                          <span style={{fontSize:13,fontWeight:700,color:CREAM}}>Choisissez un creneau</span>
+                          <button onClick={()=>setShowCal(false)} style={{background:"none",border:"1px solid "+CREAM+"20",borderRadius:8,color:CREAM+"60",padding:"6px 14px",cursor:"pointer",fontSize:12,fontFamily:"'DM Sans',sans-serif"}}>Retour</button>
+                        </div>
+                        {booking&&(<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"12px 16px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600,textAlign:"center"}}>Debit wallet en cours...</div>)}
+                        <div style={{background:CREAM+"04",borderRadius:14,overflow:"hidden",border:"1px solid "+GOLD+"15",minHeight:500}}>
+                          <iframe src={getCalIframeSrc()} style={{width:"100%",height:600,border:"none",borderRadius:14}} frameBorder="0" allow="payment" loading="lazy"/>
+                        </div>
+                        <p style={{fontSize:11,color:CREAM+"30",marginTop:10,textAlign:"center"}}>Vos credits seront debites automatiquement a la confirmation de la reservation</p>
+                      </div>
+                    )}
                 </div>
 
                 {/* Lien recharger si solde faible */}
@@ -1235,7 +1309,7 @@ function PallapShop(){
     {
       title:"Accessoires",
       desc:"Sacs, casquettes, chaussettes grip et surgrips pour compléter votre équipement.",
-      img:"./accessoire-pallap.png",
+      img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=600",
       range:"6,95 – 69,95"
     }
   ];
