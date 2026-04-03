@@ -1720,16 +1720,17 @@ function GiftCard(){
   const[result,setResult]=useState(null);
   const[error,setError]=useState("");
 
+  React.useEffect(()=>{const p=new URLSearchParams(window.location.search);if(p.get("giftcard")==="success"){setResult({success:true});setOpen(true);window.history.replaceState({},"",window.location.pathname+window.location.hash);}if(p.get("giftcard")==="cancel"){setError("Paiement annul\u00e9");setOpen(true);window.history.replaceState({},"",window.location.pathname+window.location.hash);}},[]);
+
   const sendGift=async()=>{
     if(!form.senderEmail.includes("@")||!form.recipientEmail.includes("@")){setError("Emails invalides");return}
     setLoading(true);setError("");
     try{
-      const url=WALLET_API+"?action=giftcard&from="+encodeURIComponent(form.senderEmail)+"&to="+encodeURIComponent(form.recipientEmail)+"&montant="+encodeURIComponent(Math.round(parseFloat(form.amount)))+"&message="+encodeURIComponent(form.senderName+" pour "+form.recipientName+": "+(form.message||""));
+      const url=WALLET_API+"?action=create_giftcard_checkout&from="+encodeURIComponent(form.senderEmail)+"&to="+encodeURIComponent(form.recipientEmail)+"&montant="+encodeURIComponent(Math.round(parseFloat(form.amount)))+"&senderName="+encodeURIComponent(form.senderName)+"&recipientName="+encodeURIComponent(form.recipientName)+"&message="+encodeURIComponent(form.message||"");
       const r=await fetch(url,{redirect:"follow"});
       const txt=await r.text();let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setLoading(false);return;}
-      if(d.success) setResult(d);
-      else setError(d.error||"Erreur");
-    }catch(e){setError("Erreur de connexion")}
+      if(d.success&&d.url){window.location.href=d.url;}else{setError(d.error||"Erreur lors de la creation du paiement");}
+    }catch(e){setError("Erreur de connexion");}
     setLoading(false);
   };
 
