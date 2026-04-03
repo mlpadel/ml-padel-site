@@ -119,30 +119,61 @@ const fontLink = (
     }
   
     /* Transitions fluides entre sections */
-    html { scroll-behavior: smooth; }
-    section { position: relative; }
-    section::after {
-      content: "";
-      position: absolute;
-      bottom: -40px;
-      left: 0;
-      right: 0;
-      height: 80px;
-      background: linear-gradient(180deg, transparent 0%, rgba(10,22,40,0.6) 50%, transparent 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    section:last-of-type::after { display: none; }
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(28px); }
-      to { opacity: 1; transform: none; }
-    }
-    .section-divider {
-      height: 1px;
-      margin: 0 auto;
-      max-width: 200px;
-      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-    }
+html { scroll-behavior: smooth; }
+section { position: relative; overflow: visible; }
+
+/* Gradient doux entre sections */
+section::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0; right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, transparent 0%, #0a1628 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+section:last-of-type::after { display: none; }
+
+/* Animation d'apparition au scroll */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Séparateur SVG vague entre groupes */
+.section-wave-wrap {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  overflow: hidden;
+  margin: -1px 0;
+  z-index: 2;
+}
+.section-wave-wrap svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Trait doré fin central */
+.section-divider {
+  height: 1px;
+  margin: 0 auto;
+  max-width: 120px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+}
+
+/* Point balle de padel décoratif */
+.section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e8d48b, #c9a84c);
+  margin: 12px auto;
+  opacity: 0.5;
+  box-shadow: 0 0 6px rgba(201,168,76,0.2);
+}
   `}</style>
 );
 
@@ -1870,20 +1901,20 @@ function MLPadel(){
       <Wallet/>
       <WalletClient/>
       
-      <div className="section-divider"/>
+      <><div className="section-divider"/><div className="section-dot"/></>
       <Gallery/>
       <PallapShop/>
       
-      <div className="section-divider"/>
+      <><div className="section-divider"/><div className="section-dot"/></>
       <Stagiaires/>
       <Testimonials/>
       <HowItWorks/>
       <GiftCard/>
       
-      <div className="section-divider"/>
+      <><div className="section-divider"/><div className="section-dot"/></>
       <FAQ/>
       
-      <div className="section-divider"/>
+      <><div className="section-divider"/><div className="section-dot"/></>
       <Contact/>
       <MentionsLegales/>
       <Footer/>
