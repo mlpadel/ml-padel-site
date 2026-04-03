@@ -1290,123 +1290,76 @@ function Gallery(){
 
 /* --- Boutique Pallap -- Partenaire Officiel --- */
 function PallapShop(){
-  const PALLAP_URL="https://pallapsport.com/fr?country=FR";
   const PALLAP_CYAN="#00c8ff";
-
-  const sections=[
-    {
-      title:"Raquettes",
-      desc:"Du débutant au compétiteur, des raquettes conçues pour la performance et le confort.",
-      img:"./pallap-raquette-elite-velocity.png",
-      range:"189,95 – 299,95"
-    },
-    {
-      title:"Textile",
-      desc:"T-shirts, shorts et jupes techniques dry-fit pour homme et femme.",
-      img:"./pallap-textile.png",
-      range:"29,95 – 34,95"
-    },
-    {
-      title:"Accessoires",
-      desc:"Sacs, casquettes, chaussettes grip et surgrips pour compléter votre équipement.",
-      img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=600",
-      range:"6,95 – 69,95"
-    }
+  const categories=[
+    {title:"Les Raquettes",img:"./pallap-raquette-menu.png",link:"https://pallapsport.com/fr/collections/lesraquettes"},
+    {title:"Vetements Hommes",img:"./pallap-vetement-homme-menu.png",link:"https://pallapsport.com/fr/collections/vetements-pour-hommes"},
+    {title:"Vetements Femmes",img:"./pallap-vetement-femme-menu.png",link:"https://pallapsport.com/fr/collections/vetements-pour-femmes"},
+    {title:"Accessoires",img:"./pallap-accessoire-menu.png",link:"https://pallapsport.com/fr/collections/accessoires"},
   ];
-
+  const [hovered,setHovered]=useState(null);
   return(
-    <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section id="boutique" style={{padding:"80px 24px",background:"#f8f6f2",position:"relative"}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
-        <AnimatedSection>
-          <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Partenaire officiel</span>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
-              Boutique <span style={{color:PALLAP_CYAN}}>pallap</span>
-            </h2>
-            <p style={{color:TEXT_MED,fontSize:15,marginTop:10,maxWidth:580,margin:"10px auto 0"}}>
-              Equipez-vous avec du materiel de qualite professionnelle, disponible sur commande.
-            </p>
-          </div>
-        </AnimatedSection>
+        <p style={{textAlign:"center",textTransform:"uppercase",letterSpacing:3,color:PALLAP_CYAN,fontSize:12,fontWeight:700,marginBottom:8}}>Partenaire officiel</p>
+        <h2 style={{textAlign:"center",fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",fontWeight:900,color:"#0a1628",marginBottom:8}}>Boutique <span style={{color:PALLAP_CYAN}}>pallap</span></h2>
+        <p style={{textAlign:"center",color:"#666",fontSize:15,marginBottom:36,maxWidth:500,margin:"0 auto 36px"}}>Equipez-vous avec du materiel de qualite professionnelle, disponible sur commande.</p>
 
-        {/* Banniere */}
-        <AnimatedSection delay={0.05}>
-          <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{display:"block",borderRadius:18,overflow:"hidden",marginBottom:40}}>
-            <img src="./Bandeau-pallap.png" alt="Pallap Sport" loading="lazy" style={{width:"100%",display:"block",borderRadius:18}}/>
-          </a>
-        </AnimatedSection>
+        {/* Bandeau */}
+        <div style={{borderRadius:18,overflow:"hidden",marginBottom:40,boxShadow:"0 4px 20px rgba(0,0,0,0.10)"}}>
+          <img src="./Bandeau-plus-large-Pallap.png" alt="Pallap Sport" style={{width:"100%",display:"block"}}/>
+        </div>
 
-        {/* 3 sections */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:24}}>
-          {sections.map((s,i)=>(
-            <AnimatedSection key={i} delay={i*0.12}>
-              <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
-                background:WHITE,borderRadius:18,overflow:"hidden",
-                border:"1px solid "+NAVY+"0d",transition:"all 0.35s",
-                display:"flex",flexDirection:"column",textDecoration:"none",
-              }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-6px)";e.currentTarget.style.boxShadow="0 16px 40px "+PALLAP_CYAN+"22"}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none"}}
-              >
-                <div style={{aspectRatio:"4/3",background:"linear-gradient(135deg,"+NAVY+"08,"+PALLAP_CYAN+"10)",display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
-                  <img src={s.img} alt={s.title} loading="lazy" style={{maxHeight:"85%",maxWidth:"85%",objectFit:"contain"}}/>
-                </div>
-                <div style={{padding:"20px 24px"}}>
-                  <h3 style={{fontSize:20,fontWeight:800,color:TEXT_DARK,marginBottom:6,fontFamily:"'Playfair Display',serif"}}>{s.title}</h3>
-                  <p style={{fontSize:13,color:TEXT_MED,lineHeight:1.6,marginBottom:12}}>{s.desc}</p>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                    <span style={{fontSize:16,fontWeight:800,color:NAVY}}>{s.range} €</span>
-                    <span style={{fontSize:12,fontWeight:600,color:PALLAP_CYAN}}>Voir →</span>
-                  </div>
-                </div>
-              </a>
-            </AnimatedSection>
+        {/* 4 boutons categories */}
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:20,marginBottom:40}}>
+          {categories.map((cat,i)=>(
+            <a key={i} href={cat.link} target="_blank" rel="noopener noreferrer"
+              onMouseEnter={()=>setHovered(i)} onMouseLeave={()=>setHovered(null)}
+              style={{
+                display:"block",borderRadius:16,overflow:"hidden",position:"relative",
+                boxShadow:hovered===i?"0 8px 30px rgba(0,200,255,0.25)":"0 2px 12px rgba(0,0,0,0.08)",
+                transform:hovered===i?"scale(1.04)":"scale(1)",
+                transition:"all 0.3s cubic-bezier(0.4,0,0.2,1)",
+                cursor:"pointer",textDecoration:"none",
+              }}>
+              <img src={cat.img} alt={cat.title} style={{width:"100%",display:"block",transition:"transform 0.3s",transform:hovered===i?"scale(1.08)":"scale(1)"}}/>
+            </a>
           ))}
         </div>
 
         {/* CTA */}
-        <AnimatedSection delay={0.4}>
-          <div style={{textAlign:"center",marginTop:40,display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
-            <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
-              display:"inline-flex",alignItems:"center",gap:10,
-              background:NAVY,color:WHITE,
-              padding:"14px 36px",borderRadius:50,textDecoration:"none",
-              fontSize:15,fontWeight:700,transition:"all 0.3s",
-              boxShadow:"0 4px 20px "+NAVY+"4d",
-            }}
-            onMouseEnter={e=>{e.currentTarget.style.background=PALLAP_CYAN;e.currentTarget.style.boxShadow="0 8px 32px "+PALLAP_CYAN+"66"}}
-            onMouseLeave={e=>{e.currentTarget.style.background=NAVY;e.currentTarget.style.boxShadow="0 4px 20px "+NAVY+"4d"}}
-            >
-              Voir la boutique pallap
-            </a>
-            <span style={{fontSize:12,color:TEXT_LIGHT}}>Commandez en ligne ou contactez-nous pour un conseil personnalisé</span>
-            <a href={wa("Bonjour Mathias, je suis interesse(e) par du materiel pallap")} target="_blank" rel="noopener noreferrer" style={{
-              color:GOLD,fontSize:13,fontWeight:600,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:6,
-            }}>
-              <Icon.whatsapp/> Demander un conseil
-            </a>
-          </div>
-        </AnimatedSection>
+        <div style={{textAlign:"center",marginBottom:30}}>
+          <a href="https://pallapsport.com/fr?country=FR" target="_blank" rel="noopener noreferrer" style={{
+            display:"inline-block",padding:"16px 40px",borderRadius:50,
+            background:"linear-gradient(135deg,"+PALLAP_CYAN+",#0090cc)",
+            color:"#fff",fontWeight:700,fontSize:16,textDecoration:"none",
+            boxShadow:"0 4px 15px rgba(0,200,255,0.3)",transition:"all 0.3s",
+          }}>
+            Voir la boutique pallap
+          </a>
+        </div>
+        <div style={{textAlign:"center",marginBottom:30}}>
+          <a href="https://wa.me/262692627372?text=Bonjour%20Mathias%2C%20je%20souhaite%20commander%20du%20materiel%20Pallap" target="_blank" rel="noopener noreferrer" style={{
+            display:"inline-flex",alignItems:"center",gap:8,
+            color:"#25D366",fontWeight:600,fontSize:14,textDecoration:"none",
+          }}>
+            Demander un conseil via WhatsApp
+          </a>
+        </div>
 
         {/* Remerciement */}
-        <AnimatedSection delay={0.5}>
-          <div style={{
-            marginTop:36,textAlign:"center",padding:"24px 28px",borderRadius:16,
-            background:"linear-gradient(135deg,"+NAVY+"0a,"+PALLAP_CYAN+"0a)",
-            border:"1px solid "+PALLAP_CYAN+"26",
-          }}>
-            <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,fontStyle:"italic"}}>
-              Un grand merci a <strong style={{color:PALLAP_CYAN}}>PALLAP</strong> pour leur confiance et leur soutien.
-              Ensemble, nous partageons la meme passion : rendre le padel accessible et performant pour tous.
-            </p>
-            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, ML Padel</p>
-          </div>
-        </AnimatedSection>
+        <div style={{textAlign:"center",padding:"20px 0",borderTop:"1px solid #e0dcd4"}}>
+          <p style={{fontStyle:"italic",color:"#888",fontSize:13,marginBottom:4}}>
+            Fier ambassadeur Pallap Sport a La Reunion
+          </p>
+          <p style={{fontWeight:700,color:"#0a1628",fontSize:14}}>
+            -- Mathias Laval, ML Padel
+          </p>
+        </div>
       </div>
     </section>
   );
 }
-
 function Stagiaires(){
   const stages=[
     {label:"Stage vacances mars 2026",img:IMG_ENFANTS1},
