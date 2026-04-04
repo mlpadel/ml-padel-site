@@ -325,7 +325,7 @@ function Navbar(){
 
 /* ─── Hero with Background Carousel ─── */
 function Hero(){
-  const heroImages=["./position-attention.JPG","./_DSC3506.JPG","./_DSC3578.JPG","./_LAVAL005.JPG"];
+  const heroImages=["./position-attention.JPG","./engagement.JPG","./coup-droit-action.JPG","./engagement-dynamique.JPG"];
   const[bgIdx,setBgIdx]=useState(0);
   useEffect(()=>{
     const t=setInterval(()=>setBgIdx(p=>(p+1)%heroImages.length),5000);
@@ -1467,53 +1467,18 @@ function PallapShop(){
   const PALLAP_URL="https://pallapsport.com/fr?country=FR";
   const PALLAP_CYAN="#00c8ff";
   const categories=[
-    {
-      title:"Raquettes",icon:"\u{1F3D3}",
-      items:[
-        {name:"Power Pro",detail:"MADE IN SPAIN",price:"299,95",stars:4,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-        {name:"Power Elite",detail:"MADE IN SPAIN",price:"269,95",stars:5,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-        {name:"Velocity Pro",detail:"",price:"299,95",stars:5,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-        {name:"Velocity Elite",detail:"MADE IN SPAIN",price:"269,95",stars:5,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-        {name:"Power Star",detail:"",price:"189,95",stars:4,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-        {name:"Velocity Star",detail:"",price:"189,95",stars:4,img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=400"},
-      ],
-    },
-    {
-      title:"Textile",icon:"\u{1F455}",
-      items:[
-        {name:"Tech T-Shirt Homme",detail:"",price:"34,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=400"},
-        {name:"Short Mesh Homme",detail:"",price:"29,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=400"},
-        {name:"Tech Tee Femme",detail:"",price:"34,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=400"},
-        {name:"Skort Femme",detail:"",price:"29,95",stars:5,img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=400"},
-      ],
-    },
-    {
-      title:"Accessoires",icon:"\u{1F392}",
-      items:[
-        {name:"Mid Racket Bag",detail:"",price:"69,95",stars:4,img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=400"},
-        {name:"Mini Accessory Bag",detail:"",price:"6,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=400"},
-        {name:"CAP",detail:"3 coloris",price:"19,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=400"},
-        {name:"Padel Socks Grip",detail:"",price:"19,95",stars:0,img:"https://pallapsport.com/cdn/shop/files/SURGRIP_LOT_DE_3.png?v=1710925894&width=400"},
-      ],
-    },
+    {key:"raquettes",label:"Raquettes",icon:"\u{1F3D3}",url:"https://pallapsport.com/fr/collections/raquettes-de-padel",img:"./pallap-raquette-menu.png"},
+    {key:"textile_h",label:"Textile Homme",icon:"\u{1F455}",url:"https://pallapsport.com/fr/collections/vetements-padel-homme",img:"./pallap-vetement-homme-menu.png"},
+    {key:"textile_f",label:"Textile Femme",icon:"\u{1F457}",url:"https://pallapsport.com/fr/collections/vetements-padel-femme",img:"./pallap-vetement-femme-menu.png"},
+    {key:"accessoires",label:"Accessoires",icon:"\u{1F392}",url:"https://pallapsport.com/fr/collections/accessoires-padel",img:"./pallap-accessoire-menu.png"},
   ];
-
-  const[activeCat,setActiveCat]=useState(0);
-
-  const StarRow=({count})=>(
-    React.createElement("div",{style:{display:"flex",gap:2}},
-      [1,2,3,4,5].map(s=>
-        React.createElement("span",{key:s,style:{color:s<=count?"#f5a623":"#d0d0d0",fontSize:12}},s<=count?"\u2605":"\u2606")
-      )
-    )
-  );
 
   return(
     <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Partenaire officiel</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Ambassadeur officiel</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
@@ -1521,61 +1486,52 @@ function PallapShop(){
               Boutique <span style={{color:PALLAP_CYAN}}>pallap</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:15,marginTop:10,maxWidth:580,margin:"10px auto 0"}}>
-              Equipez-vous avec du materiel de qualite professionnelle. Raquettes, textile et accessoires disponibles sur commande.
+              Made in Spain — Materiel de qualite professionnelle. Cliquez sur une categorie pour decouvrir la gamme sur le site officiel PALLAP.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* Category tabs */}
+        {/* Bandeau Pallap */}
         <AnimatedSection delay={0.1}>
-          <div style={{display:"flex",justifyContent:"center",gap:8,marginBottom:36,flexWrap:"wrap"}}>
+          <div style={{marginBottom:36,borderRadius:20,overflow:"hidden",border:`2px solid ${PALLAP_CYAN}30`,boxShadow:`0 8px 30px ${NAVY}15`}}>
+            <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer">
+              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP — Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}}/>
+            </a>
+          </div>
+        </AnimatedSection>
+
+        {/* 4 category cards - clickable to Pallap */}
+        <AnimatedSection delay={0.15}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:20}}>
             {categories.map((cat,i)=>(
-              <button key={i} onClick={()=>setActiveCat(i)} style={{
-                padding:"10px 22px",borderRadius:50,border:"none",cursor:"pointer",
-                fontSize:14,fontWeight:600,fontFamily:"'DM Sans','Montserrat',sans-serif",
-                display:"flex",alignItems:"center",gap:6,transition:"all 0.3s",
-                background:activeCat===i?NAVY:(NAVY+"0d"),
-                color:activeCat===i?WHITE:TEXT_DARK,
-                boxShadow:activeCat===i?("0 4px 20px "+NAVY+"4d"):"none",
-              }}>
-                <span>{cat.icon}</span> {cat.title}
-              </button>
+              <a key={cat.key} href={cat.url} target="_blank" rel="noopener noreferrer" style={{
+                background:WHITE,borderRadius:20,padding:"28px 20px",
+                border:"1px solid "+NAVY+"0d",transition:"all 0.35s",
+                display:"flex",flexDirection:"column",alignItems:"center",gap:12,textDecoration:"none",
+                cursor:"pointer",textAlign:"center",
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-6px)";e.currentTarget.style.boxShadow="0 16px 40px "+PALLAP_CYAN+"30";e.currentTarget.style.borderColor=PALLAP_CYAN+"66"}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=NAVY+"0d"}}
+              >
+                <div style={{
+                  width:120,height:120,borderRadius:16,
+                  background:"linear-gradient(135deg,"+NAVY+"06 0%,"+PALLAP_CYAN+"10 100%)",
+                  display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",
+                }}>
+                  <img src={cat.img} alt={cat.label} loading="lazy" style={{maxHeight:"80%",maxWidth:"80%",objectFit:"contain"}}/>
+                </div>
+                <span style={{fontSize:16,fontWeight:700,color:TEXT_DARK}}>{cat.icon} {cat.label}</span>
+                <span style={{fontSize:12,fontWeight:600,color:PALLAP_CYAN,display:"flex",alignItems:"center",gap:4}}>
+                  Voir sur pallap.com →
+                </span>
+              </a>
             ))}
           </div>
         </AnimatedSection>
 
-        {/* Product grid */}
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:18}}>
-          {categories[activeCat].items.map((item,i)=>(
-            <AnimatedSection key={activeCat+"-"+i} delay={i*0.08}>
-              <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
-                background:WHITE,borderRadius:16,padding:20,
-                border:"1px solid "+NAVY+"0d",transition:"all 0.35s",
-                display:"flex",flexDirection:"column",gap:8,textDecoration:"none",
-              }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 12px 32px "+PALLAP_CYAN+"26";e.currentTarget.style.borderColor=PALLAP_CYAN+"66"}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=NAVY+"0d"}}
-              >
-                <div style={{
-                  width:"100%",aspectRatio:"1",borderRadius:12,
-                  background:"linear-gradient(135deg,"+NAVY+"0a 0%,"+PALLAP_CYAN+"14 100%)",
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  overflow:"hidden",marginBottom:4,
-                }}>
-                  <img src={item.img} alt={item.name} loading="lazy" style={{maxHeight:"80%",maxWidth:"80%",objectFit:"contain"}}/>
-                </div>
-                <span style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{item.name}</span>
-                {item.detail && <span style={{fontSize:11,fontWeight:600,color:PALLAP_CYAN,textTransform:"uppercase",letterSpacing:1}}>{item.detail}</span>}
-                {item.stars>0 && <StarRow count={item.stars}/>}
-                <span style={{fontSize:18,fontWeight:800,color:NAVY,marginTop:4}}>{"\u20AC"}{item.price} <span style={{fontSize:11,fontWeight:400,color:TEXT_LIGHT}}>EUR</span></span>
-              </a>
-            </AnimatedSection>
-          ))}
-        </div>
-
         {/* CTA */}
-        <AnimatedSection delay={0.4}>
-          <div style={{textAlign:"center",marginTop:40,display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
+        <AnimatedSection delay={0.3}>
+          <div style={{textAlign:"center",marginTop:36,display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
             <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
               display:"inline-flex",alignItems:"center",gap:10,
               background:NAVY,color:WHITE,
@@ -1586,11 +1542,8 @@ function PallapShop(){
             onMouseEnter={e=>{e.currentTarget.style.background=PALLAP_CYAN;e.currentTarget.style.boxShadow="0 8px 32px "+PALLAP_CYAN+"66"}}
             onMouseLeave={e=>{e.currentTarget.style.background=NAVY;e.currentTarget.style.boxShadow="0 4px 20px "+NAVY+"4d"}}
             >
-              Voir la boutique pallap
+              Voir toute la boutique pallap
             </a>
-            <span style={{fontSize:12,color:TEXT_LIGHT}}>
-              Commandez en ligne ou contactez-nous pour un conseil personnalise
-            </span>
             <a href={wa("Bonjour Mathias, je suis interesse(e) par du materiel pallap")} target="_blank" rel="noopener noreferrer" style={{
               color:GOLD,fontSize:13,fontWeight:600,textDecoration:"none",
               display:"inline-flex",alignItems:"center",gap:6,
@@ -1608,10 +1561,12 @@ function PallapShop(){
             border:"1px solid "+PALLAP_CYAN+"26",
           }}>
             <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,fontStyle:"italic"}}>
-              Un grand merci a <strong style={{color:PALLAP_CYAN}}>PALLAP</strong> pour leur confiance et leur soutien.
-              Ensemble, nous partageons la meme passion : rendre le padel accessible et performant pour tous.
+              Fier d'etre ambassadeur <strong style={{color:PALLAP_CYAN}}>PALLAP</strong> pour la saison 2026-2027 !
+              Du materiel Made in Spain, concu pour la performance et l'exigence du padel moderne.
+              Livraison a La Reunion bientot disponible — restez connectes !
+              Merci a toute l'equipe PALLAP pour leur confiance et ce beau partenariat.
             </p>
-            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, ML Padel</p>
+            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, Ambassadeur PALLAP & Coach ML Padel</p>
           </div>
         </AnimatedSection>
       </div>
@@ -2012,8 +1967,8 @@ function CounterStats(){
   const stats=[
     {end:500,suffix:"+",label:"Élèves coachés",icon:"🎾"},
     {end:10,suffix:" ans",label:"D'expérience",icon:"🏆"},
-    {end:50,suffix:"+",label:"Stages réalisés",icon:"📋"},
-    {end:3000,suffix:"+",label:"Heures de coaching",icon:"⏱️"},
+    {end:20,suffix:"+",label:"Stages réalisés",icon:"📋"},
+    {end:2000,suffix:"+",label:"Heures de coaching",icon:"⏱️"},
   ];
   return(
     <section style={{padding:"60px 24px",background:`linear-gradient(135deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
@@ -2046,7 +2001,7 @@ function TeamSection(){
       name:"Mathias Laval",
       role:"Coach principal — Diplômé d'État",
       bio:"Passionné de padel depuis plus de 10 ans, Mathias a formé plus de 500 joueurs de tous niveaux. Sa méthode structurée et son approche personnalisée font progresser chaque élève de façon mesurable.",
-      photo:"./_LAVAL001.JPG",
+      photo:"./photo-profil.JPG",
       specialites:["Technique","Tactique","Préparation mentale","Compétition"],
     },
   ];
@@ -2136,15 +2091,15 @@ function Evenements(){
             position:"relative",overflow:"hidden",
           }}>
             <div style={{position:"absolute",top:"-30%",right:"-10%",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,${GOLD}08,transparent 70%)`}}/>
-            <div style={{position:"relative",zIndex:1}}>
-              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,flexWrap:"wrap"}}>
+            <div style={{position:"relative",zIndex:1,textAlign:"center"}}>
+              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,flexWrap:"wrap",justifyContent:"center"}}>
                 <span style={{fontSize:28}}>🎾</span>
                 <div>
                   <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:900,color:WHITE}}>Stage Mai 2026</h3>
                   <div style={{color:`${CREAM}60`,fontSize:13,marginTop:2}}>Du 11 au 16 mai 2026 — 4Padel Saint-Louis</div>
                 </div>
               </div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:10,marginBottom:20}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:10,marginBottom:20,justifyContent:"center"}}>
                 {["7h – 8h30","17h – 18h30","18h30 – 20h","20h – 21h30"].map((c,i)=>(
                   <span key={i} style={{
                     padding:"8px 18px",borderRadius:50,fontSize:13,fontWeight:600,
@@ -2152,7 +2107,7 @@ function Evenements(){
                   }}>{c}</span>
                 ))}
               </div>
-              <div style={{display:"flex",gap:16,marginBottom:24,flexWrap:"wrap"}}>
+              <div style={{display:"flex",gap:16,marginBottom:16,flexWrap:"wrap",justifyContent:"center"}}>
                 <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
                   <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Matin</div>
                   <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>120€</div>
@@ -2162,6 +2117,11 @@ function Evenements(){
                   <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>150€</div>
                 </div>
               </div>
+              <div style={{marginBottom:24,display:"inline-flex",alignItems:"center",gap:8,background:"#e07b5a22",border:"1px solid #e07b5a44",borderRadius:50,padding:"8px 20px"}}>
+                <span style={{fontSize:14}}>🔥</span>
+                <span style={{fontSize:13,fontWeight:700,color:"#e07b5a",letterSpacing:0.5}}>Places limitées !</span>
+              </div>
+              <div>
               <a href="/stage-mai-2026.html" style={{
                 display:"inline-flex",alignItems:"center",gap:10,
                 background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
@@ -2172,6 +2132,7 @@ function Evenements(){
               onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
               onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 8px 30px ${GOLD}44`}}
               >S'inscrire au stage →</a>
+              </div>
             </div>
           </div>
         </AnimatedSection>
