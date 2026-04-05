@@ -1131,8 +1131,7 @@ function WalletClient(){
     setBooking(true);setError("");
     try{
       const dateStr=new Date().toISOString().split("T")[0];
-      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"debit",email:currentEmail,prestation:currentPrestation,date:dateStr,creneau:"Via Cal.com",nbPersonnes:1})});
+      const r=await fetch(WALLET_API+"?action=debit&email="+encodeURIComponent(currentEmail)+"&prestation="+encodeURIComponent(currentPrestation)+"&date="+encodeURIComponent(dateStr)+"&creneau=Via+Cal.com&nbPersonnes=1");
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
       if(d.success){
@@ -1393,8 +1392,17 @@ function WalletClient(){
                       />
                     </div>
 
+                    <button onClick={()=>handleBookingSuccess(null)} disabled={booking} style={{
+                      width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
+                      background:"linear-gradient(135deg,#4ade80,#22c55e)",
+                      color:"#0a1628",fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                      transition:"all 0.3s",marginTop:14,opacity:booking?0.6:1,
+                      display:"flex",alignItems:"center",justifyContent:"center",gap:8,
+                    }}>
+                      {booking?"Débit en cours...":"✓ J'ai réservé — Débiter mes crédits"}
+                    </button>
                     <p style={{fontSize:11,color:`${CREAM}30`,marginTop:10,textAlign:"center"}}>
-                      Vos crédits seront débités automatiquement à la confirmation de la réservation
+                      Après avoir choisi votre créneau ci-dessus, cliquez sur ce bouton pour confirmer et débiter vos crédits
                     </p>
                   </div>
                 )}
