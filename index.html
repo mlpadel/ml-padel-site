@@ -1082,127 +1082,71 @@ function WalletClient(){
   const[error,setError]=useState("");
   const[success,setSuccess]=useState("");
   const[prestation,setPrestation]=useState("indiv");
-  const[showCal,setShowCal]=useState(false);
   const[booking,setBooking]=useState(false);
-  const[confirmedBooking,setConfirmedBooking]=useState(false);
-  const calRef=useRef(null);
+  const[walletStep,setWalletStep]=useState(1);
+  const[calcomClicked,setCalcomClicked]=useState(false);
+  const[dateRes,setDateRes]=useState("");
+  const[creneau,setCreneau]=useState("");
 
   const prestations=[
-    {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"ml-padel/indiv"},
-    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35,calLink:"ml-padel/collectif"},
-    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25,calLink:"ml-padel/collectif"},
-    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20,calLink:"ml-padel/collectif"},
-    {key:"stage",label:"Stage vacances",credits:150,calLink:"ml-padel/stage-adulte"},
-    {key:"masterclass4",label:"Masterclass WE 4j",credits:100,calLink:"ml-padel/masterclass-week-end-2-jours-4-joueurs"},
-    {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"ml-padel/masterclass-week-end-2-jours-8-joueurs"},
+    {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"https://cal.com/ml-padel/indiv"},
+    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35,calLink:"https://cal.com/ml-padel/collectif"},
+    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25,calLink:"https://cal.com/ml-padel/collectif"},
+    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20,calLink:"https://cal.com/ml-padel/collectif"},
+    {key:"stage",label:"Stage vacances",credits:150,calLink:"https://cal.com/ml-padel/stage-adulte"},
+    {key:"masterclass4",label:"Masterclass WE 4j",credits:100,calLink:"https://cal.com/ml-padel/masterclass-week-end-2-jours-4-joueurs"},
+    {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"https://cal.com/ml-padel/masterclass-week-end-2-jours-8-joueurs"},
   ];
 
-  // Écouter les messages postMessage de Cal.com pour détecter une réservation réussie
-  useEffect(()=>{
-    const handler=(e)=>{
-      if(e.origin&&e.origin.includes("cal.com")){
-        try{
-          const data=typeof e.data==="string"?JSON.parse(e.data):e.data;
-          if(data&&(data.type==="bookingSuccessful"||(data.action==="bookingSuccessful"))){
-            handleBookingSuccess(data);
-          }
-        }catch(ex){}
-      }
-    };
-    window.addEventListener("message",handler);
-    return()=>window.removeEventListener("message",handler);
-  },[]);
-
-  // Référence stable pour le handler de booking
-  const emailRef=useRef(email);
-  const prestationRef=useRef(prestation);
-  const clientRef=useRef(client);
-  useEffect(()=>{emailRef.current=email},[email]);
-  useEffect(()=>{prestationRef.current=prestation},[prestation]);
-  useEffect(()=>{clientRef.current=client},[client]);
-
-  const handleBookingSuccess=async(eventData)=>{
-    const currentEmail=emailRef.current;
-    const currentPrestation=prestationRef.current;
-    const currentClient=clientRef.current;
-    if(!currentClient||!currentEmail)return;
-    const p=prestations.find(x=>x.key===currentPrestation);
-    if(!p)return;
-
-    setBooking(true);setError("");
+  const sendOtp=async()=>{
+    const cleanE=email.trim().toLowerCase();
+    if(!cleanE||!cleanE.includes("@")){setError("Entrez un email valide");return}
+    setLoading(true);setError("");
     try{
-      const dateStr=new Date().toISOString().split("T")[0];
-      const r=await fetch(WALLET_API+"?action=debit&email="+encodeURIComponent(currentEmail)+"&prestation="+encodeURIComponent(currentPrestation)+"&date="+encodeURIComponent(dateStr)+"&creneau=Via+Cal.com&nbPersonnes=1");
+      const r=await fetch(WALLET_API+"?action=sendOtp&email="+encodeURIComponent(cleanE));
+      const d=await r.json();
+      if(d.success){setCodeSent(true);setSuccess("Code envoyé à "+cleanE)}
+      else setError(d.error||"Erreur d'envoi");
+    }catch(err){setError("Erreur de connexion")}
+    setLoading(false);
+  };
+
+  const verifyOtp=async()=>{
+    if(!securityCode||securityCode.length<4){setError("Entrez le code reçu par email");return}
+    setLoading(true);setError("");
+    try{
+      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(email.trim().toLowerCase())+"&code="+encodeURIComponent(securityCode));
+      const d=await r.json();
+      if(d.success){setCodeVerified(true);setClient(d.client);setSuccess("Wallet connecté !")}
+      else setError(d.error||"Code invalide");
+    }catch(err){setError("Erreur de connexion")}
+    setLoading(false);
+  };
+
+  const debitWallet=async()=>{
+    if(!client||!dateRes){setError("Indiquez la date du créneau réservé");return}
+    const p=prestations.find(x=>x.key===prestation);
+    if(client.solde<p.credits){setError("Solde insuffisant");return}
+    setBooking(true);setError("");setSuccess("");
+    try{
+      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"debit",email:email.trim().toLowerCase(),prestation,date:dateRes,creneau:creneau||"Via Cal.com",nbPersonnes:1})});
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
       if(d.success){
-        setSuccess("Réservation confirmée via Cal.com ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
-        setClient({...currentClient,solde:d.nouveauSolde});
-        setShowCal(false);setConfirmedBooking(false);
-      }else{
-        setError(d.error||"Erreur lors du débit wallet");
-      }
-    }catch(err){setError("Erreur de connexion au wallet")}
+        setSuccess("Réservation confirmée ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setClient({...client,solde:d.nouveauSolde});
+        setWalletStep(1);setCalcomClicked(false);setDateRes("");setCreneau("");
+      }else setError(d.error||"Erreur lors du débit");
+    }catch(err){setError("Erreur de connexion")}
     setBooking(false);
-  };
-
-  // Étape 1 : envoyer le code de sécurité par email
-  const sendCode=async()=>{
-    const cleanEmail=email.trim().toLowerCase();
-    if(!cleanEmail||!cleanEmail.includes("@")){setError("Entrez une adresse email valide");return}
-    if(!WALLET_API){setError("Système wallet en cours de configuration");return}
-    setLoading(true);setError("");setClient(null);setSuccess("");setShowCal(false);setCodeSent(false);setCodeVerified(false);setSecurityCode("");
-    try{
-      const r=await fetch(WALLET_API+"?action=sendOtp&email="+encodeURIComponent(cleanEmail));
-      const txt=await r.text();
-      let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
-      if(d.success){setCodeSent(true);setSuccess("Code de sécurité envoyé à "+cleanEmail+" ! Vérifiez votre boîte mail.");}
-      else setError(d.error||"Email non trouvé dans le wallet");
-    }catch(err){setError("Erreur de connexion")}
-    setLoading(false);
-  };
-
-  // Étape 2 : vérifier le code et récupérer le solde
-  const verifyCode=async()=>{
-    const cleanEmail=email.trim().toLowerCase();
-    const code=securityCode.trim();
-    if(!code||code.length<4){setError("Entrez le code reçu par email");return}
-    setLoading(true);setError("");setSuccess("");
-    try{
-      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(cleanEmail)+"&otp="+encodeURIComponent(code));
-      const txt=await r.text();
-      let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
-      if(d.success){setClient(d.client);setCodeVerified(true);setSuccess("Identité vérifiée !");}
-      else setError(d.error||"Code incorrect ou expiré");
-    }catch(err){setError("Erreur de connexion")}
-    setLoading(false);
-  };
-
-  // Reset complet
-  const resetWallet=()=>{
-    setEmail("");setSecurityCode("");setCodeSent(false);setCodeVerified(false);
-    setClient(null);setError("");setSuccess("");setShowCal(false);
-  };
-
-  // Afficher le calendrier Cal.com via iframe
-  const openCalendar=()=>{
-    const p=prestations.find(x=>x.key===prestation);
-    if(!p||!client)return;
-    if(client.solde<p.credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+p.credits+" cr.)");return}
-    setError("");setSuccess("");setConfirmedBooking(false);setShowCal(true);
-  };
-
-  const getCalIframeSrc=()=>{
-    const p=prestations.find(x=>x.key===prestation);
-    if(!p)return "";
-    return `https://cal.com/${p.calLink}?embed=true&theme=dark&layout=month_view`;
   };
 
   const selectedP=prestations.find(x=>x.key===prestation);
 
   return(
-    <section style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:showCal?900:700,margin:"0 auto",transition:"max-width 0.4s"}}>
+    <section id="walletClient" style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
             background:`${CREAM}06`,borderRadius:20,border:`1.5px solid ${GOLD}25`,
@@ -1220,210 +1164,119 @@ function WalletClient(){
               </p>
             </div>
 
-            {/* Étape 1 : Saisie email */}
-            {!codeSent&&!codeVerified&&(
-              <div style={{display:"flex",gap:10,marginBottom:16}}>
-                <input
-                  type="email" placeholder="Entrez votre mail ici"
-                  value={email} onChange={e=>setEmail(e.target.value)}
-                  onKeyDown={e=>e.key==="Enter"&&sendCode()}
-                  style={{
-                    flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
-                    background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                    outline:"none",
-                  }}
-                />
-                <button onClick={sendCode} disabled={loading} style={{
-                  padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
-                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-                  fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
-                  opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
-                }}>
-                  {loading?"...":"S'identifier"}
-                </button>
-              </div>
-            )}
-
-            {/* Étape 2 : Saisie code de sécurité */}
-            {codeSent&&!codeVerified&&(
+            {!codeVerified?(
               <div>
-                <div style={{fontSize:13,color:`${CREAM}66`,marginBottom:10}}>
-                  Un code de sécurité a été envoyé à <strong style={{color:GOLD}}>{email}</strong>
+                <div style={{display:"flex",gap:10,marginBottom:16}}>
+                  <input type="email" placeholder="Votre email" value={email} onChange={e=>setEmail(e.target.value)}
+                    onKeyDown={e=>e.key==="Enter"&&(!codeSent?sendOtp():verifyOtp())}
+                    style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                  {!codeSent&&<button onClick={sendOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap"}}>{loading?"...":"Connexion"}</button>}
                 </div>
-                <div style={{display:"flex",gap:10,marginBottom:10}}>
-                  <input
-                    type="text" placeholder="Code de sécurité (4 chiffres)"
-                    value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
-                    onKeyDown={e=>e.key==="Enter"&&verifyCode()}
-                    maxLength={6}
-                    style={{
-                      flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
-                      background:`${CREAM}08`,color:CREAM,fontSize:20,fontFamily:"'DM Sans',sans-serif",
-                      outline:"none",letterSpacing:8,textAlign:"center",fontWeight:700,
-                    }}
-                  />
-                  <button onClick={verifyCode} disabled={loading} style={{
-                    padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
-                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-                    fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
-                    opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
-                  }}>
-                    {loading?"...":"Vérifier"}
-                  </button>
-                </div>
-                <button onClick={resetWallet} style={{
-                  background:"none",border:"none",color:`${CREAM}40`,fontSize:12,
-                  cursor:"pointer",padding:"4px 0",textDecoration:"underline",
-                }}>Changer d'email</button>
+                {codeSent&&!codeVerified&&(
+                  <div style={{display:"flex",gap:10,marginBottom:16}}>
+                    <input type="text" placeholder="Code reçu par email" value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
+                      onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
+                      style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                    <button onClick={verifyOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1}}>{loading?"...":"Vérifier"}</button>
+                  </div>
+                )}
               </div>
-            )}
-
-            {/* Après vérification : affichage connecté */}
-            {codeVerified&&client&&(
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-                <span style={{fontSize:13,color:`${CREAM}55`}}>Connecté : <strong style={{color:GOLD}}>{email}</strong></span>
-                <button onClick={resetWallet} style={{
-                  background:`${CREAM}10`,border:`1px solid ${CREAM}15`,borderRadius:8,
-                  color:`${CREAM}60`,fontSize:12,padding:"6px 14px",cursor:"pointer",
-                }}>Déconnexion</button>
-              </div>
-            )}
+            ):(null)}
 
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
             {success&&<div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
 
-            {/* Résultat client */}
             {client&&(
               <div style={{marginTop:8}}>
-                <div style={{
-                  display:"flex",justifyContent:"space-between",alignItems:"center",
-                  padding:"18px 20px",borderRadius:14,
-                  background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:20,
-                }}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"18px 20px",borderRadius:14,background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:20}}>
                   <div>
                     <div style={{fontSize:15,fontWeight:700,color:CREAM}}>{client.prenom} {client.nom}</div>
                     <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>ID : {client.id}</div>
                   </div>
                   <div style={{textAlign:"right"}}>
-                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
-                      {client.solde.toFixed(1)}
-                    </div>
+                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>{client.solde.toFixed(1)}</div>
                     <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
                   </div>
                 </div>
 
-                {/* Formulaire de réservation */}
-                {!showCal?(
-                  <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
-                    <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:14}}>
-                      Réserver avec mes crédits
-                    </h4>
+                <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
+                  <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:18}}>Réserver avec mes crédits</h4>
 
-                    {/* Choix prestation */}
-                    <div style={{marginBottom:16}}>
+                  <div style={{display:"flex",alignItems:"center",gap:0,marginBottom:22}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+                      <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,background:walletStep>=1?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:walletStep>=1?NAVY:`${CREAM}40`,transition:"all 0.3s"}}>1</div>
+                      <span style={{fontSize:12,fontWeight:600,color:walletStep>=1?CREAM:`${CREAM}35`,transition:"all 0.3s"}}>Réserver le créneau</span>
+                    </div>
+                    <div style={{width:40,height:2,background:walletStep>=2?GOLD:`${CREAM}15`,transition:"all 0.3s",borderRadius:1}}/>
+                    <div style={{display:"flex",alignItems:"center",gap:8,flex:1,justifyContent:"flex-end"}}>
+                      <span style={{fontSize:12,fontWeight:600,color:walletStep>=2?CREAM:`${CREAM}35`,transition:"all 0.3s"}}>Débiter ma wallet</span>
+                      <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,background:walletStep>=2?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:walletStep>=2?NAVY:`${CREAM}40`,transition:"all 0.3s"}}>2</div>
+                    </div>
+                  </div>
+
+                  {walletStep===1&&(<div>
+                    <div style={{marginBottom:12}}>
                       <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Prestation</label>
-                      <select value={prestation} onChange={e=>setPrestation(e.target.value)} style={{
-                        width:"100%",padding:"12px 14px",borderRadius:10,
-                        border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,
-                        color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",
-                        outline:"none",appearance:"none",
-                      }}>
-                        {prestations.map(p=>(
-                          <option key={p.key} value={p.key} style={{background:NAVY,color:CREAM}}>
-                            {p.label} — {p.credits} cr.
-                          </option>
-                        ))}
+                      <select value={prestation} onChange={e=>{setPrestation(e.target.value);setCalcomClicked(false)}} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",appearance:"none"}}>
+                        {prestations.map(pr=>(<option key={pr.key} value={pr.key} style={{background:NAVY,color:CREAM}}>{pr.label} — {pr.credits} cr.</option>))}
                       </select>
                     </div>
 
-                    {/* Récap */}
-                    <div style={{
-                      display:"flex",justifyContent:"space-between",alignItems:"center",
-                      padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,
-                      marginBottom:14,
-                    }}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:14}}>
                       <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
                       <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(client.solde-selectedP.credits).toFixed(1)} cr.</strong></span>
                     </div>
 
-                    {/* Bouton voir les dispos */}
-                    <button onClick={openCalendar} disabled={client.solde<selectedP.credits} style={{
-                      width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
-                      background:client.solde>=selectedP.credits?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
-                      color:client.solde>=selectedP.credits?NAVY:`${CREAM}30`,
-                      fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                      transition:"all 0.3s",display:"flex",alignItems:"center",justifyContent:"center",gap:8,
-                    }}>
-                      <Icon.calendar/>
-                      {client.solde<selectedP.credits?"Solde insuffisant":"Voir les disponibilités et réserver"}
-                    </button>
-                  </div>
-                ):(
-                  /* Calendrier Cal.com intégré */
-                  <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
-                      <h4 style={{fontSize:14,fontWeight:700,color:CREAM}}>
-                        Choisissez un créneau — {selectedP.label} ({selectedP.credits} cr.)
-                      </h4>
-                      <button onClick={()=>setShowCal(false)} style={{
-                        background:"none",border:`1px solid ${CREAM}20`,borderRadius:8,
-                        color:`${CREAM}60`,padding:"6px 14px",cursor:"pointer",fontSize:12,
-                        fontFamily:"'DM Sans',sans-serif",
-                      }}>
-                        ← Retour
-                      </button>
-                    </div>
-
-                    {booking&&(
-                      <div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"12px 16px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600,textAlign:"center"}}>
-                        Débit wallet en cours...
-                      </div>
+                    {client.solde<selectedP.credits?(
+                      <div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"12px 14px",color:"#ff6666",fontSize:13,fontWeight:600,textAlign:"center"}}>Solde insuffisant pour cette prestation</div>
+                    ):(
+                      <a href={selectedP.calLink} target="_blank" rel="noopener noreferrer" onClick={()=>setCalcomClicked(true)} style={{display:"block",textAlign:"center",padding:"16px",borderRadius:14,background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",textDecoration:"none",transition:"all 0.3s"}}>
+                        📅 Réserver mon créneau sur Cal.com
+                      </a>
                     )}
 
-                    <div style={{
-                      background:`${CREAM}04`,borderRadius:14,overflow:"hidden",
-                      border:`1px solid ${GOLD}15`,minHeight:500,
-                    }}>
-                      <iframe
-                        src={getCalIframeSrc()}
-                        style={{width:"100%",height:600,border:"none",borderRadius:14}}
-                        frameBorder="0"
-                        allow="payment"
-                        loading="lazy"
-                      />
+                    {calcomClicked&&(
+                      <div style={{marginTop:14,animation:"fadeUp 0.4s ease-out"}}>
+                        <div style={{background:`${GOLD}10`,border:`1px solid ${GOLD}30`,borderRadius:12,padding:"14px 16px",marginBottom:12}}>
+                          <p style={{fontSize:13,color:CREAM,fontWeight:600,marginBottom:8}}>✅ Créneau réservé sur Cal.com ?</p>
+                          <p style={{fontSize:12,color:`${CREAM}50`,marginBottom:12,lineHeight:1.5}}>Si vous avez bien confirmé votre créneau, passez à l'étape 2 pour débiter votre wallet.</p>
+                          <button onClick={()=>{setWalletStep(2);setError("");setSuccess("")}} style={{width:"100%",padding:"14px",borderRadius:12,border:`2px solid ${GOLD}`,background:"transparent",color:GOLD,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s"}}>
+                            Oui, passer à l'étape 2 →
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>)}
+
+                  {walletStep===2&&(<div style={{animation:"fadeUp 0.4s ease-out"}}>
+                    <div style={{background:`${GOLD}10`,border:`1px solid ${GOLD}25`,borderRadius:12,padding:"14px 16px",marginBottom:16}}>
+                      <div style={{fontSize:13,color:CREAM,fontWeight:600}}>{selectedP.label} — <span style={{color:GOLD}}>{selectedP.credits} cr.</span></div>
+                      <div style={{fontSize:11,color:`${CREAM}40`,marginTop:4}}>Créneau réservé sur Cal.com ✓</div>
                     </div>
 
-                    <label style={{display:"flex",alignItems:"center",gap:10,marginTop:16,cursor:"pointer",
-                      padding:"12px 14px",borderRadius:12,background:`${CREAM}08`,border:`1px solid ${CREAM}15`,
-                    }}>
-                      <input type="checkbox" checked={confirmedBooking} onChange={e=>setConfirmedBooking(e.target.checked)} style={{
-                        width:20,height:20,accentColor:"#22c55e",cursor:"pointer",flexShrink:0,
-                      }}/>
-                      <span style={{fontSize:13,color:`${CREAM}cc`,lineHeight:1.4}}>
-                        Je confirme avoir finalisé ma réservation sur Cal.com ci-dessus
-                      </span>
-                    </label>
+                    <div style={{display:"flex",gap:10,marginBottom:12}}>
+                      <div style={{flex:1}}>
+                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date du créneau réservé</label>
+                        <input type="date" value={dateRes} onChange={e=>setDateRes(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                      </div>
+                      <div style={{flex:1}}>
+                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau (optionnel)</label>
+                        <input type="text" placeholder="ex: 9h-10h" value={creneau} onChange={e=>setCreneau(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                      </div>
+                    </div>
 
-                    <button onClick={()=>handleBookingSuccess(null)} disabled={booking||!confirmedBooking} style={{
-                      width:"100%",padding:"16px",borderRadius:14,border:"none",
-                      cursor:confirmedBooking&&!booking?"pointer":"not-allowed",
-                      background:confirmedBooking?"linear-gradient(135deg,#4ade80,#22c55e)":`${CREAM}15`,
-                      color:confirmedBooking?"#0a1628":`${CREAM}40`,
-                      fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                      transition:"all 0.3s",marginTop:10,opacity:booking?0.6:1,
-                      display:"flex",alignItems:"center",justifyContent:"center",gap:8,
-                    }}>
-                      {booking?"Débit en cours...":"✓ Débiter mes crédits"}
+                    <button onClick={debitWallet} disabled={booking||!dateRes} style={{width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",background:dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:dateRes?NAVY:`${CREAM}30`,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s",opacity:booking?0.6:1}}>
+                      {booking?"Débit en cours...":"Confirmer et débiter "+selectedP.credits+" crédits"}
                     </button>
-                    <p style={{fontSize:11,color:`${CREAM}30`,marginTop:10,textAlign:"center"}}>
-                      Étape 1 : réservez votre créneau ci-dessus — Étape 2 : cochez la case — Étape 3 : cliquez pour débiter
-                    </p>
-                  </div>
-                )}
+
+                    <button onClick={()=>{setWalletStep(1);setCalcomClicked(false);setError("");setSuccess("")}} style={{width:"100%",padding:"12px",marginTop:8,borderRadius:12,border:`1px solid ${CREAM}15`,background:"transparent",color:`${CREAM}50`,fontSize:13,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",fontWeight:600,transition:"all 0.3s"}}>
+                      ← Retour à l'étape 1
+                    </button>
+                  </div>)}
+                </div>
               </div>
             )}
 
-            {/* Exclusions */}
             <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}03`,border:`1px solid ${CREAM}08`}}>
               <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Crédits utilisables sur :</div>
               <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
@@ -2361,4 +2214,4 @@ function MLPadel(){
 ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 </script>
 </body>
-</html>
+                </html>
