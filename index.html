@@ -241,7 +241,7 @@ function Navbar(){
     {label:"Tarifs",href:"#tarifs"},
     {label:"Wallet",href:"#wallet"},
     {label:"Galerie",href:"#galerie"},
-    {label:"Boutique",href:"#boutique"},
+    {label:"Boutique",href:"#boutique",badge:"New"},
     {label:"FAQ",href:"#faq"},
     {label:"Contact",href:"#contact"},
   ];
@@ -268,11 +268,15 @@ function Navbar(){
             <a key={l.href} href={l.href} style={{
               color:scrolled?TEXT_MED:"rgba(255,255,255,0.8)",
               textDecoration:"none",fontSize:13,fontWeight:600,letterSpacing:0.5,
-              transition:"color 0.3s",
+              transition:"color 0.3s",position:"relative",
             }}
             onMouseEnter={e=>e.target.style.color=GOLD}
             onMouseLeave={e=>e.target.style.color=scrolled?TEXT_MED:"rgba(255,255,255,0.8)"}
-            >{l.label}</a>
+            >{l.label}{l.badge&&<span style={{
+              position:"absolute",top:-8,right:-16,fontSize:8,fontWeight:800,
+              background:"#00c8ff",color:WHITE,padding:"1px 5px",borderRadius:6,
+              letterSpacing:0.3,animation:"pulse 2s ease-in-out infinite",
+            }}>{l.badge}</span>}</a>
           ))}
           <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
@@ -627,8 +631,8 @@ function Pricing(){
       {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcademie:true,link:"#"},
     ],
     stages:[
-      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage},
-      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage},
+      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:6,spotsTotal:8},
+      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage,spotsLeft:3,spotsTotal:8},
       {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4},
       {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8},
       {title:"Stage Ocean Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Reunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
@@ -658,6 +662,7 @@ function Pricing(){
             background:WHITE,borderRadius:50,padding:4,
             boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 40px",
             border:`1px solid ${GOLD}15`,
+            overflowX:"auto",maxWidth:"100%",WebkitOverflowScrolling:"touch",
           }}>
             {tabs.map(t=>(
               <button key={t.key} onClick={()=>setTab(t.key)} style={{
@@ -759,6 +764,21 @@ function Pricing(){
                     </div>
                   ))}
                 </div>
+
+                {o.spotsLeft!=null&&(
+                  <div style={{marginBottom:10}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                      <span style={{fontSize:11,fontWeight:600,color:TEXT_LIGHT}}>Disponibilité</span>
+                      <span style={{fontSize:11,fontWeight:700,color:o.spotsLeft<=2?"#e07b5a":o.spotsLeft<=4?GOLD:"#4ade80"}}>
+                        {o.spotsLeft}/{o.spotsTotal} places
+                      </span>
+                    </div>
+                    <div style={{height:5,borderRadius:3,background:"#f0ede8",overflow:"hidden"}}>
+                      <div style={{height:"100%",borderRadius:3,width:Math.round((o.spotsTotal-o.spotsLeft)/o.spotsTotal*100)+"%",
+                        background:o.spotsLeft<=2?"#e07b5a":o.spotsLeft<=4?GOLD:"#4ade80",transition:"width 1s ease"}}/>
+                    </div>
+                  </div>
+                )}
 
                 {!o.soon&&(
                   <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
@@ -1053,7 +1073,10 @@ function Wallet(){
 /* ─── Mon Wallet — Espace Client avec Cal.com intégré ─── */
 function WalletClient(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
-  const[phone,setPhone]=useState("");
+  const[email,setEmail]=useState("");
+  const[securityCode,setSecurityCode]=useState("");
+  const[codeSent,setCodeSent]=useState(false);
+  const[codeVerified,setCodeVerified]=useState(false);
   const[client,setClient]=useState(null);
   const[loading,setLoading]=useState(false);
   const[error,setError]=useState("");
@@ -1090,18 +1113,18 @@ function WalletClient(){
   },[]);
 
   // Référence stable pour le handler de booking
-  const phoneRef=useRef(phone);
+  const emailRef=useRef(email);
   const prestationRef=useRef(prestation);
   const clientRef=useRef(client);
-  useEffect(()=>{phoneRef.current=phone},[phone]);
+  useEffect(()=>{emailRef.current=email},[email]);
   useEffect(()=>{prestationRef.current=prestation},[prestation]);
   useEffect(()=>{clientRef.current=client},[client]);
 
   const handleBookingSuccess=async(eventData)=>{
-    const currentPhone=phoneRef.current;
+    const currentEmail=emailRef.current;
     const currentPrestation=prestationRef.current;
     const currentClient=clientRef.current;
-    if(!currentClient||!currentPhone)return;
+    if(!currentClient||!currentEmail)return;
     const p=prestations.find(x=>x.key===currentPrestation);
     if(!p)return;
 
@@ -1109,7 +1132,7 @@ function WalletClient(){
     try{
       const dateStr=new Date().toISOString().split("T")[0];
       const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"debit",phone:currentPhone,prestation:currentPrestation,date:dateStr,creneau:"Via Cal.com",nbPersonnes:1})});
+        body:JSON.stringify({action:"debit",email:currentEmail,prestation:currentPrestation,date:dateStr,creneau:"Via Cal.com",nbPersonnes:1})});
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
       if(d.success){
@@ -1123,19 +1146,44 @@ function WalletClient(){
     setBooking(false);
   };
 
-  const checkBalance=async()=>{
-    const cleanP=phone.replace(/[\s\-\.]/g,"");
-    if(!cleanP||cleanP.length<10){setError("Entrez un numéro valide (ex: 0692627372)");return}
+  // Étape 1 : envoyer le code de sécurité par email
+  const sendCode=async()=>{
+    const cleanEmail=email.trim().toLowerCase();
+    if(!cleanEmail||!cleanEmail.includes("@")){setError("Entrez une adresse email valide");return}
     if(!WALLET_API){setError("Système wallet en cours de configuration");return}
-    setLoading(true);setError("");setClient(null);setSuccess("");setShowCal(false);
+    setLoading(true);setError("");setClient(null);setSuccess("");setShowCal(false);setCodeSent(false);setCodeVerified(false);setSecurityCode("");
     try{
-      const r=await fetch(WALLET_API+"?action=balance&phone="+encodeURIComponent(cleanP),{redirect:"follow"});
+      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"sendOtp",email:cleanEmail}),redirect:"follow"});
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
-      if(d.success)setClient(d.client);
-      else setError(d.error||"Wallet non trouvé");
+      if(d.success){setCodeSent(true);setSuccess("Code de sécurité envoyé à "+cleanEmail+" ! Vérifiez votre boîte mail.");}
+      else setError(d.error||"Email non trouvé dans le wallet");
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
+  };
+
+  // Étape 2 : vérifier le code et récupérer le solde
+  const verifyCode=async()=>{
+    const cleanEmail=email.trim().toLowerCase();
+    const code=securityCode.trim();
+    if(!code||code.length<4){setError("Entrez le code reçu par email");return}
+    setLoading(true);setError("");setSuccess("");
+    try{
+      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"verifyOtp",email:cleanEmail,otp:code}),redirect:"follow"});
+      const txt=await r.text();
+      let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
+      if(d.success){setClient(d.client);setCodeVerified(true);setSuccess("Identité vérifiée !");}
+      else setError(d.error||"Code incorrect ou expiré");
+    }catch(err){setError("Erreur de connexion")}
+    setLoading(false);
+  };
+
+  // Reset complet
+  const resetWallet=()=>{
+    setEmail("");setSecurityCode("");setCodeSent(false);setCodeVerified(false);
+    setClient(null);setError("");setSuccess("");setShowCal(false);
   };
 
   // Afficher le calendrier Cal.com via iframe
@@ -1174,27 +1222,74 @@ function WalletClient(){
               </p>
             </div>
 
-            {/* Lookup par téléphone */}
-            <div style={{display:"flex",gap:10,marginBottom:16}}>
-              <input
-                type="tel" placeholder="Votre n° de téléphone (ex: 0692...)"
-                value={phone} onChange={e=>setPhone(e.target.value)}
-                onKeyDown={e=>e.key==="Enter"&&checkBalance()}
-                style={{
-                  flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
-                  background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                  outline:"none",
-                }}
-              />
-              <button onClick={checkBalance} disabled={loading} style={{
-                padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-                fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
-                opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
-              }}>
-                {loading?"...":"Consulter"}
-              </button>
-            </div>
+            {/* Étape 1 : Saisie email */}
+            {!codeSent&&!codeVerified&&(
+              <div style={{display:"flex",gap:10,marginBottom:16}}>
+                <input
+                  type="email" placeholder="Entrez votre mail ici"
+                  value={email} onChange={e=>setEmail(e.target.value)}
+                  onKeyDown={e=>e.key==="Enter"&&sendCode()}
+                  style={{
+                    flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
+                    background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                    outline:"none",
+                  }}
+                />
+                <button onClick={sendCode} disabled={loading} style={{
+                  padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
+                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                  fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                  opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
+                }}>
+                  {loading?"...":"S'identifier"}
+                </button>
+              </div>
+            )}
+
+            {/* Étape 2 : Saisie code de sécurité */}
+            {codeSent&&!codeVerified&&(
+              <div>
+                <div style={{fontSize:13,color:`${CREAM}66`,marginBottom:10}}>
+                  Un code de sécurité a été envoyé à <strong style={{color:GOLD}}>{email}</strong>
+                </div>
+                <div style={{display:"flex",gap:10,marginBottom:10}}>
+                  <input
+                    type="text" placeholder="Code de sécurité (4 chiffres)"
+                    value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
+                    onKeyDown={e=>e.key==="Enter"&&verifyCode()}
+                    maxLength={6}
+                    style={{
+                      flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,
+                      background:`${CREAM}08`,color:CREAM,fontSize:20,fontFamily:"'DM Sans',sans-serif",
+                      outline:"none",letterSpacing:8,textAlign:"center",fontWeight:700,
+                    }}
+                  />
+                  <button onClick={verifyCode} disabled={loading} style={{
+                    padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
+                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                    fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                    opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
+                  }}>
+                    {loading?"...":"Vérifier"}
+                  </button>
+                </div>
+                <button onClick={resetWallet} style={{
+                  background:"none",border:"none",color:`${CREAM}40`,fontSize:12,
+                  cursor:"pointer",padding:"4px 0",textDecoration:"underline",
+                }}>Changer d'email</button>
+              </div>
+            )}
+
+            {/* Après vérification : affichage connecté */}
+            {codeVerified&&client&&(
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                <span style={{fontSize:13,color:`${CREAM}55`}}>Connecté : <strong style={{color:GOLD}}>{email}</strong></span>
+                <button onClick={resetWallet} style={{
+                  background:`${CREAM}10`,border:`1px solid ${CREAM}15`,borderRadius:8,
+                  color:`${CREAM}60`,fontSize:12,padding:"6px 14px",cursor:"pointer",
+                }}>Déconnexion</button>
+              </div>
+            )}
 
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
             {success&&<div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
@@ -1500,30 +1595,31 @@ function PallapShop(){
           </div>
         </AnimatedSection>
 
-        {/* 4 category cards - clickable to Pallap */}
+        {/* 4 category cards - big image background + zoom hover */}
         <AnimatedSection delay={0.15}>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:20}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:22}}>
             {categories.map((cat,i)=>(
               <a key={cat.key} href={cat.url} target="_blank" rel="noopener noreferrer" style={{
-                background:WHITE,borderRadius:20,padding:"28px 20px",
-                border:"1px solid "+NAVY+"0d",transition:"all 0.35s",
-                display:"flex",flexDirection:"column",alignItems:"center",gap:12,textDecoration:"none",
-                cursor:"pointer",textAlign:"center",
+                position:"relative",borderRadius:20,overflow:"hidden",
+                display:"block",textDecoration:"none",cursor:"pointer",
+                height:360,aspectRatio:"1/1",border:"2px solid "+NAVY+"10",
+                transition:"border-color 0.35s, box-shadow 0.35s",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-6px)";e.currentTarget.style.boxShadow="0 16px 40px "+PALLAP_CYAN+"30";e.currentTarget.style.borderColor=PALLAP_CYAN+"66"}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=NAVY+"0d"}}
+              onMouseEnter={e=>{
+                e.currentTarget.style.borderColor=PALLAP_CYAN+"66";
+                e.currentTarget.style.boxShadow="0 16px 48px "+PALLAP_CYAN+"30";
+                e.currentTarget.querySelector('.pallap-card-img').style.transform="scale(1.08)";
+              }}
+              onMouseLeave={e=>{
+                e.currentTarget.style.borderColor=NAVY+"10";
+                e.currentTarget.style.boxShadow="none";
+                e.currentTarget.querySelector('.pallap-card-img').style.transform="scale(1)";
+              }}
               >
-                <div style={{
-                  width:120,height:120,borderRadius:16,
-                  background:"linear-gradient(135deg,"+NAVY+"06 0%,"+PALLAP_CYAN+"10 100%)",
-                  display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden",
-                }}>
-                  <img src={cat.img} alt={cat.label} loading="lazy" style={{maxHeight:"80%",maxWidth:"80%",objectFit:"contain"}}/>
-                </div>
-                <span style={{fontSize:16,fontWeight:700,color:TEXT_DARK}}>{cat.icon} {cat.label}</span>
-                <span style={{fontSize:12,fontWeight:600,color:PALLAP_CYAN,display:"flex",alignItems:"center",gap:4}}>
-                  Voir sur pallap.com →
-                </span>
+                <img className="pallap-card-img" src={cat.img} alt={cat.label} loading="lazy" style={{
+                  position:"absolute",inset:0,width:"100%",height:"100%",
+                  objectFit:"cover",objectPosition:"center",transition:"transform 0.5s ease",
+                }}/>
               </a>
             ))}
           </div>
@@ -1718,7 +1814,7 @@ function FAQ(){
     {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prérequis. J'accueille tous les niveaux, du débutant complet au compétiteur confirmé. Le coaching est adapté à ton profil."},
     {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, La Reunion (974)."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
-    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre numéro de téléphone, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
+    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
     {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
     {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
@@ -2117,21 +2213,50 @@ function Evenements(){
                   <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>150€</div>
                 </div>
               </div>
-              <div style={{marginBottom:24,display:"inline-flex",alignItems:"center",gap:8,background:"#e07b5a22",border:"1px solid #e07b5a44",borderRadius:50,padding:"8px 20px"}}>
-                <span style={{fontSize:14}}>🔥</span>
-                <span style={{fontSize:13,fontWeight:700,color:"#e07b5a",letterSpacing:0.5}}>Places limitées !</span>
+              <div style={{marginBottom:24,display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
+                <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"#e07b5a22",border:"1px solid #e07b5a44",borderRadius:50,padding:"8px 20px"}}>
+                  <span style={{fontSize:14}}>🔥</span>
+                  <span style={{fontSize:13,fontWeight:700,color:"#e07b5a",letterSpacing:0.5}}>Places limitées !</span>
+                </div>
+                {/* Jauge places restantes */}
+                {[
+                  {slot:"7h – 8h30",total:8,taken:5},
+                  {slot:"17h – 18h30",total:8,taken:7},
+                  {slot:"18h30 – 20h",total:8,taken:4},
+                  {slot:"20h – 21h30",total:8,taken:2},
+                ].map((s,i)=>{
+                  const pct=Math.round(s.taken/s.total*100);
+                  const rest=s.total-s.taken;
+                  const barColor=rest<=2?"#e07b5a":rest<=4?GOLD:"#4ade80";
+                  return(
+                    <div key={i} style={{width:"100%",maxWidth:340}}>
+                      <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+                        <span style={{fontSize:12,fontWeight:600,color:`${CREAM}80`}}>{s.slot}</span>
+                        <span style={{fontSize:12,fontWeight:700,color:barColor}}>{rest} place{rest>1?"s":""} restante{rest>1?"s":""}</span>
+                      </div>
+                      <div style={{height:6,borderRadius:3,background:`${CREAM}15`,overflow:"hidden"}}>
+                        <div style={{height:"100%",borderRadius:3,background:barColor,width:pct+"%",transition:"width 1s ease"}}/>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div>
+              <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
               <a href="/stage-mai-2026.html" style={{
                 display:"inline-flex",alignItems:"center",gap:10,
                 background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
                 color:NAVY,padding:"16px 36px",borderRadius:50,
                 textDecoration:"none",fontWeight:700,fontSize:15,
                 boxShadow:`0 8px 30px ${GOLD}44`,transition:"all 0.3s",
+                position:"relative",
               }}
               onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
               onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 8px 30px ${GOLD}44`}}
               >S'inscrire au stage →</a>
+              <span style={{
+                fontSize:11,fontWeight:700,color:"#e07b5a",
+                animation:"pulse 2s ease-in-out infinite",letterSpacing:0.5,
+              }}>⚡ Dernières places disponibles</span>
               </div>
             </div>
           </div>
@@ -2216,4 +2341,4 @@ function MLPadel(){
 ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 </script>
 </body>
- </html>
+</html>
