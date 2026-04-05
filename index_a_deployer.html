@@ -1153,8 +1153,7 @@ function WalletClient(){
     if(!WALLET_API){setError("Système wallet en cours de configuration");return}
     setLoading(true);setError("");setClient(null);setSuccess("");setShowCal(false);setCodeSent(false);setCodeVerified(false);setSecurityCode("");
     try{
-      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"sendOtp",email:cleanEmail}),redirect:"follow"});
+      const r=await fetch(WALLET_API+"?action=sendOtp&email="+encodeURIComponent(cleanEmail));
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
       if(d.success){setCodeSent(true);setSuccess("Code de sécurité envoyé à "+cleanEmail+" ! Vérifiez votre boîte mail.");}
@@ -1170,8 +1169,7 @@ function WalletClient(){
     if(!code||code.length<4){setError("Entrez le code reçu par email");return}
     setLoading(true);setError("");setSuccess("");
     try{
-      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"verifyOtp",email:cleanEmail,otp:code}),redirect:"follow"});
+      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(cleanEmail)+"&otp="+encodeURIComponent(code));
       const txt=await r.text();
       let d;try{d=JSON.parse(txt)}catch(e){setError("Réponse invalide du serveur");setLoading(false);return}
       if(d.success){setClient(d.client);setCodeVerified(true);setSuccess("Identité vérifiée !");}
