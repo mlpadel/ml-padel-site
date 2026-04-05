@@ -23,8 +23,41 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "ML Padel",
+  "description": "Coaching de padel à La Réunion par Mathias Laval, coach diplômé d'État",
+  "url": "https://ml-padel-site.vercel.app",
+  "telephone": "+262692627372",
+  "email": "mathias.laval38@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Le Five — 4Padel Saint-Louis",
+    "addressLocality": "Saint-Louis",
+    "addressRegion": "La Réunion",
+    "postalCode": "97450",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -21.2868,
+    "longitude": 55.4097
+  },
+  "sport": "Padel",
+  "image": "https://ml-padel-site.vercel.app/position-attention.JPG",
+  "priceRange": "20€ - 150€",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "07:00",
+    "closes": "21:00"
+  }
+}
+</script>
 </head>
-<body>
+<body><a href="#tarifs" style="position:absolute;top:-40px;left:0;background:#c9a84c;color:#0a1628;padding:8px 16px;zIndex:9999;fontWeight:700;transition:top 0.3s" onFocus="this.style.top='0'" onBlur="this.style.top='-40px'">Aller au contenu</a>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
@@ -247,7 +280,7 @@ function Navbar(){
   ];
 
   return(
-    <nav style={{
+    <nav aria-label="Navigation principale" style={{
       position:"fixed",top:0,left:0,right:0,zIndex:1000,
       background:scrolled?`${WARM_WHITE}f0`:"transparent",
       backdropFilter:scrolled?"blur(20px)":"none",
@@ -1086,6 +1119,9 @@ function WalletClient(){
   const[walletStep,setWalletStep]=useState(1);
   const[dateRes,setDateRes]=useState("");
   const[creneau,setCreneau]=useState("");
+  const[showHistory,setShowHistory]=useState(false);
+  const[history,setHistory]=useState([]);
+  const[histLoading,setHistLoading]=useState(false);
 
   const prestations=[
     {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"https://cal.com/ml-padel/indiv"},
@@ -1141,6 +1177,18 @@ function WalletClient(){
     setBooking(false);
   };
 
+  const fetchHistory=async()=>{
+    if(showHistory){setShowHistory(false);return}
+    setHistLoading(true);
+    try{
+      const r=await fetch(WALLET_API+"?action=history&email="+encodeURIComponent(email.trim().toLowerCase()));
+      const d=await r.json();
+      if(d.success){setHistory(d.history||[]);setShowHistory(true)}
+      else setError(d.error||"Impossible de charger l'historique");
+    }catch(err){setError("Erreur de connexion")}
+    setHistLoading(false);
+  };
+
   const selectedP=prestations.find(x=>x.key===prestation);
 
   return(
@@ -1166,14 +1214,14 @@ function WalletClient(){
             {!codeVerified?(
               <div>
                 <div style={{display:"flex",gap:10,marginBottom:16}}>
-                  <input type="email" placeholder="Votre email" value={email} onChange={e=>setEmail(e.target.value)}
+                  <input type="email" placeholder="Votre email" aria-label="Adresse email pour accéder à votre wallet" value={email} onChange={e=>setEmail(e.target.value)}
                     onKeyDown={e=>e.key==="Enter"&&(!codeSent?sendOtp():verifyOtp())}
                     style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
                   {!codeSent&&<button onClick={sendOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap"}}>{loading?"...":"Connexion"}</button>}
                 </div>
                 {codeSent&&!codeVerified&&(
                   <div style={{display:"flex",gap:10,marginBottom:16}}>
-                    <input type="text" placeholder="Code reçu par email" value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
+                    <input type="text" placeholder="Code reçu par email" aria-label="Code de vérification reçu par email" value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
                       onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
                       style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
                     <button onClick={verifyOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1}}>{loading?"...":"Vérifier"}</button>
@@ -1198,6 +1246,24 @@ function WalletClient(){
                   </div>
                 </div>
 
+
+                <button onClick={fetchHistory} style={{width:"100%",padding:"10px",borderRadius:10,border:`1px solid ${CREAM}15`,background:"transparent",color:`${CREAM}50`,fontSize:12,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",fontWeight:600,marginBottom:16,transition:"all 0.3s"}}>
+                  {histLoading?"Chargement...":(showHistory?"Masquer l'historique":"Voir mon historique")}
+                </button>
+
+                {showHistory&&history.length>0&&(
+                  <div style={{marginBottom:20,maxHeight:200,overflowY:"auto",borderRadius:12,border:`1px solid ${CREAM}10`,padding:"8px"}}>
+                    {history.slice(0,10).map((h,i)=>(
+                      <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 12px",borderBottom:i<Math.min(history.length,10)-1?`1px solid ${CREAM}06`:"none"}}>
+                        <div>
+                          <div style={{fontSize:12,fontWeight:600,color:h.type==="recharge"?"#4ade80":"#ff8888"}}>{h.type==="recharge"?"+":""}{h.montant} cr.</div>
+                          <div style={{fontSize:11,color:`${CREAM}35`,marginTop:2}}>{h.detail}</div>
+                        </div>
+                        <div style={{fontSize:11,color:`${CREAM}30`}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
                   <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:18}}>Réserver avec mes crédits</h4>
 
@@ -1216,7 +1282,7 @@ function WalletClient(){
                   {walletStep===1&&(<div>
                     <div style={{marginBottom:12}}>
                       <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Prestation</label>
-                      <select value={prestation} onChange={e=>{setPrestation(e.target.value);setCalcomClicked(false)}} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",appearance:"none"}}>
+                      <select value={prestation} aria-label="Choisir une prestation" onChange={e=>{setPrestation(e.target.value);setCalcomClicked(false)}} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",appearance:"none"}}>
                         {prestations.map(pr=>(<option key={pr.key} value={pr.key} style={{background:NAVY,color:CREAM}}>{pr.label} — {pr.credits} cr.</option>))}
                       </select>
                     </div>
@@ -1256,11 +1322,11 @@ function WalletClient(){
                     <div style={{display:"flex",gap:10,marginBottom:12}}>
                       <div style={{flex:1}}>
                         <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date du créneau réservé</label>
-                        <input type="date" value={dateRes} onChange={e=>setDateRes(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                        <input type="date" value={dateRes} aria-label="Date du créneau réservé" onChange={e=>setDateRes(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
                       </div>
                       <div style={{flex:1}}>
                         <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau (optionnel)</label>
-                        <input type="text" placeholder="ex: 9h-10h" value={creneau} onChange={e=>setCreneau(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
+                        <input type="text" placeholder="ex: 9h-10h" aria-label="Créneau horaire" value={creneau} onChange={e=>setCreneau(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
                       </div>
                     </div>
 
