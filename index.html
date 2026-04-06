@@ -660,8 +660,8 @@ function Pricing(){
       {title:"Pack Quatuor 10h",price:"170",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 680€",features:["Économie de 15%","Soit 17€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
     ],
     académie:[
-      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"#",isAcadémie:true},
-      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"#"},
+      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"#academie-form",isAcadémie:true},
+      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"#academie-form"},
     ],
     stages:[
       {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:6,spotsTotal:8},
@@ -2151,34 +2151,6 @@ function Événements(){
                   <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>150€</div>
                 </div>
               </div>
-              <div style={{marginBottom:24,display:"flex",flexDirection:"column",alignItems:"center",gap:12}}>
-                <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"#e07b5a22",border:"1px solid #e07b5a44",borderRadius:50,padding:"8px 20px"}}>
-                  <span style={{fontSize:14}}>🔥</span>
-                  <span style={{fontSize:13,fontWeight:700,color:"#e07b5a",letterSpacing:0.5}}>Places limitées !</span>
-                </div>
-                {/* Jauge places restantes */}
-                {[
-                  {slot:"7h – 8h30",total:8,taken:5},
-                  {slot:"17h – 18h30",total:8,taken:7},
-                  {slot:"18h30 – 20h",total:8,taken:4},
-                  {slot:"20h – 21h30",total:8,taken:2},
-                ].map((s,i)=>{
-                  const pct=Math.round(s.taken/s.total*100);
-                  const rest=s.total-s.taken;
-                  const barColor=rest<=2?"#e07b5a":rest<=4?GOLD:"#4ade80";
-                  return(
-                    <div key={i} style={{width:"100%",maxWidth:340}}>
-                      <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
-                        <span style={{fontSize:12,fontWeight:600,color:`${CREAM}80`}}>{s.slot}</span>
-                        <span style={{fontSize:12,fontWeight:700,color:barColor}}>{rest} place{rest>1?"s":""} restante{rest>1?"s":""}</span>
-                      </div>
-                      <div style={{height:6,borderRadius:3,background:`${CREAM}15`,overflow:"hidden"}}>
-                        <div style={{height:"100%",borderRadius:3,background:barColor,width:pct+"%",transition:"width 1s ease"}}/>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
               <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
               <a href="/stage-mai-2026.html" style={{
                 display:"inline-flex",alignItems:"center",gap:10,
@@ -2241,6 +2213,144 @@ function MapSection(){
 }
 
 /* ─── App ─── */
+
+/* --- Formulaire Inscription Academie Adulte --- */
+function AcademieForm(){
+  const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
+  const creneaux=[
+    {jour:"Lundi",slots:[
+      {horaire:"17h \u2013 18h30",niveaux:"Niv. 2/3",min:2,max:3},
+      {horaire:"18h30 \u2013 20h",niveaux:"Niv. 3/4",min:3,max:4},
+      {horaire:"20h \u2013 21h30",niveaux:"Niv. 4/5",min:4,max:5},
+    ]},
+    {jour:"Mardi",slots:[
+      {horaire:"17h \u2013 18h30",niveaux:"Niv. 4/5",min:4,max:5},
+      {horaire:"18h30 \u2013 20h",niveaux:"Niv. 2/3",min:2,max:3},
+      {horaire:"20h \u2013 21h30",niveaux:"Niv. 3/4",min:3,max:4},
+    ]},
+    {jour:"Jeudi",slots:[
+      {horaire:"17h \u2013 18h30",niveaux:"Niv. 3/4",min:3,max:4},
+      {horaire:"18h30 \u2013 20h",niveaux:"Niv. 4/5",min:4,max:5},
+      {horaire:"20h \u2013 21h30",niveaux:"Niv. 5/6",min:5,max:6},
+    ]},
+  ];
+  const[form,setForm]=React.useState({nom:"",prenom:"",email:"",tel:"",niveau:"3",engagement:"annuel",creneau:"",attentes:""});
+  const[sending,setSending]=React.useState(false);
+  const[success,setSuccess]=React.useState(false);
+  const[error,setError]=React.useState("");
+  const niveau=parseInt(form.niveau)||3;
+  const compatibleSlots=creneaux.map(j=>({...j,slots:j.slots.filter(s=>niveau>=s.min&&niveau<=s.max)})).filter(j=>j.slots.length>0);
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    if(!form.nom||!form.prenom||!form.email||!form.tel||!form.creneau){
+      setError("Merci de remplir tous les champs obligatoires et de choisir un cr\u00e9neau.");return;
+    }
+    setSending(true);setError("");
+    try{
+      const params=new URLSearchParams({action:"academie_inscription",nom:form.nom,prenom:form.prenom,email:form.email,tel:form.tel,niveau:form.niveau,engagement:form.engagement,creneau:form.creneau,attentes:form.attentes});
+      const r=await fetch(WALLET_API+"?"+params.toString(),{redirect:"follow"});
+      const d=await r.json();
+      if(d.status==="ok"){setSuccess(true)}else{setError(d.message||"Erreur lors de l'inscription.")}
+    }catch(err){setError("Erreur r\u00e9seau. R\u00e9essayez.")}
+    setSending(false);
+  };
+
+  if(success){
+    return(
+      <section id="academie-form" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+        <div style={{maxWidth:600,margin:"0 auto",textAlign:"center",background:WHITE,borderRadius:20,padding:"48px 32px",border:`2px solid ${GOLD}30`,boxShadow:`0 8px 40px ${GOLD}10`}}>
+          <div style={{fontSize:56,marginBottom:16}}>&#127934;</div>
+          <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:TEXT_DARK,marginBottom:12}}>
+            Inscription <span style={{color:GOLD}}>enregistr\u00e9e</span> !
+          </h3>
+          <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.7}}>
+            Merci {form.prenom} ! Un email de confirmation a \u00e9t\u00e9 envoy\u00e9 \u00e0 <strong>{form.email}</strong>.
+            <br/>Mathias te contactera prochainement avec les d\u00e9tails de paiement.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const inputStyle={width:"100%",padding:"12px 16px",borderRadius:12,border:`1.5px solid ${GOLD}25`,fontFamily:"'DM Sans',sans-serif",fontSize:14,color:TEXT_DARK,background:WHITE,outline:"none",transition:"border-color 0.3s"};
+  const labelStyle={fontSize:12,fontWeight:700,color:TEXT_DARK,marginBottom:6,display:"block"};
+
+  return(
+    <section id="academie-form" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:40}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+              Acad\u00e9mie Adulte \u2014 Saison 2026/2027
+            </span>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3.5vw,36px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
+              Formulaire d'<span style={{color:GOLD}}>inscription</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
+              Choisis ton engagement et ton cr\u00e9neau. Les liens de paiement seront envoy\u00e9s ap:"pointer"}} value={form.niveau} onChange={e=>setForm({...form,niveau:e.target.value,creneau:""})}>
+                  {[1,2,3,4,5,6,7].map(n=><option key={n} value={n}>Niveau {n}</option>)}
+                </select>
+              </div>
+              <div>
+                <label style={labelStyle}>Engagement *</label>
+                <select style={{...inputStyle,cursor:"pointer"}} value={form.engagement} onChange={e=>setForm({...form,engagement:e.target.value})}>
+                  <option value="annuel">Annuel \u2014 750\u20ac (28 s\u00e9ances)</option>
+                  <option value="semestriel">Semestriel \u2014 420\u20ac (14 s\u00e9ances)</option>
+                </select>
+              </div>
+            </div>
+            <div style={{marginBottom:24}}>
+              <label style={{...labelStyle,marginBottom:12}}>Cr\u00e9neau souhait\u00e9 * <span style={{fontWeight:500,color:TEXT_LIGHT}}>(filtr\u00e9 selon votre niveau)</span></label>
+              {compatibleSlots.length===0?(
+                <p style={{color:TEXT_LIGHT,fontSize:13,fontStyle:"italic",padding:"12px 0"}}>Aucun cr\u00e9neau disponible pour le niveau {niveau}. Ajustez votre niveau ci-dessus.</p>
+              ):(
+                <div style={{display:"flex",flexDirection:"column",gap:14}}>
+                  {compatibleSlots.map(j=>(
+                    <div key={j.jour}>
+                      <div style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:8,display:"flex",alignItems:"center",gap:8}}>
+                        <span style={{width:6,height:6,borderRadius:3,background:GOLD,display:"inline-block"}}/>
+                        {j.jour}
+                      </div>
+                      <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                        {j.slots.map(s=>{
+                          const val=j.jour+" "+s.horaire;
+                          const selected=form.creneau===val;
+                          return(
+                            <label key={val} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 16px",borderRadius:12,cursor:"pointer",background:selected?GOLD+"12":WHITE,border:`1.5px solid ${selected?GOLD:GOLD+"25"}`,transition:"all 0.3s",flex:"1 1 auto",minWidth:180}}>
+                              <input type="radio" name="creneau" value={val} checked={selected} onChange={e=>setForm({...form,creneau:e.target.value})} style={{accentColor:GOLD}}/>
+                              <div>
+                                <div style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>{s.horaire}</div>
+                                <div style={{fontSize:11,color:GOLD,fontWeight:600}}>{s.niveaux}</div>
+                              </div>
+                            </label>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div style={{marginBottom:24}}>
+              <label style={labelStyle}>Attentes / Commentaire</label>
+              <textarea style={{...inputStyle,minHeight:80,resize:"vertical"}} value={form.attentes} onChange={e=>setForm({...form,attentes:e.target.value})} placeholder="Objectifs, contraintes, questions..." onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=GOLD+"25"}/>
+            </div>
+            {error&&<p style={{color:"#e74c3c",fontSize:13,marginBottom:16,fontWeight:600}}>{error}</p>}
+            <button type="submit" disabled={sending} style={{width:"100%",padding:"14px 0",borderRadius:50,border:"none",cursor:sending?"wait":"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s",opacity:sending?0.7:1}}
+            onMouseEnter={e=>{if(!sending)e.target.style.transform="scale(1.02)"}}
+            onMouseLeave={e=>e.target.style.transform="scale(1)"}
+            >{sending?"Envoi en cours...":"Valider mon inscription"}</button>
+            <p style={{textAlign:"center",fontSize:11,color:TEXT_LIGHT,marginTop:12}}>
+              Paiement en 1 fois \u00b7 Les liens de paiement seront envoy\u00e9s apr\u00e8s validation par le coach
+            </p>
+          </form>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
 function MLPadel(){
   return(
     <div style={{background:WARM_WHITE,minHeight:"100vh",overflowX:"hidden"}}>
@@ -2255,6 +2365,7 @@ function MLPadel(){
       <TransitionAbout/>
       <Événements/>
       <Pricing/>
+            <AcademieForm/>
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
