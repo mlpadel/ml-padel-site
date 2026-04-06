@@ -2288,7 +2288,36 @@ function AcademieForm(){
               Formulaire d'<span style={{color:GOLD}}>inscription</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
-              Choisis ton engagement et ton cr\u00e9neau. Les liens de paiement seront envoy\u00e9s ap:"pointer"}} value={form.niveau} onChange={e=>setForm({...form,niveau:e.target.value,creneau:""})}>
+              Choisis ton engagement et ton cr\u00e9neau. Les liens de paiement seront envoy\u00e9s apr\u00e8s validation.
+            </p>
+          </div>
+        </AnimatedSection>
+        <AnimatedSection delay={0.15}>
+          <form onSubmit={handleSubmit} style={{background:WHITE,borderRadius:20,padding:"36px 32px",border:`1.5px solid ${GOLD}20`,boxShadow:`0 4px 24px ${GOLD}08`}}>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:20}}>
+              <div>
+                <label style={labelStyle}>Nom *</label>
+                <input style={inputStyle} value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} placeholder="Votre nom" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=GOLD+"25"}/>
+              </div>
+              <div>
+                <label style={labelStyle}>Pr\u00e9nom *</label>
+                <input style={inputStyle} value={form.prenom} onChange={e=>setForm({...form,prenom:e.target.value})} placeholder="Votre pr\u00e9nom" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=GOLD+"25"}/>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:20}}>
+              <div>
+                <label style={labelStyle}>Email *</label>
+                <input type="email" style={inputStyle} value={form.email} onChange={e=>setForm({...form,email:e.target.value})} placeholder="email@exemple.com" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=GOLD+"25"}/>
+              </div>
+              <div>
+                <label style={labelStyle}>T\u00e9l\u00e9phone *</label>
+                <input type="tel" style={inputStyle} value={form.tel} onChange={e=>setForm({...form,tel:e.target.value})} placeholder="0692 XX XX XX" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=GOLD+"25"}/>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:24}}>
+              <div>
+                <label style={labelStyle}>Niveau estim\u00e9 (1 \u00e0 7) *</label>
+                <select style={{...inputStyle,cursor:"pointer"}} value={form.niveau} onChange={e=>setForm({...form,niveau:e.target.value,creneau:""})}>
                   {[1,2,3,4,5,6,7].map(n=><option key={n} value={n}>Niveau {n}</option>)}
                 </select>
               </div>
