@@ -910,7 +910,7 @@ function Horaires(){
   ];
 
   return(
-    <section style={{padding:"48px 24px 0",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
@@ -919,7 +919,7 @@ function Horaires(){
           }}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
               <Icon.calendar/>
-              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,color:TEXT_DARK}}>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:TEXT_DARK}}>
                 Horaires & <span style={{color:GOLD}}>disponibilités</span>
               </h3>
             </div>
@@ -932,9 +932,9 @@ function Horaires(){
                 }}>
                   <span style={{fontSize:22,lineHeight:1,marginTop:2}}>{s.icon}</span>
                   <div>
-                    <div style={{fontSize:13,fontWeight:700,color:TEXT_DARK,marginBottom:3}}>{s.label}</div>
-                    <div style={{fontSize:14,fontWeight:800,color:s.color}}>{s.horaire}</div>
-                    <div style={{fontSize:11,color:TEXT_LIGHT,marginTop:2}}>{s.note}</div>
+                    <div style={{fontSize:15,fontWeight:700,color:TEXT_DARK,marginBottom:4}}>{s.label}</div>
+                    <div style={{fontSize:15,fontWeight:800,color:s.color}}>{s.horaire}</div>
+                    <div style={{fontSize:12,color:TEXT_LIGHT,marginTop:3}}>{s.note}</div>
                   </div>
                 </div>
               ))}
@@ -963,7 +963,7 @@ function Wallet(){
 
   return(
     <section id="wallet" style={{
-      padding:"80px 24px",
+      padding:"80px 24px 20px",
       background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,
       color:CREAM,
       position:"relative",
@@ -1199,7 +1199,7 @@ function WalletClient(){
   const selectedP=prestations.find(x=>x.key===prestation);
 
   return(
-    <section id="walletClient" style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+    <section id="walletClient" style={{padding:"0 24px 60px",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
