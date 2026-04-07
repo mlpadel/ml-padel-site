@@ -362,7 +362,7 @@ function Navbar(){
 
 /* ─── Hero with Background Carousel ─── */
 function Hero(){
-  const heroImages=["./position-attention.JPG","./engagement.JPG","./coup-droit-action.JPG","./engagement-dynamique.JPG"];
+  const heroImages=["./_LAVAL012.JPG","./_LAVAL013.JPG","./_LAVAL014.JPG","./_LAVAL015.JPG","./_LAVAL017.JPG","./_LAVAL018.JPG"];
   const[bgIdx,setBgIdx]=useState(0);
   useEffect(()=>{
     const t=setInterval(()=>setBgIdx(p=>(p+1)%heroImages.length),5000);
@@ -492,6 +492,10 @@ function Hero(){
 
 /* ─── About / Coach ─── */
 function About(){
+
+  const coachPhotos=["./_LAVAL019.JPG","./_LAVAL020.JPG","./_LAVAL029.JPG"];
+  const[coachIdx,setCoachIdx]=useState(0);
+  useEffect(()=>{const ci=setInterval(()=>setCoachIdx(p=>(p+1)%3),3000);return()=>clearInterval(ci);},[]);
   const stats=[
     {num:"500+",label:"élèves en 1 an"},
     {num:"10 ans",label:"d'expérience coaching"},
@@ -508,9 +512,7 @@ function About(){
             border:`2px solid ${GOLD}20`,
             position:"relative",overflow:"hidden",
           }}>
-            <img src="./position-attention.JPG" alt="Mathias Laval — Coach Padel" loading="lazy" style={{
-              width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 15%",display:"block",minHeight:380,
-            }}/>
+            {coachPhotos.map((ph,i)=>React.createElement("img",{key:i,src:ph,alt:"Coach Mathias Laval",loading:"lazy",style:{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 15%",display:"block",minHeight:380,position:"absolute",top:0,left:0,opacity:i===coachIdx?1:0,transition:"opacity 0.8s ease"}}))}
             <div style={{
               position:"absolute",bottom:0,left:0,right:0,height:4,
               background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
@@ -1419,6 +1421,20 @@ function InstagramSection(){
 /* ─── Galerie Photos (vrac) ─── */
 function Gallery(){
   const photos=[
+    {src:"./_LAVAL012.JPG",alt:"Coaching sur le terrain"},
+    {src:"./_LAVAL013.JPG",alt:"Action sur le terrain"},
+    {src:"./_LAVAL014.JPG",alt:"Coaching padel"},
+    {src:"./_LAVAL015.JPG",alt:"Technique padel"},
+    {src:"./_LAVAL017.JPG",alt:"Entraînement padel"},
+    {src:"./_LAVAL018.JPG",alt:"Session coaching"},
+    {src:"./_LAVAL021.JPG",alt:"Élèves en action"},
+    {src:"./_LAVAL022.JPG",alt:"Coaching collectif"},
+    {src:"./_LAVAL023.JPG",alt:"Session groupe"},
+    {src:"./_LAVAL024.JPG",alt:"Pratique en duo"},
+    {src:"./_LAVAL025.JPG",alt:"Échange padel"},
+    {src:"./_LAVAL026.JPG",alt:"Match entraînement"},
+    {src:"./_LAVAL027.JPG",alt:"Exercice padel"},
+    {src:"./_LAVAL028.JPG",alt:"Groupe padel"},
     {src:"./action-volee.jpg",alt:"Volée en action"},
     {src:"./engagement.JPG",alt:"Engagement"},
     {src:"./explication.JPG",alt:"Explication tactique"},
