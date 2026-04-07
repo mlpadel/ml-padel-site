@@ -372,9 +372,9 @@ h1 em {
     <span>ML PADEL</span>
   </div>
   <h1>Stage Vacances <em>Mai 2026</em></h1>
-  <p class="subtitle">Du 11 au 16 mai — 5 sessions de 1H30 — Du lundi au vendredi</p>
+  <p class="subtitle">Du 11 au 15 mai — 5 sessions de 1H30 — Du lundi au vendredi</p>
   <div class="info-pills">
-    <span class="pill">📅 11 → 16 mai 2026</span>
+    <span class="pill">📅 11 → 15 mai 2026</span>
     <span class="pill">🎯 Niveaux 1 à 6</span>
     <span class="pill">🏋️ Coach ML Padel</span>
   </div>
@@ -550,7 +550,7 @@ document.getElementById('stageForm').addEventListener('submit', async function(e
       niveau: niveau,
       creneaux: creneaux.join(", "),
       attentes: attentes || "(aucune)",
-      stage: "Mai 2026 (11-16 mai)"
+      stage: "Mai 2026 (11-15 mai)"
     });
 
     const r = await fetch(WALLET_API + "?" + params.toString(), { redirect: "follow" });
