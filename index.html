@@ -1771,7 +1771,7 @@ function FAQ(){
   const[openIdx,setOpenIdx]=useState(null);
   const items=[
     {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prérequis. J'accueille tous les niveaux, du débutant complet au compétiteur confirmé. Le coaching est adapté à ton profil."},
-    {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, La Réunion (974)."},
+    {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, 2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
     {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
     {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
@@ -1895,7 +1895,7 @@ function Contact(){
           }}>
             {contactItems.map((c,i)=>(
               <a key={i} href={c.href} target={c.href.startsWith("http")?"_blank":undefined} rel="noopener noreferrer" style={{
-                display:"flex",alignItems:"center",gap:10,
+                display:"flex",alignItems:"center",justifyContent:"center",gap:10,
                 padding:"14px 16px",borderRadius:12,
                 background:`${CREAM}06`,border:`1px solid ${CREAM}10`,
                 textDecoration:"none",transition:"all 0.3s",
@@ -1904,7 +1904,7 @@ function Contact(){
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${CREAM}10`;e.currentTarget.style.background=`${CREAM}06`}}
               >
                 <div style={{color:GOLD,display:"flex",flexShrink:0}}>{c.icon}</div>
-                <div style={{textAlign:"left"}}>
+                <div style={{textAlign:"center"}}>
                   <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3}}>{c.label}</div>
                   <div style={{fontSize:11,color:`${CREAM}45`}}>{c.sub}</div>
                 </div>
@@ -1917,8 +1917,19 @@ function Contact(){
             display:"flex",alignItems:"center",justifyContent:"center",gap:6,
             color:`${CREAM}45`,fontSize:13,marginBottom:16,
           }}>
-            <Icon.mapPin/> 4Padel Saint-Louis &middot; La Réunion (974)
+            <Icon.mapPin/> 2 rue Benoite Boulard, 97450 Saint-Louis · La Réunion
           </div>
+
+          {/* Google Maps embed */}
+          <div style={{width:"100%",maxWidth:500,margin:"16px auto",borderRadius:14,overflow:"hidden",border:`1px solid ${CREAM}10`}}>
+            <iframe
+              src="https://maps.google.com/maps?q=2+rue+Benoite+Boulard+97450+Saint-Louis+La+Reunion&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              width="100%" height="220" style={{border:0}} allowFullScreen="" loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="ML Padel - 2 rue Benoite Boulard, Saint-Louis"
+            />
+          </div>
+
           <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
             display:"inline-flex",alignItems:"center",gap:6,
             color:`${CREAM}50`,textDecoration:"none",fontSize:13,transition:"color 0.3s",
