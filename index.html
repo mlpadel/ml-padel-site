@@ -23,6 +23,8 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -61,6 +63,18 @@
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
+/* ─── Firebase Config ─── */
+const firebaseConfig = {
+  apiKey: "AIzaSyA24T81-Ac5BmJe06rdOs7BhsYYw6BiEsY",
+  authDomain: "ml-padel-reviews.firebaseapp.com",
+  projectId: "ml-padel-reviews",
+  storageBucket: "ml-padel-reviews.firebasestorage.app",
+  messagingSenderId: "75604165889",
+  appId: "1:75604165889:web:487e5c5b20a0662ef78700"
+};
+const fbApp = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 /* ─── Palette Bleu Nuit & Or – ML_PADEL ─── */
 const NAVY = "#0a1628";
 const NAVY_MID = "#0f1f3d";
@@ -1943,6 +1957,163 @@ function Contact(){
   );
 }
 
+/* ─── Reviews / Avis ─── */
+function StarDisplay({rating,size=16,color=GOLD}){
+  return(
+    <span style={{display:"inline-flex",gap:1}}>
+      {[1,2,3,4,5].map(i=>{
+        const fill=rating>=i?1:rating>=i-0.5?0.5:0;
+        return(
+          <svg key={i} width={size} height={size} viewBox="0 0 20 20" fill="none">
+            <defs><linearGradient id={"sf"+i+size}><stop offset={fill*100+"%"} stopColor={color}/><stop offset={fill*100+"%"} stopColor={color+"30"}/></linearGradient></defs>
+            <path d="M10 1l2.5 5.5L18 7.5l-4 4 1 5.5L10 14.5 4.9 17l1-5.5-4-4 5.6-1z" fill={"url(#sf"+i+size+")"}/>
+          </svg>
+        );
+      })}
+    </span>
+  );
+}
+
+function StarInput({value,onChange}){
+  const[hover,setHover]=useState(0);
+  return(
+    <span style={{display:"inline-flex",gap:4,cursor:"pointer"}}>
+      {[1,2,3,4,5].map(i=>(
+        <svg key={i} width={32} height={32} viewBox="0 0 20 20" fill="none"
+          onMouseEnter={()=>setHover(i)} onMouseLeave={()=>setHover(0)}
+          onClick={()=>onChange(i)} style={{transition:"transform 0.15s",transform:(hover===i?"scale(1.2)":"scale(1)")}}
+        >
+          <path d="M10 1l2.5 5.5L18 7.5l-4 4 1 5.5L10 14.5 4.9 17l1-5.5-4-4 5.6-1z"
+            fill={(hover||value)>=i?GOLD:CREAM+"20"}/>
+        </svg>
+      ))}
+    </span>
+  );
+}
+
+function Reviews(){
+  const[reviews,setReviews]=useState([]);
+  const[showAll,setShowAll]=useState(false);
+  const[showForm,setShowForm]=useState(false);
+  const[formName,setFormName]=useState("");
+  const[formRating,setFormRating]=useState(0);
+  const[formComment,setFormComment]=useState("");
+  const[submitting,setSubmitting]=useState(false);
+  const[submitted,setSubmitted]=useState(false);
+
+  useEffect(()=>{
+    (async()=>{
+      try{
+        const snap=await db.collection("reviews").orderBy("createdAt","desc").limit(50).get();
+        setReviews(snap.docs.map(d=>({id:d.id,...d.data()})));
+      }catch(e){console.error("Firestore read:",e)}
+    })();
+  },[submitted]);
+
+  const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    if(!formName.trim()||!formRating||!formComment.trim())return;
+    setSubmitting(true);
+    try{
+      await db.collection("reviews").add({
+        name:formName.trim(),rating:formRating,comment:formComment.trim(),
+        createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      });
+      setFormName("");setFormRating(0);setFormComment("");
+      setShowForm(false);setSubmitted(prev=>!prev);
+    }catch(e){console.error("Firestore write:",e)}
+    setSubmitting(false);
+  };
+
+  const displayed=showAll?reviews:reviews.slice(0,3);
+
+  return(
+    <section id="reviews" style={{padding:"60px 24px 80px",background:"linear-gradient(175deg,"+NAVY_MID+" 0%,"+NAVY+" 100%)",color:CREAM,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:800,margin:"0 auto",textAlign:"center"}}>
+        <AnimatedSection>
+          <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Avis Clients</span>
+          <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3.5vw,34px)",fontWeight:900,marginTop:8,marginBottom:20,color:CREAM}}>Ce qu'ils pensent de ML Padel</h2>
+
+          {reviews.length>0&&(
+            <div style={{display:"inline-flex",alignItems:"center",gap:14,background:CREAM+"08",border:"1px solid "+GOLD+"30",borderRadius:16,padding:"16px 28px",marginBottom:32}}>
+              <span style={{fontSize:42,fontWeight:900,color:GOLD,lineHeight:1}}>{avg.toFixed(1)}</span>
+              <div style={{textAlign:"left"}}>
+                <StarDisplay rating={avg} size={18}/>
+                <div style={{fontSize:12,color:CREAM+"60",marginTop:2}}>{reviews.length} avis</div>
+              </div>
+            </div>
+          )}
+
+          {displayed.length>0&&(
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16,marginBottom:24,textAlign:"left"}}>
+              {displayed.map(r=>(
+                <div key={r.id} style={{background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:14,padding:"20px",transition:"border-color 0.3s"}}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor=GOLD+"44"}
+                  onMouseLeave={e=>e.currentTarget.style.borderColor=CREAM+"10"}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                    <span style={{fontWeight:700,fontSize:14,color:CREAM}}>{r.name}</span>
+                    <StarDisplay rating={r.rating} size={13}/>
+                  </div>
+                  <p style={{fontSize:13,color:CREAM+"70",lineHeight:1.5,margin:0}}>{r.comment}</p>
+                  {r.createdAt&&(<div style={{fontSize:11,color:CREAM+"30",marginTop:10}}>{new Date(r.createdAt.seconds*1000).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})}</div>)}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {reviews.length===0&&!showForm&&(<p style={{color:CREAM+"50",fontSize:14,marginBottom:24}}>Soyez le premier à laisser un avis !</p>)}
+
+          <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+            {reviews.length>3&&!showAll&&(
+              <button onClick={()=>setShowAll(true)} style={{background:"transparent",border:"1px solid "+GOLD+"50",color:GOLD,padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:600,cursor:"pointer",transition:"all 0.3s"}}
+                onMouseEnter={e=>{e.target.style.background=GOLD+"15";e.target.style.borderColor=GOLD}}
+                onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.borderColor=GOLD+"50"}}>
+                Voir tous les avis ({reviews.length})
+              </button>
+            )}
+            {showAll&&(<button onClick={()=>setShowAll(false)} style={{background:"transparent",border:"1px solid "+CREAM+"20",color:CREAM+"60",padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:600,cursor:"pointer"}}>Voir moins</button>)}
+            <button onClick={()=>setShowForm(!showForm)} style={{
+              background:showForm?"transparent":"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
+              border:showForm?"1px solid "+CREAM+"20":"none",
+              color:showForm?CREAM+"60":NAVY,
+              padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:700,cursor:"pointer",
+              transition:"all 0.3s",boxShadow:showForm?"none":"0 4px 20px "+GOLD+"30"
+            }}>{showForm?"Annuler":"Laisser un avis"}</button>
+          </div>
+
+          {showForm&&(
+            <form onSubmit={handleSubmit} style={{maxWidth:440,margin:"28px auto 0",textAlign:"left",background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:16,padding:24}}>
+              <div style={{marginBottom:16}}>
+                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Prénom</label>
+                <input value={formName} onChange={e=>setFormName(e.target.value)} placeholder="Votre prénom"
+                  style={{width:"100%",padding:"10px 14px",borderRadius:10,border:"1px solid "+CREAM+"15",background:CREAM+"06",color:CREAM,fontSize:14,outline:"none",boxSizing:"border-box"}}/>
+              </div>
+              <div style={{marginBottom:16}}>
+                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Note</label>
+                <StarInput value={formRating} onChange={setFormRating}/>
+              </div>
+              <div style={{marginBottom:20}}>
+                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Commentaire</label>
+                <textarea value={formComment} onChange={e=>setFormComment(e.target.value)} rows={3}
+                  placeholder="Partagez votre expérience..."
+                  style={{width:"100%",padding:"10px 14px",borderRadius:10,border:"1px solid "+CREAM+"15",background:CREAM+"06",color:CREAM,fontSize:14,outline:"none",resize:"vertical",fontFamily:"'DM Sans',sans-serif",boxSizing:"border-box"}}/>
+              </div>
+              <button type="submit" disabled={submitting||!formName.trim()||!formRating||!formComment.trim()} style={{
+                width:"100%",padding:"12px",borderRadius:50,border:"none",
+                background:(!formName.trim()||!formRating||!formComment.trim())?CREAM+"15":"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
+                color:(!formName.trim()||!formRating||!formComment.trim())?CREAM+"30":NAVY,
+                fontSize:14,fontWeight:700,cursor:submitting?"wait":"pointer",transition:"all 0.3s"
+              }}>{submitting?"Envoi...":"Envoyer mon avis"}</button>
+            </form>
+          )}
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Footer ─── */
 function Footer(){
   return(
@@ -2277,6 +2448,7 @@ function MLPadel(){
       <MapSection/>
       <CentrePhotos/>
       <Contact/>
+      <Reviews/>
       <Footer/>
     </div>
   );
