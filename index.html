@@ -3,86 +3,20 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>ML Padel â Coaching Ã  La RÃ©union</title>
-<meta name="description" content="ML Padel â Coaching de padel Ã  La RÃ©union par Mathias Laval, coach diplÃ´mÃ© d'Ãtat. Cours individuels, collectifs, stages et acadÃ©mie au 4Padel Saint-Louis."/>
+<title>ML Padel — Coaching à La Réunion</title>
+<meta name="description" content="ML Padel — Coaching de padel à La Réunion par Mathias Laval, coach diplômé d'état. Cours individuels, collectifs, stages et académie au 4Padel Saint-Louis."/>
 <meta name="theme-color" content="#0a1628"/>
-<meta property="og:type" content="website"/>
-<meta property="og:title" content="ML Padel â Coaching Ã  La RÃ©union"/>
-<meta property="og:description" content="Coaching de padel personnalisÃ© par Mathias Laval, coach diplÃ´mÃ© d'Ãtat. Cours individuels, collectifs, stages et acadÃ©mie au 4Padel Saint-Louis."/>
-<meta property="og:image" content="https://mlpadel.fr/position-attention.JPG"/>
-<meta property="og:url" content="https://mlpadel.fr"/>
-<meta property="og:locale" content="fr_FR"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="ML Padel â Coaching Ã  La RÃ©union"/>
-<meta name="twitter:description" content="Coaching de padel personnalisÃ© par Mathias Laval. Cours, stages et acadÃ©mie au 4Padel Saint-Louis, La RÃ©union."/>
-<meta name="twitter:image" content="https://mlpadel.fr/position-attention.JPG"/>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://mlpadel.fr"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore-compat.js"></script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
-  "name": "ML Padel",
-  "description": "Coaching de padel Ã  La RÃ©union par Mathias Laval, coach diplÃ´mÃ© d'Ãtat",
-  "url": "https://mlpadel.fr",
-  "telephone": "+262692627372",
-  "email": "mathias.laval38@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Le Five â 4Padel Saint-Louis",
-    "addressLocality": "Saint-Louis",
-    "addressRegion": "La RÃ©union",
-    "postalCode": "97450",
-    "addressCountry": "FR"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": -21.2868,
-    "longitude": 55.4097
-  },
-  "sport": "Padel",
-  "image": "https://mlpadel.fr/position-attention.JPG",
-  "priceRange": "20â¬ - 150â¬",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "07:00",
-    "closes": "21:00"
-  }
-}
-</script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-42T2TZ445S"></script>
-<script>
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','G-42T2TZ445S');
-</script>
-<link rel="manifest" href="/manifest.json"/>
 </head>
-<body><a href="#tarifs" style="position:absolute;top:-40px;left:0;background:#c9a84c;color:#0a1628;padding:8px 16px;zIndex:9999;fontWeight:700;transition:top 0.3s" onFocus="this.style.top='0'" onBlur="this.style.top='-40px'">Aller au contenu</a>
+<body>
 <div id="root"></div>
 <script type="text/babel">
 const { useState, useEffect, useRef, useCallback, useMemo } = React;
-/* âââ Firebase Config âââ */
-const firebaseConfig = {
-  apiKey: "AIzaSyA24T81-Ac5BmJe06rdOs7BhsYYw6BiEsY",
-  authDomain: "ml-padel-reviews.firebaseapp.com",
-  projectId: "ml-padel-reviews",
-  storageBucket: "ml-padel-reviews.firebasestorage.app",
-  messagingSenderId: "75604165889",
-  appId: "1:75604165889:web:487e5c5b20a0662ef78700"
-};
-const fbApp = firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-/* âââ Palette Bleu Nuit & Or â ML_PADEL âââ */
+/* ─── Palette Bleu Nuit & Or – ML_PADEL ─── */
 const NAVY = "#0a1628";
 const NAVY_MID = "#0f1f3d";
 const NAVY_LIGHT = "#162d50";
@@ -114,13 +48,13 @@ const CALCOM = {
 };
 const WHATSAPP_BASE = "https://wa.me/262692627372";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
-const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite rÃ©server un cours de padel ð¾");
+const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite réserver un cours de padel 🎾");
 const INSTAGRAM = "https://instagram.com/ml_padel";
 const PHONE = "0692 62 73 72";
 const PHONE_LINK = "tel:+262692627372";
 const EMAIL = "mathias.laval38@gmail.com";
 
-/* âââ Fonts & Global CSS âââ */
+/* ─── Fonts & Global CSS ─── */
 const fontLink = (
   <style>{`
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap');
@@ -133,13 +67,6 @@ const fontLink = (
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
     @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
-    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
-    @keyframes slideInLeft { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:translateX(0)} }
-    @keyframes slideInRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
-    #scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e0cb82);z-index:10001;transition:width 0.1s linear;width:0%}
-    .back-to-top{position:fixed;bottom:30px;right:30px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(201,168,76,0.4);z-index:999;transition:all 0.3s;opacity:0;pointer-events:none;transform:translateY(20px)}
-    .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
-    .back-to-top:hover{transform:translateY(-3px)!important;box-shadow:0 8px 30px rgba(201,168,76,0.6)}
     @media(max-width:768px){
       .nav-desktop{display:none!important}
       .nav-mobile-btn{display:flex!important}
@@ -152,14 +79,10 @@ const fontLink = (
       .stats-grid{grid-template-columns:1fr!important}
       #galerie .gallery-grid{grid-template-columns:repeat(2,1fr)!important}
     }
-  
-  .hide-scrollbar::-webkit-scrollbar{display:none}
-  .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-  `}
-</style>
+  `}</style>
 );
 
-/* âââ Hooks âââ */
+/* ─── Hooks ─── */
 function useInView(threshold=0.08){
   const ref=useRef(null);
   const[inView,setInView]=useState(false);
@@ -183,50 +106,54 @@ function AnimatedSection({children,style={},delay=0}){
   );
 }
 
-/* âââ Carousel Component âââ */
-function Carousel({images,height=320}){
+/* ─── Carousel Component ─── */
+function Carousel({images,height=320,autoPlay=4000}){
+  const[idx,setIdx]=useState(0);
+  const len=images.length;
+  useEffect(()=>{
+    if(!autoPlay||len<=1)return;
+    const t=setInterval(()=>setIdx(p=>(p+1)%len),autoPlay);
+    return()=>clearInterval(t);
+  },[autoPlay,len]);
   return(
-    <div>
-      <div className="hide-scrollbar" style={{
-        display:"flex",gap:12,overflowX:"auto",scrollSnapType:"x mandatory",
-        WebkitOverflowScrolling:"touch",borderRadius:16,height:height,
-        paddingBottom:4,
-      }}>
-        {images.map(function(img,i){return(
-          <div key={i} style={{
-            minWidth:"85%",height:"100%",position:"relative",
-            scrollSnapAlign:"center",borderRadius:16,overflow:"hidden",flexShrink:0,
-          }}>
+    <div style={{position:"relative",overflow:"hidden",borderRadius:18,border:`1px solid ${GOLD}18`,height}}>
+      <div style={{display:"flex",transition:"transform 0.6s cubic-bezier(0.25,1,0.5,1)",transform:`translateX(-${idx*100}%)`,height:"100%"}}>
+        {images.map((img,i)=>(
+          <div key={i} style={{minWidth:"100%",height:"100%",position:"relative"}}>
             {img.src?(
-              <img src={img.src} alt={img.alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
-            ):null}
-            {img.caption?(
-              <div style={{position:"absolute",bottom:0,left:0,right:0,
-                background:"linear-gradient(transparent,rgba(0,0,0,.6))",
-                padding:"40px 20px 20px",color:"#fff",fontSize:14,fontWeight:600}}>
-                {img.caption}
+              <img src={img.src} alt={img.alt||""} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+            ):(
+              <div style={{width:"100%",height:"100%",display:"flex",alignItems:"center",justifyContent:"center",background:`linear-gradient(135deg,${NAVY}08,${GOLD}08)`,flexDirection:"column",gap:8}}>
+                <span style={{fontSize:40,opacity:0.15}}>📸</span>
+                <span style={{color:TEXT_LIGHT,fontSize:13}}>{img.alt||"Photo à venir"}</span>
               </div>
-            ):null}
+            )}
+            {img.caption&&<div style={{position:"absolute",bottom:0,left:0,right:0,padding:"24px 16px 12px",background:"linear-gradient(transparent,rgba(10,22,40,0.7))"}}>
+              <span style={{color:CREAM,fontSize:13,fontWeight:600}}>{img.caption}</span>
+            </div>}
           </div>
-        )})}
+        ))}
       </div>
-      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginTop:10,opacity:0.5}}>
-        <span style={{fontSize:11,color:"#c9a84c",fontWeight:600}}>&#8592; swipe &#8594;</span>
-      </div>
+      {len>1&&<div style={{position:"absolute",bottom:10,left:"50%",transform:"translateX(-50%)",display:"flex",gap:6}}>
+        {images.map((_,i)=>(
+          <button key={i} onClick={()=>setIdx(i)} style={{width:i===idx?20:8,height:8,borderRadius:4,border:"none",background:i===idx?GOLD:`${CREAM}40`,cursor:"pointer",transition:"all 0.3s",padding:0}}/>
+        ))}
+      </div>}
     </div>
   );
 }
 
-function PhotoBanner({src,alt,height=280,overlay=true,objectPos="center center"}){
+/* ─── Photo Banner (transition entre sections) ─── */
+function PhotoBanner({src,alt,height=280,overlay=true}){
   return(
     <div style={{width:"100%",height,position:"relative",overflow:"hidden",zIndex:1}}>
-      <img src={src} alt={alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:objectPos,display:"block"}}/>
+      <img src={src} alt={alt||""} style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
       {overlay&&<div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,${NAVY}33 0%,transparent 30%,transparent 70%,${NAVY}33 100%)`}}/>}
     </div>
   );
 }
 
-/* âââ SVG Icons âââ */
+/* ─── SVG Icons ─── */
 const Icon={
   check:()=><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
   star:()=><svg width="15" height="15" viewBox="0 0 24 24" fill={GOLD} stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
@@ -238,30 +165,49 @@ const Icon={
   phone:()=><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
 };
 
-/* âââ Logo Component âââ */
-function Logo({size=36, scrolled=false}) {
+/* ─── Logo Component ─── */
+function Logo({size=36, showText=true, textColor=WHITE}) {
+  const s = size * 1.6;
   return (
-    <img 
-      src="./LOGO%20ML%20PADEL%202025%20(1).png" 
-      alt="ML Padel" 
-      style={{
-        height: size * 1.8,
-        width: "auto",
-        objectFit: "contain",
-        display: "block",
-        borderRadius: 10,
-        background: scrolled ? WHITE : "transparent",
-        padding: scrolled ? 2 : 0,
-        transition: "background 0.3s, padding 0.3s"
-      }}
-    />
+    <div style={{display:"flex",alignItems:"center",gap:0}}>
+      <svg width={s*2.2} height={s*1.1} viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+        {/* M and L letters */}
+        <text x="5" y="68" fontFamily="'Playfair Display',serif" fontWeight="900" fontSize="72" fill={textColor} letterSpacing="-2">ML</text>
+        {/* Padel racket integrated with L */}
+        <g transform="translate(108,8) rotate(25,30,45)">
+          {/* Racket head */}
+          <ellipse cx="30" cy="28" rx="22" ry="30" fill="none" stroke={GOLD} strokeWidth="3"/>
+          {/* Racket holes */}
+          <circle cx="22" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="30" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="38" cy="14" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="18" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="26" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="34" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="42" cy="22" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="20" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="28" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="36" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="42" cy="30" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="22" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="30" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          <circle cx="38" cy="38" r="2.5" fill={GOLD} opacity="0.9"/>
+          {/* Racket handle */}
+          <rect x="26" y="56" width="8" height="22" rx="3" fill={GOLD}/>
+          {/* Ball */}
+          <circle cx="38" cy="50" r="5" fill={GOLD} opacity="0.8"/>
+        </g>
+        {/* PADEL text */}
+        <text x="30" y="100" fontFamily="'Playfair Display',serif" fontWeight="800" fontSize="30" fill={GOLD} letterSpacing="8">PADEL</text>
+      </svg>
+    </div>
   );
 }
 
-/* âââ Padel Court Background â SUPPRIMÃ âââ */
+/* ─── Padel Court Background — SUPPRIMÉ ─── */
 function PadelBackground(){ return null; }
 
-/* âââ Navbar âââ */
+/* ─── Navbar ─── */
 function Navbar(){
   const[scrolled,setScrolled]=useState(false);
   const[menuOpen,setMenuOpen]=useState(false);
@@ -272,17 +218,15 @@ function Navbar(){
   },[]);
 
   const links=[
-    {label:"Ã la une",href:"#Ã©vÃ©nements"},
     {label:"Tarifs",href:"#tarifs"},
     {label:"Wallet",href:"#wallet"},
     {label:"Galerie",href:"#galerie"},
-    {label:"Boutique",href:"#boutique",badge:"New"},
-    {label:"AcadÃ©mie",href:"/academie-inscription.html"},{label:"FAQ",href:"#faq"},
+    {label:"FAQ",href:"#faq"},
     {label:"Contact",href:"#contact"},
   ];
 
   return(
-    <nav aria-label="Navigation principale" style={{
+    <nav style={{
       position:"fixed",top:0,left:0,right:0,zIndex:1000,
       background:scrolled?`${WARM_WHITE}f0`:"transparent",
       backdropFilter:scrolled?"blur(20px)":"none",
@@ -295,7 +239,7 @@ function Navbar(){
         height:scrolled?58:72,transition:"height 0.3s",
       }}>
         <a href="#hero" style={{textDecoration:"none"}}>
-          <Logo size={scrolled?32:36} scrolled={scrolled} />
+          <Logo size={scrolled?32:36} textColor={scrolled?NAVY:WHITE} />
         </a>
 
         <div style={{display:"flex",alignItems:"center",gap:28}} className="nav-desktop">
@@ -303,15 +247,11 @@ function Navbar(){
             <a key={l.href} href={l.href} style={{
               color:scrolled?TEXT_MED:"rgba(255,255,255,0.8)",
               textDecoration:"none",fontSize:13,fontWeight:600,letterSpacing:0.5,
-              transition:"color 0.3s",position:"relative",
+              transition:"color 0.3s",
             }}
             onMouseEnter={e=>e.target.style.color=GOLD}
             onMouseLeave={e=>e.target.style.color=scrolled?TEXT_MED:"rgba(255,255,255,0.8)"}
-            >{l.label}{l.badge&&<span style={{
-              position:"absolute",top:-8,right:-16,fontSize:8,fontWeight:800,
-              background:"#00c8ff",color:WHITE,padding:"1px 5px",borderRadius:6,
-              letterSpacing:0.3,animation:"pulse 2s ease-in-out infinite",
-            }}>{l.badge}</span>}</a>
+            >{l.label}</a>
           ))}
           <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
@@ -321,7 +261,7 @@ function Navbar(){
           }}
           onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 6px 25px ${GOLD}55`}}
           onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 4px 15px ${GOLD}44`}}
-          >RÃ©server</a>
+          >Réserver</a>
         </div>
 
         <button onClick={()=>setMenuOpen(!menuOpen)} className="nav-mobile-btn" style={{
@@ -355,21 +295,15 @@ function Navbar(){
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
             color:NAVY,padding:"14px 24px",borderRadius:50,
             textDecoration:"none",fontWeight:700,fontSize:14,textAlign:"center",marginTop:8,
-          }}>RÃ©server un cours</a>
+          }}>Réserver un cours</a>
         </div>
       )}
     </nav>
   );
 }
 
-/* âââ Hero with Background Carousel âââ */
+/* ─── Hero ─── */
 function Hero(){
-  const heroImages=["./_LAVAL012.JPG","./_LAVAL013.JPG","./_LAVAL014.JPG","./_LAVAL015.JPG","./_LAVAL017.JPG","./_LAVAL018.JPG"];
-  const[bgIdx,setBgIdx]=useState(0);
-  useEffect(()=>{
-    const t=setInterval(()=>setBgIdx(p=>(p+1)%heroImages.length),5000);
-    return()=>clearInterval(t);
-  },[]);
   return(
     <section id="hero" style={{
       minHeight:"100vh",position:"relative",overflow:"hidden",
@@ -377,20 +311,17 @@ function Hero(){
       background:NAVY,
       zIndex:1,
     }}>
-      {/* Background carousel */}
-      {heroImages.map((img,i)=>(
-        <div key={i} style={{
-          position:"absolute",inset:0,
-          backgroundImage:`url('${img}')`,
-          backgroundSize:"cover",backgroundPosition:"center center",
-          opacity:i===bgIdx?0.55:0,
-          transition:"opacity 1.5s ease-in-out",
-        }}/>
-      ))}
+      {/* Background photo */}
+      <div style={{
+        position:"absolute",inset:0,
+        backgroundImage:`url('./coup droit action.JPG')`,
+        backgroundSize:"cover",backgroundPosition:"center 30%",
+        opacity:0.25,
+      }}/>
       {/* Gradient overlay */}
       <div style={{
         position:"absolute",inset:0,
-        background:`linear-gradient(165deg, ${NAVY}aa 0%, ${NAVY_MID}88 45%, ${NAVY_LIGHT}55 100%)`,
+        background:`linear-gradient(165deg, ${NAVY}ee 0%, ${NAVY_MID}cc 45%, ${NAVY_LIGHT}99 100%)`,
       }}/>
       {/* Decorative elements */}
       <div style={{
@@ -420,7 +351,7 @@ function Hero(){
         }}>
           <span style={{display:"flex",color:GOLD}}><Icon.mapPin/></span>
           <span style={{fontSize:11,color:GOLD_PALE,fontWeight:600,letterSpacing:1.5,textTransform:"uppercase"}}>
-            La RÃ©union 974 &middot; 4Padel Saint-Louis
+            La Reunion 974 &middot; 4Padel Saint-Louis
           </span>
         </div>
 
@@ -435,7 +366,7 @@ function Hero(){
             background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD_PALE})`,
             backgroundSize:"200% auto",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent",
             animation:"shimmer 4s linear infinite",
-          }}>personnalisÃ©</span>
+          }}>personnalisé</span>
         </h1>
 
         <p style={{
@@ -443,8 +374,8 @@ function Hero(){
           maxWidth:520,margin:"0 auto 40px",lineHeight:1.7,
           animation:"fadeUp 0.8s ease-out 0.3s both",
         }}>
-          MÃ©thode structurÃ©e, coaching adaptÃ© Ã  ton niveau, rÃ©sultats concrets.
-          <br/>Saison 2026 â 2027 ouverte aux inscriptions.
+          Méthode structurée, coaching adapté à ton niveau, résultats concrets.
+          <br/>Saison 2026 – 2027 ouverte aux inscriptions.
         </p>
 
         <div className="hero-cta-row" style={{
@@ -459,7 +390,7 @@ function Hero(){
           }}
           onMouseEnter={e=>{e.target.style.transform="translateY(-2px)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
           onMouseLeave={e=>{e.target.style.transform="translateY(0)";e.target.style.boxShadow=`0 8px 32px ${GOLD}44`}}
-          >RÃ©server un cours</a>
+          >Réserver un cours</a>
 
           <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
             background:`${CREAM}10`,backdropFilter:"blur(10px)",
@@ -492,15 +423,11 @@ function Hero(){
   );
 }
 
-/* âââ About / Coach âââ */
+/* ─── About / Coach ─── */
 function About(){
-
-  const coachPhotos=["./_LAVAL019.JPG","./_LAVAL020.JPG","./_LAVAL029.JPG"];
-  const[coachIdx,setCoachIdx]=useState(0);
-  useEffect(()=>{const ci=setInterval(()=>setCoachIdx(p=>(p+1)%3),3000);return()=>clearInterval(ci);},[]);
   const stats=[
-    {num:"500+",label:"Ã©lÃ¨ves en 1 an"},
-    {num:"10 ans",label:"d'expÃ©rience coaching"},
+    {num:"500+",label:"élèves en 1 an"},
+    {num:"10 ans",label:"d'expérience coaching"},
     {num:"976 FR",label:"Top 1% classement"},
   ];
 
@@ -510,11 +437,13 @@ function About(){
         <div className="about-grid" style={{display:"flex",gap:48,alignItems:"center",flexWrap:"wrap"}}>
           {/* Photo placeholder */}
           <div className="about-photo" style={{
-            flex:"0 0 300px",minHeight:380,width:"100%",aspectRatio:"3/4",borderRadius:20,
+            flex:"0 0 300px",minHeight:380,borderRadius:20,
             border:`2px solid ${GOLD}20`,
             position:"relative",overflow:"hidden",
           }}>
-            {coachPhotos.map((ph,i)=>React.createElement("img",{key:i,src:ph,alt:"Coach Mathias Laval",loading:"eager",style:{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 15%",display:"block",minHeight:380,position:"absolute",top:0,left:0,opacity:i===coachIdx?1:0,transition:"opacity 0.8s ease"}}))}
+            <img src="./photo de profil.JPG" alt="Mathias Laval — Coach Padel" style={{
+              width:"100%",height:"100%",objectFit:"cover",display:"block",minHeight:380,
+            }}/>
             <div style={{
               position:"absolute",bottom:0,left:0,right:0,height:4,
               background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
@@ -525,7 +454,7 @@ function About(){
             <span style={{
               color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,
               textTransform:"uppercase",display:"block",marginBottom:12,
-            }}>Coach certifiÃ© &middot; 4Padel Academy</span>
+            }}>Coach certifié &middot; 4Padel Academy</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,3.5vw,38px)",
               fontWeight:900,marginBottom:16,lineHeight:1.15,color:TEXT_DARK,
@@ -533,9 +462,9 @@ function About(){
               Mathias Laval
             </h2>
             <p style={{color:TEXT_MED,lineHeight:1.8,fontSize:15,marginBottom:20}}>
-              Joueur classÃ© <strong>Top 1% en France</strong> (NÂ°976 FrMF DFMP), je mets mon expertise
-              au service de ta progression. MÃ©thode structurÃ©e, coaching individualisÃ© â du dÃ©butant
-              au compÃ©titeur confirmÃ©. Base au <strong>4Padel Saint-Louis, La RÃ©union</strong>.
+              Joueur classé <strong>Top 1% en France</strong> (N°976 FrMF DFMP), je mets mon expertise
+              au service de ta progression. Méthode structurée, coaching individualisé — du débutant
+              au compétiteur confirmé. Base au <strong>4Padel Saint-Louis, La Reunion</strong>.
             </p>
 
             <div className="stats-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>
@@ -569,13 +498,13 @@ function About(){
             Mon <span style={{color:GOLD}}>approche</span>
           </h3>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
-            Bienvenue Ã  toutes et Ã  tous sur mon site ML_PADEL avec comme coach diplÃ´mÃ© d'Ãtat depuis plus de <strong>10 ans</strong> Laval Mathias. ClassÃ© au mieux Ã  la <strong>976Ã¨me place nationale</strong>, j'ai toujours Ã  cÅur l'enseignement et la transmission de compÃ©tences dans de nombreux domaines. Aujourd'hui c'est avec une passion immense que je me mets Ã  votre disposition pour vous faire Ã©voluer dans votre projet padel.
+            Bienvenu à toutes et à tous sur mon site ML_PADEL avec comme coach diplômé d'état depuis plus de <strong>10 ans</strong> Laval Mathias. Classé au mieux à la <strong>976ème place nationale</strong>, j'ai toujours à cœur l'enseignement et la transmission de compétences dans de nombreux domaines. Aujourd'hui c'est avec une passion immense que je me mets à votre disposition pour vous faire évoluer dans votre projet padel.
           </p>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
-            Mon obsession ? Donner du <strong>sens</strong> Ã  votre progression. Chaque exercice, chaque conseil a un objectif clair. InstallÃ© sur l'Ã®le depuis plus d'un an, je suis Ã  votre entiÃ¨re disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
+            Mon obsession ? Donner du <strong>sens</strong> à votre progression. Chaque exercice, chaque conseil a un objectif clair. Installé sur l'île depuis plus d'un an, je suis à votre entière disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
           </p>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
-            Au programme : du <strong style={{color:GOLD}}>rire</strong>, de la <strong style={{color:GOLD}}>bienveillance</strong>, de l'<strong style={{color:GOLD}}>exigence</strong> et de la <strong style={{color:GOLD}}>rÃ©pÃ©tition</strong>. Alors, prÃªt Ã  tenir votre engagement et Ã  passer le cap de niveau que vous vous Ãªtes fixÃ© ?
+            Au programme : du <strong style={{color:GOLD}}>rire</strong>, de la <strong style={{color:GOLD}}>bienveillance</strong>, de l'<strong style={{color:GOLD}}>exigence</strong> et de la <strong style={{color:GOLD}}>répétition</strong>. Alors, prêt à tenir votre engagement et à passer le cap de niveau que vous vous êtes fixé ?
           </p>
           <p style={{
             color:GOLD,fontFamily:"'Playfair Display',serif",fontWeight:700,
@@ -590,10 +519,9 @@ function About(){
       <AnimatedSection delay={0.2}>
         <div style={{maxWidth:700,margin:"40px auto 0"}}>
           <Carousel images={[
-            {src:"./_LAVAL019.JPG",caption:"Coaching padel â ML Padel"},
-            {src:"./3balles-engagement.JPG",caption:"Engagement â 3 balles en main"},
-            {src:"./coup-droit-action.JPG",caption:"Coup droit en action"},
-            {src:"./apres-frappe.JPG",caption:"AprÃ¨s frappe â coup droit"},
+            {src:"./3 balles main gauche engagement.JPG",caption:"Engagement — 3 balles en main"},
+            {src:"./coup droit action.JPG",caption:"Coup droit en action"},
+            {src:"./après frappe coup droit.JPG",caption:"Après frappe — coup droit"},
           ]} height={420}/>
         </div>
       </AnimatedSection>
@@ -601,43 +529,12 @@ function About(){
   );
 }
 
-/* âââ Transition design aprÃ¨s About âââ */
+/* ─── Transition Photo après About ─── */
 function TransitionAbout(){
-  return(
-    <div style={{position:"relative",height:120,overflow:"hidden",zIndex:1}}>
-      {/* Vague du haut (couleur About = WARM_WHITE) */}
-      <svg style={{position:"absolute",top:0,left:0,width:"100%"}} viewBox="0 0 1440 60" fill="none" preserveAspectRatio="none">
-        <path d="M0,0 L1440,0 L1440,20 C1200,60 720,0 0,50 Z" fill={WARM_WHITE}/>
-      </svg>
-      {/* Fond dÃ©gradÃ© avec motif dorÃ© */}
-      <div style={{
-        width:"100%",height:"100%",
-        background:`linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 50%, ${NAVY_LIGHT} 100%)`,
-      }}>
-        <div style={{
-          position:"absolute",inset:0,opacity:0.06,
-          backgroundImage:`linear-gradient(${GOLD} 1px,transparent 1px),linear-gradient(90deg,${GOLD} 1px,transparent 1px)`,
-          backgroundSize:"40px 40px",
-        }}/>
-        {/* Ligne dorÃ©e centrale */}
-        <div style={{
-          position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",
-          display:"flex",alignItems:"center",gap:16,
-        }}>
-          <div style={{width:80,height:1,background:`linear-gradient(90deg,transparent,${GOLD})`}}/>
-          <div style={{width:8,height:8,borderRadius:"50%",background:GOLD,opacity:0.6}}/>
-          <div style={{width:80,height:1,background:`linear-gradient(90deg,${GOLD},transparent)`}}/>
-        </div>
-      </div>
-      {/* Vague du bas (couleur Pricing = WARM_WHITE) */}
-      <svg style={{position:"absolute",bottom:0,left:0,width:"100%"}} viewBox="0 0 1440 60" fill="none" preserveAspectRatio="none">
-        <path d="M0,40 C480,0 960,60 1440,30 L1440,60 L0,60 Z" fill={WARM_WHITE}/>
-      </svg>
-    </div>
-  );
+  return <PhotoBanner src="./position d_attention.JPG" alt="Position d'attention sur le terrain"/>;
 }
 
-/* âââ Tarifs / Pricing âââ */
+/* ─── Tarifs / Pricing ─── */
 function Pricing(){
   const[tab,setTab]=useState("individuel");
 
@@ -645,35 +542,35 @@ function Pricing(){
     {key:"individuel",label:"Individuels"},
     {key:"collectif",label:"Collectifs"},
     {key:"packs",label:"Packs 10h"},
-    {key:"acadÃ©mie",label:"AcadÃ©mie"},
+    {key:"academie",label:"Académie"},
     {key:"stages",label:"Stages"},
   ];
 
   const data={
     individuel:[
-      {title:"Cours individuel",price:"55",unit:"â¬/heure",desc:"1h Â· Heures creuses",features:["Coaching personnalisÃ©","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+      {title:"Cours individuel",price:"55",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
     ],
     collectif:[
-      {title:"Duo",price:"70",unit:"â¬/heure",desc:"1h Â· 2 joueurs Â· 35â¬/pers",features:["Travail diagonales","SÃ©ance technico-tactique","2 vs 1 avec le coach"],link:CALCOM.collectif},
-      {title:"Trio",price:"75",unit:"â¬/heure",desc:"1h Â· 3 joueurs Â· 25â¬/pers",features:["Match dirigÃ© avec le coach","Travail en cadence au panier","Format le plus populaire"],popular:true,link:CALCOM.collectif},
-      {title:"Quatuor",price:"80",unit:"â¬/heure",desc:"1h Â· 4 joueurs Â· 20â¬/pers",features:["Match coachÃ©","Conseils tactiques","Travail des schÃ©mas de jeux"],link:CALCOM.collectif},
+      {title:"Duo",price:"70",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach"],link:CALCOM.collectif},
+      {title:"Trio",price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Format le plus populaire"],popular:true,link:CALCOM.collectif},
+      {title:"Quatuor",price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux"],link:CALCOM.collectif},
     ],
     packs:[
-      {title:"Pack Individuel 10h",price:"470",unit:"â¬",desc:"10 Ã 1h Â· Soit 47â¬/h",features:["Ãconomie de 82,50â¬ (â15%)","FlexibilitÃ© des crÃ©neaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"â15%",popular:true,subPrice:"soit 47â¬/h au lieu de 55â¬",link:CALCOM.packIndiv10},
-      {title:"Pack Duo 10h",price:"300",unit:"â¬/personne",desc:"10 Ã 1h Â· 2 joueurs Â· Total groupe 600â¬",features:["Ãconomie de 15%","CrÃ©neaux flexibles","Paiement en euros (hors wallet)"],badge:"â15%",link:CALCOM.packCollectifDuo},
-      {title:"Pack Trio 10h",price:"210",unit:"â¬/personne",desc:"10 Ã 1h Â· 3 joueurs Â· Total groupe 630â¬",features:["Ãconomie de 15%","CrÃ©neaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"â15%",link:CALCOM.packCollectifTrio},
-      {title:"Pack Quatuor 10h",price:"170",unit:"â¬/personne",desc:"10 Ã 1h Â· 4 joueurs Â· Total groupe 680â¬",features:["Ãconomie de 15%","Soit 17â¬/pers/sÃ©ance","Le meilleur rapport qualitÃ©-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
+      {title:"Pack Individuel 10h",price:"495",unit:"€",desc:"10 × 1h · Soit 49,50€/h",features:["Économie de 55€ (–10%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–10%",popular:true,subPrice:"soit 49,50€/h au lieu de 55€",link:CALCOM.packIndiv10},
+      {title:"Pack Duo 10h",price:"315",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 630€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–10%",link:CALCOM.packCollectifDuo},
+      {title:"Pack Trio 10h",price:"225",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 675€",features:["Économie de 10%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–10%",link:CALCOM.packCollectifTrio},
+      {title:"Pack Quatuor 10h",price:"180",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 720€",features:["Économie de 10%","Soit 18€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
     ],
-    acadÃ©mie:[
-      {title:"Engagement annuel",price:"750",unit:"â¬/joueur/an",desc:"Septembre Ã  juin Â· 28 sÃ©ances",features:["Place rÃ©servÃ©e Ã  l'annÃ©e","28 sÃ©ances garanties","PrioritÃ© sur les crÃ©neaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadÃ©mie:true},
-      {title:"Engagement semestriel",price:"420",unit:"â¬/joueur/semestre",desc:"AoÃ»t Ã  dÃ©cembre et/ou janvier Ã  mai Â· 14 sÃ©ances",features:["FlexibilitÃ© semestrielle","14 sÃ©ances garanties","IdÃ©al pour dÃ©couvrir"],badge:"SEMESTRE",isAcadÃ©mie:true,link:"/academie-inscription.html"},
+    academie:[
+      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"#",isAcademie:true},
+      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcademie:true,link:"#"},
     ],
     stages:[
-      {title:"Stage vacances",price:"150",unit:"â¬/joueur",desc:"1 terrain Â· 4 groupes Â· 1h30 Â· 5 jours",features:["Stage complet (semaine)","Niveaux adaptÃ©s","IdÃ©al vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
-      {title:"Stage 2 terrains",price:"120",unit:"â¬/joueur",desc:"4 groupes Â· 1h30 Â· 5 jours Â· 8 joueurs/gr",features:["Ãconomie de 20%","Plus de crÃ©neaux","8 joueurs par groupe"],popular:true,badge:"â20%",link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
-      {title:"Masterclass WE 4j",price:"100",unit:"â¬/joueur",desc:"2 Ã 3h Â· 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblÃ©"],link:CALCOM.masterclass4},
-      {title:"Masterclass WE 8j",price:"80",unit:"â¬/joueur",desc:"2 Ã 3h Â· 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif rÃ©duit"],link:CALCOM.masterclass8},
-      {title:"Stage OcÃ©an Indien",price:"BientÃ´t",unit:"",desc:"Multi-jours Â· RÃ©union, Maurice, Afrique du Sud",features:["ExpÃ©rience immersive","Destinations paradisiaques","Padel & dÃ©couverte"],soon:true},
+      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage},
+      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage},
+      {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4},
+      {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8},
+      {title:"Stage Ocean Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Reunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
     ],
   };
 
@@ -685,13 +582,13 @@ function Pricing(){
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
             <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-              Tarifs Saison 2026 â 2027
+              Tarifs Saison 2026 – 2027
             </span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,40px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              Trouve la formule <span style={{color:GOLD}}>idÃ©ale</span>
+              Trouve la formule <span style={{color:GOLD}}>idéale</span>
             </h2>
           </div>
 
@@ -700,7 +597,6 @@ function Pricing(){
             background:WHITE,borderRadius:50,padding:4,
             boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 40px",
             border:`1px solid ${GOLD}15`,
-            overflowX:"auto",maxWidth:"100%",WebkitOverflowScrolling:"touch",
           }}>
             {tabs.map(t=>(
               <button key={t.key} onClick={()=>setTab(t.key)} style={{
@@ -774,7 +670,7 @@ function Pricing(){
                     position:"absolute",top:-10,right:18,
                     background:TEXT_LIGHT,color:WHITE,padding:"3px 12px",borderRadius:50,
                     fontSize:10,fontWeight:700,
-                  }}>BIENTÃT</div>
+                  }}>BIENTÔT</div>
                 )}
 
                 <h3 style={{
@@ -803,21 +699,6 @@ function Pricing(){
                   ))}
                 </div>
 
-                {o.spotsLeft!=null&&(
-                  <div style={{marginBottom:10}}>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
-                      <span style={{fontSize:11,fontWeight:600,color:TEXT_LIGHT}}>DisponibilitÃ©</span>
-                      <span style={{fontSize:11,fontWeight:700,color:o.spotsLeft<=2?"#e07b5a":o.spotsLeft<=4?GOLD:"#4ade80"}}>
-                        {o.spotsLeft}/{o.spotsTotal} places
-                      </span>
-                    </div>
-                    <div style={{height:5,borderRadius:3,background:"#f0ede8",overflow:"hidden"}}>
-                      <div style={{height:"100%",borderRadius:3,width:Math.round((o.spotsTotal-o.spotsLeft)/o.spotsTotal*100)+"%",
-                        background:o.spotsLeft<=2?"#e07b5a":o.spotsLeft<=4?GOLD:"#4ade80",transition:"width 1s ease"}}/>
-                    </div>
-                  </div>
-                )}
-
                 {!o.soon&&(
                   <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
                     display:"block",textAlign:"center",padding:"11px 0",
@@ -836,7 +717,7 @@ function Pricing(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >{o.isAcadÃ©mie?"S'inscrire":"RÃ©server"}</a>
+                  >{o.isAcademie?"Remplir le formulaire":"Réserver"}</a>
                 )}
               </div>
             </AnimatedSection>
@@ -847,24 +728,19 @@ function Pricing(){
   );
 }
 
-/* âââ Carrousel Coaching (aprÃ¨s Pricing) âââ */
+/* ─── Carrousel Coaching (après Pricing) ─── */
 function CoachingCarousel(){
   return(
     <section style={{padding:"40px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:20}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Nos Ã©lÃ¨ves en action</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Nos élèves en action</span>
           </div>
           <Carousel images={[
-            {src:"./_LAVAL021.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL022.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL023.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL024.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL025.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL026.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL027.JPG",alt:"Coaching padel en action"},
-            {src:"./_LAVAL028.JPG",alt:"Coaching padel en action"}
+            {src:null,alt:"Photo à venir"},
+            {src:"./Math avec enfants.JPG",caption:"Coaching enfants — initiation padel"},
+            {src:null,alt:"Photo à venir"},
           ]} height={380}/>
         </AnimatedSection>
       </div>
@@ -872,48 +748,21 @@ function CoachingCarousel(){
   );
 }
 
-/* âââ Transition design aprÃ¨s Pricing âââ */
+/* ─── Transition Photo après Pricing ─── */
 function TransitionPricing(){
-  return(
-    <div style={{position:"relative",height:100,overflow:"hidden",zIndex:1}}>
-      <svg style={{position:"absolute",top:0,left:0,width:"100%"}} viewBox="0 0 1440 50" fill="none" preserveAspectRatio="none">
-        <path d="M0,0 L1440,0 L1440,15 C960,50 480,10 0,40 Z" fill={WARM_WHITE}/>
-      </svg>
-      <div style={{
-        width:"100%",height:"100%",
-        background:`linear-gradient(135deg, ${NAVY_LIGHT} 0%, ${NAVY_MID} 50%, ${NAVY} 100%)`,
-      }}>
-        <div style={{
-          position:"absolute",inset:0,opacity:0.04,
-          backgroundImage:`radial-gradient(circle, ${GOLD} 1px, transparent 1px)`,
-          backgroundSize:"24px 24px",
-        }}/>
-        <div style={{
-          position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",
-          display:"flex",alignItems:"center",gap:12,
-        }}>
-          <div style={{width:60,height:1,background:`linear-gradient(90deg,transparent,${GOLD}60)`}}/>
-          <div style={{width:6,height:6,borderRadius:"50%",border:`1.5px solid ${GOLD}60`}}/>
-          <div style={{width:60,height:1,background:`linear-gradient(90deg,${GOLD}60,transparent)`}}/>
-        </div>
-      </div>
-      <svg style={{position:"absolute",bottom:0,left:0,width:"100%"}} viewBox="0 0 1440 50" fill="none" preserveAspectRatio="none">
-        <path d="M0,30 C720,0 1080,50 1440,20 L1440,50 L0,50 Z" fill={WARM_WHITE}/>
-      </svg>
-    </div>
-  );
+  return <PhotoBanner src="./engagement dynamique.JPG" alt="Engagement dynamique"/>;
 }
 
-/* âââ Horaires & DisponibilitÃ©s âââ */
+/* ─── Horaires & Disponibilités ─── */
 function Horaires(){
   const slots=[
-    {icon:"ð¤",label:"Cours individuels & collectifs",horaire:"Lun â Ven Â· 6h â 16h",note:"Heures creuses uniquement",color:GOLD},
-    {icon:"ð",label:"AcadÃ©mie adulte",horaire:"Lun â Jeu Â· 16h â 22h",note:"SÃ©ances hebdomadaires en soirÃ©e",color:"#6c9bcf"},
-    {icon:"ðï¸",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complÃ¨te ou week-end",color:"#e07b5a"},
+    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Lun – Ven · 6h – 16h",note:"Heures creuses uniquement",color:GOLD},
+    {icon:"🎓",label:"Académie adulte",horaire:"Lun – Jeu · 16h – 22h",note:"Séances hebdomadaires en soirée",color:"#6c9bcf"},
+    {icon:"🏕️",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complète ou week-end",color:"#e07b5a"},
   ];
 
   return(
-    <section style={{padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"48px 24px 0",background:WARM_WHITE,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
@@ -922,8 +771,8 @@ function Horaires(){
           }}>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:20}}>
               <Icon.calendar/>
-              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:700,color:TEXT_DARK}}>
-                Horaires & <span style={{color:GOLD}}>disponibilitÃ©s</span>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:18,fontWeight:700,color:TEXT_DARK}}>
+                Horaires & <span style={{color:GOLD}}>disponibilités</span>
               </h3>
             </div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:14}}>
@@ -935,9 +784,9 @@ function Horaires(){
                 }}>
                   <span style={{fontSize:22,lineHeight:1,marginTop:2}}>{s.icon}</span>
                   <div>
-                    <div style={{fontSize:15,fontWeight:700,color:TEXT_DARK,marginBottom:4}}>{s.label}</div>
-                    <div style={{fontSize:15,fontWeight:800,color:s.color}}>{s.horaire}</div>
-                    <div style={{fontSize:12,color:TEXT_LIGHT,marginTop:3}}>{s.note}</div>
+                    <div style={{fontSize:13,fontWeight:700,color:TEXT_DARK,marginBottom:3}}>{s.label}</div>
+                    <div style={{fontSize:14,fontWeight:800,color:s.color}}>{s.horaire}</div>
+                    <div style={{fontSize:11,color:TEXT_LIGHT,marginTop:2}}>{s.note}</div>
                   </div>
                 </div>
               ))}
@@ -949,12 +798,12 @@ function Horaires(){
   );
 }
 
-/* âââ Wallet / Credits âââ */
+/* ─── Wallet / Credits ─── */
 function Wallet(){
   const tiers=[
-    {amount:100,bonus:5,credits:105,label:"100â¬",stripe:"https://buy.stripe.com/5kQdR23dp9LZdfm1oNa7C00"},
-    {amount:200,bonus:10,credits:220,label:"200â¬",stripe:"https://buy.stripe.com/9B69AM4ht7DR5MU2sRa7C01"},
-    {amount:300,bonus:15,credits:345,label:"300â¬",best:true,stripe:"https://buy.stripe.com/28E6oAbJV1ftfnu4AZa7C02"},
+    {amount:100,bonus:5,credits:105,label:"100€",stripe:"https://buy.stripe.com/5kQdR23dp9LZdfm1oNa7C00"},
+    {amount:200,bonus:10,credits:220,label:"200€",stripe:"https://buy.stripe.com/9B69AM4ht7DR5MU2sRa7C01"},
+    {amount:300,bonus:15,credits:345,label:"300€",best:true,stripe:"https://buy.stripe.com/28E6oAbJV1ftfnu4AZa7C02"},
   ];
 
   const uses=[
@@ -966,7 +815,7 @@ function Wallet(){
 
   return(
     <section id="wallet" style={{
-      padding:"80px 24px 20px",
+      padding:"80px 24px",
       background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,
       color:CREAM,
       position:"relative",
@@ -976,17 +825,17 @@ function Wallet(){
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
             <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-              Wallet ML_Padel &middot; SystÃ¨me de crÃ©dits
+              Wallet ML_Padel &middot; Système de crédits
             </span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:CREAM,
             }}>
-              Chargez. Jouez. <span style={{color:GOLD}}>Ãconomisez.</span>
+              Chargez. Jouez. <span style={{color:GOLD}}>Économisez.</span>
             </h2>
             <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
-              1 crÃ©dit = 1â¬ â Plus vous chargez, plus vous gagnez de crÃ©dits bonus.
-              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute rÃ©duction ou promotion.
+              1 crédit = 1€ — Plus vous chargez, plus vous gagnez de crédits bonus.
+              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
             </p>
           </div>
         </AnimatedSection>
@@ -998,8 +847,8 @@ function Wallet(){
           }}>
             {[
               {n:"1",t:"Chargez votre wallet avec le montant de votre choix"},
-              {n:"2",t:"Recevez vos crÃ©dits bonus immÃ©diatement selon le palier"},
-              {n:"3",t:"Utilisez vos crÃ©dits sur toutes les prestations"},
+              {n:"2",t:"Recevez vos crédits bonus immédiatement selon le palier"},
+              {n:"3",t:"Utilisez vos crédits sur toutes les prestations"},
             ].map((s,i)=>(
               <div key={i} style={{display:"flex",alignItems:"center",gap:12,maxWidth:250}}>
                 <div style={{
@@ -1021,7 +870,7 @@ function Wallet(){
             padding:"14px 20px",textAlign:"center",marginBottom:32,
           }}>
             <span style={{fontSize:13,color:`${CREAM}90`}}>
-              Exemple : je crÃ©dite <strong style={{color:GOLD}}>500â¬</strong> â 300â¬ (345 cr.) + 200â¬ (220 cr.) = <strong style={{color:GOLD}}>565 crÃ©dits</strong> au total
+              Exemple : je crédite <strong style={{color:GOLD}}>500€</strong> → 300€ (345 cr.) + 200€ (220 cr.) = <strong style={{color:GOLD}}>565 crédits</strong> au total
             </span>
           </div>
         </AnimatedSection>
@@ -1056,11 +905,11 @@ function Wallet(){
                   background:`${GOLD}20`,borderRadius:10,padding:"10px 0",marginBottom:14,
                 }}>
                   <span style={{fontSize:18,fontWeight:800,color:GOLD}}>+{t.bonus}%</span>
-                  <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de crÃ©dits bonus</span>
+                  <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de crédits bonus</span>
                 </div>
 
                 <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
-                  Vous obtenez <strong style={{color:GOLD}}>{t.credits} crÃ©dits</strong>
+                  Vous obtenez <strong style={{color:GOLD}}>{t.credits} crédits</strong>
                 </p>
                 <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8,marginBottom:14}}>
                   Payable en 1 fois
@@ -1087,7 +936,7 @@ function Wallet(){
             border:`1px solid ${CREAM}08`,
           }}>
             <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:15,fontWeight:700,marginBottom:14,color:CREAM}}>
-              Utilisez vos crÃ©dits
+              Utilisez vos crédits
             </h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
               {uses.map((u,i)=>(
@@ -1104,7 +953,7 @@ function Wallet(){
               ))}
             </div>
             <p style={{fontSize:11,color:`${CREAM}30`,marginTop:14,textAlign:"center"}}>
-              CrÃ©dits valables 12 mois &middot; Non remboursables &middot; Non transfÃ©rables &middot; Non cumulable avec toute rÃ©duction ou promotion &middot; Paiement en 1 fois
+              Crédits valables 12 mois &middot; Non remboursables &middot; Non transférables &middot; Non cumulable avec toute réduction ou promotion &middot; Paiement en 1 fois
             </p>
           </div>
         </AnimatedSection>
@@ -1113,7 +962,7 @@ function Wallet(){
   );
 }
 
-/* âââ Mon Wallet â Espace Client avec Cal.com intÃ©grÃ© âââ */
+/* ─── Mon Wallet — Espace Client avec Cal.com intégré ─── */
 function WalletClient(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
@@ -1167,7 +1016,7 @@ function WalletClient(){
   };
 
   const verifyOtp=async()=>{
-    if(!otp||otp.length<4){setError("Entrez le code recu par email");return}
+    if(!otp||otp.length<4){setError("Entrez le code reçu par email");return}
     setLoading(true);setError("");
     try{
       const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"verifyOtp",email,otp})});
@@ -1190,7 +1039,7 @@ function WalletClient(){
   };
 
   const bookWithWallet=async()=>{
-    if(!client){setError("Client non connecte");return}
+    if(!client){setError("Client non connecté");return}
     if(client.solde<credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+credits+" cr.)");return}
     setBooking(true);setError("");setSuccess("");
     var today=new Date().toISOString().split("T")[0];
@@ -1199,10 +1048,10 @@ function WalletClient(){
         body:JSON.stringify({action:"debit",email:email,prestation:prestationKey,date:today,creneau:"",nbPersonnes:1})});
       const d=await r.json();
       if(d.success){
-        setSuccess("Reservation confirmee ! "+prestationLabel+" - "+d.debit+" cr. debites. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
         setCalcomDone(false);
-      }else setError(d.error||"Erreur lors du debit");
+      }else setError(d.error||"Erreur lors du débit");
     }catch(err){setError("Erreur de connexion")}
     setBooking(false);
   };
@@ -1247,9 +1096,9 @@ function WalletClient(){
                 </div>
               ):(
                 <div>
-                  <p style={{fontSize:13,color:`${CREAM}60`,marginBottom:10}}>Code envoye a <strong style={{color:GOLD}}>{email}</strong></p>
+                  <p style={{fontSize:13,color:`${CREAM}60`,marginBottom:10}}>Code envoyé à <strong style={{color:GOLD}}>{email}</strong></p>
                   <div style={{display:"flex",gap:10,marginBottom:8}}>
-                    <input type="text" placeholder="Code a 6 chiffres" value={otp}
+                    <input type="text" placeholder="Code à 6 chiffres" value={otp}
                       onChange={e=>setOtp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
                       style={{...inputStyle,flex:1,letterSpacing:4,textAlign:"center",fontSize:18}}/>
                     <button onClick={verifyOtp} disabled={loading} style={{
@@ -1281,7 +1130,7 @@ function WalletClient(){
                   <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
                     {client.solde.toFixed(1)}
                   </div>
-                  <div style={{fontSize:11,color:`${CREAM}50`}}>credits disponibles</div>
+                  <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
                 </div>
               </div>
 
@@ -1290,7 +1139,7 @@ function WalletClient(){
                   {loadingHist?"...":showHistory?"Masquer l'historique":"Voir l'historique"}
                 </button>
                 <button onClick={disconnect} style={{background:"transparent",border:"none",color:`${CREAM}30`,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
-                  Deconnexion
+                  Déconnexion
                 </button>
               </div>
 
@@ -1312,7 +1161,7 @@ function WalletClient(){
 
               <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
                 <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
-                  Reserver avec mes credits
+                  Réserver avec mes crédits
                 </h4>
 
                 <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Type de cours</label>
@@ -1330,7 +1179,7 @@ function WalletClient(){
                 </div>
 
                 {sel.hasDuree&&(<div style={{marginBottom:16}}>
-                  <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Duree</label>
+                  <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Durée</label>
                   <div style={{display:"flex",gap:8}}>
                     {durees.map(function(d){return(
                       <button key={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
@@ -1349,7 +1198,7 @@ function WalletClient(){
                   display:"flex",justifyContent:"space-between",alignItems:"center",
                   padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:16,
                 }}>
-                  <span style={{fontSize:13,color:`${CREAM}60`}}>{prestationLabel} - <strong style={{color:GOLD}}>{credits} cr.</strong></span>
+                  <span style={{fontSize:13,color:`${CREAM}60`}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
                   <span style={{fontSize:13,color:`${CREAM}60`}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
                 </div>
 
@@ -1366,14 +1215,14 @@ function WalletClient(){
                         color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                         textDecoration:"none",transition:"all 0.3s",marginBottom:10,
                       }}>
-                      Reserver mon creneau sur Cal.com
+                      Réserver mon créneau sur Cal.com
                     </a>
                     <button onClick={function(){setCalcomDone(true);setError("");setSuccess("")}} style={{
                       width:"100%",padding:"12px",borderRadius:12,border:`1.5px solid ${GOLD}40`,
                       background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
                       fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
                     }}>
-                      J'ai reserve mon creneau
+                      J'ai réservé mon créneau
                     </button>
                   </div>
                 ):(
@@ -1384,7 +1233,7 @@ function WalletClient(){
                       color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                       transition:"all 0.3s",opacity:booking?0.6:1,marginBottom:8,
                     }}>
-                      {booking?"Debit en cours...":"Valider et debiter "+credits+" credits"}
+                      {booking?"Débit en cours...":"Valider et débiter "+credits+" crédits"}
                     </button>
                     <button onClick={function(){setCalcomDone(false);setError("");setSuccess("")}} style={{
                       width:"100%",padding:"10px",borderRadius:10,border:"none",
@@ -1400,13 +1249,13 @@ function WalletClient(){
             )}
 
             <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}03`,border:`1px solid ${CREAM}08`}}>
-              <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Credits utilisables sur :</div>
+              <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Crédits utilisables sur :</div>
               <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                \u2713 Cours individuels \u00b7 \u2713 Cours collectifs \u00b7 \u2713 Stages vacances \u00b7 \u2713 Masterclass week-end
+                ✓ Cours individuels &middot; ✓ Cours collectifs &middot; ✓ Stages vacances &middot; ✓ Masterclass week-end
               </div>
               <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
               <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                \u2717 Packs 10h (deja -15%) \u00b7 \u2717 Academie annuelle (750\u20ac) \u00b7 \u2717 Academie semestrielle (420\u20ac) \u00b7 \u2717 Toute promotion en cours
+                ✗ Packs 10h (déjà –15%) &middot; ✗ Académie annuelle (750€) &middot; ✗ Académie semestrielle (420€) &middot; ✗ Toute promotion en cours
               </div>
             </div>
           </div>
@@ -1417,6 +1266,7 @@ function WalletClient(){
 }
 
 
+/* ─── Instagram / Réseaux ─── */
 function InstagramSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
@@ -1450,10 +1300,10 @@ function InstagramSection(){
               aspectRatio:"16/9",
               background:WHITE,
               display:"flex",alignItems:"center",justifyContent:"center",
-              padding:0,overflow:"hidden",
+              padding:24,overflow:"hidden",
             }}>
-              <img src="./profil-instagram.png" alt="Profil Instagram @ml_padel" loading="lazy" style={{
-                width:"100%",height:"100%",objectFit:"cover",
+              <img src="./Profil instagram.png" alt="Profil Instagram @ml_padel" style={{
+                width:"100%",height:"100%",objectFit:"contain",
               }}/>
             </div>
 
@@ -1473,36 +1323,21 @@ function InstagramSection(){
   );
 }
 
-/* âââ Galerie Photos (vrac) âââ */
+/* ─── Galerie Photos (vrac) ─── */
 function Gallery(){
   const photos=[
-    {src:"./_LAVAL012.JPG",alt:"Coaching sur le terrain"},
-    {src:"./_LAVAL013.JPG",alt:"Action sur le terrain"},
-    {src:"./_LAVAL014.JPG",alt:"Coaching padel"},
-    {src:"./_LAVAL015.JPG",alt:"Technique padel"},
-    {src:"./_LAVAL017.JPG",alt:"EntraÃ®nement padel"},
-    {src:"./_LAVAL018.JPG",alt:"Session coaching"},
-    {src:"./_LAVAL021.JPG",alt:"ÃlÃ¨ves en action"},
-    {src:"./_LAVAL022.JPG",alt:"Coaching collectif"},
-    {src:"./_LAVAL023.JPG",alt:"Session groupe"},
-    {src:"./_LAVAL024.JPG",alt:"Pratique en duo"},
-    {src:"./_LAVAL025.JPG",alt:"Ãchange padel"},
-    {src:"./_LAVAL026.JPG",alt:"Match entraÃ®nement"},
-    {src:"./_LAVAL027.JPG",alt:"Exercice padel"},
-    {src:"./_LAVAL028.JPG",alt:"Groupe padel"},
-    {src:"./action-volee.jpg",alt:"VolÃ©e en action"},
+    {src:"./volée action.jpg",alt:"Volée en action"},
     {src:"./engagement.JPG",alt:"Engagement"},
     {src:"./explication.JPG",alt:"Explication tactique"},
-    {src:"./avant-coup-droit.JPG",alt:"Avant coup droit"},
-    {src:"./math-2-enfants.JPG",alt:"Coaching avec 2 enfants"},
-    {src:"./engagement-dynamique.JPG",alt:"Engagement dynamique"},
-    {src:"./partenaire-charly.jpg",alt:"Partenaire Charly â finale"},
-    {src:"./partenaire-galloo.jpg",alt:"Partenaire Galloo"},
-    {src:"./position-attention.JPG",alt:"Position d'attention"},
-    {src:"./coup-droit-action.JPG",alt:"Coup droit en action"},
-    {src:"./apres-frappe.JPG",alt:"AprÃ¨s frappe coup droit"},
-    {src:"./_LAVAL019.JPG",caption:"Coaching padel â ML Padel"},
-            {src:"./3balles-engagement.JPG",alt:"3 balles â engagement"},
+    {src:"./avant coup droit.JPG",alt:"Avant coup droit"},
+    {src:"./Math avec 2 enfants.JPG",alt:"Coaching avec 2 enfants"},
+    {src:"./engagement dynamique.JPG",alt:"Engagement dynamique"},
+    {src:"./partenaire charly finale.jpg",alt:"Partenaire Charly — finale"},
+    {src:"./partenaire galloo.jpg",alt:"Partenaire Galloo"},
+    {src:"./position d_attention.JPG",alt:"Position d'attention"},
+    {src:"./coup droit action.JPG",alt:"Coup droit en action"},
+    {src:"./après frappe coup droit.JPG",alt:"Après frappe coup droit"},
+    {src:"./3 balles main gauche engagement.JPG",alt:"3 balles — engagement"},
   ];
 
   return(
@@ -1567,112 +1402,93 @@ function Gallery(){
   );
 }
 
-/* âââ Boutique Pallap â Partenaire Officiel âââ */
-function PallapShop(){
-  const PALLAP_URL="https://pallapsport.com/fr?country=FR";
-  const PALLAP_CYAN="#00c8ff";
-  const categories=[
-    {key:"raquettes",label:"Raquettes",icon:"\u{1F3D3}",url:"https://pallapsport.com/fr/collections/raquettes-de-padel",img:"./pallap-raquette-menu.png"},
-    {key:"textile_h",label:"Textile Homme",icon:"\u{1F455}",url:"https://pallapsport.com/fr/collections/vetements-padel-homme",img:"./pallap-vetement-homme-menu.png"},
-    {key:"textile_f",label:"Textile Femme",icon:"\u{1F457}",url:"https://pallapsport.com/fr/collections/vetements-padel-femme",img:"./pallap-vetement-femme-menu.png"},
-    {key:"accessoires",label:"Accessoires",icon:"\u{1F392}",url:"https://pallapsport.com/fr/collections/accessoires-padel",img:"./pallap-accessoire-menu.png"},
+/* ─── Sponsor PALLAP ─── */
+function Sponsor(){
+  const PALLAP_URL="https://pallapsport.com/fr?srsltid=AfmBOopTTQfTo90RBqQETenG08l5H3HcTOXWRm91E8jA6ix2JzC4TWjl&country=FR";
+  const products=[
+    {name:"Raquettes padel",img:"https://pallapsport.com/cdn/shop/files/POCKET_PADEL_CARBON_3K_2.png?v=1706882718&width=600"},
+    {name:"Textiles",img:"https://pallapsport.com/cdn/shop/files/maillotHommeDry-Fit2-removebg-preview.png?v=1724752648&width=600"},
+    {name:"Accessoires",img:"https://pallapsport.com/cdn/shop/files/SURGRIP_LOT_DE_3.png?v=1710925894&width=600"},
+    {name:"Sacs padel",img:"https://pallapsport.com/cdn/shop/files/SAC_PADEL_1.png?v=1706882726&width=600"},
   ];
-
   return(
-    <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:1100,margin:"0 auto"}}>
+    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1000,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Ambassadeur officiel</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Partenaire officiel</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              Boutique <span style={{color:PALLAP_CYAN}}>pallap</span>
+              Mon <span style={{color:GOLD}}>sponsor</span>
             </h2>
-            <p style={{color:TEXT_MED,fontSize:15,marginTop:10,maxWidth:580,margin:"10px auto 0"}}>
-              Made in Spain â Materiel de qualite professionnelle. Cliquez sur une categorie pour decouvrir la gamme sur le site officiel PALLAP.
-            </p>
           </div>
         </AnimatedSection>
 
-        {/* Bandeau Pallap */}
+        {/* Logo + présentation */}
         <AnimatedSection delay={0.1}>
-          <div style={{marginBottom:36,borderRadius:20,overflow:"hidden",border:`2px solid ${PALLAP_CYAN}30`,boxShadow:`0 8px 30px ${NAVY}15`}}>
-            <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer">
-              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP â Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}}/>
-            </a>
-          </div>
+          <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
+            display:"block",borderRadius:20,overflow:"hidden",
+            border:`2px solid ${GOLD}20`,background:WHITE,
+            textDecoration:"none",transition:"all 0.3s",marginBottom:32,
+            boxShadow:`0 4px 24px ${NAVY}08`,
+          }}
+          onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 14px 44px ${GOLD}15`}}
+          onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=`0 4px 24px ${NAVY}08`}}
+          >
+            <div style={{padding:"32px 40px",textAlign:"center"}}>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:TEXT_DARK,marginBottom:12}}>
+                PALLAP<span style={{color:GOLD}}>SPORT</span>
+              </h3>
+              <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,maxWidth:600,margin:"0 auto"}}>
+                Fier d'être partenaire de PALLAP, marque spécialisée dans l'équipement padel de haute qualité.
+                Raquettes, textiles et accessoires pensés pour la performance.
+              </p>
+              <div style={{
+                display:"inline-block",marginTop:16,padding:"10px 28px",borderRadius:50,
+                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                color:NAVY,fontWeight:700,fontSize:13,
+              }}>
+                Visiter pallapsport.com
+              </div>
+            </div>
+          </a>
         </AnimatedSection>
 
-        {/* 4 category cards - big image background + zoom hover */}
-        <AnimatedSection delay={0.15}>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:32}}>
-            {categories.map((cat,i)=>(
-              <a key={cat.key} href={cat.url} target="_blank" rel="noopener noreferrer" style={{
-                position:"relative",borderRadius:20,overflow:"hidden",
-                display:"block",textDecoration:"none",cursor:"pointer",
-                height:360,aspectRatio:"1/1",border:"2px solid "+NAVY+"10",
-                transition:"border-color 0.35s, box-shadow 0.35s",
+        {/* Carrousel produits */}
+        <AnimatedSection delay={0.2}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
+            {products.map((p,i)=>(
+              <a key={i} href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
+                borderRadius:16,overflow:"hidden",background:WHITE,
+                border:`1px solid ${GOLD}15`,textDecoration:"none",
+                transition:"all 0.3s",textAlign:"center",padding:"20px 12px",
               }}
-              onMouseEnter={e=>{
-                e.currentTarget.style.borderColor=PALLAP_CYAN+"66";
-                e.currentTarget.style.boxShadow="0 16px 48px "+PALLAP_CYAN+"30";
-                e.currentTarget.querySelector('.pallap-card-img').style.transform="scale(1.08)";
-              }}
-              onMouseLeave={e=>{
-                e.currentTarget.style.borderColor=NAVY+"10";
-                e.currentTarget.style.boxShadow="none";
-                e.currentTarget.querySelector('.pallap-card-img').style.transform="scale(1)";
-              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow=`0 8px 24px ${GOLD}12`}}
+              onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="none"}}
               >
-                <img className="pallap-card-img" src={cat.img} alt={cat.label} loading="lazy" style={{
-                  position:"absolute",inset:0,width:"100%",height:"100%",
-                  objectFit:"cover",objectPosition:"center",transition:"transform 0.5s ease",
-                }}/>
+                <div style={{height:120,display:"flex",alignItems:"center",justifyContent:"center",marginBottom:12}}>
+                  <img src={p.img} alt={p.name} style={{maxHeight:"100%",maxWidth:"100%",objectFit:"contain"}} loading="lazy"/>
+                </div>
+                <span style={{fontSize:12,fontWeight:700,color:TEXT_DARK}}>{p.name}</span>
               </a>
             ))}
           </div>
         </AnimatedSection>
 
-        {/* CTA */}
-        <AnimatedSection delay={0.3}>
-          <div style={{textAlign:"center",marginTop:36,display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
-            <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer" style={{
-              display:"inline-flex",alignItems:"center",gap:10,
-              background:NAVY,color:WHITE,
-              padding:"14px 36px",borderRadius:50,textDecoration:"none",
-              fontSize:15,fontWeight:700,transition:"all 0.3s",
-              boxShadow:"0 4px 20px "+NAVY+"4d",
-            }}
-            onMouseEnter={e=>{e.currentTarget.style.background=PALLAP_CYAN;e.currentTarget.style.boxShadow="0 8px 32px "+PALLAP_CYAN+"66"}}
-            onMouseLeave={e=>{e.currentTarget.style.background=NAVY;e.currentTarget.style.boxShadow="0 4px 20px "+NAVY+"4d"}}
-            >
-              Voir toute la boutique pallap
-            </a>
-            <a href={wa("Bonjour Mathias, je suis intÃ©ressÃ©(e) par du materiel pallap")} target="_blank" rel="noopener noreferrer" style={{
-              color:GOLD,fontSize:13,fontWeight:600,textDecoration:"none",
-              display:"inline-flex",alignItems:"center",gap:6,
-            }}>
-              <Icon.whatsapp/> Demander un conseil
-            </a>
-          </div>
-        </AnimatedSection>
-
         {/* Remerciement */}
-        <AnimatedSection delay={0.5}>
+        <AnimatedSection delay={0.3}>
           <div style={{
-            marginTop:36,textAlign:"center",padding:"24px 28px",borderRadius:16,
-            background:"linear-gradient(135deg,"+NAVY+"0a,"+PALLAP_CYAN+"0a)",
-            border:"1px solid "+PALLAP_CYAN+"26",
+            marginTop:32,textAlign:"center",padding:"24px 28px",borderRadius:16,
+            background:`linear-gradient(135deg,${NAVY}06,${GOLD}06)`,
+            border:`1px solid ${GOLD}15`,
           }}>
             <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.8,fontStyle:"italic"}}>
-              Fier d'etre ambassadeur <strong style={{color:PALLAP_CYAN}}>PALLAP</strong> pour la saison 2026-2027 !
-              Du materiel Made in Spain, concu pour la performance et l'exigence du padel moderne.
-              Livraison a La RÃ©union bientot disponible â restez connectes !
-              Merci a toute l'equipe PALLAP pour leur confiance et ce beau partenariat.
+              "Un grand merci à <strong>PALLAP</strong> pour leur confiance et leur soutien.
+              Ensemble, nous partageons la même passion : rendre le padel accessible et performant pour tous."
             </p>
-            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>â Mathias Laval, Ambassadeur PALLAP & Coach ML Padel</p>
+            <p style={{color:GOLD,fontWeight:700,fontSize:13,marginTop:8}}>— Mathias Laval, ML Padel</p>
           </div>
         </AnimatedSection>
       </div>
@@ -1680,17 +1496,17 @@ function PallapShop(){
   );
 }
 
-/* âââ Photos du centre (avant Contact) âââ */
+/* ─── Photos du centre (avant Contact) ─── */
 function CentrePhotos(){
   return(
     <section style={{padding:"0 0",position:"relative",zIndex:1}}>
       <AnimatedSection>
         <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:0}}>
           <div style={{aspectRatio:"16/9",overflow:"hidden"}}>
-            <img src="./droneclub.jpeg" alt="Vue drone du club 4Padel" loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+            <img src="./droneclub.jpeg" alt="Vue drone du club 4Padel" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
           </div>
           <div style={{aspectRatio:"16/9",overflow:"hidden"}}>
-            <img src="./devanture.jpg" alt="Devanture Le Five â 4Padel" loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+            <img src="./devanture.jpg" alt="Devanture Le Five — 4Padel" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
           </div>
         </div>
       </AnimatedSection>
@@ -1698,17 +1514,17 @@ function CentrePhotos(){
   );
 }
 
-/* âââ Testimonials âââ */
+/* ─── Testimonials ─── */
 function Testimonials(){
   const items=[
-    {name:"Aina",role:"Avis Google",date:"Mars 2026",text:"TrÃ¨s bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevÃ©. Je recommande.",google:true},
-    {name:"Jules",role:"Stage",date:"FÃ©vrier 2026",text:"Merci Mathias de nous avoir ainsi accompagnÃ©s cette semaine, avec professionnalisme et bonne humeur. Ãa permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
-    {name:"Didier",role:"Stage",date:"Janvier 2026",text:"Un rÃ©el plaisir de participer Ã  ce stage avec un groupe homogÃ¨ne et avec beaucoup d'entrain. J'ai beaucoup appris grÃ¢ce Ã  tes conseils trÃ¨s prÃ©cieux et pertinents mais surtout bravo pour ta pÃ©dagogie."},
-    {name:"Francois",role:"Stage",date:"DÃ©cembre 2025",text:"Ce stage m'a Ã©tÃ© profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
-    {name:"Nathalie",role:"Stage",date:"Novembre 2025",text:"C'Ã©tait une trÃ¨s belle semaine. Je me suis rÃ©galÃ©e ! Merci pour ton coaching !"},
-    {name:"Laurence",role:"Stage",date:"Octobre 2025",text:"Merci Ã  toi de t'Ãªtre adaptÃ© Ã  nous ! C'Ã©tait sympa. Quand on aura tout assimilÃ©, on progressera."},
-    {name:"Cathy",role:"Stage",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'Ã©tait vraiment cool ce stage. Maintenant y'a plus qu'Ã  !"},
-    {name:"Karine",role:"Stage",date:"AoÃ»t 2025",text:"Excellente semaine... merci pour les conseils et les infos. Ã nous de nous y mettre. Merci Ã  Mathias et merci les filles pour la bonne ambiance. Ã plus la team."},
+    {name:"Aina",role:"Avis Google",date:"Mars 2026",text:"Très bon coach avec une bonne approche ! Il a pu corriger des mauvaises habitudes que j'avais au Padel que d'autres coach n'avaient pas relevé. Je recommande.",google:true},
+    {name:"Jules",role:"Stage",date:"Février 2026",text:"Merci Mathias de nous avoir ainsi accompagnés cette semaine, avec professionnalisme et bonne humeur. Ça permet de progresser non seulement sur les aspects techniques, mais aussi tactiques : je recommande !"},
+    {name:"Didier",role:"Stage",date:"Janvier 2026",text:"Un réel plaisir de participer à ce stage avec un groupe homogène et avec beaucoup d'entrain. J'ai beaucoup appris grâce à tes conseils très précieux et pertinents mais surtout bravo pour ta pédagogie."},
+    {name:"Francois",role:"Stage",date:"Décembre 2025",text:"Ce stage m'a été profitable sur tous les domaines, donc un grand merci pour ta prestation. Chuis partant pour Mai !"},
+    {name:"Nathalie",role:"Stage",date:"Novembre 2025",text:"C'était une très belle semaine. Je me suis régalée ! Merci pour ton coaching !"},
+    {name:"Laurence",role:"Stage",date:"Octobre 2025",text:"Merci à toi de t'être adapté à nous ! C'était sympa. Quand on aura tout assimilé, on progressera."},
+    {name:"Cathy",role:"Stage",date:"Septembre 2025",text:"Merci Mathias pour ta patience et tes conseils, c'était vraiment cool ce stage. Maintenant y'a plus qu'à !"},
+    {name:"Karine",role:"Stage",date:"Août 2025",text:"Excellente semaine... merci pour les conseils et les infos. À nous de nous y mettre. Merci à Mathias et merci les filles pour la bonne ambiance. À plus la team."},
   ];
 
   return(
@@ -1716,12 +1532,12 @@ function Testimonials(){
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>TÃ©moignages</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Témoignages</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              Ils ont <span style={{color:GOLD}}>progressÃ©</span>
+              Ils ont <span style={{color:GOLD}}>progressé</span>
             </h2>
           </div>
         </AnimatedSection>
@@ -1765,12 +1581,12 @@ function Testimonials(){
   );
 }
 
-/* âââ How It Works âââ */
+/* ─── How It Works ─── */
 function HowItWorks(){
   const steps=[
-    {n:"01",icon:"ð¯",title:"Choisis ton format",desc:"Individuel, collectif, acadÃ©mie ou stage selon tes objectifs"},
-    {n:"02",icon:"ð",title:"RÃ©serve en ligne",desc:"CrÃ©neau dispo en temps rÃ©el via Cal.com ou WhatsApp"},
-    {n:"03",icon:"ð",title:"Progresse",desc:"Coaching structurÃ©, feedback, rÃ©sultats mesurables"},
+    {n:"01",icon:"🎯",title:"Choisis ton format",desc:"Individuel, collectif, académie ou stage selon tes objectifs"},
+    {n:"02",icon:"📅",title:"Réserve en ligne",desc:"Créneau dispo en temps réel via Cal.com ou WhatsApp"},
+    {n:"03",icon:"🚀",title:"Progresse",desc:"Coaching structuré, feedback, résultats mesurables"},
   ];
 
   return(
@@ -1778,12 +1594,12 @@ function HowItWorks(){
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Comment Ã§a marche</span>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Comment ça marche</span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              3 Ã©tapes <span style={{color:GOLD}}>simples</span>
+              3 étapes <span style={{color:GOLD}}>simples</span>
             </h2>
           </div>
         </AnimatedSection>
@@ -1817,18 +1633,18 @@ function HowItWorks(){
   );
 }
 
-/* âââ FAQ âââ */
+/* ─── FAQ ─── */
 function FAQ(){
   const[openIdx,setOpenIdx]=useState(null);
   const items=[
-    {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prÃ©requis. J'accueille tous les niveaux, du dÃ©butant complet au compÃ©titeur confirmÃ©. Le coaching est adaptÃ© Ã  ton profil."},
-    {q:"OÃ¹ se dÃ©roulent les cours ?",a:"Au 4Padel Saint-Louis, 2 rue Benoite Boulard, 97450 Saint-Louis, La RÃ©union."},
-    {q:"Faut-il amener son matÃ©riel ?",a:"Non, le matÃ©riel (raquette + balles) peut Ãªtre fourni. Si tu as ta propre raquette, amÃ¨ne-la pour un coaching optimal."},
-    {q:"Comment fonctionne le systÃ¨me Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100â¬), +10% (200â¬) ou +15% (300â¬) de crÃ©dits bonus. 1 crÃ©dit = 1â¬. Cumulable Ã  chaque palier. Pour rÃ©server, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sÃ©curitÃ© reÃ§u, choisissez votre prestation et la date : vos crÃ©dits sont dÃ©bitÃ©s automatiquement. CrÃ©dits valables 12 mois."},
-    {q:"Sur quoi puis-je utiliser mes crÃ©dits wallet ?",a:"Les crÃ©dits sont utilisables sur : cours individuels Ã  l'unitÃ© (55 cr.), cours collectifs Ã  l'unitÃ© (20 Ã  35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crÃ©dits ne sont PAS utilisables sur : les packs 10h (dÃ©jÃ  remisÃ©s Ã  -10%), l'acadÃ©mie annuelle (750â¬), l'acadÃ©mie semestrielle (420â¬), ou toute autre promotion en cours."},
-    {q:"Quels moyens de paiement ?",a:"EspÃ¨ces, CB, chÃ¨que. Pour le wallet, paiement en 1 fois."},
-    {q:"Des cours pour les enfants ?",a:"Oui, Ã  partir de 10 ans. SÃ©ances adaptÃ©es avec pÃ©dagogie ludique et progressive."},
-    {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'Ã  24h avant le crÃ©neau. Au-delÃ , le cours est dÃ». Report facile via Cal.com."},
+    {q:"Quel niveau faut-il pour commencer ?",a:"Aucun prérequis. J'accueille tous les niveaux, du débutant complet au compétiteur confirmé. Le coaching est adapté à ton profil."},
+    {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, La Reunion (974)."},
+    {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
+    {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre numéro de téléphone, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
+    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
+    {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
+    {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
+    {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
   ];
 
   return(
@@ -1841,7 +1657,7 @@ function FAQ(){
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:TEXT_DARK,
             }}>
-              Questions <span style={{color:GOLD}}>frÃ©quentes</span>
+              Questions <span style={{color:GOLD}}>fréquentes</span>
             </h2>
           </div>
         </AnimatedSection>
@@ -1867,12 +1683,10 @@ function FAQ(){
                   }}><Icon.chevDown/></span>
                 </div>
                 <div style={{
-                  maxHeight:openIdx===i?300:0,
-                  overflow:"hidden",transition:"max-height 0.5s cubic-bezier(0.4,0,0.2,1)",
-                  opacity:openIdx===i?1:0,
-                  transitionProperty:"max-height, opacity",
+                  maxHeight:openIdx===i?200:0,
+                  overflow:"hidden",transition:"max-height 0.4s ease",
                 }}>
-                  <p style={{padding:"4px 20px 18px",color:TEXT_MED,fontSize:13.5,lineHeight:1.75,borderTop:`1px solid ${GOLD}10`,marginTop:0,paddingTop:12}}>{item.a}</p>
+                  <p style={{padding:"0 20px 15px",color:TEXT_MED,fontSize:13,lineHeight:1.7}}>{item.a}</p>
                 </div>
               </div>
             </AnimatedSection>
@@ -1883,11 +1697,11 @@ function FAQ(){
   );
 }
 
-/* âââ Contact / CTA âââ */
+/* ─── Contact / CTA ─── */
 function Contact(){
   const contactItems=[
     {icon:<Icon.phone/>,label:PHONE,href:PHONE_LINK,sub:"Appel direct"},
-    {icon:<Icon.whatsapp/>,label:"WhatsApp",href:WHATSAPP_LINK,sub:"RÃ©ponse rapide"},
+    {icon:<Icon.whatsapp/>,label:"WhatsApp",href:WHATSAPP_LINK,sub:"Réponse rapide"},
     {icon:<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,label:EMAIL,href:`mailto:${EMAIL}`,sub:"Par email"},
   ];
 
@@ -1906,10 +1720,10 @@ function Contact(){
             fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
             fontWeight:900,marginTop:8,marginBottom:12,color:CREAM,
           }}>
-            PrÃªt Ã  <span style={{color:GOLD}}>progresser</span> ?
+            Prêt à <span style={{color:GOLD}}>progresser</span> ?
           </h2>
           <p style={{color:`${CREAM}65`,fontSize:15,marginBottom:36,lineHeight:1.6}}>
-            RÃ©serve ton crÃ©neau en ligne ou contacte-moi directement.
+            Réserve ton créneau en ligne ou contacte-moi directement.
           </p>
 
           {/* CTA buttons */}
@@ -1924,7 +1738,7 @@ function Contact(){
             onMouseEnter={e=>e.target.style.transform="scale(1.05)"}
             onMouseLeave={e=>e.target.style.transform="scale(1)"}
             >
-              <span style={{display:"flex"}}><Icon.calendar/></span> RÃ©server en ligne
+              <span style={{display:"flex"}}><Icon.calendar/></span> Réserver en ligne
             </a>
             <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{
               display:"inline-flex",alignItems:"center",gap:10,
@@ -1946,7 +1760,7 @@ function Contact(){
           }}>
             {contactItems.map((c,i)=>(
               <a key={i} href={c.href} target={c.href.startsWith("http")?"_blank":undefined} rel="noopener noreferrer" style={{
-                display:"flex",alignItems:"center",justifyContent:"center",gap:10,
+                display:"flex",alignItems:"center",gap:10,
                 padding:"14px 16px",borderRadius:12,
                 background:`${CREAM}06`,border:`1px solid ${CREAM}10`,
                 textDecoration:"none",transition:"all 0.3s",
@@ -1955,7 +1769,7 @@ function Contact(){
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${CREAM}10`;e.currentTarget.style.background=`${CREAM}06`}}
               >
                 <div style={{color:GOLD,display:"flex",flexShrink:0}}>{c.icon}</div>
-                <div style={{textAlign:"center"}}>
+                <div style={{textAlign:"left"}}>
                   <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3}}>{c.label}</div>
                   <div style={{fontSize:11,color:`${CREAM}45`}}>{c.sub}</div>
                 </div>
@@ -1968,19 +1782,8 @@ function Contact(){
             display:"flex",alignItems:"center",justifyContent:"center",gap:6,
             color:`${CREAM}45`,fontSize:13,marginBottom:16,
           }}>
-            <Icon.mapPin/> 2 rue Benoite Boulard, 97450 Saint-Louis Â· La RÃ©union
+            <Icon.mapPin/> 4Padel Saint-Louis &middot; La Reunion (974)
           </div>
-
-          {/* Google Maps embed */}
-          <div style={{width:"100%",maxWidth:500,margin:"16px auto",borderRadius:14,overflow:"hidden",border:`1px solid ${CREAM}10`}}>
-            <iframe
-              src="https://maps.google.com/maps?q=2+rue+Benoite+Boulard+97450+Saint-Louis+La+Reunion&t=&z=15&ie=UTF8&iwloc=&output=embed"
-              width="100%" height="220" style={{border:0}} allowFullScreen="" loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="ML Padel - 2 rue Benoite Boulard, Saint-Louis"
-            />
-          </div>
-
           <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
             display:"inline-flex",alignItems:"center",gap:6,
             color:`${CREAM}50`,textDecoration:"none",fontSize:13,transition:"color 0.3s",
@@ -1994,223 +1797,7 @@ function Contact(){
   );
 }
 
-/* âââ Reviews / Avis âââ */
-function StarDisplay({rating,size=16,color=GOLD}){
-  return(
-    <span style={{display:"inline-flex",gap:1}}>
-      {[1,2,3,4,5].map(i=>{
-        const fill=rating>=i?1:rating>=i-0.5?0.5:0;
-        return(
-          <svg key={i} width={size} height={size} viewBox="0 0 20 20" fill="none">
-            <defs><linearGradient id={"sf"+i+size}><stop offset={fill*100+"%"} stopColor={color}/><stop offset={fill*100+"%"} stopColor={color+"30"}/></linearGradient></defs>
-            <path d="M10 1l2.5 5.5L18 7.5l-4 4 1 5.5L10 14.5 4.9 17l1-5.5-4-4 5.6-1z" fill={"url(#sf"+i+size+")"}/>
-          </svg>
-        );
-      })}
-    </span>
-  );
-}
-
-function StarInput({value,onChange}){
-  const[hover,setHover]=useState(0);
-  return(
-    <span style={{display:"inline-flex",gap:4,cursor:"pointer"}}>
-      {[1,2,3,4,5].map(i=>(
-        <svg key={i} width={32} height={32} viewBox="0 0 20 20" fill="none"
-          onMouseEnter={()=>setHover(i)} onMouseLeave={()=>setHover(0)}
-          onClick={()=>onChange(i)} style={{transition:"transform 0.15s",transform:(hover===i?"scale(1.2)":"scale(1)")}}
-        >
-          <path d="M10 1l2.5 5.5L18 7.5l-4 4 1 5.5L10 14.5 4.9 17l1-5.5-4-4 5.6-1z"
-            fill={(hover||value)>=i?GOLD:CREAM+"20"}/>
-        </svg>
-      ))}
-    </span>
-  );
-}
-
-function Reviews(){
-  const[reviews,setReviews]=useState([]);
-  const[showAll,setShowAll]=useState(false);
-  const[showForm,setShowForm]=useState(false);
-  const[formName,setFormName]=useState("");
-  const[formRating,setFormRating]=useState(0);
-  const[formComment,setFormComment]=useState("");
-  const[submitting,setSubmitting]=useState(false);
-  const[submitted,setSubmitted]=useState(false);
-
-  useEffect(()=>{
-    (async()=>{
-      try{
-        const snap=await db.collection("reviews").orderBy("createdAt","desc").limit(50).get();
-        setReviews(snap.docs.map(d=>({id:d.id,...d.data()})));
-      }catch(e){console.error("Firestore read:",e)}
-    })();
-  },[submitted]);
-
-  const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
-
-  const handleSubmit=async(e)=>{
-    e.preventDefault();
-    if(!formName.trim()||!formRating||!formComment.trim())return;
-    setSubmitting(true);
-    try{
-      await db.collection("reviews").add({
-        name:formName.trim(),rating:formRating,comment:formComment.trim(),
-        createdAt:firebase.firestore.FieldValue.serverTimestamp()
-      });
-      setFormName("");setFormRating(0);setFormComment("");
-      setShowForm(false);setSubmitted(prev=>!prev);
-    }catch(e){console.error("Firestore write:",e)}
-    setSubmitting(false);
-  };
-
-  const displayed=showAll?reviews:reviews.slice(0,3);
-
-  return(
-    <section id="reviews" style={{padding:"60px 24px 80px",background:"linear-gradient(175deg,"+NAVY_MID+" 0%,"+NAVY+" 100%)",color:CREAM,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:800,margin:"0 auto",textAlign:"center"}}>
-        <AnimatedSection>
-          <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Avis Clients</span>
-          <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3.5vw,34px)",fontWeight:900,marginTop:8,marginBottom:20,color:CREAM}}>Ce qu'ils pensent de ML Padel</h2>
-
-          {reviews.length>0&&(
-            <div style={{display:"inline-flex",alignItems:"center",gap:14,background:CREAM+"08",border:"1px solid "+GOLD+"30",borderRadius:16,padding:"16px 28px",marginBottom:32}}>
-              <span style={{fontSize:42,fontWeight:900,color:GOLD,lineHeight:1}}>{avg.toFixed(1)}</span>
-              <div style={{textAlign:"left"}}>
-                <StarDisplay rating={avg} size={18}/>
-                <div style={{fontSize:12,color:CREAM+"60",marginTop:2}}>{reviews.length} avis</div>
-              </div>
-            </div>
-          )}
-
-          {displayed.length>0&&(
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16,marginBottom:24,textAlign:"left"}}>
-              {displayed.map(r=>(
-                <div key={r.id} style={{background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:14,padding:"20px",transition:"border-color 0.3s"}}
-                  onMouseEnter={e=>e.currentTarget.style.borderColor=GOLD+"44"}
-                  onMouseLeave={e=>e.currentTarget.style.borderColor=CREAM+"10"}>
-                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-                    <span style={{fontWeight:700,fontSize:14,color:CREAM}}>{r.name}</span>
-                    <StarDisplay rating={r.rating} size={13}/>
-                  </div>
-                  <p style={{fontSize:13,color:CREAM+"70",lineHeight:1.5,margin:0}}>{r.comment}</p>
-                  {r.createdAt&&(<div style={{fontSize:11,color:CREAM+"30",marginTop:10}}>{new Date(r.createdAt.seconds*1000).toLocaleDateString("fr-FR",{day:"numeric",month:"short",year:"numeric"})}</div>)}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {reviews.length===0&&!showForm&&(<p style={{color:CREAM+"50",fontSize:14,marginBottom:24}}>Soyez le premier Ã  laisser un avis !</p>)}
-
-          <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
-            {reviews.length>3&&!showAll&&(
-              <button onClick={()=>setShowAll(true)} style={{background:"transparent",border:"1px solid "+GOLD+"50",color:GOLD,padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:600,cursor:"pointer",transition:"all 0.3s"}}
-                onMouseEnter={e=>{e.target.style.background=GOLD+"15";e.target.style.borderColor=GOLD}}
-                onMouseLeave={e=>{e.target.style.background="transparent";e.target.style.borderColor=GOLD+"50"}}>
-                Voir tous les avis ({reviews.length})
-              </button>
-            )}
-            {showAll&&(<button onClick={()=>setShowAll(false)} style={{background:"transparent",border:"1px solid "+CREAM+"20",color:CREAM+"60",padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:600,cursor:"pointer"}}>Voir moins</button>)}
-            <button onClick={()=>setShowForm(!showForm)} style={{
-              background:showForm?"transparent":"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
-              border:showForm?"1px solid "+CREAM+"20":"none",
-              color:showForm?CREAM+"60":NAVY,
-              padding:"12px 24px",borderRadius:50,fontSize:14,fontWeight:700,cursor:"pointer",
-              transition:"all 0.3s",boxShadow:showForm?"none":"0 4px 20px "+GOLD+"30"
-            }}>{showForm?"Annuler":"Laisser un avis"}</button>
-          </div>
-
-          {showForm&&(
-            <form onSubmit={handleSubmit} style={{maxWidth:440,margin:"28px auto 0",textAlign:"left",background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:16,padding:24}}>
-              <div style={{marginBottom:16}}>
-                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>PrÃ©nom</label>
-                <input value={formName} onChange={e=>setFormName(e.target.value)} placeholder="Votre prÃ©nom"
-                  style={{width:"100%",padding:"10px 14px",borderRadius:10,border:"1px solid "+CREAM+"15",background:CREAM+"06",color:CREAM,fontSize:14,outline:"none",boxSizing:"border-box"}}/>
-              </div>
-              <div style={{marginBottom:16}}>
-                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Note</label>
-                <StarInput value={formRating} onChange={setFormRating}/>
-              </div>
-              <div style={{marginBottom:20}}>
-                <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Commentaire</label>
-                <textarea value={formComment} onChange={e=>setFormComment(e.target.value)} rows={3}
-                  placeholder="Partagez votre expÃ©rience..."
-                  style={{width:"100%",padding:"10px 14px",borderRadius:10,border:"1px solid "+CREAM+"15",background:CREAM+"06",color:CREAM,fontSize:14,outline:"none",resize:"vertical",fontFamily:"'DM Sans',sans-serif",boxSizing:"border-box"}}/>
-              </div>
-              <button type="submit" disabled={submitting||!formName.trim()||!formRating||!formComment.trim()} style={{
-                width:"100%",padding:"12px",borderRadius:50,border:"none",
-                background:(!formName.trim()||!formRating||!formComment.trim())?CREAM+"15":"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
-                color:(!formName.trim()||!formRating||!formComment.trim())?CREAM+"30":NAVY,
-                fontSize:14,fontWeight:700,cursor:submitting?"wait":"pointer",transition:"all 0.3s"
-              }}>{submitting?"Envoi...":"Envoyer mon avis"}</button>
-            </form>
-          )}
-        </AnimatedSection>
-      </div>
-    </section>
-  );
-}
-
-/* âââ Footer âââ */
-
-/* CookieBanner RGPD */
-function CookieBanner(){
-  var _s=useState(false),visible=_s[0],setVisible=_s[1];
-  useEffect(function(){
-    try{if(!localStorage.getItem("ml_cookies_consent"))setVisible(true)}catch(e){setVisible(true)}
-  },[]);
-  var accept=function(){try{localStorage.setItem("ml_cookies_consent","accepted")}catch(e){}setVisible(false)};
-  var refuse=function(){try{localStorage.setItem("ml_cookies_consent","refused")}catch(e){}setVisible(false)};
-  if(!visible) return null;
-  return(
-    <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
-      <p style={{flex:"1 1 400px",margin:0,lineHeight:1.5}}>
-        Ce site utilise des cookies (Google Analytics, Firebase) pour amÃ©liorer votre expÃ©rience.{" "}
-        <a href="#mentions-legales" style={{color:GOLD,textDecoration:"underline"}} onClick={function(){setVisible(false)}}>En savoir plus</a>
-      </p>
-      <div style={{display:"flex",gap:10}}>
-        <button onClick={refuse} style={{padding:"8px 20px",borderRadius:50,border:"1px solid "+CREAM+"40",background:"transparent",color:CREAM,cursor:"pointer",fontSize:13,fontFamily:"'DM Sans',sans-serif"}}>Refuser</button>
-        <button onClick={accept} style={{padding:"8px 20px",borderRadius:50,border:"none",background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",color:NAVY,fontWeight:700,cursor:"pointer",fontSize:13,fontFamily:"'DM Sans',sans-serif"}}>Accepter</button>
-      </div>
-    </div>
-  );
-}
-
-
-/* Mentions Legales / CGV */
-function MentionsLegales(){
-  var sStyle={padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1};
-  var h2s={fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3vw,32px)",fontWeight:800,color:NAVY,marginBottom:24};
-  var h3s={fontFamily:"'DM Sans',sans-serif",fontSize:17,fontWeight:700,color:NAVY,marginTop:28,marginBottom:8};
-  var ps={fontSize:14,lineHeight:1.7,color:TEXT_MED,marginBottom:12};
-  return(
-    <section id="mentions-legales" style={sStyle}>
-      <div style={{maxWidth:800,margin:"0 auto"}}>
-        <h2 style={h2s}>Mentions LÃ©gales</h2>
-        <h3 style={h3s}>Ãditeur du site</h3>
-        <p style={ps}>ML Padel â Mathias Laval<br/>Entrepreneur individuel<br/>2 rue Benoite Boulard, 97450 Saint-Louis, La RÃ©union<br/>TÃ©lÃ©phone : 0692 62 73 72<br/>Email : mathias.laval38@gmail.com</p>
-        <h3 style={h3s}>HÃ©bergement</h3>
-        <p style={ps}>Vercel Inc. â 440 N Barranca Ave #4133, Covina, CA 91723, Ãtats-Unis</p>
-        <h3 style={h3s}>PropriÃ©tÃ© intellectuelle</h3>
-        <p style={ps}>Lâensemble du contenu de ce site (textes, images, logos, vidÃ©os) est la propriÃ©tÃ© exclusive de ML Padel. Toute reproduction est interdite sans autorisation.</p>
-        <h3 style={h3s}>DonnÃ©es personnelles & Cookies</h3>
-        <p style={ps}>Ce site collecte des donnÃ©es via Google Analytics et Firebase Firestore. ConformÃ©ment au RGPD, vous disposez dâun droit dâaccÃ¨s, rectification et suppression. Contact : mathias.laval38@gmail.com</p>
-        <h2 style={{...h2s,marginTop:48}}>Conditions GÃ©nÃ©rales de Vente</h2>
-        <h3 style={h3s}>1. Objet</h3>
-        <p style={ps}>Les prÃ©sentes CGV rÃ©gissent la vente de prestations de coaching de padel par ML Padel.</p>
-        <h3 style={h3s}>2. RÃ©servation & Paiement</h3>
-        <p style={ps}>RÃ©servations via Cal.com. Paiement dÃ» avant la prestation via Stripe. CrÃ©dits Wallet non remboursables.</p>
-        <h3 style={h3s}>3. Annulation</h3>
-        <p style={ps}>Annulation minimum 24h avant. Absence = cours dÃ». Force majeure = report sans frais.</p>
-        <h3 style={h3s}>4. ResponsabilitÃ©</h3>
-        <p style={ps}>ML Padel dÃ©cline toute responsabilitÃ© en cas de blessure. Assurance RC recommandÃ©e.</p>
-        <h3 style={h3s}>5. Droit applicable</h3>
-        <p style={ps}>Droit franÃ§ais. Tribunaux de Saint-Denis de La RÃ©union compÃ©tents.</p>
-      </div>
-    </section>
-  );
-}
-
+/* ─── Footer ─── */
 function Footer(){
   return(
     <footer style={{
@@ -2226,310 +1813,43 @@ function Footer(){
       }}>
         <Logo size={26} textColor={`${CREAM}60`}/>
         <div style={{display:"flex",gap:18}}>
-          <a href="#mentions-legales" style={{color:`${CREAM}40`,textDecoration:"none"}}>Mentions lÃ©gales</a>
-          <a href="#mentions-legales" style={{color:`${CREAM}40`,textDecoration:"none"}}>CGV</a>
+          <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>Mentions légales</a>
+          <a href="#" style={{color:`${CREAM}40`,textDecoration:"none"}}>CGV</a>
           <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{color:`${CREAM}40`,textDecoration:"none"}}>Instagram</a>
         </div>
         <span style={{fontSize:11,color:`${CREAM}25`}}>
-          Â© {new Date().getFullYear()} ML Padel &middot; La RÃ©union
+          © {new Date().getFullYear()} ML Padel &middot; La Reunion
         </span>
       </div>
     </footer>
   );
 }
 
-/* âââ Scroll Progress Bar âââ */
-function ScrollProgress(){
-  useEffect(()=>{
-    const bar=document.getElementById("scroll-progress");
-    const onScroll=()=>{
-      const h=document.documentElement.scrollHeight-window.innerHeight;
-      bar.style.width=(window.scrollY/h*100)+"%";
-    };
-    window.addEventListener("scroll",onScroll);
-    return()=>window.removeEventListener("scroll",onScroll);
-  },[]);
-  return <div id="scroll-progress"/>;
-}
-
-/* âââ Back to Top Button âââ */
-function BackToTop(){
-  const[visible,setVisible]=useState(false);
-  useEffect(()=>{
-    const fn=()=>setVisible(window.scrollY>600);
-    window.addEventListener("scroll",fn);
-    return()=>window.removeEventListener("scroll",fn);
-  },[]);
-  return(
-    <button className={`back-to-top ${visible?"visible":""}`}
-      onClick={()=>window.scrollTo({top:0,behavior:"smooth"})}
-      aria-label="Retour en haut"
-    >â</button>
-  );
-}
-
-/* âââ Animated Counter Hook âââ */
-function useCounter(end,duration=2000,startOnView=false){
-  const[count,setCount]=useState(0);
-  const ref=useRef(null);
-  const started=useRef(false);
-  useEffect(()=>{
-    if(!startOnView||started.current)return;
-    const el=ref.current;if(!el)return;
-    const obs=new IntersectionObserver(([e])=>{
-      if(e.isIntersecting&&!started.current){
-        started.current=true;
-        const s=performance.now();
-        const animate=(now)=>{
-          const p=Math.min((now-s)/duration,1);
-          const eased=1-Math.pow(1-p,3);
-          setCount(Math.round(eased*end));
-          if(p<1)requestAnimationFrame(animate);
-        };
-        requestAnimationFrame(animate);
-      }
-    },{threshold:0.3});
-    obs.observe(el);
-    return()=>obs.disconnect();
-  },[end,duration,startOnView]);
-  return[ref,count];
-}
-
-/* âââ Counter Stats Section âââ */
-function CounterStats(){
-  const stats=[
-    {end:500,suffix:"+",label:"ÃlÃ¨ves coachÃ©s",icon:"ð¾"},
-    {end:10,suffix:" ans",label:"D'expÃ©rience",icon:"ð"},
-    {end:20,suffix:"+",label:"Stages rÃ©alisÃ©s",icon:"ð"},
-    {end:2000,suffix:"+",label:"Heures de coaching",icon:"â±ï¸"},
-  ];
-  return(
-    <section style={{padding:"60px 24px",background:`linear-gradient(135deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:1000,margin:"0 auto"}}>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:24,textAlign:"center"}}>
-          {stats.map((s,i)=>{
-            const[ref,count]=useCounter(s.end,2200,true);
-            return(
-              <AnimatedSection key={i} delay={i*0.15}>
-                <div ref={ref} style={{padding:"28px 16px"}}>
-                  <div style={{fontSize:36,marginBottom:8}}>{s.icon}</div>
-                  <div style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(32px,5vw,48px)",fontWeight:900,color:GOLD,lineHeight:1}}>
-                    {count}{s.suffix}
-                  </div>
-                  <div style={{marginTop:8,fontSize:13,fontWeight:600,color:`${CREAM}70`,letterSpacing:1,textTransform:"uppercase"}}>{s.label}</div>
-                </div>
-              </AnimatedSection>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* âââ Team / Coach Section âââ */
-function TeamSection(){
-  const team=[
-    {
-      name:"Mathias Laval",
-      role:"Coach principal â DiplÃ´mÃ© d'Ãtat",
-      bio:"PassionnÃ© de padel depuis plus de 10 ans, j'ai formÃ© plus de 500 joueurs de tous niveaux. Ma mÃ©thode structurÃ©e et mon approche personnalisÃ©e font progresser chaque Ã©lÃ¨ve de faÃ§on mesurable.",
-      photo:"./coup-droit-action.JPG",
-      specialites:["Technique","Tactique","PrÃ©paration mentale","PrÃ©paration physique intÃ©grÃ©e","CompÃ©tition"],
-    },
-  ];
-  return(
-    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:900,margin:"0 auto"}}>
-        <AnimatedSection>
-          <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>L'Ã©quipe</span>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
-              Votre <span style={{color:GOLD}}>coach</span>
-            </h2>
-          </div>
-        </AnimatedSection>
-        {team.map((m,i)=>(
-          <AnimatedSection key={i}>
-            <div style={{display:"flex",gap:40,alignItems:"center",flexWrap:"wrap",justifyContent:"center"}}>
-              <div style={{flex:"0 0 280px",maxWidth:280}}>
-                <div style={{
-                  width:280,height:350,borderRadius:24,overflow:"hidden",
-                  border:`3px solid ${GOLD}33`,boxShadow:`0 20px 60px ${NAVY}22`,
-                  position:"relative",
-                }}>
-                  <img src={m.photo} alt={m.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
-                  <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 20px 16px",background:`linear-gradient(transparent,${NAVY}cc)`}}>
-                    <div style={{color:GOLD,fontWeight:700,fontSize:11,letterSpacing:1.5,textTransform:"uppercase"}}>Coach principal</div>
-                  </div>
-                </div>
-              </div>
-              <div style={{flex:1,minWidth:280}}>
-                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:TEXT_DARK,marginBottom:6}}>{m.name}</h3>
-                <div style={{color:GOLD,fontWeight:600,fontSize:14,marginBottom:16}}>{m.role}</div>
-                <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.8,marginBottom:20}}>{m.bio}</p>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                  {m.specialites.map((s,j)=>(
-                    <span key={j} style={{
-                      padding:"6px 16px",borderRadius:50,fontSize:12,fontWeight:600,
-                      background:`${GOLD}12`,color:GOLD,border:`1px solid ${GOLD}25`,
-                    }}>{s}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </AnimatedSection>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* âââ ÃvÃ©nements & Stages âââ */
-function ÃvÃ©nements(){
-  return(
-    <section id="Ã©vÃ©nements" style={{
-      padding:"80px 24px",position:"relative",zIndex:1,
-      background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
-    }}>
-      <div style={{maxWidth:900,margin:"0 auto",textAlign:"center"}}>
-        <AnimatedSection>
-          <div style={{
-            display:"inline-flex",alignItems:"center",gap:8,
-            background:`${GOLD}20`,border:`1px solid ${GOLD}40`,
-            borderRadius:50,padding:"8px 20px",marginBottom:24,
-            boxShadow:`0 0 20px ${GOLD}15`,
-          }}>
-            <span style={{fontSize:16}}>â­</span>
-            <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:GOLD_PALE,textTransform:"uppercase"}}>Ã la une</span>
-          </div>
-          <h2 style={{
-            fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",
-            fontWeight:900,color:WHITE,marginBottom:12,
-            textShadow:`0 2px 20px ${NAVY}88`,
-          }}>
-            ÃvÃ©nements & <span style={{color:GOLD}}>Stages</span>
-          </h2>
-          <p style={{color:`${CREAM}70`,fontSize:15,marginBottom:40,lineHeight:1.7}}>
-            Rejoignez nos stages intensifs pour progresser rapidement
-          </p>
-        </AnimatedSection>
-
-        <AnimatedSection delay={0.2}>
-          <div style={{
-            background:`linear-gradient(145deg,${NAVY_MID},${NAVY_LIGHT}55)`,
-            border:`2px solid ${GOLD}35`,borderRadius:24,
-            padding:"40px 32px",textAlign:"left",
-            boxShadow:`0 20px 60px ${NAVY}44,inset 0 1px 0 ${GOLD}15`,
-            position:"relative",overflow:"hidden",
-          }}>
-            <div style={{position:"absolute",top:"-30%",right:"-10%",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,${GOLD}08,transparent 70%)`}}/>
-            <div style={{position:"relative",zIndex:1,textAlign:"center"}}>
-              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,flexWrap:"wrap",justifyContent:"center"}}>
-                <span style={{fontSize:28}}>ð¾</span>
-                <div>
-                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:900,color:WHITE}}>Stage Mai 2026</h3>
-                  <div style={{color:`${CREAM}60`,fontSize:13,marginTop:2}}>Du 11 au 15 mai 2026 â 4Padel Saint-Louis</div>
-                </div>
-              </div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:10,marginBottom:20,justifyContent:"center"}}>
-                {["7h â 8h30","17h â 18h30","18h30 â 20h","20h â 21h30"].map((c,i)=>(
-                  <span key={i} style={{
-                    padding:"8px 18px",borderRadius:50,fontSize:13,fontWeight:600,
-                    background:`${GOLD}15`,color:GOLD_PALE,border:`1px solid ${GOLD}30`,
-                  }}>{c}</span>
-                ))}
-              </div>
-              <div style={{display:"flex",gap:16,marginBottom:16,flexWrap:"wrap",justifyContent:"center"}}>
-                <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
-                  <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Matin</div>
-                  <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>120â¬</div>
-                </div>
-                <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
-                  <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Soir</div>
-                  <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>150â¬</div>
-                </div>
-              </div>
-              <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-              <a href="/stage-mai-2026.html" style={{
-                display:"inline-flex",alignItems:"center",gap:10,
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                color:NAVY,padding:"16px 36px",borderRadius:50,
-                textDecoration:"none",fontWeight:700,fontSize:15,
-                boxShadow:`0 8px 30px ${GOLD}44`,transition:"all 0.3s",
-                position:"relative",
-              }}
-              onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
-              onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 8px 30px ${GOLD}44`}}
-              >S'inscrire au stage â</a>
-              <span style={{
-                fontSize:11,fontWeight:700,color:"#e07b5a",
-                animation:"pulse 2s ease-in-out infinite",letterSpacing:0.5,
-              }}>â¡ DerniÃ¨res places disponibles</span>
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </div>
-    </section>
-  );
-}
-
-/* âââ Google Maps Section âââ */
-function MapSection(){
-  return(
-    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
-      <div style={{maxWidth:900,margin:"0 auto"}}>
-        <AnimatedSection>
-          <div style={{textAlign:"center",marginBottom:40}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Localisation</span>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
-              Nous <span style={{color:GOLD}}>trouver</span>
-            </h2>
-            <p style={{color:TEXT_MED,fontSize:15,marginTop:10}}>4Padel Saint-Louis â Le Five, La RÃ©union (974)</p>
-          </div>
-        </AnimatedSection>      </div>
-    </section>
-  );
-}
-
-/* âââ App âââ */
-
-
+/* ─── App ─── */
 function MLPadel(){
   return(
     <div style={{background:WARM_WHITE,minHeight:"100vh",overflowX:"hidden"}}>
       {fontLink}
-      <ScrollProgress/>
-      <BackToTop/>
       <PadelBackground/>
       <Navbar/>
       <Hero/>
-      <CounterStats/>
       <About/>
       <TransitionAbout/>
-      <ÃvÃ©nements/>
       <Pricing/>
-            
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
       <Wallet/>
       <WalletClient/>
-      <TeamSection/>
       <InstagramSection/>
       <Gallery/>
-      <PallapShop/>
+      <Sponsor/>
       <Testimonials/>
       <HowItWorks/>
       <FAQ/>
-      <MapSection/>
       <CentrePhotos/>
       <Contact/>
-      <Reviews/>
-      <MentionsLegales/>
       <Footer/>
-      <CookieBanner/>
     </div>
   );
 }
@@ -2538,4 +1858,4 @@ function MLPadel(){
 ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 </script>
 </body>
-                </html>
+</html>
