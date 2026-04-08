@@ -1160,7 +1160,7 @@ function WalletClient(){
     if(!securityCode||securityCode.length<4){setError("Entrez le code reçu par email");return}
     setLoading(true);setError("");
     try{
-      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(email.trim().toLowerCase())+"&code="+encodeURIComponent(securityCode));
+      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(email.trim().toLowerCase())+"&otp="+encodeURIComponent(securityCode));
       const d=await r.json();
       if(d.success){setCodeVerified(true);setClient(d.client);setSuccess("Wallet connecté !")}
       else setError(d.error||"Code invalide");
