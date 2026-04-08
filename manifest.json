@@ -8,9 +8,10 @@
   "theme_color": "#0a1628",
   "icons": [
     {
-      "src": "/profil-instagram.png",
-      "sizes": "256x256",
-      "type": "image/png"
+      "src": "/LOGO%20ML%20PADEL%202025%20(1).png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "lang": "fr",
