@@ -1116,93 +1116,118 @@ function Wallet(){
 /* ─── Mon Wallet — Espace Client avec Cal.com intégré ─── */
 function WalletClient(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
+ 
+  // Auth
   const[email,setEmail]=useState("");
-  const[securityCode,setSecurityCode]=useState("");
-  const[codeSent,setCodeSent]=useState(false);
-  const[codeVerified,setCodeVerified]=useState(false);
+  const[otp,setOtp]=useState("");
+  const[otpSent,setOtpSent]=useState(false);
   const[client,setClient]=useState(null);
   const[loading,setLoading]=useState(false);
   const[error,setError]=useState("");
   const[success,setSuccess]=useState("");
-  const[prestation,setPrestation]=useState("indiv");
-  const[booking,setBooking]=useState(false);
-  const[walletStep,setWalletStep]=useState(1);
+ 
+  // Booking
+  const[type,setType]=useState("indiv");
+  const[duree,setDuree]=useState("1h");
   const[dateRes,setDateRes]=useState("");
   const[creneau,setCreneau]=useState("");
+  const[booking,setBooking]=useState(false);
+  const[calcomDone,setCalcomDone]=useState(false);
+ 
+  // Historique
   const[showHistory,setShowHistory]=useState(false);
   const[history,setHistory]=useState([]);
-  const[histLoading,setHistLoading]=useState(false);
-
-  const prestations=[
-    {key:"indiv",label:"Cours individuel 1h",credits:55,calLink:"https://cal.com/ml-padel/indiv"},
-    {key:"duo",label:"Collectif Duo 1h (/pers.)",credits:35,calLink:"https://cal.com/ml-padel/collectif-duo"},
-    {key:"trio",label:"Collectif Trio 1h (/pers.)",credits:25,calLink:"https://cal.com/ml-padel/collectif"},
-    {key:"quatuor",label:"Collectif Quatuor 1h (/pers.)",credits:20,calLink:"https://cal.com/ml-padel/collectif"},
-    {key:"stage",label:"Stage vacances",credits:150,calLink:"https://cal.com/ml-padel/stage-adulte"},
-    {key:"masterclass4",label:"Masterclass WE 4j",credits:100,calLink:"https://cal.com/ml-padel/masterclass-week-end-2-jours-4-joueurs"},
-    {key:"masterclass8",label:"Masterclass WE 8j",credits:80,calLink:"https://cal.com/ml-padel/masterclass-week-end-2-jours-8-joueurs"},
+  const[loadingHist,setLoadingHist]=useState(false);
+ 
+  // ── Types de prestations ──
+  // base = crédits pour 1h (par personne pour duo/trio/quatuor)
+  const types=[
+    {key:"indiv",label:"Individuel",base:55,calcom:CALCOM.indiv,hasDuree:true},
+    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
+    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
+    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
+    {key:"stage",label:"Stage vacances",base:150,calcom:CALCOM.stage,hasDuree:false},
+    {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4,hasDuree:false},
+    {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8,hasDuree:false},
   ];
-
+ 
+  // ── Durées disponibles ──
+  // mult = multiplicateur (1h30 = x1.5, 2h = x2), arrondi à l'euro inférieur
+  const durees=[{key:"1h",label:"1h",mult:1},{key:"1h30",label:"1h30",mult:1.5},{key:"2h",label:"2h",mult:2}];
+ 
+  // ── Calculs dynamiques ──
+  const sel=types.find(t=>t.key===type);
+  const selD=durees.find(d=>d.key===duree);
+  const credits=sel.hasDuree?Math.floor(sel.base*selD.mult):sel.base;
+  const prestationKey=sel.hasDuree?type+"_"+duree:type;
+  const prestationLabel=sel.label+(sel.hasDuree?" "+selD.label:"")+(sel.perPers?" /pers.":"");
+ 
+  // ── Envoi OTP par email ──
   const sendOtp=async()=>{
-    const cleanE=email.trim().toLowerCase();
-    if(!cleanE||!cleanE.includes("@")){setError("Entrez un email valide");return}
+    if(!email||!email.includes("@")){setError("Entrez un email valide");return}
     setLoading(true);setError("");
     try{
-      const r=await fetch(WALLET_API+"?action=sendOtp&email="+encodeURIComponent(cleanE));
+      const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"sendOtp",email})});
       const d=await r.json();
-      if(d.success){setCodeSent(true);setSuccess("Code envoyé à "+cleanE)}
-      else setError(d.error||"Erreur d'envoi");
+      if(d.success){setOtpSent(true);setError("")}
+      else setError(d.error||"Erreur")
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
   };
-
+ 
+  // ── Vérification OTP ──
   const verifyOtp=async()=>{
-    if(!securityCode||securityCode.length<4){setError("Entrez le code reçu par email");return}
+    if(!otp||otp.length<4){setError("Entrez le code reçu par email");return}
     setLoading(true);setError("");
     try{
-      const r=await fetch(WALLET_API+"?action=verifyOtp&email="+encodeURIComponent(email.trim().toLowerCase())+"&otp="+encodeURIComponent(securityCode));
+      const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"verifyOtp",email,otp})});
       const d=await r.json();
-      if(d.success){setCodeVerified(true);setClient(d.client);setSuccess("Wallet connecté !")}
-      else setError(d.error||"Code invalide");
+      if(d.success){setClient(d.client);setError("")}
+      else setError(d.error||"Code invalide")
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
   };
-
-  const debitWallet=async()=>{
-    if(!client||!dateRes){setError("Indiquez la date du créneau réservé");return}
-    const p=prestations.find(x=>x.key===prestation);
-    if(client.solde<p.credits){setError("Solde insuffisant");return}
+ 
+  // ── Historique ──
+  const fetchHistory=async()=>{
+    if(showHistory){setShowHistory(false);return}
+    setLoadingHist(true);
+    try{
+      const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"history",email})});
+      const d=await r.json();
+      if(d.success){setHistory(d.history||[]);setShowHistory(true);if(d.client)setClient(prev=>({...prev,solde:d.client.solde}))}
+    }catch(err){}
+    setLoadingHist(false);
+  };
+ 
+  // ── Débit wallet ──
+  // Envoie email (pas phone) + prestationKey (ex: "indiv_1h30") + date + créneau
+  const bookWithWallet=async()=>{
+    if(!client||!dateRes){setError("Renseignez la date de votre réservation");return}
+    if(client.solde<credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+credits+" cr.)");return}
     setBooking(true);setError("");setSuccess("");
     try{
-      const r=await fetch(WALLET_API,{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"debit",email:email.trim().toLowerCase(),prestation,date:dateRes,creneau:creneau||"Via Cal.com",nbPersonnes:1})});
-      const txt=await r.text();
-      let d;try{d=JSON.parse(txt)}catch(e){setError("Erreur serveur");setBooking(false);return}
+      const r=await fetch(WALLET_API,{method:"POST",
+        body:JSON.stringify({action:"debit",email,prestation:prestationKey,date:dateRes,creneau,nbPersonnes:1})});
+      const d=await r.json();
       if(d.success){
-        setSuccess("Réservation confirmée ! "+p.label+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
-        setWalletStep(1);setDateRes("");setCreneau("");
+        setCalcomDone(false);setDateRes("");setCreneau("");
       }else setError(d.error||"Erreur lors du débit");
     }catch(err){setError("Erreur de connexion")}
     setBooking(false);
   };
-
-  const fetchHistory=async()=>{
-    if(showHistory){setShowHistory(false);return}
-    setHistLoading(true);
-    try{
-      const r=await fetch(WALLET_API+"?action=history&email="+encodeURIComponent(email.trim().toLowerCase()));
-      const d=await r.json();
-      if(d.success){setHistory(d.history||[]);setShowHistory(true)}
-      else setError(d.error||"Impossible de charger l'historique");
-    }catch(err){setError("Erreur de connexion")}
-    setHistLoading(false);
-  };
-
-  const selectedP=prestations.find(x=>x.key===prestation);
-
+ 
+  // ── Déconnexion ──
+  const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false)};
+ 
+  // ── Styles réutilisables ──
+  const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
+  const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
+ 
   return(
-    <section id="walletClient" style={{padding:"0 24px 60px",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+    <section style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
@@ -1216,150 +1241,212 @@ function WalletClient(){
               <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,marginTop:6,color:CREAM}}>
                 Mon <span style={{color:GOLD}}>Wallet</span>
               </h3>
-              <p style={{fontSize:13,color:`${CREAM}55`,marginTop:6}}>
-                Consultez votre solde et réservez directement avec vos crédits
-              </p>
             </div>
-
-            {!codeVerified?(
-              <div>
-                <div style={{display:"flex",gap:10,marginBottom:16}}>
-                  <input type="email" placeholder="Votre email" aria-label="Adresse email pour accéder à votre wallet" value={email} onChange={e=>setEmail(e.target.value)}
-                    onKeyDown={e=>e.key==="Enter"&&(!codeSent?sendOtp():verifyOtp())}
-                    style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
-                  {!codeSent&&<button onClick={sendOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap"}}>{loading?"...":"Connexion"}</button>}
-                </div>
-                {codeSent&&!codeVerified&&(
-                  <div style={{display:"flex",gap:10,marginBottom:16}}>
-                    <input type="text" placeholder="Code reçu par email" aria-label="Code de vérification reçu par email" value={securityCode} onChange={e=>setSecurityCode(e.target.value)}
-                      onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
-                      style={{flex:1,padding:"14px 18px",borderRadius:12,border:`1.5px solid ${GOLD}30`,background:`${CREAM}08`,color:CREAM,fontSize:15,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
-                    <button onClick={verifyOtp} disabled={loading} style={{padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",opacity:loading?0.6:1}}>{loading?"...":"Vérifier"}</button>
-                  </div>
-                )}
-              </div>
-            ):(null)}
-
+ 
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
             {success&&<div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
-
-            {client&&(
-              <div style={{marginTop:8}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"18px 20px",borderRadius:14,background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:20}}>
-                  <div>
-                    <div style={{fontSize:15,fontWeight:700,color:CREAM}}>{client.prenom} {client.nom}</div>
-                    <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>ID : {client.id}</div>
-                  </div>
-                  <div style={{textAlign:"right"}}>
-                    <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>{client.solde.toFixed(1)}</div>
-                    <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
-                  </div>
+ 
+            {/* ═══ CONNEXION EMAIL + OTP ═══ */}
+            {!client&&(<div>
+              {!otpSent?(
+                <div style={{display:"flex",gap:10,marginBottom:8}}>
+                  <input type="email" placeholder="Votre adresse email" value={email}
+                    onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&sendOtp()}
+                    style={{...inputStyle,flex:1}}/>
+                  <button onClick={sendOtp} disabled={loading} style={{
+                    padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
+                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                    fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                    opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
+                  }}>{loading?"...":"Connexion"}</button>
                 </div>
-
-
-                <button onClick={fetchHistory} style={{width:"100%",padding:"10px",borderRadius:10,border:`1px solid ${CREAM}15`,background:"transparent",color:`${CREAM}50`,fontSize:12,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",fontWeight:600,marginBottom:16,transition:"all 0.3s"}}>
-                  {histLoading?"Chargement...":(showHistory?"Masquer l'historique":"Voir mon historique")}
-                </button>
-
-                {showHistory&&history.length>0&&(
-                  <div style={{marginBottom:20,maxHeight:200,overflowY:"auto",borderRadius:12,border:`1px solid ${CREAM}10`,padding:"8px"}}>
-                    {history.slice(0,10).map((h,i)=>(
-                      <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 12px",borderBottom:i<Math.min(history.length,10)-1?`1px solid ${CREAM}06`:"none"}}>
-                        <div>
-                          <div style={{fontSize:12,fontWeight:600,color:h.type==="recharge"?"#4ade80":"#ff8888"}}>{h.type==="recharge"?"+":""}{h.montant} cr.</div>
-                          <div style={{fontSize:11,color:`${CREAM}35`,marginTop:2}}>{h.detail}</div>
-                        </div>
-                        <div style={{fontSize:11,color:`${CREAM}30`}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
-                      </div>
-                    ))}
+              ):(
+                <div>
+                  <p style={{fontSize:13,color:`${CREAM}60`,marginBottom:10}}>Code envoyé à <strong style={{color:GOLD}}>{email}</strong></p>
+                  <div style={{display:"flex",gap:10,marginBottom:8}}>
+                    <input type="text" placeholder="Code à 6 chiffres" value={otp}
+                      onChange={e=>setOtp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
+                      style={{...inputStyle,flex:1,letterSpacing:4,textAlign:"center",fontSize:18}}/>
+                    <button onClick={verifyOtp} disabled={loading} style={{
+                      padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
+                      background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                      fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+                      opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
+                    }}>{loading?"...":"Valider"}</button>
                   </div>
-                )}
-                <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
-                  <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:18}}>Réserver avec mes crédits</h4>
-
-                  <div style={{display:"flex",alignItems:"center",gap:0,marginBottom:22}}>
-                    <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
-                      <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,background:walletStep>=1?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:walletStep>=1?NAVY:`${CREAM}40`,transition:"all 0.3s"}}>1</div>
-                      <span style={{fontSize:12,fontWeight:600,color:walletStep>=1?CREAM:`${CREAM}35`,transition:"all 0.3s"}}>Réserver le créneau</span>
-                    </div>
-                    <div style={{width:40,height:2,background:walletStep>=2?GOLD:`${CREAM}15`,transition:"all 0.3s",borderRadius:1}}/>
-                    <div style={{display:"flex",alignItems:"center",gap:8,flex:1,justifyContent:"flex-end"}}>
-                      <span style={{fontSize:12,fontWeight:600,color:walletStep>=2?CREAM:`${CREAM}35`,transition:"all 0.3s"}}>Débiter ma wallet</span>
-                      <div style={{width:28,height:28,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:700,background:walletStep>=2?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:walletStep>=2?NAVY:`${CREAM}40`,transition:"all 0.3s"}}>2</div>
-                    </div>
+                  <button onClick={()=>{setOtpSent(false);setOtp("");setError("")}} style={{
+                    background:"transparent",border:"none",color:`${CREAM}40`,fontSize:12,
+                    cursor:"pointer",fontFamily:"'DM Sans',sans-serif",marginTop:4,
+                  }}>Changer d'email</button>
+                </div>
+              )}
+            </div>)}
+ 
+            {/* ═══ CLIENT CONNECTÉ ═══ */}
+            {client&&(<div>
+              {/* Carte solde */}
+              <div style={{
+                display:"flex",justifyContent:"space-between",alignItems:"center",
+                padding:"18px 20px",borderRadius:14,
+                background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:6,
+              }}>
+                <div>
+                  <div style={{fontSize:15,fontWeight:700,color:CREAM}}>{client.prenom} {client.nom}</div>
+                  <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>ID : {client.id}</div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
+                    {client.solde.toFixed(1)}
                   </div>
-
-                  {walletStep===1&&(<div>
-                    <div style={{marginBottom:12}}>
-                      <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Prestation</label>
-                      <select value={prestation} aria-label="Choisir une prestation" onChange={e=>{setPrestation(e.target.value);setCalcomClicked(false)}} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none",appearance:"none"}}>
-                        {prestations.map(pr=>(<option key={pr.key} value={pr.key} style={{background:NAVY,color:CREAM}}>{pr.label} — {pr.credits} cr.</option>))}
-                      </select>
-                    </div>
-
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:14}}>
-                      <span style={{fontSize:13,color:`${CREAM}60`}}>Coût : <strong style={{color:GOLD}}>{selectedP.credits} cr.</strong></span>
-                      <span style={{fontSize:13,color:`${CREAM}60`}}>Solde après : <strong style={{color:client.solde>=selectedP.credits?GOLD:"#ff6666"}}>{(client.solde-selectedP.credits).toFixed(1)} cr.</strong></span>
-                    </div>
-
-                    {client.solde<selectedP.credits?(
-                      <div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"12px 14px",color:"#ff6666",fontSize:13,fontWeight:600,textAlign:"center"}}>Solde insuffisant pour cette prestation</div>
-                    ):(
-                      <a href={selectedP.calLink} target="_blank" rel="noopener noreferrer" onClick={()=>{setWalletStep(2);setError("");setSuccess("")}} style={{display:"block",textAlign:"center",padding:"16px",borderRadius:14,background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",textDecoration:"none",transition:"all 0.3s"}}>
-                        📅 Réserver mon créneau sur Cal.com
-                      </a>
-                    )}
-
-                    Clicked&&(
-                      <div style={{marginTop:14,animation:"fadeUp 0.4s ease-out"}}>
-                        <div style={{background:`${GOLD}10`,border:`1px solid ${GOLD}30`,borderRadius:12,padding:"14px 16px",marginBottom:12}}>
-                          <p style={{fontSize:13,color:CREAM,fontWeight:600,marginBottom:8}}>✅ Créneau réservé sur Cal.com ?</p>
-                          <p style={{fontSize:12,color:`${CREAM}50`,marginBottom:12,lineHeight:1.5}}>Si vous avez bien confirmé votre créneau, passez à l'étape 2 pour débiter votre wallet.</p>
-                          <button onClick={()=>{setWalletStep(2);setError("");setSuccess("")}} style={{width:"100%",padding:"14px",borderRadius:12,border:`2px solid ${GOLD}`,background:"transparent",color:GOLD,fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s"}}>
-                            Oui, passer à l'étape 2 →
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>)}
-
-                  {walletStep===2&&(<div style={{animation:"fadeUp 0.4s ease-out"}}>
-                    <div style={{background:`${GOLD}10`,border:`1px solid ${GOLD}25`,borderRadius:12,padding:"14px 16px",marginBottom:16}}>
-                      <div style={{fontSize:13,color:CREAM,fontWeight:600}}>{selectedP.label} — <span style={{color:GOLD}}>{selectedP.credits} cr.</span></div>
-                      <div style={{fontSize:11,color:`${CREAM}40`,marginTop:4}}>Créneau réservé sur Cal.com ✓</div>
-                    </div>
-
-                    <div style={{display:"flex",gap:10,marginBottom:12}}>
-                      <div style={{flex:1}}>
-                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date du créneau réservé</label>
-                        <input type="date" value={dateRes} aria-label="Date du créneau réservé" onChange={e=>setDateRes(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
-                      </div>
-                      <div style={{flex:1}}>
-                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau (optionnel)</label>
-                        <input type="text" placeholder="ex: 9h-10h" aria-label="Créneau horaire" value={creneau} onChange={e=>setCreneau(e.target.value)} style={{width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"}}/>
-                      </div>
-                    </div>
-
-                    <button onClick={debitWallet} disabled={booking||!dateRes} style={{width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",background:dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,color:dateRes?NAVY:`${CREAM}30`,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s",opacity:booking?0.6:1}}>
-                      {booking?"Débit en cours...":"Confirmer et débiter "+selectedP.credits+" crédits"}
-                    </button>
-
-                    <button onClick={()=>{setWalletStep(1);setError("");setSuccess("")}} style={{width:"100%",padding:"12px",marginTop:8,borderRadius:12,border:`1px solid ${CREAM}15`,background:"transparent",color:`${CREAM}50`,fontSize:13,fontFamily:"'DM Sans',sans-serif",cursor:"pointer",fontWeight:600,transition:"all 0.3s"}}>
-                      ← Retour à l'étape 1
-                    </button>
-                  </div>)}
+                  <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
                 </div>
               </div>
+ 
+              {/* Liens historique / déconnexion */}
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:20}}>
+                <button onClick={fetchHistory} style={{background:"transparent",border:"none",color:`${CREAM}45`,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontWeight:600}}>
+                  {loadingHist?"...":showHistory?"Masquer l'historique":"Voir l'historique"}
+                </button>
+                <button onClick={disconnect} style={{background:"transparent",border:"none",color:`${CREAM}30`,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
+                  Déconnexion
+                </button>
+              </div>
+ 
+              {/* Historique */}
+              {showHistory&&history.length>0&&(
+                <div style={{marginBottom:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}04`,border:`1px solid ${CREAM}08`}}>
+                  {history.map(function(h,i){return(
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<history.length-1?`1px solid ${CREAM}08`:"none"}}>
+                      <div>
+                        <div style={{fontSize:13,fontWeight:600,color:h.type==="recharge"?"#4ecdc4":"#ff6666"}}>
+                          {h.type==="recharge"?"+":""}{h.montant} cr.
+                        </div>
+                        <div style={{fontSize:11,color:`${CREAM}35`,marginTop:2}}>{h.detail}</div>
+                      </div>
+                      <div style={{fontSize:11,color:`${CREAM}30`}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
+                    </div>
+                  )})}
+                </div>
+              )}
+ 
+              {/* ═══ RÉSERVATION AVEC CRÉDITS ═══ */}
+              <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
+                <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
+                  Réserver avec mes crédits
+                </h4>
+ 
+                {/* Type de prestation — boutons pills */}
+                <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Type de cours</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
+                  {types.map(function(t){return(
+                    <button key={t.key} onClick={function(){setType(t.key);if(!t.hasDuree)setDuree("1h");setCalcomDone(false);setError("");setSuccess("")}}
+                      style={{...pillActive,
+                        background:type===t.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}08`,
+                        color:type===t.key?NAVY:`${CREAM}60`,
+                        border:type===t.key?"none":`1px solid ${CREAM}15`,
+                      }}>
+                      {t.label}
+                    </button>
+                  )})}
+                </div>
+ 
+                {/* Durée — pills 1h / 1h30 / 2h (uniquement pour les cours, pas stage/masterclass) */}
+                {sel.hasDuree&&(<div style={{marginBottom:16}}>
+                  <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Durée</label>
+                  <div style={{display:"flex",gap:8}}>
+                    {durees.map(function(d){return(
+                      <button key={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
+                        style={{...pillActive,flex:1,textAlign:"center",
+                          background:duree===d.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}08`,
+                          color:duree===d.key?NAVY:`${CREAM}60`,
+                          border:duree===d.key?"none":`1px solid ${CREAM}15`,
+                        }}>
+                        {d.label}
+                      </button>
+                    )})}
+                  </div>
+                </div>)}
+ 
+                {/* Récap coût dynamique */}
+                <div style={{
+                  display:"flex",justifyContent:"space-between",alignItems:"center",
+                  padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:16,
+                }}>
+                  <span style={{fontSize:13,color:`${CREAM}60`}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
+                  <span style={{fontSize:13,color:`${CREAM}60`}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
+                </div>
+ 
+                {/* Solde insuffisant */}
+                {client.solde<credits?(
+                  <div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"12px 14px",color:"#ff6666",fontSize:13,fontWeight:600,textAlign:"center",marginBottom:16}}>
+                    Solde insuffisant pour cette prestation
+                  </div>
+ 
+                /* Phase 1 : Réserver sur Cal.com */
+                ):!calcomDone?(
+                  <div>
+                    <a href={sel.calcom} target="_blank" rel="noopener noreferrer"
+                      style={{
+                        display:"block",textAlign:"center",padding:"16px",borderRadius:14,
+                        background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                        color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                        textDecoration:"none",transition:"all 0.3s",marginBottom:10,
+                      }}>
+                      Réserver mon créneau sur Cal.com
+                    </a>
+                    <button onClick={function(){setCalcomDone(true);setError("");setSuccess("")}} style={{
+                      width:"100%",padding:"12px",borderRadius:12,border:`1.5px solid ${GOLD}40`,
+                      background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
+                      fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
+                    }}>
+                      J'ai réservé mon créneau
+                    </button>
+                  </div>
+ 
+                /* Phase 2 : Confirmer date + débiter */
+                ):(
+                  <div style={{animation:"fadeUp 0.4s ease-out"}}>
+                    <div style={{display:"flex",gap:10,marginBottom:12}}>
+                      <div style={{flex:1}}>
+                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date réservée</label>
+                        <input type="date" value={dateRes} onChange={function(e){setDateRes(e.target.value)}} style={inputStyle}/>
+                      </div>
+                      <div style={{flex:1}}>
+                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau horaire</label>
+                        <input type="text" placeholder="ex: 10h-11h30" value={creneau} onChange={function(e){setCreneau(e.target.value)}} style={inputStyle}/>
+                      </div>
+                    </div>
+                    <button onClick={bookWithWallet} disabled={booking||!dateRes} style={{
+                      width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
+                      background:dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
+                      color:dateRes?NAVY:`${CREAM}30`,
+                      fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                      transition:"all 0.3s",opacity:booking?0.6:1,marginBottom:8,
+                    }}>
+                      {booking?"Débit en cours...":"Confirmer et débiter "+credits+" crédits"}
+                    </button>
+                    <button onClick={function(){setCalcomDone(false);setError("");setSuccess("")}} style={{
+                      width:"100%",padding:"10px",borderRadius:10,border:"none",
+                      background:"transparent",color:`${CREAM}40`,fontSize:12,
+                      fontFamily:"'DM Sans',sans-serif",cursor:"pointer",
+                    }}>
+                      Modifier ma prestation
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
             )}
-
+ 
+            {/* Exclusions */}
             <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}03`,border:`1px solid ${CREAM}08`}}>
               <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Crédits utilisables sur :</div>
               <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                ✓ Cours individuels à l'unité &middot; ✓ Cours collectifs à l'unité &middot; ✓ Stages vacances &middot; ✓ Masterclass week-end
+                ✓ Cours individuels &middot; ✓ Cours collectifs &middot; ✓ Stages vacances &middot; ✓ Masterclass week-end
               </div>
               <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
               <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                ✗ Packs 10h (déjà –10%) &middot; ✗ Académie annuelle (750€) &middot; ✗ Académie semestrielle (420€) &middot; ✗ Toute promotion en cours
+                ✗ Packs 10h (déjà –15%) &middot; ✗ Académie annuelle (750€) &middot; ✗ Académie semestrielle (420€) &middot; ✗ Toute promotion en cours
               </div>
             </div>
           </div>
