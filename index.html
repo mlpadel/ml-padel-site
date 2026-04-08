@@ -296,7 +296,7 @@ function Navbar(){
     {label:"Wallet",href:"#wallet"},
     {label:"Galerie",href:"#galerie"},
     {label:"Boutique",href:"#boutique",badge:"New"},
-    {label:"Acad\u00e9mie",href:"/academie-inscription.html"},{label:"FAQ",href:"#faq"},
+    {label:"Académie",href:"/academie-inscription.html"},{label:"FAQ",href:"#faq"},
     {label:"Contact",href:"#contact"},
   ];
 
@@ -2154,7 +2154,7 @@ function CookieBanner(){
   return(
     <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
       <p style={{flex:"1 1 400px",margin:0,lineHeight:1.5}}>
-        Ce site utilise des cookies (Google Analytics, Firebase) pour am\u00e9liorer votre exp\u00e9rience.{" "}
+        Ce site utilise des cookies (Google Analytics, Firebase) pour améliorer votre expérience.{" "}
         <a href="#mentions-legales" style={{color:GOLD,textDecoration:"underline"}} onClick={function(){setVisible(false)}}>En savoir plus</a>
       </p>
       <div style={{display:"flex",gap:10}}>
@@ -2175,26 +2175,26 @@ function MentionsLegales(){
   return(
     <section id="mentions-legales" style={sStyle}>
       <div style={{maxWidth:800,margin:"0 auto"}}>
-        <h2 style={h2s}>Mentions L\u00e9gales</h2>
-        <h3 style={h3s}>\u00c9diteur du site</h3>
-        <p style={ps}>ML Padel \u2014 Mathias Laval<br/>Entrepreneur individuel<br/>2 rue Benoite Boulard, 97450 Saint-Louis, La R\u00e9union<br/>T\u00e9l\u00e9phone : 0692 62 73 72<br/>Email : mathias.laval38@gmail.com</p>
-        <h3 style={h3s}>H\u00e9bergement</h3>
-        <p style={ps}>Vercel Inc. \u2014 440 N Barranca Ave #4133, Covina, CA 91723, \u00c9tats-Unis</p>
-        <h3 style={h3s}>Propri\u00e9t\u00e9 intellectuelle</h3>
-        <p style={ps}>L\u2019ensemble du contenu de ce site (textes, images, logos, vid\u00e9os) est la propri\u00e9t\u00e9 exclusive de ML Padel. Toute reproduction est interdite sans autorisation.</p>
-        <h3 style={h3s}>Donn\u00e9es personnelles & Cookies</h3>
-        <p style={ps}>Ce site collecte des donn\u00e9es via Google Analytics et Firebase Firestore. Conform\u00e9ment au RGPD, vous disposez d\u2019un droit d\u2019acc\u00e8s, rectification et suppression. Contact : mathias.laval38@gmail.com</p>
-        <h2 style={{...h2s,marginTop:48}}>Conditions G\u00e9n\u00e9rales de Vente</h2>
+        <h2 style={h2s}>Mentions Légales</h2>
+        <h3 style={h3s}>Éditeur du site</h3>
+        <p style={ps}>ML Padel — Mathias Laval<br/>Entrepreneur individuel<br/>2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion<br/>Téléphone : 0692 62 73 72<br/>Email : mathias.laval38@gmail.com</p>
+        <h3 style={h3s}>Hébergement</h3>
+        <p style={ps}>Vercel Inc. — 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis</p>
+        <h3 style={h3s}>Propriété intellectuelle</h3>
+        <p style={ps}>L’ensemble du contenu de ce site (textes, images, logos, vidéos) est la propriété exclusive de ML Padel. Toute reproduction est interdite sans autorisation.</p>
+        <h3 style={h3s}>Données personnelles & Cookies</h3>
+        <p style={ps}>Ce site collecte des données via Google Analytics et Firebase Firestore. Conformément au RGPD, vous disposez d’un droit d’accès, rectification et suppression. Contact : mathias.laval38@gmail.com</p>
+        <h2 style={{...h2s,marginTop:48}}>Conditions Générales de Vente</h2>
         <h3 style={h3s}>1. Objet</h3>
-        <p style={ps}>Les pr\u00e9sentes CGV r\u00e9gissent la vente de prestations de coaching de padel par ML Padel.</p>
-        <h3 style={h3s}>2. R\u00e9servation & Paiement</h3>
-        <p style={ps}>R\u00e9servations via Cal.com. Paiement d\u00fb avant la prestation via Stripe. Cr\u00e9dits Wallet non remboursables.</p>
+        <p style={ps}>Les présentes CGV régissent la vente de prestations de coaching de padel par ML Padel.</p>
+        <h3 style={h3s}>2. Réservation & Paiement</h3>
+        <p style={ps}>Réservations via Cal.com. Paiement dû avant la prestation via Stripe. Crédits Wallet non remboursables.</p>
         <h3 style={h3s}>3. Annulation</h3>
-        <p style={ps}>Annulation minimum 24h avant. Absence = cours d\u00fb. Force majeure = report sans frais.</p>
-        <h3 style={h3s}>4. Responsabilit\u00e9</h3>
-        <p style={ps}>ML Padel d\u00e9cline toute responsabilit\u00e9 en cas de blessure. Assurance RC recommand\u00e9e.</p>
+        <p style={ps}>Annulation minimum 24h avant. Absence = cours dû. Force majeure = report sans frais.</p>
+        <h3 style={h3s}>4. Responsabilité</h3>
+        <p style={ps}>ML Padel décline toute responsabilité en cas de blessure. Assurance RC recommandée.</p>
         <h3 style={h3s}>5. Droit applicable</h3>
-        <p style={ps}>Droit fran\u00e7ais. Tribunaux de Saint-Denis de La R\u00e9union comp\u00e9tents.</p>
+        <p style={ps}>Droit français. Tribunaux de Saint-Denis de La Réunion compétents.</p>
       </div>
     </section>
   );
