@@ -390,14 +390,14 @@ function Hero(){
           position:"absolute",inset:0,
           backgroundImage:`url('${img}')`,
           backgroundSize:"cover",backgroundPosition:"center center",
-          opacity:i===bgIdx?0.35:0,
+          opacity:i===bgIdx?0.55:0,
           transition:"opacity 1.5s ease-in-out",
         }}/>
       ))}
       {/* Gradient overlay */}
       <div style={{
         position:"absolute",inset:0,
-        background:`linear-gradient(165deg, ${NAVY}dd 0%, ${NAVY_MID}bb 45%, ${NAVY_LIGHT}88 100%)`,
+        background:`linear-gradient(165deg, ${NAVY}aa 0%, ${NAVY_MID}88 45%, ${NAVY_LIGHT}55 100%)`,
       }}/>
       {/* Decorative elements */}
       <div style={{
