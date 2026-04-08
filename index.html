@@ -210,11 +210,11 @@ function Carousel({images,height=320}){
           </div>
         )})}
       </div>
+      <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginTop:10,opacity:0.5}}>
+        <span style={{fontSize:11,color:"#c9a84c",fontWeight:600}}>&#8592; swipe &#8594;</span>
+      </div>
     </div>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:6,marginTop:10,opacity:0.5}}>
-            <span style={{fontSize:11,color:"#c9a84c",fontWeight:600}}>&#8592; swipe &#8594;</span>
-          </div>
-        );
+  );
 }
 
 function PhotoBanner({src,alt,height=280,overlay=true,objectPos="center center"}){
