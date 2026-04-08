@@ -246,12 +246,21 @@ const Icon={
 };
 
 /* ─── Logo Component ─── */
-function Logo({size=36}) {
+function Logo({size=36, scrolled=false}) {
   return (
     <img 
       src="./LOGO%20ML%20PADEL%202025%20(1).png" 
       alt="ML Padel" 
-      style={{height: size * 1.8, width: "auto", objectFit: "contain", display: "block"}}
+      style={{
+        height: size * 1.8,
+        width: "auto",
+        objectFit: "contain",
+        display: "block",
+        borderRadius: 10,
+        background: scrolled ? WHITE : "transparent",
+        padding: scrolled ? 2 : 0,
+        transition: "background 0.3s, padding 0.3s"
+      }}
     />
   );
 }
@@ -293,7 +302,7 @@ function Navbar(){
         height:scrolled?58:72,transition:"height 0.3s",
       }}>
         <a href="#hero" style={{textDecoration:"none"}}>
-          <Logo size={scrolled?32:36} textColor={scrolled?NAVY:WHITE} />
+          <Logo size={scrolled?32:36} scrolled={scrolled} />
         </a>
 
         <div style={{display:"flex",alignItems:"center",gap:28}} className="nav-desktop">
@@ -2437,25 +2446,7 @@ function MapSection(){
             </h2>
             <p style={{color:TEXT_MED,fontSize:15,marginTop:10}}>4Padel Saint-Louis — Le Five, La Réunion (974)</p>
           </div>
-        </AnimatedSection>
-        <AnimatedSection delay={0.15}>
-          <div style={{borderRadius:20,overflow:"hidden",border:`2px solid ${GOLD}22`,boxShadow:`0 12px 40px ${NAVY}10`}}>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3529.5!2d55.41!3d-21.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s4Padel+Saint-Louis+La+Réunion!5e0!3m2!1sfr!2sfr!4v1700000000000"
-              width="100%" height="380" style={{border:0,display:"block"}} allowFullScreen="" loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade" title="4Padel Saint-Louis — La Réunion"
-            />
-          </div>
-          <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:20}}>
-            <span style={{color:GOLD,display:"flex"}}><Icon.mapPin/></span>
-            <a href="https://maps.google.com/?q=4Padel+Saint-Louis+La+Réunion" target="_blank" rel="noopener noreferrer"
-              style={{color:TEXT_MED,fontSize:14,fontWeight:600,textDecoration:"none",transition:"color 0.3s"}}
-              onMouseEnter={e=>e.target.style.color=GOLD}
-              onMouseLeave={e=>e.target.style.color=TEXT_MED}
-            >Ouvrir dans Google Maps →</a>
-          </div>
-        </AnimatedSection>
-      </div>
+        </AnimatedSection>      </div>
     </section>
   );
 }
