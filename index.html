@@ -1164,7 +1164,7 @@ function WalletClient(){
   };
 
   const verifyOtp=async()=>{
-    if(!otp||otp.length<4){setError("Entrez le code re\u00e7u par email");return}
+    if(!otp||otp.length<4){setError("Entrez le code reçu par email");return}
     setLoading(true);setError("");
     try{
       const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"verifyOtp",email,otp})});
@@ -1187,7 +1187,7 @@ function WalletClient(){
   };
 
   const bookWithWallet=async()=>{
-    if(!client){setError("Client non connect\u00e9");return}
+    if(!client){setError("Client non connecté");return}
     if(client.solde<credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+credits+" cr.)");return}
     setBooking(true);setError("");setSuccess("");
     var today=new Date().toISOString().split("T")[0];
@@ -1196,10 +1196,10 @@ function WalletClient(){
         body:JSON.stringify({action:"debit",email:email,prestation:prestationKey,date:today,creneau:"",nbPersonnes:1})});
       const d=await r.json();
       if(d.success){
-        setSuccess("R\u00e9servation confirm\u00e9e ! "+prestationLabel+" \u2014 "+d.debit+" cr. d\u00e9bit\u00e9s. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
         setCalcomDone(false);
-      }else setError(d.error||"Erreur lors du d\u00e9bit");
+      }else setError(d.error||"Erreur lors du débit");
     }catch(err){setError("Erreur de connexion")}
     setBooking(false);
   };
@@ -1244,9 +1244,9 @@ function WalletClient(){
                 </div>
               ):(
                 <div>
-                  <p style={{fontSize:13,color:CREAM+"60",marginBottom:10}}>Code envoy\u00e9 \u00e0 <strong style={{color:GOLD}}>{email}</strong></p>
+                  <p style={{fontSize:13,color:CREAM+"60",marginBottom:10}}>Code envoyé à <strong style={{color:GOLD}}>{email}</strong></p>
                   <div style={{display:"flex",gap:10,marginBottom:8}}>
-                    <input type="text" placeholder="Code \u00e0 6 chiffres" value={otp}
+                    <input type="text" placeholder="Code à 6 chiffres" value={otp}
                       onChange={e=>setOtp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
                       style={{...inputStyle,flex:1,letterSpacing:4,textAlign:"center",fontSize:18}}/>
                     <button onClick={verifyOtp} disabled={loading} style={{
@@ -1278,7 +1278,7 @@ function WalletClient(){
                   <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
                     {client.solde.toFixed(1)}
                   </div>
-                  <div style={{fontSize:11,color:CREAM+"50"}}>cr\u00e9dits disponibles</div>
+                  <div style={{fontSize:11,color:CREAM+"50"}}>crédits disponibles</div>
                 </div>
               </div>
 
@@ -1287,7 +1287,7 @@ function WalletClient(){
                   {loadingHist?"...":showHistory?"Masquer l'historique":"Voir l'historique"}
                 </button>
                 <button onClick={disconnect} style={{background:"transparent",border:"none",color:CREAM+"30",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
-                  D\u00e9connexion
+                  Déconnexion
                 </button>
               </div>
 
@@ -1309,7 +1309,7 @@ function WalletClient(){
 
               <div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:20}}>
                 <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
-                  R\u00e9server avec mes cr\u00e9dits
+                  Réserver avec mes crédits
                 </h4>
 
                 <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Type de cours</label>
@@ -1327,7 +1327,7 @@ function WalletClient(){
                 </div>
 
                 {sel.hasDuree&&(<div style={{marginBottom:16}}>
-                  <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Dur\u00e9e</label>
+                  <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Durée</label>
                   <div style={{display:"flex",gap:8}}>
                     {durees.map(function(d){return(
                       <button key={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
@@ -1346,7 +1346,7 @@ function WalletClient(){
                   display:"flex",justifyContent:"space-between",alignItems:"center",
                   padding:"14px 18px",borderRadius:12,background:CREAM+"04",marginBottom:16,
                 }}>
-                  <span style={{fontSize:13,color:CREAM+"60"}}>{prestationLabel} \u2014 <strong style={{color:GOLD}}>{credits} cr.</strong></span>
+                  <span style={{fontSize:13,color:CREAM+"60"}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
                   <span style={{fontSize:13,color:CREAM+"60"}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
                 </div>
 
@@ -1363,14 +1363,14 @@ function WalletClient(){
                         color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                         textDecoration:"none",transition:"all 0.3s",marginBottom:10,
                       }}>
-                      R\u00e9server mon cr\u00e9neau sur Cal.com
+                      Réserver mon créneau sur Cal.com
                     </a>
                     <button onClick={function(){setCalcomDone(true);setError("");setSuccess("")}} style={{
                       width:"100%",padding:"12px",borderRadius:12,border:"1.5px solid "+GOLD+"40",
                       background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
                       fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
                     }}>
-                      J'ai r\u00e9serv\u00e9 mon cr\u00e9neau
+                      J'ai réservé mon créneau
                     </button>
                   </div>
                 ):(
@@ -1381,7 +1381,7 @@ function WalletClient(){
                       color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                       transition:"all 0.3s",opacity:booking?0.6:1,marginBottom:8,
                     }}>
-                      {booking?"D\u00e9bit en cours...":"Valider et d\u00e9biter "+credits+" cr\u00e9dits"}
+                      {booking?"Débit en cours...":"Valider et débiter "+credits+" crédits"}
                     </button>
                     <button onClick={function(){setCalcomDone(false);setError("");setSuccess("")}} style={{
                       width:"100%",padding:"10px",borderRadius:10,border:"none",
@@ -1397,13 +1397,13 @@ function WalletClient(){
             )}
 
             <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:CREAM+"03",border:"1px solid "+CREAM+"08"}}>
-              <div style={{fontSize:12,fontWeight:700,color:CREAM+"45",marginBottom:8}}>Cr\u00e9dits utilisables sur :</div>
+              <div style={{fontSize:12,fontWeight:700,color:CREAM+"45",marginBottom:8}}>Crédits utilisables sur :</div>
               <div style={{fontSize:12,color:CREAM+"35",lineHeight:1.8}}>
-                \u2713 Cours individuels \u00b7 \u2713 Cours collectifs \u00b7 \u2713 Stages vacances \u00b7 \u2713 Masterclass week-end
+                ✓ Cours individuels · ✓ Cours collectifs · ✓ Stages vacances · ✓ Masterclass week-end
               </div>
               <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
               <div style={{fontSize:12,color:CREAM+"35",lineHeight:1.8}}>
-                \u2717 Packs 10h (d\u00e9j\u00e0 \u201315%) \u00b7 \u2717 Acad\u00e9mie annuelle (750\u20ac) \u00b7 \u2717 Acad\u00e9mie semestrielle (420\u20ac) \u00b7 \u2717 Toute promotion en cours
+                ✗ Packs 10h (déjà –15%) · ✗ Académie annuelle (750€) · ✗ Académie semestrielle (420€) · ✗ Toute promotion en cours
               </div>
             </div>
           </div>
