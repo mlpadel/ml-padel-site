@@ -79,16 +79,6 @@ const firebaseConfig = {
   messagingSenderId: "75604165889",
   appId: "1:75604165889:web:487e5c5b20a0662ef78700"
 ,
-  collectifDuo: `${CALCOM_BASE}/cours-collectif-duo`,
-  collectifTrio: `${CALCOM_BASE}/cours-collectif-trio`,
-  collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`,
-  indivWallet: `${CALCOM_BASE}/cours-individuel-wallet`,
-  collectifDuoWallet: `${CALCOM_BASE}/cours-collectif-duo-wallet`,
-  collectifTrioWallet: `${CALCOM_BASE}/cours-collectif-trio-wallet`,
-  collectifQuatuorWallet: `${CALCOM_BASE}/cours-collectif-quatuor-wallet`,
-  stageWallet: `${CALCOM_BASE}/stage-adulte-wallet`,
-  masterclass4Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs-wallet`,
-  masterclass8Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs-wallet`};
 const fbApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -121,6 +111,16 @@ const CALCOM = {
   masterclass8: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs`,
   stage: `${CALCOM_BASE}/stage-adulte`,
   general: CALCOM_BASE,
+  collectifDuo: `${CALCOM_BASE}/cours-collectif-duo`,
+  collectifTrio: `${CALCOM_BASE}/cours-collectif-trio`,
+  collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`,
+  indivWallet: `${CALCOM_BASE}/cours-individuel-wallet`,
+  collectifDuoWallet: `${CALCOM_BASE}/cours-collectif-duo-wallet`,
+  collectifTrioWallet: `${CALCOM_BASE}/cours-collectif-trio-wallet`,
+  collectifQuatuorWallet: `${CALCOM_BASE}/cours-collectif-quatuor-wallet`,
+  stageWallet: `${CALCOM_BASE}/stage-adulte-wallet`,
+  masterclass4Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs-wallet`,
+  masterclass8Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs-wallet`,
 };
 const WHATSAPP_BASE = "https://wa.me/262692627372";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
