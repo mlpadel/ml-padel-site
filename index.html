@@ -1116,8 +1116,7 @@ function Wallet(){
 /* ─── Mon Wallet — Espace Client avec Cal.com intégré ─── */
 function WalletClient(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
- 
-  // Auth
+
   const[email,setEmail]=useState("");
   const[otp,setOtp]=useState("");
   const[otpSent,setOtpSent]=useState(false);
@@ -1125,22 +1124,16 @@ function WalletClient(){
   const[loading,setLoading]=useState(false);
   const[error,setError]=useState("");
   const[success,setSuccess]=useState("");
- 
-  // Booking
+
   const[type,setType]=useState("indiv");
   const[duree,setDuree]=useState("1h");
-  const[dateRes,setDateRes]=useState("");
-  const[creneau,setCreneau]=useState("");
   const[booking,setBooking]=useState(false);
   const[calcomDone,setCalcomDone]=useState(false);
- 
-  // Historique
+
   const[showHistory,setShowHistory]=useState(false);
   const[history,setHistory]=useState([]);
   const[loadingHist,setLoadingHist]=useState(false);
- 
-  // ── Types de prestations ──
-  // base = crédits pour 1h (par personne pour duo/trio/quatuor)
+
   const types=[
     {key:"indiv",label:"Individuel",base:55,calcom:CALCOM.indiv,hasDuree:true},
     {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
@@ -1150,19 +1143,14 @@ function WalletClient(){
     {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4,hasDuree:false},
     {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8,hasDuree:false},
   ];
- 
-  // ── Durées disponibles ──
-  // mult = multiplicateur (1h30 = x1.5, 2h = x2), arrondi à l'euro inférieur
   const durees=[{key:"1h",label:"1h",mult:1},{key:"1h30",label:"1h30",mult:1.5},{key:"2h",label:"2h",mult:2}];
- 
-  // ── Calculs dynamiques ──
+
   const sel=types.find(t=>t.key===type);
   const selD=durees.find(d=>d.key===duree);
   const credits=sel.hasDuree?Math.floor(sel.base*selD.mult):sel.base;
   const prestationKey=sel.hasDuree?type+"_"+duree:type;
   const prestationLabel=sel.label+(sel.hasDuree?" "+selD.label:"")+(sel.perPers?" /pers.":"");
- 
-  // ── Envoi OTP par email ──
+
   const sendOtp=async()=>{
     if(!email||!email.includes("@")){setError("Entrez un email valide");return}
     setLoading(true);setError("");
@@ -1174,10 +1162,9 @@ function WalletClient(){
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
   };
- 
-  // ── Vérification OTP ──
+
   const verifyOtp=async()=>{
-    if(!otp||otp.length<4){setError("Entrez le code reçu par email");return}
+    if(!otp||otp.length<4){setError("Entrez le code re\u00e7u par email");return}
     setLoading(true);setError("");
     try{
       const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"verifyOtp",email,otp})});
@@ -1187,8 +1174,7 @@ function WalletClient(){
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
   };
- 
-  // ── Historique ──
+
   const fetchHistory=async()=>{
     if(showHistory){setShowHistory(false);return}
     setLoadingHist(true);
@@ -1199,40 +1185,37 @@ function WalletClient(){
     }catch(err){}
     setLoadingHist(false);
   };
- 
-  // ── Débit wallet ──
-  // Envoie email (pas phone) + prestationKey (ex: "indiv_1h30") + date + créneau
+
   const bookWithWallet=async()=>{
-    if(!client||!dateRes){setError("Renseignez la date de votre réservation");return}
+    if(!client){setError("Client non connect\u00e9");return}
     if(client.solde<credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+credits+" cr.)");return}
     setBooking(true);setError("");setSuccess("");
+    var today=new Date().toISOString().split("T")[0];
     try{
       const r=await fetch(WALLET_API,{method:"POST",
-        body:JSON.stringify({action:"debit",email,prestation:prestationKey,date:dateRes,creneau,nbPersonnes:1})});
+        body:JSON.stringify({action:"debit",email:email,prestation:prestationKey,date:today,creneau:"",nbPersonnes:1})});
       const d=await r.json();
       if(d.success){
-        setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
+        setSuccess("R\u00e9servation confirm\u00e9e ! "+prestationLabel+" \u2014 "+d.debit+" cr. d\u00e9bit\u00e9s. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
-        setCalcomDone(false);setDateRes("");setCreneau("");
-      }else setError(d.error||"Erreur lors du débit");
+        setCalcomDone(false);
+      }else setError(d.error||"Erreur lors du d\u00e9bit");
     }catch(err){setError("Erreur de connexion")}
     setBooking(false);
   };
- 
-  // ── Déconnexion ──
+
   const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false)};
- 
-  // ── Styles réutilisables ──
-  const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:`1.5px solid ${GOLD}25`,background:`${CREAM}06`,color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
+
+  const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:"1.5px solid "+GOLD+"25",background:CREAM+"06",color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
   const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
- 
+
   return(
-    <section style={{padding:"60px 24px 0",background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+    <section style={{padding:"60px 24px 0",background:"linear-gradient(175deg,"+NAVY+" 0%,"+NAVY_MID+" 100%)",position:"relative",zIndex:1}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
-            background:`${CREAM}06`,borderRadius:20,border:`1.5px solid ${GOLD}25`,
-            padding:"32px 28px",boxShadow:`0 8px 32px ${GOLD}10`,
+            background:CREAM+"06",borderRadius:20,border:"1.5px solid "+GOLD+"25",
+            padding:"32px 28px",boxShadow:"0 8px 32px "+GOLD+"10",
           }}>
             <div style={{textAlign:"center",marginBottom:24}}>
               <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
@@ -1242,11 +1225,10 @@ function WalletClient(){
                 Mon <span style={{color:GOLD}}>Wallet</span>
               </h3>
             </div>
- 
+
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
-            {success&&<div style={{background:`${GOLD}15`,border:`1px solid ${GOLD}33`,borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
- 
-            {/* ═══ CONNEXION EMAIL + OTP ═══ */}
+            {success&&<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
+
             {!client&&(<div>
               {!otpSent?(
                 <div style={{display:"flex",gap:10,marginBottom:8}}>
@@ -1255,179 +1237,155 @@ function WalletClient(){
                     style={{...inputStyle,flex:1}}/>
                   <button onClick={sendOtp} disabled={loading} style={{
                     padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
-                    background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                    background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",color:NAVY,
                     fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
                     opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
                   }}>{loading?"...":"Connexion"}</button>
                 </div>
               ):(
                 <div>
-                  <p style={{fontSize:13,color:`${CREAM}60`,marginBottom:10}}>Code envoyé à <strong style={{color:GOLD}}>{email}</strong></p>
+                  <p style={{fontSize:13,color:CREAM+"60",marginBottom:10}}>Code envoy\u00e9 \u00e0 <strong style={{color:GOLD}}>{email}</strong></p>
                   <div style={{display:"flex",gap:10,marginBottom:8}}>
-                    <input type="text" placeholder="Code à 6 chiffres" value={otp}
+                    <input type="text" placeholder="Code \u00e0 6 chiffres" value={otp}
                       onChange={e=>setOtp(e.target.value)} onKeyDown={e=>e.key==="Enter"&&verifyOtp()}
                       style={{...inputStyle,flex:1,letterSpacing:4,textAlign:"center",fontSize:18}}/>
                     <button onClick={verifyOtp} disabled={loading} style={{
                       padding:"14px 24px",borderRadius:12,border:"none",cursor:"pointer",
-                      background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                      background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",color:NAVY,
                       fontWeight:700,fontSize:14,fontFamily:"'DM Sans',sans-serif",
                       opacity:loading?0.6:1,transition:"all 0.3s",whiteSpace:"nowrap",
                     }}>{loading?"...":"Valider"}</button>
                   </div>
                   <button onClick={()=>{setOtpSent(false);setOtp("");setError("")}} style={{
-                    background:"transparent",border:"none",color:`${CREAM}40`,fontSize:12,
+                    background:"transparent",border:"none",color:CREAM+"40",fontSize:12,
                     cursor:"pointer",fontFamily:"'DM Sans',sans-serif",marginTop:4,
                   }}>Changer d'email</button>
                 </div>
               )}
             </div>)}
- 
-            {/* ═══ CLIENT CONNECTÉ ═══ */}
+
             {client&&(<div>
-              {/* Carte solde */}
               <div style={{
                 display:"flex",justifyContent:"space-between",alignItems:"center",
                 padding:"18px 20px",borderRadius:14,
-                background:`${GOLD}10`,border:`1px solid ${GOLD}22`,marginBottom:6,
+                background:GOLD+"10",border:"1px solid "+GOLD+"22",marginBottom:6,
               }}>
                 <div>
                   <div style={{fontSize:15,fontWeight:700,color:CREAM}}>{client.prenom} {client.nom}</div>
-                  <div style={{fontSize:12,color:`${CREAM}50`,marginTop:2}}>ID : {client.id}</div>
+                  <div style={{fontSize:12,color:CREAM+"50",marginTop:2}}>ID : {client.id}</div>
                 </div>
                 <div style={{textAlign:"right"}}>
                   <div style={{fontFamily:"'Playfair Display',serif",fontSize:28,fontWeight:900,color:GOLD}}>
                     {client.solde.toFixed(1)}
                   </div>
-                  <div style={{fontSize:11,color:`${CREAM}50`}}>crédits disponibles</div>
+                  <div style={{fontSize:11,color:CREAM+"50"}}>cr\u00e9dits disponibles</div>
                 </div>
               </div>
- 
-              {/* Liens historique / déconnexion */}
+
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:20}}>
-                <button onClick={fetchHistory} style={{background:"transparent",border:"none",color:`${CREAM}45`,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontWeight:600}}>
+                <button onClick={fetchHistory} style={{background:"transparent",border:"none",color:CREAM+"45",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontWeight:600}}>
                   {loadingHist?"...":showHistory?"Masquer l'historique":"Voir l'historique"}
                 </button>
-                <button onClick={disconnect} style={{background:"transparent",border:"none",color:`${CREAM}30`,fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
-                  Déconnexion
+                <button onClick={disconnect} style={{background:"transparent",border:"none",color:CREAM+"30",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
+                  D\u00e9connexion
                 </button>
               </div>
- 
-              {/* Historique */}
+
               {showHistory&&history.length>0&&(
-                <div style={{marginBottom:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}04`,border:`1px solid ${CREAM}08`}}>
+                <div style={{marginBottom:20,padding:"14px 16px",borderRadius:12,background:CREAM+"04",border:"1px solid "+CREAM+"08"}}>
                   {history.map(function(h,i){return(
-                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<history.length-1?`1px solid ${CREAM}08`:"none"}}>
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<history.length-1?"1px solid "+CREAM+"08":"none"}}>
                       <div>
                         <div style={{fontSize:13,fontWeight:600,color:h.type==="recharge"?"#4ecdc4":"#ff6666"}}>
                           {h.type==="recharge"?"+":""}{h.montant} cr.
                         </div>
-                        <div style={{fontSize:11,color:`${CREAM}35`,marginTop:2}}>{h.detail}</div>
+                        <div style={{fontSize:11,color:CREAM+"35",marginTop:2}}>{h.detail}</div>
                       </div>
-                      <div style={{fontSize:11,color:`${CREAM}30`}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
+                      <div style={{fontSize:11,color:CREAM+"30"}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
                     </div>
                   )})}
                 </div>
               )}
- 
-              {/* ═══ RÉSERVATION AVEC CRÉDITS ═══ */}
-              <div style={{borderTop:`1px solid ${CREAM}10`,paddingTop:20}}>
+
+              <div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:20}}>
                 <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
-                  Réserver avec mes crédits
+                  R\u00e9server avec mes cr\u00e9dits
                 </h4>
- 
-                {/* Type de prestation — boutons pills */}
-                <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Type de cours</label>
+
+                <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Type de cours</label>
                 <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
                   {types.map(function(t){return(
                     <button key={t.key} onClick={function(){setType(t.key);if(!t.hasDuree)setDuree("1h");setCalcomDone(false);setError("");setSuccess("")}}
                       style={{...pillActive,
-                        background:type===t.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}08`,
-                        color:type===t.key?NAVY:`${CREAM}60`,
-                        border:type===t.key?"none":`1px solid ${CREAM}15`,
+                        background:type===t.key?"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")":CREAM+"08",
+                        color:type===t.key?NAVY:CREAM+"60",
+                        border:type===t.key?"none":"1px solid "+CREAM+"15",
                       }}>
                       {t.label}
                     </button>
                   )})}
                 </div>
- 
-                {/* Durée — pills 1h / 1h30 / 2h (uniquement pour les cours, pas stage/masterclass) */}
+
                 {sel.hasDuree&&(<div style={{marginBottom:16}}>
-                  <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:8}}>Durée</label>
+                  <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Dur\u00e9e</label>
                   <div style={{display:"flex",gap:8}}>
                     {durees.map(function(d){return(
                       <button key={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
                         style={{...pillActive,flex:1,textAlign:"center",
-                          background:duree===d.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}08`,
-                          color:duree===d.key?NAVY:`${CREAM}60`,
-                          border:duree===d.key?"none":`1px solid ${CREAM}15`,
+                          background:duree===d.key?"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")":CREAM+"08",
+                          color:duree===d.key?NAVY:CREAM+"60",
+                          border:duree===d.key?"none":"1px solid "+CREAM+"15",
                         }}>
                         {d.label}
                       </button>
                     )})}
                   </div>
                 </div>)}
- 
-                {/* Récap coût dynamique */}
+
                 <div style={{
                   display:"flex",justifyContent:"space-between",alignItems:"center",
-                  padding:"14px 18px",borderRadius:12,background:`${CREAM}04`,marginBottom:16,
+                  padding:"14px 18px",borderRadius:12,background:CREAM+"04",marginBottom:16,
                 }}>
-                  <span style={{fontSize:13,color:`${CREAM}60`}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
-                  <span style={{fontSize:13,color:`${CREAM}60`}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
+                  <span style={{fontSize:13,color:CREAM+"60"}}>{prestationLabel} \u2014 <strong style={{color:GOLD}}>{credits} cr.</strong></span>
+                  <span style={{fontSize:13,color:CREAM+"60"}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
                 </div>
- 
-                {/* Solde insuffisant */}
+
                 {client.solde<credits?(
                   <div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"12px 14px",color:"#ff6666",fontSize:13,fontWeight:600,textAlign:"center",marginBottom:16}}>
                     Solde insuffisant pour cette prestation
                   </div>
- 
-                /* Phase 1 : Réserver sur Cal.com */
                 ):!calcomDone?(
                   <div>
                     <a href={sel.calcom} target="_blank" rel="noopener noreferrer"
                       style={{
                         display:"block",textAlign:"center",padding:"16px",borderRadius:14,
-                        background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+                        background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
                         color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                         textDecoration:"none",transition:"all 0.3s",marginBottom:10,
                       }}>
-                      Réserver mon créneau sur Cal.com
+                      R\u00e9server mon cr\u00e9neau sur Cal.com
                     </a>
                     <button onClick={function(){setCalcomDone(true);setError("");setSuccess("")}} style={{
-                      width:"100%",padding:"12px",borderRadius:12,border:`1.5px solid ${GOLD}40`,
+                      width:"100%",padding:"12px",borderRadius:12,border:"1.5px solid "+GOLD+"40",
                       background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
                       fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
                     }}>
-                      J'ai réservé mon créneau
+                      J'ai r\u00e9serv\u00e9 mon cr\u00e9neau
                     </button>
                   </div>
- 
-                /* Phase 2 : Confirmer date + débiter */
                 ):(
                   <div style={{animation:"fadeUp 0.4s ease-out"}}>
-                    <div style={{display:"flex",gap:10,marginBottom:12}}>
-                      <div style={{flex:1}}>
-                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Date réservée</label>
-                        <input type="date" value={dateRes} onChange={function(e){setDateRes(e.target.value)}} style={inputStyle}/>
-                      </div>
-                      <div style={{flex:1}}>
-                        <label style={{fontSize:12,color:`${CREAM}50`,display:"block",marginBottom:6}}>Créneau horaire</label>
-                        <input type="text" placeholder="ex: 10h-11h30" value={creneau} onChange={function(e){setCreneau(e.target.value)}} style={inputStyle}/>
-                      </div>
-                    </div>
-                    <button onClick={bookWithWallet} disabled={booking||!dateRes} style={{
+                    <button onClick={bookWithWallet} disabled={booking} style={{
                       width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
-                      background:dateRes?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:`${CREAM}15`,
-                      color:dateRes?NAVY:`${CREAM}30`,
-                      fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+                      background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
+                      color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                       transition:"all 0.3s",opacity:booking?0.6:1,marginBottom:8,
                     }}>
-                      {booking?"Débit en cours...":"Confirmer et débiter "+credits+" crédits"}
+                      {booking?"D\u00e9bit en cours...":"Valider et d\u00e9biter "+credits+" cr\u00e9dits"}
                     </button>
                     <button onClick={function(){setCalcomDone(false);setError("");setSuccess("")}} style={{
                       width:"100%",padding:"10px",borderRadius:10,border:"none",
-                      background:"transparent",color:`${CREAM}40`,fontSize:12,
+                      background:"transparent",color:CREAM+"40",fontSize:12,
                       fontFamily:"'DM Sans',sans-serif",cursor:"pointer",
                     }}>
                       Modifier ma prestation
@@ -1437,16 +1395,15 @@ function WalletClient(){
               </div>
             </div>
             )}
- 
-            {/* Exclusions */}
-            <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:`${CREAM}03`,border:`1px solid ${CREAM}08`}}>
-              <div style={{fontSize:12,fontWeight:700,color:`${CREAM}45`,marginBottom:8}}>Crédits utilisables sur :</div>
-              <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                ✓ Cours individuels &middot; ✓ Cours collectifs &middot; ✓ Stages vacances &middot; ✓ Masterclass week-end
+
+            <div style={{marginTop:20,padding:"14px 16px",borderRadius:12,background:CREAM+"03",border:"1px solid "+CREAM+"08"}}>
+              <div style={{fontSize:12,fontWeight:700,color:CREAM+"45",marginBottom:8}}>Cr\u00e9dits utilisables sur :</div>
+              <div style={{fontSize:12,color:CREAM+"35",lineHeight:1.8}}>
+                \u2713 Cours individuels \u00b7 \u2713 Cours collectifs \u00b7 \u2713 Stages vacances \u00b7 \u2713 Masterclass week-end
               </div>
               <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
-              <div style={{fontSize:12,color:`${CREAM}35`,lineHeight:1.8}}>
-                ✗ Packs 10h (déjà –15%) &middot; ✗ Académie annuelle (750€) &middot; ✗ Académie semestrielle (420€) &middot; ✗ Toute promotion en cours
+              <div style={{fontSize:12,color:CREAM+"35",lineHeight:1.8}}>
+                \u2717 Packs 10h (d\u00e9j\u00e0 \u201315%) \u00b7 \u2717 Acad\u00e9mie annuelle (750\u20ac) \u00b7 \u2717 Acad\u00e9mie semestrielle (420\u20ac) \u00b7 \u2717 Toute promotion en cours
               </div>
             </div>
           </div>
