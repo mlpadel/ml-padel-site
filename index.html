@@ -78,7 +78,10 @@ const firebaseConfig = {
   storageBucket: "ml-padel-reviews.firebasestorage.app",
   messagingSenderId: "75604165889",
   appId: "1:75604165889:web:487e5c5b20a0662ef78700"
-};
+,
+  collectifDuo: `${CALCOM_BASE}/collectif-duo`,
+  collectifTrio: `${CALCOM_BASE}/cours-collectif-trio`,
+  collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`};
 const fbApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -1136,9 +1139,9 @@ function WalletClient(){
 
   const types=[
     {key:"indiv",label:"Individuel",base:55,calcom:CALCOM.indiv,hasDuree:true},
-    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
-    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
-    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectif,hasDuree:true,perPers:true},
+    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectifDuo,hasDuree:true,perPers:true},
+    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectifTrio,hasDuree:true,perPers:true},
+    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectifQuatuor,hasDuree:true,perPers:true},
     {key:"stage",label:"Stage vacances",base:150,calcom:CALCOM.stage,hasDuree:false},
     {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4,hasDuree:false},
     {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8,hasDuree:false},
