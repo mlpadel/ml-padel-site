@@ -1140,6 +1140,7 @@ function WalletClient(){
   const[duree,setDuree]=useState("1h");
   const[booking,setBooking]=useState(false);
   const[calcomDone,setCalcomDone]=useState(false);
+  const[reserved,setReserved]=useState(false);
 
   const[showHistory,setShowHistory]=useState(false);
   const[history,setHistory]=useState([]);
@@ -1210,12 +1211,13 @@ function WalletClient(){
         setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
         setClient({...client,solde:d.nouveauSolde});
         setCalcomDone(false);
+        setReserved(true);
       }else setError(d.error||"Erreur lors du débit");
     }catch(err){setError("Erreur de connexion")}
     setBooking(false);
   };
 
-  const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false)};
+  const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false);setReserved(false)};
 
   const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:"1.5px solid "+GOLD+"25",background:CREAM+"06",color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
   const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
@@ -1238,7 +1240,7 @@ function WalletClient(){
             </div>
 
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
-            {success&&<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
+            {success&&!reserved&&<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
 
             {!client&&(<div>
               {!otpSent?(
@@ -1318,7 +1320,7 @@ function WalletClient(){
                 </div>
               )}
 
-              <div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:20}}>
+              {!reserved?(<div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:20}}>
                 <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
                   Réserver avec mes crédits
                 </h4>
@@ -1405,6 +1407,20 @@ function WalletClient(){
                   </div>
                 )}
               </div>
+              ):(
+              <div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:30,textAlign:"center"}}>
+                <div style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:64,height:64,borderRadius:"50%",background:"#22c55e20",marginBottom:16}}>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h4 style={{fontSize:16,fontWeight:700,color:"#22c55e",marginBottom:8,fontFamily:"'DM Sans',sans-serif"}}>Réservation confirmée !</h4>
+                <p style={{fontSize:13,color:CREAM+"70",marginBottom:20,lineHeight:1.6}}>{success}</p>
+                <button onClick={function(){setReserved(false);setSuccess("");setCalcomDone(false)}} style={{
+                  padding:"12px 28px",borderRadius:12,border:"1.5px solid "+GOLD+"40",
+                  background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
+                  fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
+                }}>Nouvelle réservation</button>
+              </div>
+              )}
             </div>
             )}
 
