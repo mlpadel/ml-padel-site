@@ -81,7 +81,14 @@ const firebaseConfig = {
 ,
   collectifDuo: `${CALCOM_BASE}/collectif-duo`,
   collectifTrio: `${CALCOM_BASE}/cours-collectif-trio`,
-  collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`};
+  collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`,
+  indivWallet: `${CALCOM_BASE}/indiv-wallet`,
+  collectifDuoWallet: `${CALCOM_BASE}/collectif-duo-wallet`,
+  collectifTrioWallet: `${CALCOM_BASE}/cours-collectif-trio-wallet`,
+  collectifQuatuorWallet: `${CALCOM_BASE}/cours-collectif-quatuor-wallet`,
+  stageWallet: `${CALCOM_BASE}/stage-adulte-wallet`,
+  masterclass4Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs-wallet`,
+  masterclass8Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs-wallet`};
 const fbApp = firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
@@ -1138,13 +1145,13 @@ function WalletClient(){
   const[loadingHist,setLoadingHist]=useState(false);
 
   const types=[
-    {key:"indiv",label:"Individuel",base:55,calcom:CALCOM.indiv,hasDuree:true},
-    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectifDuo,hasDuree:true,perPers:true},
-    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectifTrio,hasDuree:true,perPers:true},
-    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectifQuatuor,hasDuree:true,perPers:true},
-    {key:"stage",label:"Stage vacances",base:150,calcom:CALCOM.stage,hasDuree:false},
-    {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4,hasDuree:false},
-    {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8,hasDuree:false},
+    {key:"indiv",label:"Individuel",base:55,calcom:CALCOM.indivWallet,hasDuree:true},
+    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectifDuoWallet,hasDuree:true,perPers:true},
+    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectifTrioWallet,hasDuree:true,perPers:true},
+    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectifQuatuorWallet,hasDuree:true,perPers:true},
+    {key:"stage",label:"Stage vacances",base:150,calcom:CALCOM.stageWallet,hasDuree:false},
+    {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4Wallet,hasDuree:false},
+    {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8Wallet,hasDuree:false},
   ];
   const durees=[{key:"1h",label:"1h",mult:1},{key:"1h30",label:"1h30",mult:1.5},{key:"2h",label:"2h",mult:2}];
 
