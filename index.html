@@ -1545,37 +1545,44 @@ function Gallery(){
           </div>
         </AnimatedSection>
 
-        <div style={{position:"relative"}}>
-          <div className="gallery-carousel" style={{
-            display:"flex",overflowX:"auto",gap:14,scrollSnapType:"x mandatory",
-            scrollBehavior:"smooth",WebkitOverflowScrolling:"touch",
-            paddingBottom:8,scrollbarWidth:"none",msOverflowStyle:"none",
-          }}>
-            {photos.map((p,i)=>(
-              <div key={i} style={{
-                flex:"0 0 auto",width:"min(320px,80vw)",scrollSnapAlign:"start",
-                borderRadius:14,overflow:"hidden",
-                border:`1px solid ${GOLD}18`,
-                aspectRatio:"4/3",
-                position:"relative",cursor:"pointer",transition:"all 0.3s",
-              }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
-              onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
-              >
-                <img src={p.src} alt={p.alt} loading="lazy" style={{
-                  width:"100%",height:"100%",objectFit:"cover",display:"block",
-                }}/>
-                <div style={{
-                  position:"absolute",bottom:0,left:0,right:0,
-                  padding:"24px 12px 10px",
-                  background:"linear-gradient(transparent, rgba(10,22,40,0.7))",
-                }}>
-                  <span style={{color:CREAM,fontSize:11,fontWeight:600}}>{p.alt}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <style>{`.gallery-carousel::-webkit-scrollbar{display:none}`}</style>
+        <div style={{position:"relative",overflow:"hidden"}}>
+          {(()=>{
+            const[idx,setIdx]=React.useState(0);
+            const[fade,setFade]=React.useState(true);
+            const shuffled=React.useMemo(()=>[...photos].sort(()=>Math.random()-0.5),[]);
+            React.useEffect(()=>{
+              const timer=setInterval(()=>{
+                setFade(false);
+                setTimeout(()=>{setIdx(p=>(p+1)%shuffled.length);setFade(true);},400);
+              },3500);
+              return ()=>clearInterval(timer);
+            },[shuffled.length]);
+            const prev=()=>{setFade(false);setTimeout(()=>{setIdx(p=>(p-1+shuffled.length)%shuffled.length);setFade(true);},300);};
+            const next=()=>{setFade(false);setTimeout(()=>{setIdx(p=>(p+1)%shuffled.length);setFade(true);},300);};
+            const show=[shuffled[idx],shuffled[(idx+1)%shuffled.length],shuffled[(idx+2)%shuffled.length]];
+            return React.createElement("div",null,
+              React.createElement("div",{style:{display:"flex",gap:14,transition:"opacity 0.5s ease",opacity:fade?1:0}},
+                show.map((p,i)=>React.createElement("div",{key:idx+"-"+i,style:{
+                  flex:"1 1 0",minWidth:0,borderRadius:14,overflow:"hidden",
+                  border:"1px solid "+GOLD+"18",aspectRatio:"4/3",
+                  position:"relative",cursor:"pointer",
+                }},
+                  React.createElement("img",{src:p.src,alt:p.alt,loading:"lazy",style:{width:"100%",height:"100%",objectFit:"cover",display:"block"}}),
+                  React.createElement("div",{style:{position:"absolute",bottom:0,left:0,right:0,padding:"24px 12px 10px",background:"linear-gradient(transparent, rgba(10,22,40,0.7))"}},
+                    React.createElement("span",{style:{color:CREAM,fontSize:11,fontWeight:600}},p.alt)
+                  )
+                ))
+              ),
+              React.createElement("div",{style:{display:"flex",justifyContent:"center",alignItems:"center",gap:16,marginTop:16}},
+                React.createElement("button",{onClick:prev,style:{background:"none",border:"2px solid "+GOLD+"40",borderRadius:"50%",width:38,height:38,cursor:"pointer",color:GOLD,fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s"},onMouseEnter:e=>{e.target.style.background=GOLD;e.target.style.color=NAVY},onMouseLeave:e=>{e.target.style.background="none";e.target.style.color=GOLD}},"\u2039"),
+                React.createElement("span",{style:{fontSize:11,color:GOLD+"90",fontWeight:600}},(idx+1)+" / "+shuffled.length),
+                React.createElement("button",{onClick:next,style:{background:"none",border:"2px solid "+GOLD+"40",borderRadius:"50%",width:38,height:38,cursor:"pointer",color:GOLD,fontSize:18,display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.3s"},onMouseEnter:e=>{e.target.style.background=GOLD;e.target.style.color=NAVY},onMouseLeave:e=>{e.target.style.background="none";e.target.style.color=GOLD}},"\u203A")
+              ),
+              React.createElement("div",{style:{display:"flex",justifyContent:"center",gap:4,marginTop:10}},
+                shuffled.map((_,i)=>React.createElement("div",{key:i,onClick:()=>{setFade(false);setTimeout(()=>{setIdx(i);setFade(true);},300)},style:{width:i===idx?18:6,height:6,borderRadius:3,background:i===idx?GOLD:GOLD+"30",cursor:"pointer",transition:"all 0.3s"}}))
+              )
+            );
+          })()}
         </div>
 
         <AnimatedSection delay={0.4}>
