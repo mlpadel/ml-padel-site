@@ -2556,12 +2556,7 @@ function MapSection(){
 
 function ExperienceClient(){
   const[open,setOpen]=useState(false);
-  /*EC_SKIP_START*/
-  useEffect(()=>{
-    if(!open)return;
-    const c=canvasRef.current;if(!c)return;
-    const ctx=c.getContext("2d");
-    let W,H,cx,cy,mx=0,my=0,hoverN=null,hoverA=null,time=0;
+  /*EC_DATA_START*/
 
     const nodes=[
       {id:"site",l:"MLPADEL.FR",d:"Le site",r:52,color:[201,168,76],tt:{t:"LE SITE MLPADEL.FR",p:"Tout commence ici. Tu d\u00e9couvres les cours, les tarifs, tu g\u00e8res ton wallet et tu r\u00e9serves tes cr\u00e9neaux 24h/24."}},
