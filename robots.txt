@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /system.html
 Disallow: /api/
 
-Sitemap: https://mlpadel.fr/sitemap.xml
+Sitemap: https://www.mlpadel.fr/sitemap.xml
