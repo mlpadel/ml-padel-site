@@ -1545,18 +1545,21 @@ function Gallery(){
           </div>
         </AnimatedSection>
 
-        <div className="gallery-grid" style={{
-          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,
-        }}>
-          {photos.map((p,i)=>(
-            <AnimatedSection key={i} delay={i*0.06}>
-              <div style={{
+        <div style={{position:"relative"}}>
+          <div className="gallery-carousel" style={{
+            display:"flex",overflowX:"auto",gap:14,scrollSnapType:"x mandatory",
+            scrollBehavior:"smooth",WebkitOverflowScrolling:"touch",
+            paddingBottom:8,scrollbarWidth:"none",msOverflowStyle:"none",
+          }}>
+            {photos.map((p,i)=>(
+              <div key={i} style={{
+                flex:"0 0 auto",width:"min(320px,80vw)",scrollSnapAlign:"start",
                 borderRadius:14,overflow:"hidden",
                 border:`1px solid ${GOLD}18`,
-                aspectRatio:"1/1",
+                aspectRatio:"4/3",
                 position:"relative",cursor:"pointer",transition:"all 0.3s",
               }}
-              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.03)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
+              onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow=`0 12px 40px ${GOLD}18`}}
               onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="none"}}
               >
                 <img src={p.src} alt={p.alt} loading="lazy" style={{
@@ -1570,8 +1573,9 @@ function Gallery(){
                   <span style={{color:CREAM,fontSize:11,fontWeight:600}}>{p.alt}</span>
                 </div>
               </div>
-            </AnimatedSection>
-          ))}
+            ))}
+          </div>
+          <style>{`.gallery-carousel::-webkit-scrollbar{display:none}`}</style>
         </div>
 
         <AnimatedSection delay={0.4}>
@@ -2204,14 +2208,22 @@ function CookieBanner(){
 
 /* Mentions Legales / CGV */
 function MentionsLegales(){
-  var sStyle={padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1};
-  var h2s={fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3vw,32px)",fontWeight:800,color:NAVY,marginBottom:24};
-  var h3s={fontFamily:"'DM Sans',sans-serif",fontSize:17,fontWeight:700,color:NAVY,marginTop:28,marginBottom:8};
-  var ps={fontSize:14,lineHeight:1.7,color:TEXT_MED,marginBottom:12};
+  var sStyle={maxWidth:800,margin:"0 auto",padding:"0 24px"};
+  var h2s={fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:800,color:TEXT_DARK,marginBottom:0,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"space-between"};
+  var h3s={fontSize:14,fontWeight:700,color:TEXT_DARK,marginTop:16,marginBottom:4};
+  var ps={fontSize:13,color:"#666",lineHeight:1.8,marginTop:0};
+  var[showMentions,setShowMentions]=React.useState(false);
+  var[showCGV,setShowCGV]=React.useState(false);
   return(
-    <section id="mentions-legales" style={sStyle}>
-      <div style={{maxWidth:800,margin:"0 auto"}}>
-        <h2 style={h2s}>Mentions Légales</h2>
+    <section style={{padding:"60px 24px",background:CREAM}}>
+      <div style={sStyle}>
+        <div style={{marginBottom:16}}>
+          <div onClick={()=>setShowMentions(!showMentions)} style={{...h2s,padding:"18px 0",borderBottom:"1px solid "+GOLD+"30"}}>
+            <span>Mentions Légales</span>
+            <span style={{fontSize:24,color:GOLD,transition:"transform 0.3s",transform:showMentions?"rotate(180deg)":"rotate(0deg)"}}>&#9660;</span>
+          </div>
+          {showMentions&&<div style={{padding:"16px 0",animation:"fadeIn 0.3s ease"}}>
+            
         <h3 style={h3s}>Éditeur du site</h3>
         <p style={ps}>ML Padel — Mathias Laval<br/>Entrepreneur individuel<br/>2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion<br/>Téléphone : 0692 62 73 72<br/>Email : mathias.laval38@gmail.com</p>
         <h3 style={h3s}>Hébergement</h3>
@@ -2220,7 +2232,16 @@ function MentionsLegales(){
         <p style={ps}>L’ensemble du contenu de ce site (textes, images, logos, vidéos) est la propriété exclusive de ML Padel. Toute reproduction est interdite sans autorisation.</p>
         <h3 style={h3s}>Données personnelles & Cookies</h3>
         <p style={ps}>Ce site collecte des données via Google Analytics et Firebase Firestore. Conformément au RGPD, vous disposez d’un droit d’accès, rectification et suppression. Contact : mathias.laval38@gmail.com</p>
-        <h2 style={{...h2s,marginTop:48}}>Conditions Générales de Vente</h2>
+        
+          </div>}
+        </div>
+        <div>
+          <div onClick={()=>setShowCGV(!showCGV)} style={{...h2s,padding:"18px 0",borderBottom:"1px solid "+GOLD+"30"}}>
+            <span>Conditions Générales de Vente</span>
+            <span style={{fontSize:24,color:GOLD,transition:"transform 0.3s",transform:showCGV?"rotate(180deg)":"rotate(0deg)"}}>&#9660;</span>
+          </div>
+          {showCGV&&<div style={{padding:"16px 0",animation:"fadeIn 0.3s ease"}}>
+            
         <h3 style={h3s}>1. Objet</h3>
         <p style={ps}>Les présentes CGV régissent la vente de prestations de coaching de padel par ML Padel.</p>
         <h3 style={h3s}>2. Réservation & Paiement</h3>
@@ -2231,6 +2252,9 @@ function MentionsLegales(){
         <p style={ps}>ML Padel décline toute responsabilité en cas de blessure. Assurance RC recommandée.</p>
         <h3 style={h3s}>5. Droit applicable</h3>
         <p style={ps}>Droit français. Tribunaux de Saint-Denis de La Réunion compétents.</p>
+      
+          </div>}
+        </div>
       </div>
     </section>
   );
