@@ -2605,5 +2605,22 @@ function MLPadel(){
 
 ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 </script>
+
+<!-- Secret admin access -->
+<script>
+(function(){
+  let clickCount=0,clickTimer=null;
+  document.addEventListener('click',function(e){
+    // Check if click is on the logo area (first link in nav pointing to #hero)
+    const logoLink=document.querySelector('nav a[href="#hero"]');
+    if(!logoLink)return;
+    if(logoLink.contains(e.target)||e.target===logoLink){
+      clickCount++;
+      if(clickCount===1){clickTimer=setTimeout(function(){clickCount=0},600)}
+      if(clickCount>=3){clearTimeout(clickTimer);clickCount=0;window.location.href='/system.html'}
+    }
+  });
+})();
+</script>
 </body>
                 </html>
