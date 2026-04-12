@@ -2645,10 +2645,7 @@ function ExperienceClient(){
   return e("section",{style:{padding:"60px 24px",background:"linear-gradient(170deg,#0a1628 0%,#0f1f3d 60%,#162d50 100%)",textAlign:"center"}},
     e("h2",{style:{color:GOLD,fontFamily:HEAD_FONT,fontSize:28,marginBottom:12}},"Comment \u00e7a marche ?"),
     e("p",{style:{color:"#a8aab5",maxWidth:500,margin:"0 auto 28px",fontSize:16,lineHeight:1.6}},"D\u00e9couvre en un coup d\u2019\u0153il tout le parcours ML Padel : de ta premi\u00e8re visite \u00e0 ta confirmation de r\u00e9servation."),
-    e("button",{onClick:()=>window.open("experience-client.html","_blank"),style:{background:GOLD,color:NAVY,border:"none",padding:"14px 36px",borderRadius:50,fontWeight:700,fontSize:15,cursor:"pointer",boxShadow:"0 6px 24px "+GOLD+"44",transition:"all 0.3s"}},open?"Fermer le sch\u00e9ma":"Explorer le parcours interactif"),
-    open&&e("div",{style:{marginTop:30,borderRadius:16,overflow:"hidden",border:"1px solid "+GOLD+"33",position:"relative",height:550,background:"#0a1628"}},
-      e("canvas",{ref:canvasRef,style:{display:"block",width:"100%",height:"100%"}})
-    )
+    e("button",{onClick:()=>window.open("experience-client.html","_blank"),style:{background:GOLD,color:NAVY,border:"none",padding:"14px 36px",borderRadius:50,fontWeight:700,fontSize:15,cursor:"pointer",boxShadow:"0 6px 24px "+GOLD+"44",transition:"all 0.3s"}},"Explorer le parcours interactif \u2192")
   );
 }
 
