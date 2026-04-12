@@ -2555,7 +2555,8 @@ function MapSection(){
 
 
 function ExperienceClient(){
-
+  const[open,setOpen]=useState(false);
+  /*EC_SKIP_START*/
   useEffect(()=>{
     if(!open)return;
     const c=canvasRef.current;if(!c)return;
