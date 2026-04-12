@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ML Padel — Comment ça marche ?</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a1628;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif}
+canvas{display:block}
+#tooltip{position:fixed;pointer-events:none;opacity:0;background:rgba(10,18,38,0.96);border:1px solid rgba(201,168,76,0.5);border-radius:12px;padding:18px 22px;max-width:340px;box-shadow:0 12px 40px rgba(0,0,0,0.7);transition:opacity 0.2s;z-index:100}
+#tooltip.visible{opacity:1}
+#tooltip h3{color:#c9a84c;font-size:17px;margin-bottom:10px;letter-spacing:0.5px}
+#tooltip p{color:#c0c4d0;font-size:15px;line-height:1.7}
+#tooltip .arc-label{color:#50b4dc;font-size:16px;font-weight:600}
+#steps-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to top,rgba(10,22,40,0.99),rgba(10,22,40,0.8));display:flex;align-items:center;justify-content:center;gap:32px;border-top:1px solid rgba(201,168,76,0.15);flex-wrap:wrap;padding:0 16px}
+.step-item{display:flex;align-items:center;gap:7px}
+.step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff}
+.step-text{color:#a0a4b0;font-size:12px}
+#hint{position:fixed;top:14px;right:20px;color:rgba(180,180,200,0.45);font-size:13px;font-style:italic}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div id="tooltip"></div>
+<div id="hint">Survolez les bulles et les liens</div>
+<div id="steps-bar">
+<div class="step-item"><div class="step-num" style="background:#c9a84c">1</div><div class="step-text">Tu visites le site</div></div>
+<div class="step-item"><div class="step-num" style="background:#50b4dc">2</div><div class="step-text">Tu réserves</div></div>
+<div class="step-item"><div class="step-num" style="background:#6e5af0">3</div><div class="step-text">Tu paies en ligne</div></div>
+<div class="step-item"><div class="step-num" style="background:#50b4dc">4</div><div class="step-text">Tout est automatique</div></div>
+<div class="step-item"><div class="step-num" style="background:#e65f50">5</div><div class="step-text">Confirmation par email</div></div>
+</div>
+<script>
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d'),tooltip=document.getElementById('tooltip');
+let W,H,cx,cy,mx=0,my=0,hoverNode=null,hoverArc=null,time=0;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight-56;cx=W*0.5;cy=H*0.52;layoutNodes()}
+const nodes=[
+{id:'site',label:'MLPADEL.FR',desc:'Le site',r:52,color:[201,168,76],tooltip:{title:'LE SITE MLPADEL.FR',text:"C'est ici que tout commence. Tu découvres les cours, les tarifs, tu gères ton wallet et tu réserves tes créneaux. Tout est accessible 24h/24."}},
+{id:'user',label:'TOI',desc:'',r:34,color:[230,160,60],isUser:true,tooltip:{title:'TOI, LE JOUEUR',text:'Tu navigues sur le site, tu choisis ton cours, tu réserves en quelques clics et tu reçois tout par email. Simple et rapide.'}},
+{id:'cal',label:'RÉSERVATION',desc:'Calendrier',r:38,color:[70,180,220],tooltip:{title:'RÉSERVATION EN LIGNE',text:'Tu choisis ton type de cours (individuel, duo, trio, quatuor, stage, masterclass), tu sélectionnes un créneau libre et tu confirmes.'}},
+{id:'stripe',label:'PAIEMENT',desc:'Sécurisé',r:38,color:[110,90,240],tooltip:{title:'PAIEMENT SÉCURISÉ',text:'Tu peux recharger ton wallet avec des bonus : 100€ (+5%), 200€ (+10%), 300€ (+15%). Le paiement est 100% sécurisé via Stripe.'}},
+{id:'wallet',label:'WALLET',desc:'Tes crédits',r:42,color:[70,200,130],tooltip:{title:'TON WALLET',text:'Ton solde de crédits personnel. Tu recharges quand tu veux, et les crédits sont débités automatiquement à chaque réservation.'}},
+{id:'email',label:'EMAILS',desc:'Notifications',r:34,color:[230,95,80],tooltip:{title:'NOTIFICATIONS EMAIL',text:'Tu reçois automatiquement : ton code de connexion wallet, les confirmations de recharge, les confirmations de réservation.'}},
+{id:'avis',label:'AVIS',desc:'Ton retour',r:30,color:[255,150,40],tooltip:{title:'AVIS CLIENTS',text:'Tu peux laisser un avis avec une note de 1 à 5 étoiles directement sur le site. Tes retours aident les futurs joueurs.'}}
+];
+const arcs=[
+{from:'user',to:'site',color:[230,160,60],curve:0.03,tooltip:{label:'TU VISITES LE SITE',text:'Tu accèdes à mlpadel.fr, tu découvres les offres et tu navigues entre les sections.'}},
+{from:'site',to:'cal',color:[201,168,76],curve:-0.12,tooltip:{label:'TU RÉSERVES',text:'Tu cliques sur "Réserver", tu choisis ton cours et ton créneau sur le calendrier en ligne.'}},
+{from:'site',to:'stripe',color:[201,168,76],curve:0.15,tooltip:{label:'TU PAIES',text:'Tu recharges ton wallet en choisissant un montant (100€, 200€ ou 300€ avec bonus). Paiement sécurisé par carte.'}},
+{from:'stripe',to:'wallet',color:[110,90,240],curve:0.1,tooltip:{label:'CRÉDITS AJOUTÉS',text:'Dès que ton paiement est confirmé, tes crédits (avec le bonus) sont ajoutés automatiquement à ton wallet.'}},
+{from:'cal',to:'wallet',color:[70,180,220],curve:-0.1,tooltip:{label:'DÉBIT AUTOMATIQUE',text:'Quand tu réserves avec ton wallet, les crédits correspondants sont débités automatiquement.'}},
+{from:'site',to:'email',color:[230,95,80],curve:0.18,tooltip:{label:'TU REÇOIS UN EMAIL',text:'Après chaque action (connexion, recharge, réservation), tu reçois un email de confirmation automatique.'}},
+{from:'site',to:'avis',color:[255,150,40],curve:-0.08,tooltip:{label:'TU LAISSES UN AVIS',text:'Tu peux noter ton expérience de 1 à 5 étoiles et laisser un commentaire visible par tous.'}}
+];
+function layoutNodes(){const n=id=>nodes.find(n=>n.id===id);n('user').x=W*0.09;n('user').y=cy;n('site').x=W*0.30;n('site').y=cy;n('cal').x=W*0.56;n('cal').y=cy-H*0.28;n('stripe').x=W*0.56;n('stripe').y=cy+H*0.28;n('wallet').x=W*0.80;n('wallet').y=cy;n('email').x=W*0.80;n('email').y=cy-H*0.30;n('avis').x=W*0.80;n('avis').y=cy+H*0.30}
+function bezier(x1,y1,x2,y2,curve,n=60){const mx2=(x1+x2)/2,my2=(y1+y2)/2,dx=x2-x1,dy=y2-y1,ln=Math.sqrt(dx*dx+dy*dy),nx=-dy/ln,ny=dx/ln,cpx=mx2+nx*ln*curve,cpy=my2+ny*ln*curve,pts=[];for(let i=0;i<=n;i++){const t=i/n;pts.push({x:(1-t)**2*x1+2*(1-t)*t*cpx+t**2*x2,y:(1-t)**2*y1+2*(1-t)*t*cpy+t**2*y2})}return pts}
+function distToSeg(px,py,x1,y1,x2,y2){const dx=x2-x1,dy=y2-y1,t=Math.max(0,Math.min(1,((px-x1)*dx+(py-y1)*dy)/(dx*dx+dy*dy)));return Math.sqrt((px-(x1+t*dx))**2+(py-(y1+t*dy))**2)}
+function drawStars(){const rng=n=>(Math.sin(n*127.1+311.7)*43758.5453)%1;for(let i=0;i<180;i++){const x=((rng(i)+1)%1)*W,y=((rng(i+500)+1)%1)*H;ctx.globalAlpha=0.03+0.04*(0.5+0.5*Math.sin(time*0.001+i));ctx.fillStyle='#c8cde0';ctx.fillRect(x,y,1.5,1.5)}ctx.globalAlpha=1}
+function drawGlow(x,y,r,color,intensity=0.08){const grad=ctx.createRadialGradient(x,y,0,x,y,r);grad.addColorStop(0,'rgba('+color.join(',')+','+intensity+')');grad.addColorStop(1,'rgba('+color.join(',')+',0)');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
+function drawNode(n,isHovered){const scale=isHovered?1.15:1,r=n.r*scale,pulse=1+0.03*Math.sin(time*0.003+nodes.indexOf(n));drawGlow(n.x,n.y,(r+45)*(isHovered?1.3:1)*pulse,n.color,isHovered?0.18:0.08);const grad=ctx.createRadialGradient(n.x,n.y-r*0.2,r*0.15,n.x,n.y,r);const[cr,cg,cb]=n.color;grad.addColorStop(0,'rgba('+Math.min(255,cr+80)+','+Math.min(255,cg+80)+','+Math.min(255,cb+80)+',0.95)');grad.addColorStop(1,'rgba('+cr+','+cg+','+cb+',0.75)');ctx.beginPath();ctx.arc(n.x,n.y,r,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();ctx.strokeStyle='rgba('+n.color.join(',')+','+(isHovered?1:0.7)+')';ctx.lineWidth=isHovered?3:2;ctx.stroke();if(n.isUser){ctx.fillStyle='rgba(6,10,24,0.7)';ctx.beginPath();ctx.arc(n.x,n.y-9,10,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y+14,16,Math.PI,0);ctx.fill()}ctx.textAlign='center';ctx.fillStyle=isHovered?'#fff':'rgba(240,240,245,0.95)';ctx.font='bold '+(isHovered?17:15)+"px 'Segoe UI',system-ui,sans-serif";ctx.fillText(n.label,n.x,n.y+r+24);if(n.desc){ctx.fillStyle='rgba(160,162,175,0.8)';ctx.font='12px "Segoe UI",system-ui,sans-serif';ctx.fillText(n.desc,n.x,n.y+r+42)}}
+function drawArc(a,isHovered){const fromN=nodes.find(n=>n.id===a.from),toN=nodes.find(n=>n.id===a.to);if(!fromN||!toN)return;const angle=Math.atan2(toN.y-fromN.y,toN.x-fromN.x),x1=fromN.x+Math.cos(angle)*fromN.r,y1=fromN.y+Math.sin(angle)*fromN.r,angle2=Math.atan2(fromN.y-toN.y,fromN.x-toN.x),x2=toN.x+Math.cos(angle2)*toN.r,y2=toN.y+Math.sin(angle2)*toN.r;const pts=bezier(x1,y1,x2,y2,a.curve);a._pts=pts;const[cr,cg,cb]=a.color,alpha=isHovered?0.9:0.3,width=isHovered?4:2;if(isHovered){ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.strokeStyle='rgba('+cr+','+cg+','+cb+',0.15)';ctx.lineWidth=14;ctx.stroke()}ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.strokeStyle='rgba('+cr+','+cg+','+cb+','+alpha+')';ctx.lineWidth=width;ctx.stroke();const pp=((time*0.0007+arcs.indexOf(a)*0.15)%1),pi=Math.floor(pp*(pts.length-1));if(pi<pts.length)drawGlow(pts[pi].x,pts[pi].y,10,a.color,isHovered?0.5:0.25);const last=pts[pts.length-1],prev=pts[pts.length-4],aa=Math.atan2(last.y-prev.y,last.x-prev.x);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(last.x-13*Math.cos(aa-0.4),last.y-13*Math.sin(aa-0.4));ctx.moveTo(last.x,last.y);ctx.lineTo(last.x-13*Math.cos(aa+0.4),last.y-13*Math.sin(aa+0.4));ctx.strokeStyle='rgba('+cr+','+cg+','+cb+','+(alpha+0.2)+')';ctx.lineWidth=width+0.5;ctx.stroke()}
+function hitTest(){for(const n of nodes){if(Math.sqrt((mx-n.x)**2+(my-n.y)**2)<n.r+18)return{type:'node',data:n}}for(const a of arcs){if(!a._pts)continue;for(let i=0;i<a._pts.length-1;i++){if(distToSeg(mx,my,a._pts[i].x,a._pts[i].y,a._pts[i+1].x,a._pts[i+1].y)<14)return{type:'arc',data:a}}}return null}
+function showTooltip(hit){if(!hit){tooltip.classList.remove('visible');hoverNode=null;hoverArc=null;canvas.style.cursor='default';return}canvas.style.cursor='pointer';let html='';if(hit.type==='node'){hoverNode=hit.data;hoverArc=null;html='<h3>'+hit.data.tooltip.title+'</h3><p>'+hit.data.tooltip.text+'</p>'}else{hoverArc=hit.data;hoverNode=null;html='<div class="arc-label">'+hit.data.tooltip.label+'</div><p style="margin-top:8px">'+hit.data.tooltip.text+'</p>'}tooltip.innerHTML=html;tooltip.classList.add('visible');let tx=mx+22,ty=my-22;if(tx+360>W)tx=mx-360;if(ty+200>H)ty=my-200;if(ty<10)ty=10;tooltip.style.left=tx+'px';tooltip.style.top=ty+'px'}
+function draw(){time=performance.now();ctx.clearRect(0,0,W,H);const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,500);bg.addColorStop(0,'rgba(15,25,50,0.35)');bg.addColorStop(1,'rgba(10,22,40,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);drawStars();arcs.forEach(a=>drawArc(a,a===hoverArc));nodes.forEach(n=>drawNode(n,n===hoverNode));ctx.textAlign='center';ctx.font="bold 36px 'Segoe UI',system-ui,sans-serif";ctx.fillStyle='#c9a84c';ctx.fillText('Comment fonctionne ML Padel ?',W/2,40);ctx.font="15px 'Segoe UI',system-ui,sans-serif";ctx.fillStyle='rgba(160,162,175,0.55)';ctx.fillText('Survolez chaque élément pour comprendre le parcours',W/2,64);showTooltip(hitTest());requestAnimationFrame(draw)}
+canvas.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});window.addEventListener('resize',resize);resize();draw();
+</script>
+</body>
+</html>
