@@ -2554,6 +2554,51 @@ function MapSection(){
 /* ─── App ─── */
 
 
+function ExperienceClient(){
+  const[open,setOpen]=useState(false);
+  const canvasRef=useRef(null);
+  const anim=useRef(null);
+
+  useEffect(()=>{
+    if(!open)return;
+    const c=canvasRef.current;if(!c)return;
+    const ctx=c.getContext("2d");
+    let W,H,cx,cy,mx=0,my=0,hoverN=null,hoverA=null,time=0;
+
+    const nodes=[
+      {id:"site",l:"MLPADEL.FR",d:"Le site",r:52,color:[201,168,76],tt:{t:"LE SITE MLPADEL.FR",p:"Tout commence ici. Tu d\u00e9couvres les cours, les tarifs, tu g\u00e8res ton wallet et tu r\u00e9serves tes cr\u00e9neaux 24h/24."}},
+      {id:"user",l:"TOI",d:"",r:34,color:[230,160,60],isU:true,tt:{t:"TOI, LE JOUEUR",p:"Tu navigues, tu choisis ton cours, tu r\u00e9serves en quelques clics et tu re\u00e7ois tout par email."}},
+      {id:"cal",l:"R\u00c9SERVATION",d:"Calendrier",r:38,color:[70,180,220],tt:{t:"R\u00c9SERVATION EN LIGNE",p:"Tu choisis ton type de cours, tu s\u00e9lectionnes un cr\u00e9neau libre et tu confirmes."}},
+      {id:"stripe",l:"PAIEMENT",d:"S\u00e9curis\u00e9",r:38,color:[110,90,240],tt:{t:"PAIEMENT S\u00c9CURIS\u00c9",p:"Recharge ton wallet avec bonus : 100\u20ac (+5%), 200\u20ac (+10%), 300\u20ac (+15%). Paiement s\u00e9curis\u00e9 Stripe."}},
+      {id:"wallet",l:"WALLET",d:"Tes cr\u00e9dits",r:42,color:[70,200,130],tt:{t:"TON WALLET",p:"Ton solde personnel. Recharge quand tu veux, d\u00e9bit auto \u00e0 chaque r\u00e9servation."}},
+      {id:"email",l:"EMAILS",d:"Notifications",r:34,color:[230,95,80],tt:{t:"NOTIFICATIONS EMAIL",p:"Code OTP, confirmations de recharge, r\u00e9servation et remboursement automatiques."}},
+      {id:"avis",l:"AVIS",d:"Ton retour",r:30,color:[255,150,40],tt:{t:"AVIS CLIENTS",p:"Note de 1 \u00e0 5 \u00e9toiles directement sur le site."}}
+    ];
+    const arcs=[
+      {f:"user",t:"site",color:[230,160,60],cv:0.03,tt:{l:"TU VISITES",p:"Tu acc\u00e8des \u00e0 mlpadel.fr et tu d\u00e9couvres les offres."}},
+      {f:"site",t:"cal",color:[201,168,76],cv:-0.12,tt:{l:"TU R\u00c9SERVES",p:"Choisis ton cours et ton cr\u00e9neau en ligne."}},
+      {f:"site",t:"stripe",color:[201,168,76],cv:0.15,tt:{l:"TU PAIES",p:"Recharge ton wallet par carte s\u00e9curis\u00e9e."}},
+      {f:"stripe",t:"wallet",color:[110,90,240],cv:0.1,tt:{l:"CR\u00c9DITS AJOUT\u00c9S",p:"Cr\u00e9dits + bonus ajout\u00e9s automatiquement."}},
+      {f:"cal",t:"wallet",color:[70,180,220],cv:-0.1,tt:{l:"D\u00c9BIT AUTO",p:"Cr\u00e9dits d\u00e9bit\u00e9s automatiquement \u00e0 la r\u00e9servation."}},
+      {f:"site",t:"email",color:[230,95,80],cv:0.18,tt:{l:"EMAIL ENVOY\u00c9",p:"Confirmation automatique apr\u00e8s chaque action."}},
+      {f:"site",t:"avis",color:[255,150,40],cv:-0.08,tt:{l:"TON AVIS",p:"Note et commentaire visibles par tous."}}
+    ];
+
+    /* --- EXPERIENCE_CLIENT_PART2 --- */
+
+    return ()=>{if(anim.current)cancelAnimationFrame(anim.current);};
+  },[open]);
+
+  return e("section",{style:{padding:"60px 24px",background:"linear-gradient(170deg,#0a1628 0%,#0f1f3d 60%,#162d50 100%)",textAlign:"center"}},
+    e("h2",{style:{color:GOLD,fontFamily:HEAD_FONT,fontSize:28,marginBottom:12}},"Comment \u00e7a marche ?"),
+    e("p",{style:{color:"#a8aab5",maxWidth:500,margin:"0 auto 28px",fontSize:16,lineHeight:1.6}},"D\u00e9couvre en un coup d\u2019\u0153il tout le parcours ML Padel : de ta premi\u00e8re visite \u00e0 ta confirmation de r\u00e9servation."),
+    e("button",{onClick:()=>setOpen(!open),style:{background:GOLD,color:NAVY,border:"none",padding:"14px 36px",borderRadius:50,fontWeight:700,fontSize:15,cursor:"pointer",boxShadow:"0 6px 24px "+GOLD+"44",transition:"all 0.3s"}},open?"Fermer le sch\u00e9ma":"Explorer le parcours interactif"),
+    open&&e("div",{style:{marginTop:30,borderRadius:16,overflow:"hidden",border:"1px solid "+GOLD+"33",position:"relative",height:550,background:"#0a1628"}},
+      e("canvas",{ref:canvasRef,style:{display:"block",width:"100%",height:"100%"}})
+    )
+  );
+}
+
 function MLPadel(){
   return(
     <div style={{background:WARM_WHITE,minHeight:"100vh",overflowX:"hidden"}}>
