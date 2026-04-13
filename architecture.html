@@ -5,40 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ML Padel — Architecture Technique</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #060a18; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
-  canvas { display: block; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #060a18; overflow: hidden; font-family: 'Segoe UI', system-ui, sans-serif; }
+    canvas { display: block; }
 
-  #tooltip {
-    position: fixed; pointer-events: none; opacity: 0;
-    background: rgba(8,14,30,0.97); border: 1px solid rgba(201,168,76,0.45);
-    border-radius: 14px; padding: 20px 24px; max-width: 380px;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.7); transition: opacity 0.22s;
-    z-index: 100; backdrop-filter: blur(6px);
-  }
-  #tooltip.visible { opacity: 1; }
-  #tooltip h3 { color: #c9a84c; font-size: 17px; margin-bottom: 10px; letter-spacing: 0.8px; font-weight: 700; }
-  #tooltip p { color: #b8bcc8; font-size: 14.5px; line-height: 1.75; }
-  #tooltip .cost { color: #48c882; font-size: 13.5px; margin-top: 12px; font-family: 'SF Mono', 'Fira Code', monospace; letter-spacing: 0.3px; }
-  #tooltip .arc-label { color: #50b4dc; font-size: 16px; font-weight: 700; }
+    #tooltip {
+        position: fixed; pointer-events: none; opacity: 0;
+        background: rgba(8,14,30,0.97); border: 1px solid rgba(201,168,76,0.45);
+        border-radius: 14px; padding: 20px 24px; max-width: 380px;
+        box-shadow: 0 12px 48px rgba(0,0,0,0.7); transition: opacity 0.22s;
+        z-index: 100; backdrop-filter: blur(6px);
+    }
+    #tooltip.visible { opacity: 1; }
+    #tooltip h3 { color: #c9a84c; font-size: 17px; margin-bottom: 10px; letter-spacing: 0.8px; font-weight: 700; }
+    #tooltip p { color: #b8bcc8; font-size: 14.5px; line-height: 1.75; }
+    #tooltip .cost { color: #48c882; font-size: 13.5px; margin-top: 12px; font-family: 'SF Mono', 'Fira Code', monospace; letter-spacing: 0.3px; }
+    #tooltip .arc-label { color: #50b4dc; font-size: 16px; font-weight: 700; }
 
-  #info-bar {
-    position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
-    background: linear-gradient(to top, rgba(6,10,24,0.99), rgba(6,10,24,0.85));
-    display: flex; align-items: center; justify-content: center; gap: 50px;
-    border-top: 1px solid rgba(201,168,76,0.12);
-  }
-  .stat { text-align: center; }
-  .stat-label { color: #6a6d7a; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
-  .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; }
-  .stat-green { color: #48c882; }
-  .stat-cyan { color: #50b4dc; }
-  .stat-gold { color: #c9a84c; }
+    #info-bar {
+        position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
+        background: linear-gradient(to top, rgba(6,10,24,0.99), rgba(6,10,24,0.85));
+        display: flex; align-items: center; justify-content: center; gap: 50px;
+        border-top: 1px solid rgba(201,168,76,0.12);
+    }
+    .stat { text-align: center; }
+    .stat-label { color: #6a6d7a; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .stat-value { font-size: 18px; font-weight: 700; margin-top: 1px; }
+    .stat-green { color: #48c882; }
+    .stat-cyan { color: #50b4dc; }
+    .stat-gold { color: #c9a84c; }
 
-  #hint {
-    position: fixed; top: 16px; right: 24px; color: rgba(160,162,180,0.3);
-    font-size: 12px; font-style: italic;
-  }
+    #hint {
+        position: fixed; top: 16px; right: 24px;
+        color: rgba(160,162,180,0.3); font-size: 12px; font-style: italic;
+    }
+
+    #rotate-hint {
+        display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(6,10,24,0.92); z-index: 200;
+        justify-content: center; align-items: center; flex-direction: column;
+        color: #c9a84c; font-size: 16px; text-align: center; padding: 20px;
+    }
+    #rotate-hint .icon { font-size: 48px; margin-bottom: 16px; }
+    #rotate-hint .dismiss { color: rgba(160,162,180,0.5); font-size: 12px; margin-top: 20px; cursor: pointer; text-decoration: underline; }
+
+    /* Mobile responsive */
+    @media (max-width: 767px) {
+        #info-bar { gap: 12px; height: 44px; padding: 0 8px; }
+        .stat-label { font-size: 7px; letter-spacing: 1px; }
+        .stat-value { font-size: 12px; }
+        #tooltip { max-width: 280px; padding: 14px 16px; font-size: 13px; }
+        #tooltip h3 { font-size: 14px; margin-bottom: 6px; }
+        #tooltip p { font-size: 12.5px; line-height: 1.6; }
+        #tooltip .cost { font-size: 11.5px; }
+        #tooltip .arc-label { font-size: 13px; }
+        #hint { font-size: 10px; right: 12px; top: 10px; }
+    }
 </style>
 </head>
 <body>
@@ -46,355 +68,226 @@
 <div id="tooltip"></div>
 <div id="hint">Survolez les noeuds et les liens pour explorer</div>
 <div id="info-bar">
-  <div class="stat"><div class="stat-label">Coût mensuel</div><div class="stat-value stat-green">0 €</div></div>
-  <div class="stat"><div class="stat-label">Services</div><div class="stat-value stat-cyan">7</div></div>
-  <div class="stat"><div class="stat-label">Hébergement</div><div class="stat-value stat-gold">GitHub Pages</div></div>
-  <div class="stat"><div class="stat-label">Uptime</div><div class="stat-value stat-cyan">99.9 %</div></div>
-  <div class="stat"><div class="stat-label">Stack</div><div class="stat-value" style="color:#b0b4c0">100 % serverless</div></div>
+    <div class="stat"><div class="stat-label">Coût mensuel</div><div class="stat-value stat-green">0 €</div></div>
+    <div class="stat"><div class="stat-label">Services</div><div class="stat-value stat-cyan">7</div></div>
+    <div class="stat"><div class="stat-label">Hébergement</div><div class="stat-value stat-gold">GitHub Pages</div></div>
+    <div class="stat"><div class="stat-label">Uptime</div><div class="stat-value stat-cyan">99.9 %</div></div>
+    <div class="stat"><div class="stat-label">Stack</div><div class="stat-value" style="color:#b0b4c0">100 % serverless</div></div>
 </div>
-
+<div id="rotate-hint">
+    <div class="icon">📱↔️</div>
+    <div>Tournez votre téléphone en paysage<br>pour une meilleure expérience</div>
+    <div class="dismiss" id="dismiss-hint">Continuer en portrait</div>
+</div>
 <script>
 const canvas = document.getElementById('c');
 const ctx = canvas.getContext('2d');
 const tooltip = document.getElementById('tooltip');
-
+const rotateHint = document.getElementById('rotate-hint');
 let W, H, cx, cy, mx = 0, my = 0, hoverNode = null, hoverArc = null, time = 0;
+let isMobile = false, isPortrait = false;
+
+function checkMobile() {
+    isMobile = window.innerWidth < 768 || window.innerHeight < 768;
+    isPortrait = window.innerHeight > window.innerWidth;
+}
+
+function showRotateHint() {
+    checkMobile();
+    if (isMobile && isPortrait) {
+        rotateHint.style.display = 'flex';
+    } else {
+        rotateHint.style.display = 'none';
+    }
+}
+
+document.getElementById('dismiss-hint').addEventListener('click', function() {
+    rotateHint.style.display = 'none';
+});
 
 function resize() {
-  W = canvas.width = window.innerWidth;
-  H = canvas.height = window.innerHeight - 50;
-  // Hub décalé à droite pour laisser place aux étapes à gauche
-  cx = W * 0.52;
-  cy = H * 0.48;
-  layoutNodes();
+    checkMobile();
+    const infoBarH = isMobile ? 44 : 50;
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight - infoBarH;
+    cx = W * 0.52;
+    cy = H * 0.48;
+    layoutNodes();
 }
 
-// ─── NODES ───
 const nodes = [
-  { id: 'gas', label: 'APPS SCRIPT', desc: 'Cerveau du système', r: 48, color: [70,180,220],
-    tooltip: { title: 'GOOGLE APPS SCRIPT', text: "Le backend serverless qui orchestre tout : authentification OTP, calcul de solde wallet, polling Stripe toutes les 5 min, envoi d'emails, gestion des inscriptions stages, proxy GitHub pour les commits sécurisés.", cost: '0 €/mois — Runtime V8 de Google' }},
-  { id: 'sheets', label: 'SHEETS', desc: 'Base de données', r: 36, color: [70,200,130],
-    tooltip: { title: 'GOOGLE SHEETS', text: "La base de données centrale : onglets Clients, Rechargements (wallet), Débits, Inscriptions Stages, Synthèse Analytique. Tout est alimenté automatiquement par webhooks et polling.", cost: '0 €/mois — Stockage Google gratuit' }},
-  { id: 'site', label: 'MLPADEL.FR', desc: 'Site React', r: 42, color: [201,168,76],
-    tooltip: { title: 'MLPADEL.FR', text: "Single-page app React : Hero, Tarifs (6 onglets), Wallet (OTP + solde + recharge), Boutique Pallap, Galerie carrousel, Avis clients, Académie, FAQ, CGV. Hébergé gratuitement sur GitHub Pages.", cost: '0 €/mois — GitHub Pages' }},
-  { id: 'user', label: 'CLIENT', desc: '', r: 26, color: [230,160,60], isUser: true,
-    tooltip: { title: 'LE CLIENT', text: "Le visiteur / élève de padel. Il navigue sur le site, consulte les tarifs, réserve un cours, recharge son wallet, laisse un avis. Parcours 100 % automatisé.", cost: '' }},
-  { id: 'cal', label: 'CAL.COM', desc: 'Réservation', r: 34, color: [80,190,230],
-    tooltip: { title: 'CAL.COM — RÉSERVATION', text: "Chaque type de cours a un lien dédié (individuel, duo, trio, quatuor, stage, masterclass). Les variantes wallet débitent automatiquement. Webhook vers le GAS à chaque réservation/annulation.", cost: '0 €/mois — Plan gratuit' }},
-  { id: 'stripe', label: 'STRIPE', desc: 'Paiement', r: 34, color: [110,90,240],
-    tooltip: { title: 'STRIPE — PAIEMENT', text: "Recharges wallet en 3 paliers : 100 € (+5 %), 200 € (+10 %), 300 € (+15 %). Le GAS poll toutes les 5 min pour détecter paiements réussis et remboursements sur 30 jours.", cost: '1.4 % + 0.25 € par transaction' }},
-  { id: 'gmail', label: 'GMAIL', desc: 'Emails auto', r: 30, color: [230,95,80],
-    tooltip: { title: 'GMAIL — NOTIFICATIONS', text: "Envoie automatiquement : codes OTP wallet, confirmations de recharge avec bonus, alertes de débit, notifications de remboursement, gazette hebdomadaire, confirmations inscription stage.", cost: '0 €/mois — Via Apps Script' }},
-  { id: 'firebase', label: 'FIREBASE', desc: 'Avis 1-5 ★', r: 28, color: [255,150,40],
-    tooltip: { title: 'FIREBASE FIRESTORE', text: "Stocke les avis clients : nom, note (1-5 étoiles), commentaire, date. Le site affiche la moyenne en temps réel et les derniers avis. Collection Firestore \"reviews\".", cost: '0 €/mois — Plan Spark gratuit' }},
-  { id: 'github', label: 'GITHUB', desc: 'CI / CD', r: 28, color: [140,145,165],
-    tooltip: { title: 'GITHUB PAGES', text: "Héberge le site gratuitement. Le proxy GAS permet de commiter sans exposer le token côté client. Chaque commit déclenche automatiquement le déploiement. Token sécurisé dans Script Properties.", cost: '0 €/mois — GitHub Pages gratuit' }},
+    { id: 'gas', label: 'APPS SCRIPT', desc: 'Cerveau du système', r: 48, color: [70,180,220], tooltip: { title: 'GOOGLE APPS SCRIPT', text: "Le backend serverless qui orchestre tout : authentification OTP, calcul de solde wallet, polling Stripe toutes les 5 min, envoi d'emails, gestion des inscriptions stages, proxy GitHub pour les commits sécurisés.", cost: '0 €/mois — Runtime V8 de Google' }},
+    { id: 'sheets', label: 'SHEETS', desc: 'Base de données', r: 36, color: [70,200,130], tooltip: { title: 'GOOGLE SHEETS', text: "La base de données centrale : onglets Clients, Rechargements (wallet), Débits, Inscriptions Stages, Synthèse Analytique. Tout est alimenté automatiquement par webhooks et polling.", cost: '0 €/mois — Stockage Google gratuit' }},
+    { id: 'site', label: 'MLPADEL.FR', desc: 'Site React', r: 42, color: [201,168,76], tooltip: { title: 'MLPADEL.FR', text: "Single-page app React : Hero, Tarifs (6 onglets), Wallet (OTP + solde + recharge), Boutique Pallap, Galerie carrousel, Avis clients, Académie, FAQ, CGV. Hébergé gratuitement sur GitHub Pages.", cost: '0 €/mois — GitHub Pages' }},
+    { id: 'user', label: 'CLIENT', desc: '', r: 26, color: [230,160,60], isUser: true, tooltip: { title: 'LE CLIENT', text: "Le visiteur / élève de padel. Il navigue sur le site, consulte les tarifs, réserve un cours, recharge son wallet, laisse un avis. Parcours 100 % automatisé.", cost: '' }},
+    { id: 'cal', label: 'CAL.COM', desc: 'Réservation', r: 34, color: [80,190,230], tooltip: { title: 'CAL.COM — RÉSERVATION', text: "Chaque type de cours a un lien dédié (individuel, duo, trio, quatuor, stage, masterclass). Les variantes wallet débitent automatiquement. Webhook vers le GAS à chaque réservation/annulation.", cost: '0 €/mois — Plan gratuit' }},
+    { id: 'stripe', label: 'STRIPE', desc: 'Paiement', r: 34, color: [110,90,240], tooltip: { title: 'STRIPE — PAIEMENT', text: "Recharges wallet en 3 paliers : 100 € (+5 %), 200 € (+10 %), 300 € (+15 %). Le GAS poll toutes les 5 min pour détecter paiements réussis et remboursements sur 30 jours.", cost: '1.4 % + 0.25 € par transaction' }},
+    { id: 'gmail', label: 'GMAIL', desc: 'Emails auto', r: 30, color: [230,95,80], tooltip: { title: 'GMAIL — NOTIFICATIONS', text: "Envoie automatiquement : codes OTP wallet, confirmations de recharge avec bonus, alertes de débit, notifications de remboursement, gazette hebdomadaire, confirmations inscription stage.", cost: '0 €/mois — Via Apps Script' }},
+    { id: 'firebase', label: 'FIREBASE', desc: 'Avis 1-5 ★', r: 28, color: [255,150,40], tooltip: { title: 'FIREBASE FIRESTORE', text: "Stocke les avis clients : nom, note (1-5 étoiles), commentaire, date. Le site affiche la moyenne en temps réel et les derniers avis. Collection Firestore \"reviews\".", cost: '0 €/mois — Plan Spark gratuit' }},
+    { id: 'github', label: 'GITHUB', desc: 'CI / CD', r: 28, color: [140,145,165], tooltip: { title: 'GITHUB PAGES', text: "Héberge le site gratuitement. Le proxy GAS permet de commiter sans exposer le token côté client. Chaque commit déclenche automatiquement le déploiement. Token sécurisé dans Script Properties.", cost: '0 €/mois — GitHub Pages gratuit' }},
 ];
 
-// ─── ARCS ───
 const arcs = [
-  { from: 'user', to: 'site', color: [230,160,60], curve: 0.02,
-    tooltip: { label: 'NAVIGATION', text: 'Le client visite mlpadel.fr, consulte les tarifs, découvre les offres et accède à son wallet.' }},
-  { from: 'site', to: 'gas', color: [201,168,76], curve: -0.05,
-    tooltip: { label: 'APPELS API (fetch)', text: "Le site appelle le GAS pour : vérifier OTP, consulter solde wallet, débiter crédits, inscrire aux stages, récupérer l'historique." }},
-  { from: 'gas', to: 'sheets', color: [70,200,130], curve: 0.08,
-    tooltip: { label: 'LECTURE & ÉCRITURE', text: 'Le GAS lit et écrit dans Sheets : clients, rechargements, débits, inscriptions. Base de données centrale.' }},
-  { from: 'gas', to: 'cal', color: [80,190,230], curve: 0.08,
-    tooltip: { label: 'WEBHOOK CAL.COM → GAS', text: 'Cal.com envoie un webhook au GAS à chaque réservation ou annulation. Création automatique de ligne dans le suivi.' }},
-  { from: 'site', to: 'cal', color: [160,148,80], curve: -0.10,
-    tooltip: { label: 'LIEN RÉSERVATION', text: 'Le client clique "Réserver" → redirigé vers Cal.com avec le bon type de cours.' }},
-  { from: 'gas', to: 'stripe', color: [110,90,240], curve: 0.06,
-    tooltip: { label: 'POLLING STRIPE (5 MIN)', text: 'Toutes les 5 min, le GAS vérifie les 30 derniers jours Stripe. Détecte recharges réussies et remboursements.' }},
-  { from: 'site', to: 'stripe', color: [160,148,80], curve: 0.15,
-    tooltip: { label: 'CHECKOUT STRIPE', text: 'Le client choisit un montant, clique "Recharger" → redirigé vers Stripe Checkout pour payer par carte.' }},
-  { from: 'gas', to: 'gmail', color: [230,95,80], curve: 0.08,
-    tooltip: { label: 'ENVOI EMAILS', text: "Le GAS utilise Gmail pour envoyer des emails HTML brandés (navy + gold) : OTP, confirmations, gazette." }},
-  { from: 'site', to: 'firebase', color: [255,150,40], curve: -0.06,
-    tooltip: { label: 'AVIS CLIENTS ★', text: 'Le site lit et écrit dans Firestore : affichage avis existants, soumission de nouveaux avis 1-5 ★.' }},
-  { from: 'gas', to: 'github', color: [140,145,165], curve: -0.08,
-    tooltip: { label: 'PROXY COMMIT', text: 'Le GAS sert de proxy sécurisé pour commiter sur GitHub. Token jamais exposé côté client.' }},
+    { from: 'user', to: 'site', color: [230,160,60], curve: 0.02, tooltip: { label: 'NAVIGATION', text: 'Le client visite mlpadel.fr, consulte les tarifs, découvre les offres et accède à son wallet.' }},
+    { from: 'site', to: 'gas', color: [201,168,76], curve: -0.05, tooltip: { label: 'APPELS API (fetch)', text: "Le site appelle le GAS pour : vérifier OTP, consulter solde wallet, débiter crédits, inscrire aux stages, récupérer l'historique." }},
+    { from: 'gas', to: 'sheets', color: [70,200,130], curve: 0.08, tooltip: { label: 'LECTURE & ÉCRITURE', text: 'Le GAS lit et écrit dans Sheets : clients, rechargements, débits, inscriptions. Base de données centrale.' }},
+    { from: 'gas', to: 'cal', color: [80,190,230], curve: 0.08, tooltip: { label: 'WEBHOOK CAL.COM → GAS', text: 'Cal.com envoie un webhook au GAS à chaque réservation ou annulation. Création automatique de ligne dans le suivi.' }},
+    { from: 'site', to: 'cal', color: [160,148,80], curve: -0.10, tooltip: { label: 'LIEN RÉSERVATION', text: 'Le client clique "Réserver" → redirigé vers Cal.com avec le bon type de cours.' }},
+    { from: 'gas', to: 'stripe', color: [110,90,240], curve: 0.06, tooltip: { label: 'POLLING STRIPE (5 MIN)', text: 'Toutes les 5 min, le GAS vérifie les 30 derniers jours Stripe. Détecte recharges réussies et remboursements.' }},
+    { from: 'site', to: 'stripe', color: [160,148,80], curve: 0.15, tooltip: { label: 'CHECKOUT STRIPE', text: 'Le client choisit un montant, clique "Recharger" → redirigé vers Stripe Checkout pour payer par carte.' }},
+    { from: 'gas', to: 'gmail', color: [230,95,80], curve: 0.08, tooltip: { label: 'ENVOI EMAILS', text: "Le GAS utilise Gmail pour envoyer des emails HTML brandés (navy + gold) : OTP, confirmations, gazette." }},
+    { from: 'site', to: 'firebase', color: [255,150,40], curve: -0.06, tooltip: { label: 'AVIS CLIENTS ★', text: 'Le site lit et écrit dans Firestore : affichage avis existants, soumission de nouveaux avis 1-5 ★.' }},
+    { from: 'gas', to: 'github', color: [140,145,165], curve: -0.08, tooltip: { label: 'PROXY COMMIT', text: 'Le GAS sert de proxy sécurisé pour commiter sur GitHub. Token jamais exposé côté client.' }},
 ];
 
-// ─── LAYOUT : positions fixes bien espacées ───
 function layoutNodes() {
-  const n = id => nodes.find(n => n.id === id);
+    const n = id => nodes.find(n => n.id === id);
+    const mobilePortrait = W < 768 && H > W;
+    const mobileLandscape = W < 1024 && W > H;
+    const scale = mobilePortrait ? 0.55 : (mobileLandscape ? 0.75 : 1);
 
-  // On utilise des positions en % de W et H pour garantir l'espacement
-  // Le flux va de gauche à droite : CLIENT → SITE → GAS (hub) → services autour
+    // Scale node radii
+    nodes.forEach(nd => {
+        const base = nd.id === 'gas' ? 48 : nd.id === 'site' ? 42 : nd.id === 'sheets' ? 36 : nd.id === 'cal' ? 34 : nd.id === 'stripe' ? 34 : nd.id === 'gmail' ? 30 : nd.id === 'firebase' ? 28 : nd.id === 'github' ? 28 : 26;
+        nd.r = Math.round(base * scale);
+    });
 
-  // Client : extrême gauche
-  n('user').x   = W * 0.08;
-  n('user').y   = cy;
+    if (mobilePortrait) {
+        // Layout vertical adapté pour portrait mobile
+        // Colonne gauche : USER -> SITE -> GAS (flux principal)
+        // Satellites autour de GAS répartis de manière plus verticale
+        const midX = W * 0.35;
+        const rightX = W * 0.72;
 
-  // Site : entre client et hub
-  n('site').x   = W * 0.24;
-  n('site').y   = cy;
+        n('user').x = W * 0.15;    n('user').y = H * 0.12;
+        n('site').x = W * 0.50;    n('site').y = H * 0.12;
+        n('gas').x = midX;         n('gas').y = H * 0.35;
 
-  // GAS : hub central (légèrement à droite du centre)
-  n('gas').x    = W * 0.50;
-  n('gas').y    = cy;
-
-  // Services disposés en arc de cercle à droite et autour du GAS
-  // Positions calculées pour ZÉRO superposition
-
-  // CAL.COM : haut droite
-  n('cal').x    = W * 0.76;
-  n('cal').y    = H * 0.18;
-
-  // STRIPE : droite
-  n('stripe').x = W * 0.82;
-  n('stripe').y = H * 0.50;
-
-  // GMAIL : bas droite
-  n('gmail').x  = W * 0.76;
-  n('gmail').y  = H * 0.82;
-
-  // SHEETS : bas centre
-  n('sheets').x = W * 0.50;
-  n('sheets').y = H * 0.85;
-
-  // GITHUB : bas gauche
-  n('github').x = W * 0.30;
-  n('github').y = H * 0.85;
-
-  // FIREBASE : haut centre-gauche
-  n('firebase').x = W * 0.30;
-  n('firebase').y = H * 0.15;
-}
-
-// ─── DRAWING ───
-function bezier(x1, y1, x2, y2, curve, n = 60) {
-  const mx2 = (x1+x2)/2, my2 = (y1+y2)/2;
-  const dx = x2-x1, dy = y2-y1;
-  const ln = Math.sqrt(dx*dx+dy*dy);
-  const nx = -dy/ln, ny = dx/ln;
-  const cpx = mx2 + nx*ln*curve, cpy = my2 + ny*ln*curve;
-  const pts = [];
-  for (let i = 0; i <= n; i++) {
-    const t = i/n;
-    pts.push({ x: (1-t)**2*x1 + 2*(1-t)*t*cpx + t**2*x2, y: (1-t)**2*y1 + 2*(1-t)*t*cpy + t**2*y2 });
-  }
-  return pts;
-}
-
-function distToSeg(px, py, x1, y1, x2, y2) {
-  const dx = x2-x1, dy = y2-y1;
-  const t = Math.max(0, Math.min(1, ((px-x1)*dx+(py-y1)*dy)/(dx*dx+dy*dy)));
-  return Math.sqrt((px-(x1+t*dx))**2+(py-(y1+t*dy))**2);
-}
-
-function drawStars() {
-  const rng = n => (Math.sin(n*127.1+311.7)*43758.5453) % 1;
-  for (let i = 0; i < 180; i++) {
-    const x = ((rng(i)+1)%1)*W, y = ((rng(i+500)+1)%1)*H;
-    ctx.globalAlpha = 0.02 + 0.03*(0.5+0.5*Math.sin(time*0.0008+i));
-    ctx.fillStyle = '#c8cde0';
-    ctx.fillRect(x, y, 1.2, 1.2);
-  }
-  ctx.globalAlpha = 1;
-}
-
-function drawOrbitalRings() {
-  // Anneaux concentriques autour du GAS
-  const gasN = nodes.find(n => n.id === 'gas');
-  [100, 220, 350].forEach((r, ri) => {
-    ctx.beginPath();
-    ctx.arc(gasN.x, gasN.y, r, 0, Math.PI*2);
-    ctx.strokeStyle = `rgba(40,55,90,${0.05 + 0.012*Math.sin(time*0.0004+ri)})`;
-    ctx.setLineDash([2, 12]);
-    ctx.lineWidth = 0.8;
-    ctx.stroke();
-    ctx.setLineDash([]);
-  });
-}
-
-function drawGlow(x, y, r, color, intensity = 0.08) {
-  const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
-  grad.addColorStop(0, `rgba(${color.join(',')},${intensity})`);
-  grad.addColorStop(1, `rgba(${color.join(',')},0)`);
-  ctx.fillStyle = grad;
-  ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
-}
-
-function drawNode(nd, isHovered) {
-  const scale = isHovered ? 1.12 : 1;
-  const r = nd.r * scale;
-  const pulse = 1 + 0.02*Math.sin(time*0.003 + nodes.indexOf(nd));
-
-  drawGlow(nd.x, nd.y, (r+35)*(isHovered?1.3:1)*pulse, nd.color, isHovered ? 0.2 : 0.06);
-
-  const grad = ctx.createRadialGradient(nd.x, nd.y - r*0.22, r*0.12, nd.x, nd.y, r);
-  const [cr,cg,cb] = nd.color;
-  grad.addColorStop(0, `rgba(${Math.min(255,cr+70)},${Math.min(255,cg+70)},${Math.min(255,cb+70)},0.95)`);
-  grad.addColorStop(1, `rgba(${cr},${cg},${cb},0.7)`);
-  ctx.beginPath(); ctx.arc(nd.x, nd.y, r, 0, Math.PI*2);
-  ctx.fillStyle = grad; ctx.fill();
-  ctx.strokeStyle = `rgba(${nd.color.join(',')},${isHovered?1:0.55})`;
-  ctx.lineWidth = isHovered ? 2.5 : 1.2; ctx.stroke();
-
-  // User icon
-  if (nd.isUser) {
-    ctx.fillStyle = 'rgba(6,10,24,0.6)';
-    ctx.beginPath(); ctx.arc(nd.x, nd.y-6, 7, 0, Math.PI*2); ctx.fill();
-    ctx.beginPath(); ctx.arc(nd.x, nd.y+10, 12, Math.PI, 0); ctx.fill();
-  }
-
-  // Label SOUS la bulle
-  ctx.textAlign = 'center';
-  ctx.fillStyle = isHovered ? '#fff' : 'rgba(230,232,242,0.9)';
-  ctx.font = `bold ${isHovered ? 15 : 13}px 'Segoe UI', system-ui, sans-serif`;
-  ctx.fillText(nd.label, nd.x, nd.y + r + 18);
-
-  if (nd.desc) {
-    ctx.fillStyle = 'rgba(140,143,160,0.7)';
-    ctx.font = '11px "Segoe UI", system-ui, sans-serif';
-    ctx.fillText(nd.desc, nd.x, nd.y + r + 33);
-  }
-}
-
-function drawArc(a, isHovered) {
-  const fromN = nodes.find(n => n.id === a.from);
-  const toN = nodes.find(n => n.id === a.to);
-  if (!fromN || !toN) return;
-
-  const angle = Math.atan2(toN.y-fromN.y, toN.x-fromN.x);
-  const x1 = fromN.x + Math.cos(angle)*fromN.r;
-  const y1 = fromN.y + Math.sin(angle)*fromN.r;
-  const angle2 = Math.atan2(fromN.y-toN.y, fromN.x-toN.x);
-  const x2 = toN.x + Math.cos(angle2)*toN.r;
-  const y2 = toN.y + Math.sin(angle2)*toN.r;
-
-  const pts = bezier(x1, y1, x2, y2, a.curve);
-  a._pts = pts;
-  const [cr,cg,cb] = a.color;
-  const alpha = isHovered ? 0.85 : 0.2;
-  const width = isHovered ? 3 : 1.3;
-
-  if (isHovered) {
-    ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-    for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
-    ctx.strokeStyle = `rgba(${cr},${cg},${cb},0.1)`; ctx.lineWidth = 14; ctx.stroke();
-  }
-
-  ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-  for (let i=1;i<pts.length;i++) ctx.lineTo(pts[i].x, pts[i].y);
-  ctx.strokeStyle = `rgba(${cr},${cg},${cb},${alpha})`; ctx.lineWidth = width; ctx.stroke();
-
-  // Particle
-  const pp = ((time*0.0006 + arcs.indexOf(a)*0.15) % 1);
-  const pi = Math.floor(pp*(pts.length-1));
-  if (pi < pts.length) drawGlow(pts[pi].x, pts[pi].y, 7, a.color, isHovered ? 0.4 : 0.15);
-
-  // Arrow
-  const last = pts[pts.length-1], prev = pts[pts.length-4];
-  const aa = Math.atan2(last.y-prev.y, last.x-prev.x);
-  ctx.beginPath();
-  ctx.moveTo(last.x, last.y);
-  ctx.lineTo(last.x-10*Math.cos(aa-0.38), last.y-10*Math.sin(aa-0.38));
-  ctx.moveTo(last.x, last.y);
-  ctx.lineTo(last.x-10*Math.cos(aa+0.38), last.y-10*Math.sin(aa+0.38));
-  ctx.strokeStyle = `rgba(${cr},${cg},${cb},${Math.min(1,alpha+0.25)})`; ctx.lineWidth = width+0.5; ctx.stroke();
-}
-
-// ─── TITLE ───
-function drawTitle() {
-  ctx.textAlign = 'left';
-  ctx.font = 'bold 28px "Segoe UI", system-ui, sans-serif';
-  ctx.fillStyle = '#c9a84c';
-  ctx.fillText('ML PADEL', 30, 36);
-  ctx.font = '600 12px "Segoe UI", system-ui, sans-serif';
-  ctx.fillStyle = 'rgba(130,133,155,0.55)';
-  ctx.fillText('Architecture technique — 0 € / mois', 30, 54);
-}
-
-// ─── STEPS ───
-function drawSteps() {
-  const steps = [
-    ['1', 'Client visite mlpadel.fr', '#c9a84c'],
-    ['2', 'Réserve via Cal.com', '#50b4dc'],
-    ['3', 'Paie / recharge via Stripe', '#6e5af0'],
-    ['4', 'GAS traite automatiquement', '#50b4dc'],
-    ['5', 'Données → Sheets', '#48c882'],
-    ['6', 'Email de confirmation', '#e65f50'],
-  ];
-  const startY = H - 175;
-  steps.forEach((s, i) => {
-    const sy = startY + i * 26;
-    // Pastille
-    ctx.beginPath(); ctx.arc(42, sy - 3, 9, 0, Math.PI*2);
-    ctx.fillStyle = s[2]; ctx.globalAlpha = 0.15; ctx.fill(); ctx.globalAlpha = 1;
-    ctx.font = 'bold 11px "Segoe UI", system-ui, sans-serif';
-    ctx.fillStyle = s[2]; ctx.textAlign = 'center';
-    ctx.fillText(s[0], 42, sy);
-    ctx.textAlign = 'left';
-    ctx.font = '12px "Segoe UI", system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(145,148,168,0.65)';
-    ctx.fillText(s[1], 58, sy);
-  });
-}
-
-// ─── HIT DETECTION ───
-function hitTest() {
-  for (const n of nodes) {
-    if (Math.sqrt((mx-n.x)**2+(my-n.y)**2) < n.r + 14) return { type:'node', data:n };
-  }
-  for (const a of arcs) {
-    if (!a._pts) continue;
-    for (let i=0;i<a._pts.length-1;i++) {
-      if (distToSeg(mx,my, a._pts[i].x,a._pts[i].y, a._pts[i+1].x,a._pts[i+1].y) < 12) return { type:'arc', data:a };
+        n('firebase').x = rightX;  n('firebase').y = H * 0.25;
+        n('cal').x = rightX;       n('cal').y = H * 0.45;
+        n('stripe').x = rightX;    n('stripe').y = H * 0.62;
+        n('gmail').x = midX;       n('gmail').y = H * 0.78;
+        n('sheets').x = W * 0.15;  n('sheets').y = H * 0.55;
+        n('github').x = W * 0.15;  n('github').y = H * 0.78;
+    } else {
+        // Layout horizontal standard (desktop + paysage)
+        n('user').x = W * 0.08;    n('user').y = cy;
+        n('site').x = W * 0.24;    n('site').y = cy;
+        n('gas').x = W * 0.50;     n('gas').y = cy;
+        n('cal').x = W * 0.76;     n('cal').y = H * 0.18;
+        n('stripe').x = W * 0.82;  n('stripe').y = H * 0.50;
+        n('gmail').x = W * 0.76;   n('gmail').y = H * 0.82;
+        n('sheets').x = W * 0.50;  n('sheets').y = H * 0.85;
+        n('github').x = W * 0.30;  n('github').y = H * 0.85;
+        n('firebase').x = W * 0.30; n('firebase').y = H * 0.15;
     }
-  }
-  return null;
 }
 
-function showTooltip(hit) {
-  if (!hit) { tooltip.classList.remove('visible'); hoverNode=null; hoverArc=null; canvas.style.cursor='default'; return; }
-  canvas.style.cursor = 'pointer';
-  let html = '';
-  if (hit.type === 'node') {
-    hoverNode = hit.data; hoverArc = null;
-    const t = hit.data.tooltip;
-    html = `<h3>${t.title}</h3><p>${t.text}</p>`;
-    if (t.cost) html += `<div class="cost">${t.cost}</div>`;
-  } else {
-    hoverArc = hit.data; hoverNode = null;
-    const t = hit.data.tooltip;
-    html = `<div class="arc-label">${t.label}</div><p style="margin-top:8px">${t.text}</p>`;
-  }
-  tooltip.innerHTML = html;
-  tooltip.classList.add('visible');
-  let tx = mx + 22, ty = my - 22;
-  if (tx + 380 > W) tx = mx - 395;
-  if (ty + 220 > H) ty = my - 220;
-  if (ty < 10) ty = 10;
-  tooltip.style.left = tx+'px'; tooltip.style.top = ty+'px';
+function bezier(x1,y1,x2,y2,curve,n=60){const mx2=(x1+x2)/2,my2=(y1+y2)/2,dx=x2-x1,dy=y2-y1,ln=Math.sqrt(dx*dx+dy*dy),nx=-dy/ln,ny=dx/ln,cpx=mx2+nx*ln*curve,cpy=my2+ny*ln*curve,pts=[];for(let i=0;i<=n;i++){const t=i/n;pts.push({x:(1-t)**2*x1+2*(1-t)*t*cpx+t**2*x2,y:(1-t)**2*y1+2*(1-t)*t*cpy+t**2*y2})}return pts}
+function distToSeg(px,py,x1,y1,x2,y2){const dx=x2-x1,dy=y2-y1,t=Math.max(0,Math.min(1,((px-x1)*dx+(py-y1)*dy)/(dx*dx+dy*dy)));return Math.sqrt((px-(x1+t*dx))**2+(py-(y1+t*dy))**2)}
+
+function drawStars(){const rng=n=>(Math.sin(n*127.1+311.7)*43758.5453)%1;for(let i=0;i<180;i++){const x=((rng(i)+1)%1)*W,y=((rng(i+500)+1)%1)*H;ctx.globalAlpha=.02+.03*(.5+.5*Math.sin(time*.0008+i));ctx.fillStyle='#c8cde0';ctx.fillRect(x,y,1.2,1.2)}ctx.globalAlpha=1}
+
+function drawOrbitalRings(){const gasN=nodes.find(n=>n.id==='gas');const ringScale=isMobile&&isPortrait?0.5:1;[100,220,350].forEach((r,ri)=>{ctx.beginPath();ctx.arc(gasN.x,gasN.y,r*ringScale,0,Math.PI*2);ctx.strokeStyle='rgba(40,55,90,'+(0.05+0.012*Math.sin(time*0.0004+ri))+')';ctx.setLineDash([2,12]);ctx.lineWidth=.8;ctx.stroke();ctx.setLineDash([])})}
+
+function drawGlow(x,y,r,color,intensity=.08){const grad=ctx.createRadialGradient(x,y,0,x,y,r);grad.addColorStop(0,'rgba('+color.join(',')+','+intensity+')');grad.addColorStop(1,'rgba('+color.join(',')+',0)');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()}
+
+function drawNode(nd,isHovered){
+    const scale=isHovered?1.12:1,r=nd.r*scale,pulse=1+.02*Math.sin(time*.003+nodes.indexOf(nd));
+    const mobileP = isMobile && isPortrait;
+    const labelSize = mobileP ? (isHovered?11:9) : (isHovered?15:13);
+    const descSize = mobileP ? 8 : 11;
+    const labelOffset = mobileP ? 14 : 18;
+    const descOffset = mobileP ? 25 : 33;
+
+    drawGlow(nd.x,nd.y,(r+35)*(isHovered?1.3:1)*pulse,nd.color,isHovered?.2:.06);
+    const grad=ctx.createRadialGradient(nd.x,nd.y-r*.22,r*.12,nd.x,nd.y,r);
+    const[cr,cg,cb]=nd.color;
+    grad.addColorStop(0,'rgba('+Math.min(255,cr+70)+','+Math.min(255,cg+70)+','+Math.min(255,cb+70)+',0.95)');
+    grad.addColorStop(1,'rgba('+cr+','+cg+','+cb+',0.7)');
+    ctx.beginPath();ctx.arc(nd.x,nd.y,r,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+    ctx.strokeStyle='rgba('+nd.color.join(',')+','+(isHovered?1:.55)+')';ctx.lineWidth=isHovered?2.5:1.2;ctx.stroke();
+
+    if(nd.isUser){ctx.fillStyle='rgba(6,10,24,0.6)';ctx.beginPath();ctx.arc(nd.x,nd.y-6*(mobileP?.6:1),7*(mobileP?.6:1),0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(nd.x,nd.y+10*(mobileP?.6:1),12*(mobileP?.6:1),Math.PI,0);ctx.fill()}
+
+    ctx.textAlign='center';ctx.fillStyle=isHovered?'#fff':'rgba(230,232,242,0.9)';
+    ctx.font='bold '+labelSize+"px 'Segoe UI',system-ui,sans-serif";
+    ctx.fillText(nd.label,nd.x,nd.y+r+labelOffset);
+    if(nd.desc){ctx.fillStyle='rgba(140,143,160,0.7)';ctx.font=descSize+'px "Segoe UI",system-ui,sans-serif';ctx.fillText(nd.desc,nd.x,nd.y+r+descOffset)}
 }
 
-// ─── MAIN LOOP ───
-function draw() {
-  time = performance.now();
-  ctx.clearRect(0, 0, W, H);
+function drawArc(a,isHovered){const fromN=nodes.find(n=>n.id===a.from),toN=nodes.find(n=>n.id===a.to);if(!fromN||!toN)return;const angle=Math.atan2(toN.y-fromN.y,toN.x-fromN.x),x1=fromN.x+Math.cos(angle)*fromN.r,y1=fromN.y+Math.sin(angle)*fromN.r,angle2=Math.atan2(fromN.y-toN.y,fromN.x-toN.x),x2=toN.x+Math.cos(angle2)*toN.r,y2=toN.y+Math.sin(angle2)*toN.r,pts=bezier(x1,y1,x2,y2,a.curve);a._pts=pts;const[cr,cg,cb]=a.color,alpha=isHovered?.85:.2,width=isHovered?3:1.3;if(isHovered){ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.strokeStyle='rgba('+cr+','+cg+','+cb+',0.1)';ctx.lineWidth=14;ctx.stroke()}ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);ctx.strokeStyle='rgba('+cr+','+cg+','+cb+','+alpha+')';ctx.lineWidth=width;ctx.stroke();const pp=((time*.0006+arcs.indexOf(a)*.15)%1),pi=Math.floor(pp*(pts.length-1));if(pi<pts.length)drawGlow(pts[pi].x,pts[pi].y,7,a.color,isHovered?.4:.15);const last=pts[pts.length-1],prev=pts[pts.length-4],aa=Math.atan2(last.y-prev.y,last.x-prev.x);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(last.x-10*Math.cos(aa-.38),last.y-10*Math.sin(aa-.38));ctx.moveTo(last.x,last.y);ctx.lineTo(last.x-10*Math.cos(aa+.38),last.y-10*Math.sin(aa+.38));ctx.strokeStyle='rgba('+cr+','+cg+','+cb+','+Math.min(1,alpha+.25)+')';ctx.lineWidth=width+.5;ctx.stroke()}
 
-  const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.min(W,H)*0.7);
-  bg.addColorStop(0, 'rgba(12,20,42,0.3)');
-  bg.addColorStop(1, 'rgba(6,10,24,0)');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, W, H);
-
-  drawStars();
-  drawOrbitalRings();
-  arcs.forEach(a => drawArc(a, a === hoverArc));
-  nodes.forEach(n => drawNode(n, n === hoverNode));
-  drawTitle();
-  drawSteps();
-  showTooltip(hitTest());
-  requestAnimationFrame(draw);
+function drawTitle(){
+    const mobileP = isMobile && isPortrait;
+    const titleSize = mobileP ? 18 : 28;
+    const subSize = mobileP ? 9 : 12;
+    ctx.textAlign='left';
+    ctx.font='bold '+titleSize+'px "Segoe UI",system-ui,sans-serif';
+    ctx.fillStyle='#c9a84c';ctx.fillText('ML PADEL',mobileP?12:30,mobileP?24:36);
+    ctx.font='600 '+subSize+'px "Segoe UI",system-ui,sans-serif';
+    ctx.fillStyle='rgba(130,133,155,0.55)';ctx.fillText('Architecture technique — 0 € / mois',mobileP?12:30,mobileP?38:54);
 }
 
-canvas.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-window.addEventListener('resize', resize);
+function drawSteps(){
+    const mobileP = isMobile && isPortrait;
+    if (mobileP) return; // Masquer les étapes en portrait mobile pour libérer de l'espace
+    const steps=[['1','Client visite mlpadel.fr','#c9a84c'],['2','Réserve via Cal.com','#50b4dc'],['3','Paie / recharge via Stripe','#6e5af0'],['4','GAS traite automatiquement','#50b4dc'],['5','Données → Sheets','#48c882'],['6','Email de confirmation','#e65f50']];
+    const startY=H-175;
+    steps.forEach((s,i)=>{const sy=startY+i*26;ctx.beginPath();ctx.arc(42,sy-3,9,0,Math.PI*2);ctx.fillStyle=s[2];ctx.globalAlpha=.15;ctx.fill();ctx.globalAlpha=1;ctx.font='bold 11px "Segoe UI",system-ui,sans-serif';ctx.fillStyle=s[2];ctx.textAlign='center';ctx.fillText(s[0],42,sy);ctx.textAlign='left';ctx.font='12px "Segoe UI",system-ui,sans-serif';ctx.fillStyle='rgba(145,148,168,0.65)';ctx.fillText(s[1],58,sy)});
+}
+
+function hitTest(){for(const n of nodes){if(Math.sqrt((mx-n.x)**2+(my-n.y)**2)<n.r+14)return{type:'node',data:n}}for(const a of arcs){if(!a._pts)continue;for(let i=0;i<a._pts.length-1;i++){if(distToSeg(mx,my,a._pts[i].x,a._pts[i].y,a._pts[i+1].x,a._pts[i+1].y)<(isMobile?18:12))return{type:'arc',data:a}}}return null}
+
+function showTooltip(hit){
+    if(!hit){tooltip.classList.remove('visible');hoverNode=null;hoverArc=null;canvas.style.cursor='default';return}
+    canvas.style.cursor='pointer';let html='';
+    if(hit.type==='node'){hoverNode=hit.data;hoverArc=null;const t=hit.data.tooltip;html='<h3>'+t.title+'</h3><p>'+t.text+'</p>';if(t.cost)html+='<div class="cost">'+t.cost+'</div>'}
+    else{hoverArc=hit.data;hoverNode=null;const t=hit.data.tooltip;html='<div class="arc-label">'+t.label+'</div><p style="margin-top:8px">'+t.text+'</p>'}
+    tooltip.innerHTML=html;tooltip.classList.add('visible');
+
+    // Positionnement intelligent du tooltip
+    const ttW = Math.min(isMobile ? 280 : 380, W - 20);
+    let tx = mx + 22, ty = my - 22;
+    if (tx + ttW > W - 10) tx = Math.max(10, mx - ttW - 10);
+    if (ty + 220 > H) ty = Math.max(10, my - 220);
+    if (ty < 10) ty = 10;
+    if (tx < 10) tx = 10;
+    tooltip.style.left=tx+'px';tooltip.style.top=ty+'px';
+}
+
+function draw(){time=performance.now();ctx.clearRect(0,0,W,H);const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*.7);bg.addColorStop(0,'rgba(12,20,42,0.3)');bg.addColorStop(1,'rgba(6,10,24,0)');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);drawStars();drawOrbitalRings();arcs.forEach(a=>drawArc(a,a===hoverArc));nodes.forEach(n=>drawNode(n,n===hoverNode));drawTitle();drawSteps();showTooltip(hitTest());requestAnimationFrame(draw)}
+
+// Mouse events
+canvas.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+
+// Touch events pour mobile
+canvas.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    const t=e.touches[0];mx=t.clientX;my=t.clientY;
+},{passive:false});
+canvas.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    const t=e.touches[0];mx=t.clientX;my=t.clientY;
+},{passive:false});
+canvas.addEventListener('touchend',e=>{
+    // Garder le tooltip visible un instant puis masquer
+    setTimeout(()=>{mx=-999;my=-999;},2000);
+});
+
+// Resize + orientation
+window.addEventListener('resize', () => { resize(); showRotateHint(); });
+window.addEventListener('orientationchange', () => {
+    setTimeout(() => { resize(); showRotateHint(); }, 150);
+});
+
+// Init
 resize();
+showRotateHint();
 draw();
+// Resize différé pour garantir les bonnes dimensions au chargement
+setTimeout(() => { resize(); }, 100);
+setTimeout(() => { resize(); }, 500);
 </script>
 </body>
 </html>
