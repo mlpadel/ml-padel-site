@@ -2667,6 +2667,44 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 })();
 </script>
 
+
+<!-- GA4 Event Tracking -->
+<script>
+(function() {
+  document.addEventListener("click", function(e) {
+    var link = e.target.closest("a");
+    if (!link) return;
+    var href = link.getAttribute("href") || "";
+    if (href.indexOf("cal.com") !== -1) {
+      gtag("event", "clic_reserver", { event_category: "conversion", event_label: href });
+    }
+    if (href.indexOf("wa.me") !== -1) {
+      gtag("event", "clic_whatsapp", { event_category: "conversion", event_label: "WhatsApp" });
+    }
+    if (href === "#wallet") {
+      gtag("event", "acces_wallet", { event_category: "engagement", event_label: "Navigation Wallet" });
+    }
+    if (href.indexOf("pallap") !== -1) {
+      gtag("event", "clic_boutique", { event_category: "engagement", event_label: href });
+    }
+  });
+  var sections = ["tarifs","wallet","galerie","avis","academie","contact"];
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        gtag("event", "section_vue", { event_category: "engagement", event_label: entry.target.id });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  setTimeout(function() {
+    sections.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }, 2000);
+})();
+</script>
 <script>
 (function(){
   let clickCount=0,clickTimer=null;
