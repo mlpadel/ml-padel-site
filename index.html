@@ -798,16 +798,16 @@ function Pricing(){
                   fontFamily:"'Playfair Display',serif",fontSize:17,
                   fontWeight:700,marginBottom:5,color:TEXT_DARK,
                 }}>{o.title}</h3>
-                <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14}}>{o.desc}</p>
+                <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14,display:o.disabled?"none":"block"}}>{o.desc}</p>
 
                 <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
                   <span style={{
-                    fontFamily:"'Playfair Display',serif",fontSize:o.soon?20:34,filter:o.disabled?"blur(6px)":"none",
+                    fontFamily:"'Playfair Display',serif",fontSize:o.soon?20:34,visibility:o.disabled?"hidden":"visible",
                     fontWeight:900,color:o.soon?TEXT_LIGHT:GOLD,
                   }}>{o.price}</span>
-                  {o.unit&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
+                  {o.unit&&!o.disabled&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
                 </div>
-                {o.subPrice&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
+                {o.subPrice&&!o.disabled&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
 
                 <div style={{margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
                   {o.features.map((f,fi)=>(
@@ -836,7 +836,7 @@ function Pricing(){
                 )}
 
                 {!o.soon&&(
-                  <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+                  {!o.disabled&&<a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
                     display:"block",textAlign:"center",padding:"11px 0",
                     borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
                     background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
@@ -853,7 +853,7 @@ function Pricing(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                   onClick={e=>{if(o.disabled&&!e.shiftKey){e.preventDefault();}}} style={{...(o.disabled?{opacity:0,pointerEvents:"none",height:0,overflow:"hidden"}:{})}}>{o.isAcadémie?"S'inscrire":"Réserver"}</a>
+                  >{o.isAcadémie?"S'inscrire":"Réserver"}</a>}
                 )}
               {o.disabled&&<div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%) rotate(-25deg)",background:"rgba(201,168,76,0.92)",color:"#fff",padding:"8px 80px",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase",zIndex:5,whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(0,0,0,0.3)",pointerEvents:"none"}}>{"À VENIR"}</div>}
               </div>
