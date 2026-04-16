@@ -667,15 +667,15 @@ function Pricing(){
 
   const data={
     individuel:[
-      {title:"Cours individuel",price:"55",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+      {title:"Cours individuel",price:"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
     ],
     collectif:[
-      {title:"Duo",price:"70",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach"],link:CALCOM.collectifDuo},
+      {title:"Duo",price:"60",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach"],link:CALCOM.collectifDuo},
       {title:"Trio",price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Format le plus populaire"],popular:true,link:CALCOM.collectifTrio},
       {title:"Quatuor",price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux"],link:CALCOM.collectifQuatuor},
     ],
     packs:[
-      {title:"Pack Individuel 10h",price:"470",unit:"€",desc:"10 × 1h · Soit 47€/h",features:["Économie de 82,50€ (–15%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–15%",popular:true,subPrice:"soit 47€/h au lieu de 55€",link:CALCOM.packIndiv10},
+      {title:"Pack Individuel 10h",price:"470",unit:"€",desc:"10 × 1h · Soit 47€/h",features:["Économie de 82,50€ (–15%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–15%",popular:true,subPrice:"soit 47€/h au lieu de 50€",link:CALCOM.packIndiv10},
       {title:"Pack Duo 10h",price:"300",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 600€",features:["Économie de 15%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–15%",link:CALCOM.packCollectifDuo},
       {title:"Pack Trio 10h",price:"210",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 630€",features:["Économie de 15%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–15%",link:CALCOM.packCollectifTrio},
       {title:"Pack Quatuor 10h",price:"170",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 680€",features:["Économie de 15%","Soit 17€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
@@ -685,8 +685,8 @@ function Pricing(){
       {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"/academie-inscription.html"},
     ],
     stages:[
-      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 groupes · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
-      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"4 groupes · 1h30 · 5 jours · 8 joueurs/gr",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
+      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 joueurs · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:4},
+      {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"2 terrains · 4 joueurs/terrain · 1h30 · 5 jours",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
       {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4},
       {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8},
       {title:"Stage Océan Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Réunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
@@ -1864,7 +1864,7 @@ function FAQ(){
     {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, 2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
     {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
-    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
+    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (50 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
     {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
     {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
