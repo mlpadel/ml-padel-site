@@ -835,8 +835,8 @@ function Pricing(){
                   </div>
                 )}
 
-                {!o.soon&&(
-                  {!o.disabled&&<a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+                {!o.soon&&!o.disabled&&(
+                  <a href={o.link||CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
                     display:"block",textAlign:"center",padding:"11px 0",
                     borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
                     background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
@@ -853,7 +853,7 @@ function Pricing(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >{o.isAcadémie?"S'inscrire":"Réserver"}</a>}
+                  >{o.isAcadémie?"S'inscrire":"Réserver"}</a>
                 )}
               {o.disabled&&<div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%) rotate(-25deg)",background:"rgba(201,168,76,0.92)",color:"#fff",padding:"8px 80px",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase",zIndex:5,whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(0,0,0,0.3)",pointerEvents:"none"}}>{"À VENIR"}</div>}
               </div>
