@@ -134,6 +134,9 @@ const CALCOM = {
   masterclass4Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs-wallet`,
   masterclass8Wallet: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs-wallet`,
 };
+
+const CCT_API = "https://script.google.com/macros/s/DEPLOY_ID/exec";
+
 const WHATSAPP_BASE = "https://wa.me/262692627372";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
 const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite réserver un cours de padel 🎾");
@@ -292,6 +295,7 @@ function Navbar(){
     {label:"À la une",href:"#événements"},
     {label:"Tarifs",href:"#tarifs"},
     {label:"Wallet",href:"#wallet"},
+    {label:"Collectifs",href:"#cours-collectifs"},
     {label:"Galerie",href:"#galerie"},
     {label:"Boutique",href:"#boutique",badge:"New"},
     {label:"Académie",href:"/academie-inscription.html"},{label:"FAQ",href:"#faq"},
@@ -1609,6 +1613,153 @@ function Gallery(){
 }
 
 /* ─── Boutique Pallap – Partenaire Officiel ─── */
+
+/* CCT - Cours Collectifs Thématiques */
+function CoursCollectifsSection(){
+  const[events,setEvents]=React.useState([]);
+  const[loading,setLoading]=React.useState(true);
+  const[openForm,setOpenForm]=React.useState(null);
+  const[formData,setFormData]=React.useState({prenom:"",email:"",telephone:"",niveau:"",commentaire:""});
+  const[submitting,setSubmitting]=React.useState(false);
+  const[feedback,setFeedback]=React.useState(null);
+
+  React.useEffect(()=>{
+    fetch(CCT_API+"?action=events")
+      .then(r=>r.json())
+      .then(data=>{if(Array.isArray(data))setEvents(data);setLoading(false);})
+      .catch(()=>setLoading(false));
+  },[]);
+
+  const fmtDate=(iso)=>{const d=new Date(iso);const j=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const m=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];return j[d.getDay()]+" "+d.getDate()+" "+m[d.getMonth()];};
+  const fmtH=(iso)=>{const d=new Date(iso);return d.getHours()+"h"+(d.getMinutes()<10?"0":"")+d.getMinutes();};
+  const doSubmit=(evId)=>{
+    if(!formData.prenom||!formData.email||!formData.telephone){setFeedback({t:"e",m:"Prénom, email et téléphone requis"});return;}
+    setSubmitting(true);setFeedback(null);
+    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"inscription",eventId:evId,...formData})})
+    .then(r=>r.json()).then(res=>{
+      setSubmitting(false);
+      if(res.success){
+        setFeedback({t:"s",m:res.message});
+        setEvents(prev=>prev.map(ev=>{
+          if(ev.id!==evId)return ev;
+          const u={...ev};
+          if(res.statut==="inscrit"){u.inscrits=[...ev.inscrits,{prenom:res.prenom,niveau:res.niveau}];u.nbInscrits=ev.nbInscrits+1;u.complet=u.nbInscrits>=ev.maxPlaces;}
+          else{u.nbAttente=ev.nbAttente+1;}
+          return u;
+        }));
+        setFormData({prenom:"",email:"",telephone:"",niveau:"",commentaire:""});
+        setTimeout(()=>{setOpenForm(null);setFeedback(null);},3000);
+      }else{setFeedback({t:"e",m:res.error||"Erreur"});}
+    }).catch(()=>{setSubmitting(false);setFeedback({t:"e",m:"Erreur réseau"});});
+  };
+
+  if(loading||events.length===0)return null;
+  return(
+    <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND}}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:48}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:3,textTransform:"uppercase"}}>REJOIGNEZ UN GROUPE</span>
+            <h2 style={{fontSize:28,fontWeight:800,color:NAVY,marginTop:8}}>Cours Collectifs <span style={{color:GOLD}}>Thématiques</span></h2>
+            <p style={{color:NAVY+"99",fontSize:14,maxWidth:500,margin:"12px auto 0",lineHeight:1.6}}>
+              Inscrivez-vous individuellement, on forme le groupe pour vous. Tarif dégressif selon le nombre de participants.
+            </p>
+          </div>
+        </AnimatedSection>
+        <div style={{display:"flex",flexDirection:"column",gap:20}}>
+          {events.map(ev=>{
+            const isOpen=openForm===ev.id;
+            const left=ev.maxPlaces-ev.nbInscrits;
+            const pct=(ev.nbInscrits/ev.maxPlaces)*100;
+            return(
+              <AnimatedSection key={ev.id}>
+                <div style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                  {/* Header */}
+                  <div style={{padding:"20px 24px",display:"flex",flexWrap:"wrap",gap:16,alignItems:"center",justifyContent:"space-between"}}>
+                    <div style={{flex:"1 1 200px"}}>
+                      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+                        <span style={{fontSize:22}}>&#x1F3BE;</span>
+                        <h3 style={{margin:0,fontSize:18,fontWeight:700,color:NAVY}}>{ev.theme}</h3>
+                      </div>
+                      <div style={{display:"flex",flexWrap:"wrap",gap:8,fontSize:13,color:NAVY+"99"}}>
+                        <span>&#x1F4C5; {fmtDate(ev.date)}</span>
+                        <span>&#x23F0; {fmtH(ev.date)} — {fmtH(ev.dateFin)}</span>
+                        <span>&#x23F1;️ {ev.dureeH}h</span>
+                      </div>
+                      {ev.niveau&&(<div style={{display:"inline-block",marginTop:8,background:`${GOLD}15`,border:`1px solid ${GOLD}30`,borderRadius:20,padding:"4px 12px",fontSize:12,color:GOLD,fontWeight:600}}>{ev.niveau}</div>)}
+                    </div>
+                    <div style={{textAlign:"center",minWidth:120}}>
+                      <div style={{fontSize:12,color:NAVY+"80",marginBottom:4}}>{ev.heureCreuse?"\u2600\uFE0F Heures creuses":"\uD83C\uDF19 Heures pleines"}</div>
+                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.prixPar4}\u20AC<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
+                      <div style={{fontSize:11,color:NAVY+"70"}}>\u00E0 4 joueurs \u00B7 {ev.prixPar3}\u20AC \u00E0 3</div>
+                    </div>
+                  </div>
+                  {/* Jauge */}
+                  <div style={{padding:"0 24px 16px"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                      <span style={{fontSize:13,fontWeight:600,color:NAVY}}>{ev.nbInscrits}/{ev.maxPlaces} inscrits</span>
+                      {ev.complet?(<span style={{fontSize:11,fontWeight:700,color:"#e74c3c",background:"#e74c3c18",padding:"2px 10px",borderRadius:20}}>COMPLET</span>)
+                      :(<span style={{fontSize:11,fontWeight:600,color:"#27ae60",background:"#27ae6018",padding:"2px 10px",borderRadius:20}}>{left} place{left>1?"s":""} restante{left>1?"s":""}</span>)}
+                    </div>
+                    <div style={{height:8,borderRadius:4,background:NAVY+"12",overflow:"hidden"}}>
+                      <div style={{height:"100%",borderRadius:4,width:pct+"%",background:ev.complet?"linear-gradient(90deg,#e74c3c,#c0392b)":`linear-gradient(90deg,${GOLD},${GOLD}cc)`,transition:"width 0.5s ease"}}/>
+                    </div>
+                    {ev.inscrits.length>0&&(
+                      <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
+                        {ev.inscrits.map((p,i)=>(<span key={i} style={{fontSize:11,background:NAVY+"0a",border:`1px solid ${NAVY}15`,borderRadius:20,padding:"3px 10px",color:NAVY+"cc"}}>{p.prenom} \u00B7 Niv {p.niveau}</span>))}
+                      </div>
+                    )}
+                  </div>
+                  {/* Bouton */}
+                  {!isOpen&&(
+                    <div style={{padding:"0 24px 20px"}}>
+                      <button onClick={()=>{setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
+                        {ev.complet?"\uD83D\uDD14 Liste d'attente":"\u270D\uFE0F S'inscrire"}
+                      </button>
+                    </div>
+                  )}
+                  {/* Formulaire */}
+                  {isOpen&&(
+                    <div style={{padding:"0 24px 24px",borderTop:`1px solid ${NAVY}10`}}>
+                      <div style={{paddingTop:16,display:"flex",flexDirection:"column",gap:12}}>
+                        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                          <input placeholder="Prénom *" value={formData.prenom} onChange={e=>setFormData({...formData,prenom:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                          <input placeholder="Email *" type="email" value={formData.email} onChange={e=>setFormData({...formData,email:e.target.value})} style={{flex:"1 1 180px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                        </div>
+                        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                          <input placeholder="Téléphone *" type="tel" value={formData.telephone} onChange={e=>setFormData({...formData,telephone:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                          <select value={formData.niveau} onChange={e=>setFormData({...formData,niveau:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",color:formData.niveau?NAVY:NAVY+"60"}}>
+                            <option value="">Niveau</option>
+                            <option value="1">Niv 1 — Débutant</option>
+                            <option value="2">Niv 2 — Initié</option>
+                            <option value="3">Niv 3 — Intermédiaire</option>
+                            <option value="4">Niv 4 — Avancé</option>
+                            <option value="5">Niv 5 — Compétition</option>
+                          </select>
+                        </div>
+                        <textarea placeholder="Commentaire (optionnel)" value={formData.commentaire} onChange={e=>setFormData({...formData,commentaire:e.target.value})} rows={2} style={{width:"100%",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
+                        {feedback&&(
+                          <div style={{padding:"10px 16px",borderRadius:8,fontSize:13,fontWeight:600,background:feedback.t==="s"?"#27ae6018":"#e74c3c18",color:feedback.t==="s"?"#27ae60":"#e74c3c",border:`1px solid ${feedback.t==="s"?"#27ae6030":"#e74c3c30"}`}}>{feedback.m}</div>
+                        )}
+                        <div style={{display:"flex",gap:10}}>
+                          <button onClick={()=>{setOpenForm(null);setFeedback(null);}} style={{flex:1,padding:"12px",border:`1px solid ${NAVY}20`,borderRadius:10,background:"transparent",color:NAVY+"80",fontWeight:600,fontSize:14,cursor:"pointer"}}>Annuler</button>
+                          <button onClick={()=>doSubmit(ev.id)} disabled={submitting} style={{flex:2,padding:"12px",border:"none",borderRadius:10,background:`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:NAVY,fontWeight:700,fontSize:14,cursor:"pointer",opacity:submitting?0.6:1}}>
+                            {submitting?"Envoi...":(ev.complet?"Rejoindre la liste d'attente":"Confirmer l'inscription")}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </AnimatedSection>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function PallapShop(){
   const PALLAP_URL="https://pallapsport.com/fr?country=FR";
   const PALLAP_CYAN="#00c8ff";
@@ -2590,6 +2741,7 @@ function MLPadel(){
       <TeamSection/>
       <InstagramSection/>
       <Gallery/>
+      <CoursCollectifsSection/>
       <PallapShop/>
       <Testimonials/>
       <HowItWorks/>
