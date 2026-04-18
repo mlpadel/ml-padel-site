@@ -172,6 +172,7 @@ const fontLink = (
       .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
       .wallet-cards{grid-template-columns:1fr!important}
       .stats-grid{grid-template-columns:1fr!important}
+      .gallery-slide{aspect-ratio:3/2 !important;min-height:220px !important}
       #galerie .gallery-grid{grid-template-columns:repeat(2,1fr)!important}
     }
   
@@ -1561,7 +1562,7 @@ function Gallery(){
               const timer=setInterval(()=>{
                 setFade(false);
                 setTimeout(()=>{setIdx(p=>(p+1)%shuffled.length);setFade(true);},400);
-              },3500);
+              },2500);
               return ()=>clearInterval(timer);
             },[shuffled.length]);
             const prev=()=>{setFade(false);setTimeout(()=>{setIdx(p=>(p-1+shuffled.length)%shuffled.length);setFade(true);},300);};
@@ -1569,7 +1570,7 @@ function Gallery(){
             const show=[shuffled[idx],shuffled[(idx+1)%shuffled.length],shuffled[(idx+2)%shuffled.length]];
             return React.createElement("div",null,
               React.createElement("div",{style:{display:"flex",gap:14,transition:"opacity 0.5s ease",opacity:fade?1:0}},
-                show.map((p,i)=>React.createElement("div",{key:idx+"-"+i,style:{
+                show.map((p,i)=>React.createElement("div",{key:idx+"-"+i,className:"gallery-slide",style:{
                   flex:"1 1 0",minWidth:0,borderRadius:14,overflow:"hidden",
                   border:"1px solid "+GOLD+"18",aspectRatio:"4/3",
                   position:"relative",cursor:"pointer",
