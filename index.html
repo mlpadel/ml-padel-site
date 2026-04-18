@@ -1690,8 +1690,8 @@ function CoursCollectifsSection(){
                     </div>
                     <div style={{textAlign:"center",minWidth:120}}>
                       <div style={{fontSize:12,color:NAVY+"80",marginBottom:4}}>{ev.heureCreuse?"\u2600\uFE0F Heures creuses":"\uD83C\uDF19 Heures pleines"}</div>
-                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.prixPar4}\u20AC<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
-                      <div style={{fontSize:11,color:NAVY+"70"}}>\u00E0 4 joueurs \u00B7 {ev.prixPar3}\u20AC \u00E0 3</div>
+                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.prixPar4}{"€"}<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
+                      <div style={{fontSize:11,color:NAVY+"70"}}>{"à"} 4 joueurs {"·"} {ev.prixPar3}{"€"} {"à"} 3</div>
                     </div>
                   </div>
                   {/* Jauge */}
@@ -1706,7 +1706,7 @@ function CoursCollectifsSection(){
                     </div>
                     {ev.inscrits.length>0&&(
                       <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
-                        {ev.inscrits.map((p,i)=>(<span key={i} style={{fontSize:11,background:NAVY+"0a",border:`1px solid ${NAVY}15`,borderRadius:20,padding:"3px 10px",color:NAVY+"cc"}}>{p.prenom} \u00B7 Niv {p.niveau}</span>))}
+                        {ev.inscrits.map((p,i)=>(<span key={i} style={{fontSize:11,background:NAVY+"0a",border:`1px solid ${NAVY}15`,borderRadius:20,padding:"3px 10px",color:NAVY+"cc"}}>{p.prenom} {"·"} Niv {p.niveau}</span>))}
                       </div>
                     )}
                   </div>
