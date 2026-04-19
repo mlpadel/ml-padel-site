@@ -2665,21 +2665,19 @@ function Événements(){
                 </div>
               </div>
               <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-              <a href="/stage-mai-2026.html" style={{
-                display:"inline-flex",alignItems:"center",gap:10,
-                background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                color:NAVY,padding:"16px 36px",borderRadius:50,
-                textDecoration:"none",fontWeight:700,fontSize:15,
-                boxShadow:`0 8px 30px ${GOLD}44`,transition:"all 0.3s",
-                position:"relative",
-              }}
-              onMouseEnter={e=>{e.target.style.transform="scale(1.05)";e.target.style.boxShadow=`0 12px 40px ${GOLD}66`}}
-              onMouseLeave={e=>{e.target.style.transform="scale(1)";e.target.style.boxShadow=`0 8px 30px ${GOLD}44`}}
-              >S'inscrire au stage →</a>
+              <div style={{
+              display:"inline-flex",alignItems:"center",gap:10,
+              background:"#9aa3ab",
+              color:"#fff",padding:"16px 36px",borderRadius:50,
+              fontWeight:700,fontSize:16,cursor:"not-allowed",
+              opacity:0.85,letterSpacing:0.5,userSelect:"none",
+            }}>🚫 Inscriptions clôturées</div>
               <span style={{
-                fontSize:11,fontWeight:700,color:"#e07b5a",
-                animation:"pulse 2s ease-in-out infinite",letterSpacing:0.5,
-              }}>⚡ Dernières places disponibles</span>
+                display:"inline-block",fontSize:13,fontWeight:800,color:"#fff",
+                background:"#e63946",padding:"8px 20px",borderRadius:24,
+                letterSpacing:1.2,textTransform:"uppercase",
+                boxShadow:"0 4px 14px rgba(230,57,70,0.45)",
+              }}>🔴 Stage complet</span>
               </div>
             </div>
           </div>
