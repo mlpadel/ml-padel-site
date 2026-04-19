@@ -2765,6 +2765,126 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 
 <!-- Secret admin access -->
 
+<!-- 🔔 Notification Bell — Alerte nouveaux créneaux -->
+<script>
+(function(){
+  var CCT_ALERT_API="https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
+  var LS_KEY="mlpadel_alert_subscribed";
+  var LS_EMAIL="mlpadel_alert_email";
+
+  /* ── Styles ── */
+  var style=document.createElement("style");
+  style.textContent=`
+    #mlp-bell-btn{position:fixed;bottom:90px;right:30px;width:50px;height:50px;border-radius:50%;background:#0a1628;border:2px solid #c9a84c;cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 20px rgba(10,22,40,0.4);transition:transform 0.3s,box-shadow 0.3s}
+    #mlp-bell-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(201,168,76,0.5)}
+    #mlp-bell-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center}
+    #mlp-bell-overlay.open{display:flex}
+    #mlp-bell-card{background:#0a1628;border:2px solid #c9a84c;border-radius:16px;padding:32px 28px;max-width:380px;width:90%;color:#f5f2eb;text-align:center;position:relative;font-family:'Montserrat',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+    #mlp-bell-card h3{margin:0 0 8px;font-size:22px;color:#c9a84c}
+    #mlp-bell-card p{margin:0 0 20px;font-size:14px;color:#d1cdc4;line-height:1.5}
+    #mlp-bell-card input[type=email]{width:100%;padding:12px 16px;border:1px solid #c9a84c33;border-radius:10px;background:#111d30;color:#f5f2eb;font-size:15px;outline:none;box-sizing:border-box;margin-bottom:14px;font-family:'Montserrat',sans-serif}
+    #mlp-bell-card input[type=email]::placeholder{color:#8a8577}
+    #mlp-bell-card input[type=email]:focus{border-color:#c9a84c}
+    #mlp-bell-sub-btn{width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-size:15px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:opacity 0.3s}
+    #mlp-bell-sub-btn:hover{opacity:0.9}
+    #mlp-bell-sub-btn:disabled{opacity:0.6;cursor:wait}
+    #mlp-bell-close{position:absolute;top:12px;right:16px;background:none;border:none;color:#8a8577;font-size:22px;cursor:pointer;padding:4px}
+    #mlp-bell-close:hover{color:#f5f2eb}
+    #mlp-bell-msg{margin-top:14px;font-size:13px;line-height:1.4}
+    #mlp-bell-unsub{background:none;border:none;color:#c9a84c;cursor:pointer;font-size:13px;text-decoration:underline;margin-top:10px;font-family:'Montserrat',sans-serif}
+    @media(max-width:480px){#mlp-bell-card{padding:24px 18px}#mlp-bell-btn{bottom:85px;right:18px;width:46px;height:46px;font-size:21px}}
+  `;
+  document.head.appendChild(style);
+
+  /* ── Bell button ── */
+  var bell=document.createElement("button");
+  bell.id="mlp-bell-btn";
+  bell.setAttribute("aria-label","Notifications");
+  bell.innerHTML="🔔";
+  document.body.appendChild(bell);
+
+  /* ── Overlay + Card ── */
+  var overlay=document.createElement("div");
+  overlay.id="mlp-bell-overlay";
+  overlay.innerHTML=`
+    <div id="mlp-bell-card">
+      <button id="mlp-bell-close">&times;</button>
+      <div id="mlp-bell-content"></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  var content=document.getElementById("mlp-bell-content");
+
+  function isSubscribed(){return localStorage.getItem(LS_KEY)==="1"}
+
+  function renderForm(){
+    content.innerHTML=`
+      <h3>🔔 Restez informé</h3>
+      <p>Recevez une alerte dès qu'un nouveau cours ou une nouveauté est disponible.</p>
+      <input type="email" id="mlp-bell-email" placeholder="Votre email" required autocomplete="email"/>
+      <button id="mlp-bell-sub-btn">S'abonner</button>
+      <div id="mlp-bell-msg"></div>
+    `;
+    document.getElementById("mlp-bell-sub-btn").addEventListener("click",handleSubscribe);
+    document.getElementById("mlp-bell-email").addEventListener("keydown",function(ev){if(ev.key==="Enter")handleSubscribe()});
+  }
+
+  function renderSubscribed(){
+    var email=localStorage.getItem(LS_EMAIL)||"";
+    content.innerHTML=`
+      <h3>🔔 Vous êtes abonné ✓</h3>
+      <p>Les alertes sont envoyées à<br/><strong>${email}</strong></p>
+      <button id="mlp-bell-unsub">Se désabonner</button>
+    `;
+    document.getElementById("mlp-bell-unsub").addEventListener("click",handleUnsubscribe);
+  }
+
+  function handleSubscribe(){
+    var input=document.getElementById("mlp-bell-email");
+    var msg=document.getElementById("mlp-bell-msg");
+    var btn=document.getElementById("mlp-bell-sub-btn");
+    var email=input.value.trim();
+    if(!email||!input.checkValidity()){msg.style.color="#e74c3c";msg.textContent="Veuillez entrer un email valide.";return}
+    btn.disabled=true;btn.textContent="Envoi…";
+    fetch(CCT_ALERT_API+"?action=alert_subscribe&email="+encodeURIComponent(email))
+      .then(function(r){return r.json()})
+      .then(function(d){
+        if(d.success){
+          localStorage.setItem(LS_KEY,"1");
+          localStorage.setItem(LS_EMAIL,email);
+          msg.style.color="#27ae60";
+          msg.textContent="Vous êtes inscrit ! Vous recevrez les alertes par email.";
+          setTimeout(renderSubscribed,1500);
+        }else{msg.style.color="#e74c3c";msg.textContent=d.error||"Erreur, réessayez.";btn.disabled=false;btn.textContent="S'abonner"}
+      })
+      .catch(function(){msg.style.color="#e74c3c";msg.textContent="Erreur réseau, réessayez.";btn.disabled=false;btn.textContent="S'abonner"});
+  }
+
+  function handleUnsubscribe(){
+    var email=localStorage.getItem(LS_EMAIL)||"";
+    fetch(CCT_ALERT_API+"?action=alert_unsubscribe&email="+encodeURIComponent(email))
+      .then(function(r){return r.json()})
+      .then(function(){
+        localStorage.removeItem(LS_KEY);
+        localStorage.removeItem(LS_EMAIL);
+        renderForm();
+        var msg=document.getElementById("mlp-bell-msg");
+        if(msg){msg.style.color="#c9a84c";msg.textContent="Vous avez été désabonné."}
+      })
+      .catch(function(){});
+  }
+
+  /* ── Events ── */
+  bell.addEventListener("click",function(){
+    overlay.classList.add("open");
+    if(isSubscribed()){renderSubscribed()}else{renderForm()}
+  });
+  document.getElementById("mlp-bell-close").addEventListener("click",function(){overlay.classList.remove("open")});
+  overlay.addEventListener("click",function(ev){if(ev.target===overlay)overlay.classList.remove("open")});
+})();
+</script>
+
 <!-- GA4 Event Tracking -->
 <script>
 (function() {
