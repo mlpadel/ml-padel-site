@@ -2896,34 +2896,42 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 
 <!-- Scroll Reveal Animations -->
 <style>
-.section-reveal{opacity:0!important;transform:translateY(40px)!important;transition:opacity 0.7s ease,transform 0.7s ease}
-.section-reveal.from-left{transform:translateX(-40px)!important}
-.section-reveal.from-right{transform:translateX(40px)!important}
-.section-reveal.visible{opacity:1!important;transform:translate(0,0)!important}
+.sr-hide{opacity:0!important}
+.sr-hide.sr-from-left{transform:translateX(-40px)!important}
+.sr-hide.sr-from-right{transform:translateX(40px)!important}
+.sr-hide.sr-from-bottom{transform:translateY(40px)!important}
+.sr-anim{transition:opacity 0.7s ease,transform 0.7s ease!important}
+.sr-hide.sr-show{opacity:1!important;transform:translate(0,0)!important}
 </style>
 <script>
 (function(){
   setTimeout(function(){
     var ids=['tarifs','wallet','galerie','cours-collectifs','boutique','faq','contact','reviews','\u00e9v\u00e9nements'];
+    var dirs=['sr-from-left','sr-from-right','sr-from-bottom'];
+    var toAnimate=[];
     ids.forEach(function(id,i){
       var el=document.getElementById(id);
       if(!el)return;
-      var dir=i%2===0?'from-left':'from-right';
-      el.classList.add('section-reveal',dir);
       var rect=el.getBoundingClientRect();
-      if(rect.top<window.innerHeight&&rect.bottom>0){
-        el.classList.add('visible');
-      }
+      if(rect.top<window.innerHeight&&rect.bottom>0)return;
+      el.classList.add('sr-hide',dirs[i%3]);
+      el.offsetHeight;
+      toAnimate.push(el);
     });
-    var obs=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          e.target.classList.add('visible');
-          obs.unobserve(e.target);
-        }
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        toAnimate.forEach(function(el){el.classList.add('sr-anim')});
+        var obs=new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){
+              e.target.classList.add('sr-show');
+              obs.unobserve(e.target);
+            }
+          });
+        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+        toAnimate.forEach(function(el){obs.observe(el)});
       });
-    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.section-reveal:not(.visible)').forEach(function(el){obs.observe(el)});
+    });
   },2000);
 })();
 </script>
