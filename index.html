@@ -2905,9 +2905,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 <script>
 (function(){
   setTimeout(function(){
+    var heroEl=document.getElementById('hero');
     var sectionIds=['tarifs','wallet','galerie','cours-collectifs','boutique','faq','contact','reviews','\u00e9v\u00e9nements'];
     var revealIndex=0;
     function addReveal(el,dir,delay){
+      if(heroEl&&heroEl.contains(el))return;
       el.classList.add('reveal',dir);
       if(delay)el.dataset.delay=delay;
     }
@@ -2925,14 +2927,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
         revealIndex++;
       });
     });
-    // Cards with border-radius and background
     var cards=document.querySelectorAll('[style*="border-radius"][style*="background"]');
     cards.forEach(function(card,i){
+      if(heroEl&&heroEl.contains(card))return;
       if(card.offsetHeight>50&&!card.classList.contains('reveal')){
         addReveal(card,'from-bottom',i*80);
       }
     });
-    // Elements already in viewport should be visible immediately
     var viewH=window.innerHeight;
     document.querySelectorAll('.reveal').forEach(function(el){
       var rect=el.getBoundingClientRect();
@@ -2940,7 +2941,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
         el.classList.add('visible');
       }
     });
-    // Observer for the rest
     var obs=new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting){
@@ -2954,7 +2954,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
   },2000);
 })();
 </script>
-
 <!-- GA4 Event Tracking -->
 <script>
 (function() {
