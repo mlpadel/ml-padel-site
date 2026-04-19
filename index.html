@@ -1615,6 +1615,64 @@ function Gallery(){
 /* ─── Boutique Pallap – Partenaire Officiel ─── */
 
 /* CCT - Cours Collectifs Thématiques */
+function MiniStageForm(){
+  const[fd,setFd]=React.useState({prenom:"",nom:"",email:"",telephone:"",niveau:"",attentes:""});
+  const[submitting,setSub]=React.useState(false);
+  const[done,setDone]=React.useState(false);
+  const[err,setErr]=React.useState("");
+  const handle=(k,v)=>setFd(p=>({...p,[k]:v}));
+  const submit=()=>{
+    if(!fd.prenom||!fd.nom||!fd.email||!fd.telephone){setErr("Merci de remplir tous les champs obligatoires.");return;}
+    setSub(true);setErr("");
+    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({
+      action:"inscription",eventId:"mini-stage-mai-2026",
+      stage:"Mini Stage 3 Jours (5-7 mai 2026)",
+      prenom:fd.prenom,nom:fd.nom,email:fd.email,telephone:fd.telephone,
+      niveau:fd.niveau||"Non précisé",creneaux:"18h30-20h",attentes:fd.attentes||""
+    })}).then(r=>r.json()).then(res=>{setSub(false);if(res.success||res.status==="ok"){setDone(true);}else{setErr(res.message||"Erreur, réessayez.");}})
+    .catch(()=>{setSub(false);setErr("Erreur réseau, réessayez.");});
+  };
+  if(done)return React.createElement("div",{style:{textAlign:"center",padding:20}},
+    React.createElement("div",{style:{fontSize:28,marginBottom:8}},"\u2705"),
+    React.createElement("div",{style:{color:GOLD,fontWeight:700,fontSize:16}},"Inscription envoy\u00e9e !"),
+    React.createElement("div",{style:{color:CREAM+"90",fontSize:13,marginTop:4}},"Vous recevrez une confirmation par email.")
+  );
+  const inputStyle={width:"100%",padding:"12px 16px",borderRadius:12,border:"1px solid "+GOLD+"30",background:NAVY_MID,color:WHITE,fontSize:14,outline:"none",boxSizing:"border-box"};
+  const labelStyle={fontSize:12,fontWeight:600,color:GOLD_PALE,marginBottom:4,display:"block"};
+  return React.createElement("div",{style:{marginTop:20,textAlign:"left"}},
+    React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}},
+      React.createElement("div",null,React.createElement("label",{style:labelStyle},"Pr\u00e9nom *"),React.createElement("input",{style:inputStyle,value:fd.prenom,onChange:e=>handle("prenom",e.target.value),placeholder:"Pr\u00e9nom"})),
+      React.createElement("div",null,React.createElement("label",{style:labelStyle},"Nom *"),React.createElement("input",{style:inputStyle,value:fd.nom,onChange:e=>handle("nom",e.target.value),placeholder:"Nom"}))
+    ),
+    React.createElement("div",{style:{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:12}},
+      React.createElement("div",null,React.createElement("label",{style:labelStyle},"Email *"),React.createElement("input",{type:"email",style:inputStyle,value:fd.email,onChange:e=>handle("email",e.target.value),placeholder:"email@exemple.com"})),
+      React.createElement("div",null,React.createElement("label",{style:labelStyle},"T\u00e9l\u00e9phone *"),React.createElement("input",{type:"tel",style:inputStyle,value:fd.telephone,onChange:e=>handle("telephone",e.target.value),placeholder:"0692..."}))
+    ),
+    React.createElement("div",{style:{marginBottom:12}},
+      React.createElement("label",{style:labelStyle},"Niveau"),
+      React.createElement("select",{style:{...inputStyle,cursor:"pointer"},value:fd.niveau,onChange:e=>handle("niveau",e.target.value)},
+        React.createElement("option",{value:""},"S\u00e9lectionnez votre niveau"),
+        React.createElement("option",{value:"D\u00e9butant"},"D\u00e9butant"),
+        React.createElement("option",{value:"Interm\u00e9diaire"},"Interm\u00e9diaire"),
+        React.createElement("option",{value:"Avanc\u00e9"},"Avanc\u00e9")
+      )
+    ),
+    React.createElement("div",{style:{marginBottom:16}},
+      React.createElement("label",{style:labelStyle},"Attentes / commentaire"),
+      React.createElement("textarea",{style:{...inputStyle,minHeight:60,resize:"vertical"},value:fd.attentes,onChange:e=>handle("attentes",e.target.value),placeholder:"Vos objectifs pour ce stage..."})
+    ),
+    err&&React.createElement("div",{style:{color:"#e74c3c",fontSize:13,marginBottom:10,textAlign:"center"}},err),
+    React.createElement("div",{style:{textAlign:"center"}},
+      React.createElement("button",{onClick:submit,disabled:submitting,style:{
+        background:submitting?"#666":"linear-gradient(135deg,"+GOLD+","+GOLD_PALE+")",
+        color:NAVY,padding:"16px 36px",borderRadius:50,border:"none",
+        fontWeight:700,fontSize:16,cursor:submitting?"wait":"pointer",
+        boxShadow:"0 4px 20px "+GOLD+"40",letterSpacing:0.5,
+        transition:"all 0.3s ease"
+      }},submitting?"Envoi en cours...":"S'inscrire au stage \u2192"))
+  );
+}
+
 function CoursCollectifsSection(){
   const[events,setEvents]=React.useState([]);
   const[loading,setLoading]=React.useState(true);
@@ -2627,6 +2685,45 @@ function Événements(){
           <p style={{color:`${CREAM}70`,fontSize:15,marginBottom:40,lineHeight:1.7}}>
             Rejoignez nos stages intensifs pour progresser rapidement
           </p>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.15}>
+          <div style={{
+            background:`linear-gradient(145deg,${NAVY_MID},${NAVY_LIGHT}55)`,
+            border:`2px solid ${GOLD}50`,borderRadius:24,
+            padding:"40px 32px",textAlign:"left",
+            boxShadow:`0 20px 60px ${NAVY}44,inset 0 1px 0 ${GOLD}15`,
+            position:"relative",overflow:"hidden",marginBottom:32,
+          }}>
+            <div style={{position:"absolute",top:"-30%",right:"-10%",width:300,height:300,borderRadius:"50%",background:`radial-gradient(circle,${GOLD}08,transparent 70%)`}}/>
+            <div style={{position:"relative",zIndex:1,textAlign:"center"}}>
+              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:20,flexWrap:"wrap",justifyContent:"center"}}>
+                <span style={{fontSize:28}}>🏆</span>
+                <div>
+                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:24,fontWeight:900,color:WHITE}}>Mini Stage 3 Jours</h3>
+                  <div style={{color:`${CREAM}60`,fontSize:13,marginTop:2}}>Du 5 au 7 mai 2026 — 4Padel Saint-Louis</div>
+                </div>
+              </div>
+              <div style={{display:"flex",flexWrap:"wrap",gap:10,marginBottom:20,justifyContent:"center"}}>
+                <span style={{padding:"8px 18px",borderRadius:50,fontSize:13,fontWeight:600,background:`${GOLD}15`,color:GOLD_PALE,border:`1px solid ${GOLD}30`}}>18h30 – 20h</span>
+              </div>
+              <div style={{display:"flex",gap:16,marginBottom:16,flexWrap:"wrap",justifyContent:"center"}}>
+                <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
+                  <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Prix</div>
+                  <div style={{fontSize:22,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>90€</div>
+                </div>
+                <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
+                  <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Niveau</div>
+                  <div style={{fontSize:14,fontWeight:700,color:GOLD_PALE}}>Tous niveaux</div>
+                </div>
+                <div style={{padding:"10px 20px",borderRadius:14,background:`${GOLD}12`,border:`1px solid ${GOLD}22`}}>
+                  <div style={{fontSize:11,color:`${CREAM}50`,fontWeight:600}}>Coach</div>
+                  <div style={{fontSize:14,fontWeight:700,color:GOLD_PALE}}>Mathias</div>
+                </div>
+              </div>
+              <MiniStageForm/>
+            </div>
+          </div>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
