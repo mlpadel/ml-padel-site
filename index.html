@@ -2895,43 +2895,33 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 
 
 <!-- Scroll Reveal Animations -->
-<style>
-.sr-hide{opacity:0!important}
-.sr-hide.sr-from-left{transform:translateX(-40px)!important}
-.sr-hide.sr-from-right{transform:translateX(40px)!important}
-.sr-hide.sr-from-bottom{transform:translateY(40px)!important}
-.sr-anim{transition:opacity 0.7s ease,transform 0.7s ease!important}
-.sr-hide.sr-show{opacity:1!important;transform:translate(0,0)!important}
-</style>
 <script>
 (function(){
   setTimeout(function(){
     var ids=['tarifs','wallet','galerie','cours-collectifs','boutique','faq','contact','reviews','\u00e9v\u00e9nements'];
-    var dirs=['sr-from-left','sr-from-right','sr-from-bottom'];
-    var toAnimate=[];
+    var transforms=['translateX(-40px)','translateX(40px)','translateY(40px)'];
+    var animated=[];
     ids.forEach(function(id,i){
       var el=document.getElementById(id);
       if(!el)return;
       var rect=el.getBoundingClientRect();
       if(rect.top<window.innerHeight&&rect.bottom>0)return;
-      el.classList.add('sr-hide',dirs[i%3]);
+      el.style.opacity='0';
+      el.style.transform=transforms[i%3];
       el.offsetHeight;
-      toAnimate.push(el);
+      el.style.transition='opacity 0.7s ease,transform 0.7s ease';
+      animated.push(el);
     });
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        toAnimate.forEach(function(el){el.classList.add('sr-anim')});
-        var obs=new IntersectionObserver(function(entries){
-          entries.forEach(function(e){
-            if(e.isIntersecting){
-              e.target.classList.add('sr-show');
-              obs.unobserve(e.target);
-            }
-          });
-        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
-        toAnimate.forEach(function(el){obs.observe(el)});
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.style.opacity='1';
+          e.target.style.transform='translate(0,0)';
+          obs.unobserve(e.target);
+        }
       });
-    });
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    animated.forEach(function(el){obs.observe(el)});
   },2000);
 })();
 </script>
