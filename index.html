@@ -2893,6 +2893,68 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 })();
 </script>
 
+
+<!-- Scroll Reveal Animations -->
+<style>
+.reveal{opacity:0;transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.from-bottom{transform:translateY(40px)}
+.reveal.from-left{transform:translateX(-40px)}
+.reveal.from-right{transform:translateX(40px)}
+.reveal.visible{opacity:1;transform:translate(0,0)}
+</style>
+<script>
+(function(){
+  setTimeout(function(){
+    var sectionIds=['tarifs','wallet','galerie','cours-collectifs','boutique','faq','contact','reviews','\u00e9v\u00e9nements'];
+    var revealIndex=0;
+    function addReveal(el,dir,delay){
+      el.classList.add('reveal',dir);
+      if(delay)el.dataset.delay=delay;
+    }
+    sectionIds.forEach(function(id){
+      var section=document.getElementById(id);
+      if(!section)return;
+      var kids=Array.from(section.children).filter(function(c){return c.offsetHeight>30&&c.offsetWidth>50});
+      kids.forEach(function(kid,i){
+        var h=kid.querySelector('h2,h3');
+        if(h&&h.offsetHeight>0){
+          addReveal(h,'from-bottom',0);
+        }
+        var dirs=['from-bottom','from-left','from-right'];
+        addReveal(kid,dirs[revealIndex%3],i*100);
+        revealIndex++;
+      });
+    });
+    // Cards with border-radius and background
+    var cards=document.querySelectorAll('[style*="border-radius"][style*="background"]');
+    cards.forEach(function(card,i){
+      if(card.offsetHeight>50&&!card.classList.contains('reveal')){
+        addReveal(card,'from-bottom',i*80);
+      }
+    });
+    // Elements already in viewport should be visible immediately
+    var viewH=window.innerHeight;
+    document.querySelectorAll('.reveal').forEach(function(el){
+      var rect=el.getBoundingClientRect();
+      if(rect.top<viewH&&rect.bottom>0){
+        el.classList.add('visible');
+      }
+    });
+    // Observer for the rest
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var d=parseInt(e.target.dataset.delay)||0;
+          setTimeout(function(){e.target.classList.add('visible')},d);
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function(el){obs.observe(el)});
+  },2000);
+})();
+</script>
+
 <!-- GA4 Event Tracking -->
 <script>
 (function() {
