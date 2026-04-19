@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.mlpadel.fr/</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.mlpadel.fr/stage-mai-2026.html</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.mlpadel.fr/architecture.html</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.mlpadel.fr/experience-client.html</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.mlpadel.fr/academie-inscription.html</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+<url>
+<loc>https://www.mlpadel.fr/</loc>
+<lastmod>2026-04-12</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/stage-mai-2026.html</loc>
+<lastmod>2026-04-12</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/architecture.html</loc>
+<lastmod>2026-04-12</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/experience-client.html</loc>
+<lastmod>2026-04-12</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/academie-inscription.html</loc>
+<lastmod>2026-04-12</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.7</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/cours-padel-reunion.html</loc>
+<lastmod>2026-04-19</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/stage-padel-reunion.html</loc>
+<lastmod>2026-04-19</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://www.mlpadel.fr/academie-padel-reunion.html</loc>
+<lastmod>2026-04-19</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
 </urlset>
