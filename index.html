@@ -160,6 +160,7 @@ const CALCOM = {
 };
 
 const CCT_API = "https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
+const WALLET_API_GLOBAL = "https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
 const WHATSAPP_BASE = "https://wa.me/262692627372";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
@@ -1638,7 +1639,7 @@ function Gallery(){
 
 /* ─── Boutique Pallap – Partenaire Officiel ─── */
 
-/* CCT - Cours Collectifs Thématiques */
+/* Stage classique - Mini Stage 3 Jours */
 function MiniStageForm(){
   const[fd,setFd]=React.useState({prenom:"",nom:"",email:"",telephone:"",niveau:"",attentes:""});
   const[submitting,setSub]=React.useState(false);
@@ -1648,12 +1649,14 @@ function MiniStageForm(){
   const submit=()=>{
     if(!fd.prenom||!fd.nom||!fd.email||!fd.telephone){setErr("Merci de remplir tous les champs obligatoires.");return;}
     setSub(true);setErr("");
-    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({
-      action:"inscription",eventId:"mini-stage-mai-2026",
+    const params=new URLSearchParams({
+      action:"stage_inscription",
       stage:"Mini Stage 3 Jours (5-7 mai 2026)",
       prenom:fd.prenom,nom:fd.nom,email:fd.email,telephone:fd.telephone,
       niveau:fd.niveau||"Non précisé",creneaux:"18h30-20h",attentes:fd.attentes||""
-    })}).then(r=>r.json()).then(res=>{setSub(false);if(res.success||res.status==="ok"){setDone(true);}else{setErr(res.message||"Erreur, réessayez.");}})
+    });
+    fetch(WALLET_API_GLOBAL+"?"+params.toString(),{method:"GET"})
+    .then(r=>r.json()).then(res=>{setSub(false);if(res.success||res.status==="ok"){setDone(true);}else{setErr(res.message||"Erreur, réessayez.");}})
     .catch(()=>{setSub(false);setErr("Erreur réseau, réessayez.");});
   };
   if(done)return React.createElement("div",{style:{textAlign:"center",padding:20}},
