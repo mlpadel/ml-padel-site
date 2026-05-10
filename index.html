@@ -711,8 +711,8 @@ function Pricing(){
       {title:"Pack Quatuor 10h",disabled:true,price:"170",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 680€",features:["Économie de 15%","Soit 17€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
     ],
     académie:[
-      {title:"Engagement annuel",disabled:true,price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
-      {title:"Engagement semestriel",disabled:true,price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"/academie-inscription.html"},
+      {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
+      {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"/academie-inscription.html"},
     ],
     stages:[
       {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 joueurs · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:4},
@@ -3073,6 +3073,29 @@ ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
     });
   }, 2000);
 })();
+</script>
+<script>
+(function(){
+if(localStorage.getItem('mlp_acad2026_dismissed'))return;
+var b=document.createElement('div');
+b.id='mlp-news';
+b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:1001;background:linear-gradient(90deg,#c9a84c,#e8d48b,#c9a84c);display:flex;align-items:center;padding:10px 16px;font-size:14px;box-shadow:0 2px 8px rgba(0,0,0,0.15)';
+b.innerHTML='<a href="/academie-inscription.html" style="color:#0a1628;text-decoration:none;font-weight:700;flex:1;text-align:center">\ud83d\udd14 NOUVEAU \u2014 Acad\u00e9mie Adulte 2026-2027 : inscriptions ouvertes ! Lundi \u00b7 Mardi \u00b7 Jeudi \u2192</a><button onclick="this.parentElement.remove();localStorage.setItem(\'mlp_acad2026_dismissed\',\'1\')" style="background:none;border:none;color:#0a1628;font-size:18px;cursor:pointer;padding:0 12px">\u2715</button>';
+document.body.prepend(b);
+var s=document.createElement('style');
+s.textContent='nav[aria-label]{top:42px!important}';
+document.head.appendChild(s);
+})();
+</script>
+<script>
+setTimeout(function(){
+document.querySelectorAll('a').forEach(function(a){
+if(a.textContent.trim()==='Acad\u00e9mie'){a.textContent='Acad\u00e9mie \ud83c\udd95'}
+});
+document.querySelectorAll('button,div').forEach(function(el){
+if(el.textContent.trim()==='Acad\u00e9mie'){el.textContent='Acad\u00e9mie \ud83c\udd95'}
+});
+},3000);
 </script>
 <script>
 (function(){
