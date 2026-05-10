@@ -136,13 +136,7 @@ const WHITE = "#ffffff";
 const CALCOM_BASE = "https://cal.com/ml-padel";
 const CALCOM = {
   indiv: `${CALCOM_BASE}/indiv-wallet?overlayCalendar=true`,
-  packIndiv10: `${CALCOM_BASE}/pack-individuel-10h`,
-  packIndiv15: `${CALCOM_BASE}/pack-individuel-15h`,
   collectif: `${CALCOM_BASE}/collectif-duo-wallet`,
-  packCollectifDuo: `${CALCOM_BASE}/pack-collectif-10h`,
-  packCollectifTrio: `${CALCOM_BASE}/pack-collectif-10h-trio`,
-  packCollectifQuatuor: `${CALCOM_BASE}/pack-collectif-10h-quator`,
-  packCollectif15: `${CALCOM_BASE}/pack-collectif-15h`,
   masterclass4: `${CALCOM_BASE}/masterclass-week-end-2-jours-4-joueurs`,
   masterclass8: `${CALCOM_BASE}/masterclass-week-end-2-jours-8-joueurs`,
   stage: `${CALCOM_BASE}/stage-adulte`,
@@ -690,7 +684,6 @@ function Pricing(){
   const tabs=[
     {key:"individuel",label:"Individuels"},
     {key:"collectif",label:"Collectifs"},
-    {key:"packs",label:"Packs 10h"},
     {key:"académie",label:"Académie"},
     {key:"stages",label:"Stages"},
   ];
@@ -703,12 +696,6 @@ function Pricing(){
       {title:"Duo",price:"60",unit:"€/heure",desc:"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.collectifDuo},
       {title:"Trio",disabled:true,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:CALCOM.collectifTrio},
       {title:"Quatuor",disabled:true,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:CALCOM.collectifQuatuor},
-    ],
-    packs:[
-      {title:"Pack Individuel 10h",disabled:true,price:"470",unit:"€",desc:"10 × 1h · Soit 47€/h",features:["Économie de 82,50€ (–15%)","Flexibilité des créneaux","Suivi de progression","Paiement en euros (hors wallet)"],badge:"–15%",popular:true,subPrice:"soit 47€/h au lieu de 50€",link:CALCOM.packIndiv10},
-      {title:"Pack Duo 10h",disabled:true,price:"300",unit:"€/personne",desc:"10 × 1h · 2 joueurs · Total groupe 600€",features:["Économie de 15%","Créneaux flexibles","Paiement en euros (hors wallet)"],badge:"–15%",link:CALCOM.packCollectifDuo},
-      {title:"Pack Trio 10h",disabled:true,price:"210",unit:"€/personne",desc:"10 × 1h · 3 joueurs · Total groupe 630€",features:["Économie de 15%","Créneaux flexibles","Paiement en euros (hors wallet)"],popular:true,badge:"–15%",link:CALCOM.packCollectifTrio},
-      {title:"Pack Quatuor 10h",disabled:true,price:"170",unit:"€/personne",desc:"10 × 1h · 4 joueurs · Total groupe 680€",features:["Économie de 15%","Soit 17€/pers/séance","Le meilleur rapport qualité-prix","Paiement en euros (hors wallet)"],badge:"BEST",link:CALCOM.packCollectifQuatuor},
     ],
     académie:[
       {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
@@ -1024,7 +1011,8 @@ function Wallet(){
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
             <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-              Wallet ML_Padel &middot; Système de crédits
+              Wallet ML Padel &middot; Rechargez, jouez, économisez
+              <p style={{fontSize:14,color:"#888",marginTop:6,textAlign:"center",lineHeight:1.6}}>Le Wallet remplace les packs : rechargez votre solde et profitez de bonus sur tous vos cours.<br/>100€ → +5% | 200€ → +10% | 300€ → +15%<br/><span style={{fontSize:12,color:"#aaa"}}>Valable sur cours individuels et collectifs. Non applicable sur stages et académie (tarifs fixes).</span></p>
             </span>
             <h2 style={{
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
@@ -1468,7 +1456,7 @@ function WalletClient(){
               </div>
               <div style={{fontSize:12,fontWeight:700,color:"#ff6666",marginTop:10,marginBottom:6}}>Non utilisables sur :</div>
               <div style={{fontSize:12,color:CREAM+"60",lineHeight:1.8}}>
-                ✗ Packs 10h (déjà –15%) · ✗ Académie annuelle (750€) · ✗ Académie semestrielle (420€) · ✗ Toute promotion en cours
+                ✗ Académie annuelle (750€) · ✗ Académie semestrielle (420€) · ✗ Toute promotion en cours
               </div>
             </div>
           </div>
