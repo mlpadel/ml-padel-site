@@ -2875,7 +2875,48 @@ function StageJuilletForm(){
 
   if(success){
     return(
-      <section id="stage-juillet-form"/*__INS_4__*/function MapSection(){
+      <section id="stage-juillet-form" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+        <div style={{maxWidth:600,margin:"0 auto",textAlign:"center",background:WHITE,borderRadius:20,padding:"48px 32px",border:`2px solid ${GOLD}30`,boxShadow:`0 8px 40px ${GOLD}10`}}>
+          <div style={{fontSize:56,marginBottom:16}}>🎾</div>
+          <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:TEXT_DARK,marginBottom:12}}>
+            Inscription <span style={{color:GOLD}}>enregistrée</span> !
+          </h3>
+          <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.7}}>
+            Merci {form.prenom} ! Un email de confirmation a été envoyé à <strong>{form.email}</strong>.
+            <br/>Mathias te contactera prochainement pour confirmer ta place et les détails de paiement.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  const inputStyle={
+    width:"100%",padding:"12px 16px",borderRadius:12,border:`1.5px solid ${GOLD}25`,
+    fontFamily:"'DM Sans',sans-serif",fontSize:14,color:TEXT_DARK,
+    background:WHITE,outline:"none",transition:"border-color 0.3s",
+  };
+  const labelStyle={fontSize:12,fontWeight:700,color:TEXT_DARK,marginBottom:6,display:"block"};
+
+  return(
+    <section id="stage-juillet-form" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:700,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:40}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
+              Stages Juillet 2026 — 4Padel Saint-Louis
+            </span>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3.5vw,36px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
+              Formulaire d'<span style={{color:GOLD}}>inscription</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
+              Choisis ton stage, ton créneau et ta semaine. Les groupes de 4 déjà formés sont prioritaires.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.15}>
+          <form onSubmit={handleSubmit} style={{
+            background:WHITE,borderRad/*__INS_5__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
