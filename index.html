@@ -2819,7 +2819,63 @@ function Événements(){
         </div>
 
         <AnimatedSection delay={0.4}>
-          <p style={{color:`${CREAM}60`,fontSi/*__INS_3__*/function MapSection(){
+          <p style={{color:`${CREAM}60`,fontSize:12,marginTop:24,lineHeight:1.6}}>
+            Groupes de 4 joueurs · Niveaux homogènes · Coach Mathias
+            <br/>Les groupes déjà formés (4 joueurs) sont prioritaires
+          </p>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+function StageJuilletForm(){
+  const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
+
+  const offres=[
+    {id:"matin-hc",label:"Stage Matin HC — 100€",price:100,slots:["7h – 8h30","8h30 – 10h"],semaines:["S1 (29/06–03/07)","S2 (06/07–10/07)"],days:"Lu/Ma/Je/Ve"},
+    {id:"soiree-hp",label:"Stage Soirée HP — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["S1 (29/06–03/07)","S2 (06/07–10/07)"],days:"Lu/Ma/Je/Ve"},
+    {id:"soiree-mini",label:"Stage Soirée Mini — 90€",price:90,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["S1 (29/06–03/07)"],days:"Me/Je/Ve"},
+  ];
+
+  const[form,setForm]=useState({
+    nom:"",prenom:"",email:"",tel:"",niveau:"3",
+    offre:"",creneau:"",semaine:"",
+    groupe:"",commentaire:"",
+  });
+  const[sending,setSending]=useState(false);
+  const[success,setSuccess]=useState(false);
+  const[error,setError]=useState("");
+
+  const selectedOffre=offres.find(o=>o.id===form.offre);
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    if(!form.nom||!form.prenom||!form.email||!form.tel||!form.offre||!form.creneau||!form.semaine){
+      setError("Merci de remplir tous les champs obligatoires.");return;
+    }
+    setSending(true);setError("");
+    try{
+      const params=new URLSearchParams({
+        action:"stage_inscription",
+        nom:form.nom,prenom:form.prenom,email:form.email,tel:form.tel,
+        niveau:form.niveau,
+        stage:selectedOffre?selectedOffre.label:"",
+        creneaux:form.creneau,
+        semaine:form.semaine,
+        groupe:form.groupe,
+        attentes:form.commentaire,
+      });
+      const r=await fetch(WALLET_API+"?"+params.toString(),{redirect:"follow"});
+      const d=await r.json();
+      if(d.status==="ok"){setSuccess(true)}
+      else{setError(d.message||"Erreur lors de l'inscription.")}
+    }catch(err){setError("Erreur réseau. Réessayez.")}
+    setSending(false);
+  };
+
+  if(success){
+    return(
+      <section id="stage-juillet-form"/*__INS_4__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
