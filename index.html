@@ -2951,7 +2951,47 @@ function StageJuilletForm(){
                   {[1,2,3,4,5,6,7].map(n=><option key={n} value={n}>Niveau {n}</option>)}
                 </select>
               </div>
- /*__INS_6__*/function MapSection(){
+              <div>
+                <label style={labelStyle}>Formule choisie *</label>
+                <select style={{...inputStyle,cursor:"pointer"}} value={form.offre} onChange={e=>setForm({...form,offre:e.target.value,creneau:"",semaine:""})}>
+                  <option value="">— Choisir —</option>
+                  {offres.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}
+                </select>
+              </div>
+            </div>
+
+            {/* Créneau + Semaine (visible si offre choisie) */}
+            {selectedOffre&&(
+              <div style={{marginBottom:24}}>
+                <label style={{...labelStyle,marginBottom:12}}>Créneau horaire souhaité * <span style={{fontWeight:500,color:TEXT_LIGHT}}>({selectedOffre.days})</span></label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:20}}>
+                  {selectedOffre.slots.map(sl=>{
+                    const selected=form.creneau===sl;
+                    return(
+                      <label key={sl} style={{
+                        display:"flex",alignItems:"center",gap:8,
+                        padding:"10px 16px",borderRadius:12,cursor:"pointer",
+                        background:selected?`${GOLD}12`:WHITE,
+                        border:`1.5px solid ${selected?GOLD:GOLD+"25"}`,
+                        transition:"all 0.3s",flex:"1 1 auto",minWidth:140,
+                      }}>
+                        <input type="radio" name="creneau" value={sl} checked={selected}
+                          onChange={e=>setForm({...form,creneau:e.target.value})}
+                          style={{accentColor:GOLD}}/>
+                        <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>{sl}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <label style={{...labelStyle,marginBottom:12}}>Semaine(s) souhaitée(s) *</label>
+                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                  {selectedOffre.semaines.map(sem=>{
+                    const selected=form.semaine===sem;
+                    return(
+                      <label key={sem} style={{
+                        display:"flex",alignItems:"center",gap:8,
+                        padding:"10px 16px",/*__INS_7__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
