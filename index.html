@@ -2675,7 +2675,75 @@ function TeamSection(){
 }
 
 /* ─── Événements & Stages ─── */
-/*__MLPADEL_STAGE_JUILLET__*/function MapSection(){
+function Événements(){
+  const[selectedOffer,setSelectedOffer]=useState(null);
+
+  const offers=[
+    {
+      id:"matin-hc",
+      title:"Stage Matin HC",
+      emoji:"☀️",
+      price:100,
+      sessions:"4 × 1h30",
+      days:"Lundi · Mardi · Jeudi · Vendredi",
+      slots:["7h – 8h30","8h30 – 10h"],
+      semaines:"S1 + S2",
+      badge:"HEURES CREUSES",
+      color:GOLD,
+    },
+    {
+      id:"soiree-hp",
+      title:"Stage Soirée HP",
+      emoji:"🌙",
+      price:120,
+      sessions:"4 × 1h30",
+      days:"Lundi · Mardi · Jeudi · Vendredi",
+      slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
+      semaines:"S1 + S2",
+      badge:"HEURES PLEINES",
+      popular:true,
+      color:"#e0cb82",
+    },
+    {
+      id:"soiree-mini",
+      title:"Stage Soirée Mini",
+      emoji:"⚡",
+      price:90,
+      sessions:"3 × 1h30",
+      days:"Mercredi · Jeudi · Vendredi soir",
+      slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
+      semaines:"S1 uniquement",
+      badge:"FORMAT COURT",
+      color:"#e07b5a",
+    },
+  ];
+
+  return(
+    <section id="événements" style={{
+      padding:"80px 24px",position:"relative",zIndex:1,
+      background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
+    }}>
+      <div style={{maxWidth:1000,margin:"0 auto",textAlign:"center"}}>
+        <AnimatedSection>
+          <div style={{
+            display:"inline-flex",alignItems:"center",gap:8,
+            background:`${GOLD}20`,border:`1px solid ${GOLD}40`,
+            borderRadius:50,padding:"8px 20px",marginBottom:24,
+            boxShadow:`0 0 20px ${GOLD}15`,
+          }}>
+            <span style={{fontSize:16}}>⭐</span>
+            <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:GOLD_PALE,textTransform:"uppercase"}}>À la une</span>
+          </div>
+          <h2 style={{
+            fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",
+            fontWeight:900,color:WHITE,marginBottom:12,
+          }}>
+            Stages <span style={{color:GOLD}}>Juillet 2026</span>
+          </h2>
+          <p style={{color:`${CREAM}90`,fontSize:15,marginBottom:8,lineHeight:1.6}}>
+            2 semaines de stages intensifs au 4Padel Saint-Louis
+          </p>
+          <div style={{display:"flex",justifyContent:"center",gap:16,flex/*__INS_1__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
