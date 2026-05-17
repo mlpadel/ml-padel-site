@@ -2776,7 +2776,50 @@ function Événements(){
                 </div>
 
                 <div style={{textAlign:"center",margin:"20px 0",padding:"16px 0",borderTop:`1px solid ${GOLD}20`,borderBottom:`1px solid ${GOLD}20`}}>
-                  <div style={{fontSize:36,fontWeight:900,color:GOLD,fontFamily:"'Playfair/*__INS_2__*/function MapSection(){
+                  <div style={{fontSize:36,fontWeight:900,color:GOLD,fontFamily:"'Playfair Display',serif"}}>{o.price}€</div>
+                  <div style={{fontSize:12,color:`${CREAM}70`,marginTop:4}}>{o.sessions} · par joueur</div>
+                </div>
+
+                <div style={{display:"flex",flexDirection:"column",gap:10,marginBottom:20}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{fontSize:14}}>📅</span>
+                    <span style={{fontSize:13,color:CREAM}}>{o.days}</span>
+                  </div>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{fontSize:14}}>🕐</span>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+                      {o.slots.map(sl=>(
+                        <span key={sl} style={{background:`${GOLD}15`,color:GOLD_PALE,padding:"3px 10px",borderRadius:20,fontSize:12,fontWeight:600}}>{sl}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{fontSize:14}}>📋</span>
+                    <span style={{fontSize:13,color:o.id==="soiree-mini"?"#e07b5a":CREAM,fontWeight:o.id==="soiree-mini"?700:400}}>{o.semaines}</span>
+                  </div>
+                </div>
+
+                <a href="#stage-juillet-form"
+                  onClick={()=>setSelectedOffer(o.id)}
+                  style={{
+                    display:"block",textAlign:"center",padding:"12px 0",borderRadius:50,
+                    background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                    border:o.popular?"none":`2px solid ${GOLD}`,
+                    color:o.popular?NAVY:GOLD,fontWeight:700,fontSize:14,
+                    textDecoration:"none",cursor:"pointer",transition:"all 0.3s",
+                  }}
+                  onMouseEnter={e=>{if(!o.popular){e.target.style.background=`${GOLD}15`}}}
+                  onMouseLeave={e=>{if(!o.popular){e.target.style.background="transparent"}}}
+                >
+                  S'inscrire →
+                </a>
+              </div>
+            </AnimatedSection>
+          ))}
+        </div>
+
+        <AnimatedSection delay={0.4}>
+          <p style={{color:`${CREAM}60`,fontSi/*__INS_3__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
