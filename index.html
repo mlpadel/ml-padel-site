@@ -2991,7 +2991,43 @@ function StageJuilletForm(){
                     return(
                       <label key={sem} style={{
                         display:"flex",alignItems:"center",gap:8,
-                        padding:"10px 16px",/*__INS_7__*/function MapSection(){
+                        padding:"10px 16px",borderRadius:12,cursor:"pointer",
+                        background:selected?`${GOLD}12`:WHITE,
+                        border:`1.5px solid ${selected?GOLD:GOLD+"25"}`,
+                        transition:"all 0.3s",flex:"1 1 auto",minWidth:160,
+                      }}>
+                        <input type="radio" name="semaine" value={sem} checked={selected}
+                          onChange={e=>setForm({...form,semaine:e.target.value})}
+                          style={{accentColor:GOLD}}/>
+                        <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>{sem}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Groupe déjà formé */}
+            <div style={{marginBottom:20}}>
+              <label style={labelStyle}>Groupe déjà formé ? <span style={{fontWeight:500,color:TEXT_LIGHT}}>(noms des 4 joueurs si applicable)</span></label>
+              <input style={inputStyle} value={form.groupe} onChange={e=>setForm({...form,groupe:e.target.value})} placeholder="Ex: Jean, Marie, Paul, Sophie" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=`${GOLD}25`}/>
+            </div>
+
+            {/* Commentaire */}
+            <div style={{marginBottom:24}}>
+              <label style={labelStyle}>Commentaire / Attentes</label>
+              <textarea style={{...inputStyle,minHeight:80,resize:"vertical"}} value={form.commentaire} onChange={e=>setForm({...form,commentaire:e.target.value})} placeholder="Objectifs, niveau des membres du groupe, contraintes..." onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=`${GOLD}25`}/>
+            </div>
+
+            {error&&<p style={{color:"#e74c3c",fontSize:13,marginBottom:16,fontWeight:600}}>{error}</p>}
+
+            <button type="submit" disabled={sending} style={{
+              width:"100%",padding:"14px 0",borderRadius:50,border:"none",cursor:sending?"wait":"pointer",
+              background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+              color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+              transition:"all 0.3s",opacity:sending?0.7:1,
+            }}
+            onMouseEnter={e=>{if(!sending)e/*__INS_8__*/function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
