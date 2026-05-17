@@ -3027,7 +3027,20 @@ function StageJuilletForm(){
               color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
               transition:"all 0.3s",opacity:sending?0.7:1,
             }}
-            onMouseEnter={e=>{if(!sending)e/*__INS_8__*/function MapSection(){
+            onMouseEnter={e=>{if(!sending)e.target.style.transform="scale(1.02)"}}
+            onMouseLeave={e=>e.target.style.transform="scale(1)"}
+            >{sending?"Envoi en cours...":"Valider mon inscription"}</button>
+
+            <p style={{textAlign:"center",fontSize:11,color:TEXT_LIGHT,marginTop:12}}>
+              Paiement après confirmation · Les groupes de 4 déjà formés sont prioritaires
+            </p>
+          </form>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
