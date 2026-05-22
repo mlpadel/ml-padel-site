@@ -2874,16 +2874,32 @@ function StageJuilletForm(){
   };
 
   if(success){
+    const recapRow={display:"flex",justifyContent:"space-between",gap:12,padding:"7px 0",fontSize:14,borderBottom:`1px solid ${GOLD}15`};
+    const recapKey={color:TEXT_MED,fontWeight:600};
+    const recapVal={color:TEXT_DARK,fontWeight:700,textAlign:"right"};
     return(
       <section id="stage-juillet-form" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
         <div style={{maxWidth:600,margin:"0 auto",textAlign:"center",background:WHITE,borderRadius:20,padding:"48px 32px",border:`2px solid ${GOLD}30`,boxShadow:`0 8px 40px ${GOLD}10`}}>
           <div style={{width:72,height:72,borderRadius:"50%",background:"#27ae60",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 20px"}}><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:TEXT_DARK,marginBottom:12}}>
-            Pré-inscription <span style={{color:GOLD}}>confirmée</span> !
+            Pré-inscription <span style={{color:GOLD}}>enregistrée</span> !
           </h3>
-          <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.7}}>
-            Merci {form.prenom} ! Un email de confirmation a été envoyé à <strong>{form.email}</strong>.
-            <br/>Mathias te contactera prochainement pour confirmer ta place et les détails de paiement.
+          <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.7,marginBottom:24}}>
+            Merci {form.prenom}, ta demande a bien été prise en compte. ✅
+          </p>
+          <div style={{textAlign:"left",background:WARM_WHITE,borderRadius:14,padding:"16px 22px",marginBottom:22,border:`1px solid ${GOLD}20`}}>
+            <div style={{fontSize:11,fontWeight:700,color:GOLD,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Récapitulatif</div>
+            {selectedOffre&&<div style={recapRow}><span style={recapKey}>Stage</span><span style={recapVal}>{selectedOffre.label}</span></div>}
+            {form.creneau&&<div style={recapRow}><span style={recapKey}>Créneau</span><span style={recapVal}>{form.creneau}</span></div>}
+            {form.semaine&&<div style={{...recapRow,borderBottom:"none"}}><span style={recapKey}>Semaine</span><span style={recapVal}>{form.semaine}</span></div>}
+          </div>
+          <div style={{background:`${GOLD}10`,borderRadius:14,padding:"16px 20px",borderLeft:`3px solid ${GOLD}`,textAlign:"left"}}>
+            <p style={{color:TEXT_DARK,fontSize:14,lineHeight:1.7,margin:0}}>
+              <strong>Ta place n'est pas encore définitive.</strong> Mathias revient vers toi sous 48h pour confirmer ta place et te communiquer les modalités de paiement.
+            </p>
+          </div>
+          <p style={{color:TEXT_LIGHT,fontSize:12,marginTop:20,lineHeight:1.6}}>
+            Une question d'ici là ? Contacte Mathias directement par téléphone ou WhatsApp.
           </p>
         </div>
       </section>
