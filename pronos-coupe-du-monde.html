@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Pronos Coupe du Monde 2026 — ML Padel</title>
+<link rel="icon" href="/LOGO%20ML%20PADEL%202025%20(1).png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1628;--navy2:#162040;--gold:#c9a84c;--gold2:#e0cb82;
+  --bg:#faf9f6;--ink:#1a1a2e;--muted:#6b6b7b;--line:#c9a84c25;
+  --green:#1f9d63;--red:#e05c4b;--win:#2e9e6b;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-tap-highlight-color:transparent}
+img{max-width:100%}
+.serif{font-family:'Playfair Display',serif}
+
+/* Header */
+.topbar{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 2px 14px #0a162840}
+.topbar-inner{max-width:760px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;flex-direction:column;line-height:1.1}
+.brand .logo{color:var(--gold);font-family:'Playfair Display',serif;font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+.brand .title{font-family:'Playfair Display',serif;font-size:17px;font-weight:900}
+.brand .title span{color:var(--gold)}
+.whoami{font-size:11px;color:#ffffffcc;text-align:right;line-height:1.3}
+.whoami b{color:var(--gold)}
+.logout{background:#ffffff14;border:1px solid #ffffff26;color:#fff;border-radius:40px;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;margin-top:4px}
+.logout:hover{background:#ffffff24}
+
+/* Tabs */
+.tabs{background:var(--navy2);position:sticky;top:0;z-index:49}
+.tabs-inner{max-width:760px;margin:0 auto;display:flex;gap:4px;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.tabs-inner::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:none;border:none;color:#ffffff99;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;padding:13px 14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab:hover{color:#fff}
+
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 60px}
+
+/* Demo banner */
+.demo-banner{background:#fff7e0;border:1px solid #e8c96a;color:#7a5b12;border-radius:12px;padding:10px 14px;font-size:12px;font-weight:600;margin-bottom:18px;display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+
+/* Cards */
+.card{background:#fff;border-radius:18px;padding:22px;border:1.5px solid var(--line);box-shadow:0 3px 18px #c9a84c0a;margin-bottom:16px}
+.card h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;margin-bottom:4px}
+.card h2 span{color:var(--gold)}
+.card .sub{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+
+/* Forms */
+label.fl{display:block;font-size:12px;font-weight:700;margin-bottom:6px}
+label.fl .opt{font-weight:500;color:#999}
+.inp{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:#fff;outline:none;transition:border-color .25s}
+.inp:focus{border-color:var(--gold)}
+.fg{margin-bottom:15px}
+.btn{width:100%;padding:14px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);font-weight:800;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .15s}
+.btn:hover{transform:scale(1.015)}
+.btn:active{transform:scale(.99)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn.ghost{background:none;border:1.5px solid var(--gold);color:var(--navy)}
+.btn.sm{width:auto;padding:9px 18px;font-size:13px}
+.btn.danger{background:none;border:1.5px solid var(--red);color:var(--red)}
+.linkbtn{background:none;border:none;color:var(--gold);font-weight:700;font-size:13px;cursor:pointer;text-decoration:underline;font-family:inherit}
+.err{color:var(--red);font-size:13px;font-weight:600;margin:8px 0;display:none}
+.codebox{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:14px;padding:16px;text-align:center;margin-bottom:16px}
+.codebox .lbl{font-size:11px;color:#ffffffaa;text-transform:uppercase;letter-spacing:1px}
+.codebox .code{font-family:'Playfair Display',serif;font-size:34px;font-weight:900;color:var(--gold);letter-spacing:6px;margin-top:4px}
+.codebox .note{font-size:11px;color:#ffffff99;margin-top:6px;line-height:1.4}
+
+/* Rules */
+.rules{font-size:13px;line-height:1.65;color:#33333a}
+.rules li{margin:0 0 7px 18px}
+details.rules-box summary{cursor:pointer;font-weight:700;color:var(--navy);font-size:14px;padding:6px 0}
+
+/* Stat chips */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:18px}
+.stat{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px;text-align:center}
+.stat .v{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--gold)}
+.stat .v.ink{color:var(--ink)}
+.stat .l{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* Filters */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:40px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted)}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* Match card */
+.phase-h{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:var(--navy);margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+.phase-h::after{content:"";flex:1;height:1px;background:var(--line)}
+.match{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:11px}
+.match.locked{background:#fbfaf7}
+.match.done{border-color:#1f9d6340}
+.match-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px;gap:8px}
+.match-meta{font-size:11px;color:var(--muted);font-weight:600}
+.match-meta .grp{color:var(--gold);font-weight:800}
+.badge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:30px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.badge.open{background:#eafaf1;color:var(--green)}
+.badge.lock{background:#f0f0f3;color:#888}
+.badge.done{background:#1f9d63;color:#fff}
+.teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
+.team{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;min-width:0}
+.team.right{justify-content:flex-end;text-align:right}
+.team .fl{font-size:20px;flex:0 0 auto}
+.team .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs{font-size:11px;color:#bbb;font-weight:700}
+.score-in{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px}
+.score-in input{width:54px;height:48px;text-align:center;font-size:22px;font-weight:800;border:2px solid var(--line);border-radius:12px;font-family:'Playfair Display',serif;color:var(--navy);outline:none}
+.score-in input:focus{border-color:var(--gold)}
+.score-in .dash{font-size:20px;color:#ccc;font-weight:800}
+.score-disp{text-align:center;font-family:'Playfair Display',serif;font-size:24px;font-weight:900;margin-top:6px}
+.score-disp .lbl{display:block;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.match-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap}
+.save-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.myprono{font-size:12px;color:var(--muted);font-weight:600}
+.myprono b{color:var(--navy)}
+.feedback{font-size:12px;font-weight:700}
+.feedback.ok{color:var(--green)}
+.pot-tag{font-size:12px;font-weight:700;color:var(--gold);background:#c9a84c12;border-radius:30px;padding:4px 11px}
+.win-tag{font-size:12px;font-weight:800;color:#fff;background:var(--win);border-radius:30px;padding:4px 11px}
+.lose-tag{font-size:12px;font-weight:700;color:var(--muted)}
+
+/* Table */
+.lb{width:100%;border-collapse:collapse;font-size:13px}
+.lb th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:8px 6px;border-bottom:2px solid var(--line)}
+.lb td{padding:11px 6px;border-bottom:1px solid #f0eee6}
+.lb tr.me{background:#c9a84c10}
+.lb .rk{font-family:'Playfair Display',serif;font-weight:900;font-size:16px;color:var(--gold);width:34px}
+.lb .nm{font-weight:700}
+.lb .num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.pos-amt{color:var(--green)}
+.neg-amt{color:var(--red)}
+
+/* Admin */
+.adm-match{display:grid;grid-template-columns:1fr;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.adm-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.adm-row .inp{flex:1;min-width:90px;font-size:13px;padding:9px 11px}
+.adm-row .inp.score{width:54px;flex:0 0 auto;text-align:center}
+.adm-lbl{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.part-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid #f0eee6;flex-wrap:wrap}
+.part-info b{font-size:14px}
+.part-info .meta{font-size:11px;color:var(--muted)}
+.pill{font-size:10px;font-weight:800;padding:3px 9px;border-radius:30px}
+.pill.ok{background:#eafaf1;color:var(--green)}
+.pill.no{background:#fdeceb;color:var(--red)}
+
+.empty{text-align:center;padding:36px 16px;color:var(--muted);font-size:14px}
+.empty .ic{font-size:34px;margin-bottom:8px}
+
+/* Toast */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120%);background:var(--navy);color:#fff;padding:12px 22px;border-radius:50px;font-size:13px;font-weight:700;z-index:100;transition:transform .3s;box-shadow:0 6px 24px #0a162850;max-width:90%}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.win{background:var(--win)}
+
+.foot{text-align:center;padding:30px 16px;font-size:11px;color:#aaa}
+.foot a{color:var(--gold);text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+
+<script>
+"use strict";
+
+/* ============================ CONFIG & DONNÉES ============================ */
+const DB_KEY="pronosCDM2026_db";
+const SESSION_KEY="pronosCDM2026_session";
+const ADMIN_DEFAULT="mlpadel2026"; // mot de passe admin par défaut (modifiable dans l'onglet Admin)
+
+const pad=n=>String(n).padStart(2,"0");
+
+const FLAGS={
+ "Mexique":"🇲🇽","Afrique du Sud":"🇿🇦","Corée du Sud":"🇰🇷","Tchéquie":"🇨🇿",
+ "Canada":"🇨🇦","Suisse":"🇨🇭","Qatar":"🇶🇦","Bosnie-Herzégovine":"🇧🇦",
+ "Brésil":"🇧🇷","Maroc":"🇲🇦","Haïti":"🇭🇹","Écosse":"🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+ "États-Unis":"🇺🇸","Paraguay":"🇵🇾","Australie":"🇦🇺","Turquie":"🇹🇷",
+ "Allemagne":"🇩🇪","Curaçao":"🇨🇼","Côte d'Ivoire":"🇨🇮","Équateur":"🇪🇨",
+ "Pays-Bas":"🇳🇱","Japon":"🇯🇵","Tunisie":"🇹🇳","Suède":"🇸🇪",
+ "Belgique":"🇧🇪","Égypte":"🇪🇬","Iran":"🇮🇷","Nouvelle-Zélande":"🇳🇿",
+ "Espagne":"🇪🇸","Cap-Vert":"🇨🇻","Arabie saoudite":"🇸🇦","Uruguay":"🇺🇾",
+ "France":"🇫🇷","Sénégal":"🇸🇳","Norvège":"🇳🇴","Irak":"🇮🇶",
+ "Argentine":"🇦🇷","Algérie":"🇩🇿","Autriche":"🇦🇹","Jordanie":"🇯🇴",
+ "Portugal":"🇵🇹","Ouzbékistan":"🇺🇿","Colombie":"🇨🇴","RD Congo":"🇨🇩",
+ "Angleterre":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Croatie":"🇭🇷","Ghana":"🇬🇭","Panama":"🇵🇦"
+};
+const flag=t=>FLAGS[t]||"🏳️";
+
+function generateFixture(){
+  const groupes={
+    A:["Mexique","Afrique du Sud","Corée du Sud","Tchéquie"],
+    B:["Canada","Suisse","Qatar","Bosnie-Herzégovine"],
+    C:["Brésil","Maroc","Haïti","Écosse"],
+    D:["États-Unis","Paraguay","Australie","Turquie"],
+    E:["Allemagne","Curaçao","Côte d'Ivoire","Équateur"],
+    F:["Pays-Bas","Japon","Tunisie","Suède"],
+    G:["Belgique","Égypte","Iran","Nouvelle-Zélande"],
+    H:["Espagne","Cap-Vert","Arabie saoudite","Uruguay"],
+    I:["France","Sénégal","Norvège","Irak"],
+    J:["Argentine","Algérie","Autriche","Jordanie"],
+    K:["Portugal","Ouzbékistan","Colombie","RD Congo"],
+    L:["Angleterre","Croatie","Ghana","Panama"]
+  };
+  const pairings=[[0,1],[2,3],[0,2],[1,3],[0,3],[1,2]];
+  const mdOf=[0,0,1,1,2,2];
+  const byMd={0:[],1:[],2:[]};
+  Object.keys(groupes).forEach(g=>{
+    const t=groupes[g];
+    pairings.forEach((p,i)=>byMd[mdOf[i]].push({groupe:g,teamA:t[p[0]],teamB:t[p[1]]}));
+  });
+  const matches=[];let id=1;
+  const times=["15:00","18:00","21:00","23:00"];
+  function assign(list,days){
+    const perDay=Math.ceil(list.length/days.length);
+    list.forEach((m,idx)=>{
+      const [mo,d]=days[Math.min(Math.floor(idx/perDay),days.length-1)];
+      matches.push({id:"M"+id,phase:"Phase de groupes",groupe:m.groupe,teamA:m.teamA,teamB:m.teamB,
+        datetime:`2026-${pad(mo)}-${pad(d)}T${times[idx%times.length]}:00`});
+      id++;
+    });
+  }
+  assign(byMd[0],[[6,11],[6,12],[6,13],[6,14],[6,15],[6,16]]);
+  assign(byMd[1],[[6,17],[6,18],[6,19],[6,20],[6,21],[6,22]]);
+  assign(byMd[2],[[6,23],[6,24],[6,25],[6,26],[6,27]]);
+  function ko(phase,count,days){
+    for(let i=0;i<count;i++){
+      const [mo,d]=days[Math.min(i,days.length-1)];
+      matches.push({id:"M"+id,phase,groupe:null,teamA:"À définir",teamB:"À définir",
+        datetime:`2026-${pad(mo)}-${pad(d)}T${times[i%times.length]}:00`});
+      id++;
+    }
+  }
+  ko("16es de finale",16,[[6,28],[6,28],[6,28],[6,29],[6,29],[6,29],[6,30],[6,30],[6,30],[7,1],[7,1],[7,1],[7,2],[7,2],[7,3],[7,3]]);
+  ko("8es de finale",8,[[7,4],[7,4],[7,5],[7,5],[7,6],[7,6],[7,7],[7,7]]);
+  ko("Quarts de finale",4,[[7,9],[7,10],[7,10],[7,11]]);
+  ko("Demi-finales",2,[[7,14],[7,15]]);
+  ko("Match pour la 3e place",1,[[7,18]]);
+  ko("Finale",1,[[7,19]]);
+  return matches;
+}
+
+/* ============================ STOCKAGE ============================ */
+let db,session={email:null,admin:false};
+
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));}
+function loadDB(){
+  let d=null;
+  try{d=JSON.parse(localStorage.getItem(DB_KEY));}catch(e){}
+  if(!d||typeof d!=="object")d={};
+  d.participants=d.participants||{};
+  d.pronos=d.pronos||{};
+  d.results=d.results||{};
+  d.settings=d.settings||{};
+  if(d.settings.miseParMatch==null)d.settings.miseParMatch=2;
+  if(!d.settings.adminCode)d.settings.adminCode=ADMIN_DEFAULT;
+  if(!Array.isArray(d.matches)||!d.matches.length)d.matches=generateFixture();
+  db=d;saveDB();
+}
+function loadSession(){
+  try{const s=JSON.parse(localStorage.getItem(SESSION_KEY));if(s&&s.email)session.email=s.email;}catch(e){}
+  if(session.email&&!(db.participants[session.email]&&db.participants[session.email].validated))session.email=null;
+}
+function saveSession(){localStorage.setItem(SESSION_KEY,JSON.stringify({email:session.email}));}
+
+/* ============================ HELPERS ============================ */
+const $=s=>document.querySelector(s);
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function genCode(){return String(Math.floor(100000+Math.random()*900000));}
+function validEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function euros(n){return (Math.round(n*100)/100).toLocaleString("fr-FR",{minimumFractionDigits:0,maximumFractionDigits:2})+" €";}
+
+const DAYS=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+const MONTHS=["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc."];
+function fmtDate(dt){
+  const d=new Date(dt);
+  return `${DAYS[d.getDay()]} ${d.getDate()} ${MONTHS[d.getMonth()]} · ${pad(d.getHours())}h${pad(d.getMinutes())}`;
+}
+function matchesSorted(){
+  return db.matches.slice().sort((a,b)=>{
+    const t=new Date(a.datetime)-new Date(b.datetime);
+    if(t)return t;
+    return parseInt(a.id.slice(1))-parseInt(b.id.slice(1));
+  });
+}
+function isFinished(m){return !!db.results[m.id];}
+function isLocked(m){return isFinished(m)||new Date(m.datetime)<=new Date();}
+function validatedList(){return Object.values(db.participants).filter(p=>p.validated);}
+function myProno(id){const u=session.email;return u&&db.pronos[u]?db.pronos[u][id]:null;}
+
+function toast(msg,win){
+  const t=$("#toast");t.textContent=msg;t.className=win?"show win":"show";
+  clearTimeout(toast._t);toast._t=setTimeout(()=>t.className="",2600);
+}
+
+/* ============================ CAGNOTTES ============================ */
+function computeCagnottes(){
+  const parts=validatedList();
+  const n=parts.length;
+  const mise=Number(db.settings.miseParMatch)||0;
+  let report=0;
+  const per={};const gains={};const exacts={};
+  parts.forEach(p=>{gains[p.email]=0;exacts[p.email]=0;});
+  let nbFinished=0;
+  matchesSorted().forEach(m=>{
+    const potBrut=mise*n;
+    const res=db.results[m.id];
+    if(!res){per[m.id]={finished:false,potBrut,reportEntrant:report,potTotal:potBrut+report};return;}
+    nbFinished++;
+    const potTotal=potBrut+report;
+    const winners=parts.filter(p=>{
+      const pr=db.pronos[p.email]&&db.pronos[p.email][m.id];
+      return pr&&Number(pr.a)===Number(res.a)&&Number(pr.b)===Number(res.b);
+    }).map(p=>p.email);
+    let gainPar=0,reportSortant=0;
+    if(winners.length){gainPar=potTotal/winners.length;winners.forEach(e=>{gains[e]+=gainPar;exacts[e]++;});report=0;}
+    else{reportSortant=potTotal;report=potTotal;}
+    per[m.id]={finished:true,potBrut,reportEntrant:potTotal-potBrut,potTotal,winners,gainPar,reportSortant,res};
+  });
+  return {per,gains,exacts,n,mise,reportEnCours:report,nbFinished};
+}
+
+/* ============================ RENDER : SHELL ============================ */
+const TABS=[
+  {id:"matchs",label:"⚽ Matchs"},
+  {id:"classement",label:"🏆 Classement"},
+  {id:"cagnotte",label:"💰 Cagnotte"},
+  {id:"compte",label:"👤 Mon compte"},
+  {id:"admin",label:"🔧 Admin"}
+];
+let ui={view:"matchs",filter:"tous",auth:{step:"email",email:"",code:""}};
+
+function render(){
+  if(!session.email){renderAuth();return;}
+  const p=db.participants[session.email];
+  let html=`<div class="topbar"><div class="topbar-inner">
+    <div class="brand"><span class="logo">🎾 ML Padel</span><span class="title">Pronos <span>Coupe du Monde 2026</span></span></div>
+    <div class="whoami">Connecté : <b>${esc(p.prenom)}</b><br><button class="logout" id="logoutBtn">Déconnexion</button></div>
+  </div></div>
+  <div class="tabs"><div class="tabs-inner">`;
+  TABS.forEach(t=>html+=`<button class="tab ${ui.view===t.id?"active":""}" data-tab="${t.id}">${t.label}</button>`);
+  html+=`</div></div><div class="wrap" id="wrap"></div>
+  <div class="foot">Mode démo local · ML Padel · <a href="/index.html">Retour au site</a></div>`;
+  $("#app").innerHTML=html;
+  $("#logoutBtn").onclick=()=>{session.email=null;session.admin=false;saveSession();ui.view="matchs";render();};
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{ui.view=b.dataset.tab;render();});
+  const wrap=$("#wrap");
+  if(ui.view==="matchs")renderMatchs(wrap);
+  else if(ui.view==="classement")renderClassement(wrap);
+  else if(ui.view==="cagnotte")renderCagnotte(wrap);
+  else if(ui.view==="compte")renderCompte(wrap);
+  else if(ui.view==="admin")renderAdmin(wrap);
+}
+
+const DEMO_BANNER=`<div class="demo-banner">⚠️ <span><b>Maquette de démonstration.</b> Les données sont stockées uniquement dans <b>ce navigateur</b> (rien n'est partagé en ligne pour l'instant). Aucun email n'est réellement envoyé : le code de confirmation s'affiche à l'écran.</span></div>`;
+
+/* ============================ AUTH ============================ */
+function renderAuth(){
+  const a=ui.auth;
+  let inner;
+  if(a.step==="email"){
+    inner=`<div class="card">
+      <h2>Rejoindre les <span>pronos</span></h2>
+      <p class="sub">Entre ton email pour accéder à tes pronostics. Si c'est ta première fois, indique aussi ton prénom — un code de confirmation te sera envoyé.</p>
+      <div class="fg"><label class="fl">Email</label><input class="inp" id="aEmail" type="email" placeholder="ton@email.fr" value="${esc(a.email)}" autocomplete="email"></div>
+      <div class="fg"><label class="fl">Prénom <span class="opt">(nouveaux joueurs)</span></label><input class="inp" id="aPrenom" placeholder="Ton prénom"></div>
+      <div class="err" id="aErr"></div>
+      <button class="btn" id="aGo">Recevoir mon code →</button>
+    </div>`;
+  }else{
+    const p=db.participants[a.email];
+    inner=`<div class="card">
+      <h2>Code de <span>confirmation</span></h2>
+      <p class="sub">Un code à 6 chiffres a été « envoyé » à <b>${esc(a.email)}</b>.</p>
+      <div class="codebox"><div class="lbl">📧 Mode démo — ton code</div><div class="code">${esc(a.code)}</div><div class="note">En production (avec un vrai serveur), ce code serait envoyé par email et n'apparaîtrait pas ici.</div></div>
+      <div class="fg"><label class="fl">Saisis le code</label><input class="inp" id="aCode" inputmode="numeric" maxlength="6" placeholder="••••••" style="text-align:center;letter-spacing:8px;font-size:22px;font-weight:800"></div>
+      <div class="err" id="aErr"></div>
+      <button class="btn" id="aVerify">Valider mon accès</button>
+      <div style="text-align:center;margin-top:14px"><button class="linkbtn" id="aBack">← Changer d'email</button></div>
+    </div>`;
+  }
+  $("#app").innerHTML=`<div class="topbar"><div class="topbar-inner"><div class="brand"><span class="logo">🎾 ML Padel</span><span class="title">Pronos <span>Coupe du Monde 2026</span></span></div></div></div>
+  <div class="wrap">${DEMO_BANNER}${inner}
+  <div class="card"><details class="rules-box"><summary>📋 Voir les règles du jeu</summary>
+    <ul class="rules" style="margin-top:10px">
+      <li><b>2 € par personne et par match</b> · 104 matchs du 11/06 au 19/07.</li>
+      <li>Une fois engagé, on l'est sur <b>la totalité des matchs</b>.</li>
+      <li>Pour remporter la cagnotte d'un match, il faut donner le <b>score exact</b>.</li>
+      <li>Plusieurs gagnants sur le même score ⇒ ils <b>partagent</b> la mise du match.</li>
+      <li>Personne ne trouve le score exact ⇒ la cagnotte est <b>reportée au match suivant</b>.</li>
+      <li>Paiement des gains/pertes en espèces en septembre, au 1er gros événement Padel.</li>
+    </ul></details></div>
+  <div class="foot">Mode démo local · ML Padel</div>`;
+
+  if(a.step==="email"){
+    const go=()=>{
+      const email=$("#aEmail").value.trim().toLowerCase();
+      const prenom=$("#aPrenom").value.trim();
+      const err=$("#aErr");
+      if(!validEmail(email)){err.textContent="Email invalide.";err.style.display="block";return;}
+      let p=db.participants[email];
+      if(!p){
+        if(!prenom){err.textContent="Première connexion : indique ton prénom.";err.style.display="block";return;}
+        p={email,prenom,code:genCode(),validated:false,createdAt:Date.now()};
+        db.participants[email]=p;saveDB();
+      }else if(prenom){p.prenom=prenom;saveDB();}
+      a.email=email;a.code=p.code;a.step="code";renderAuth();
+    };
+    $("#aGo").onclick=go;
+    $("#aPrenom").addEventListener("keydown",e=>{if(e.key==="Enter")go();});
+  }else{
+    $("#aVerify").onclick=()=>{
+      const code=$("#aCode").value.trim();const err=$("#aErr");
+      if(code!==a.code){err.textContent="Code incorrect. Vérifie le code affiché ci-dessus.";err.style.display="block";return;}
+      const p=db.participants[a.email];p.validated=true;saveDB();
+      session.email=a.email;saveSession();
+      ui.view="matchs";ui.auth={step:"email",email:"",code:""};
+      render();toast("Bienvenue "+p.prenom+" 🎉");
+    };
+    $("#aBack").onclick=()=>{a.step="email";renderAuth();};
+    $("#aCode").addEventListener("keydown",e=>{if(e.key==="Enter")$("#aVerify").click();});
+    $("#aCode").focus();
+  }
+}
+
+/* ============================ VUE MATCHS ============================ */
+function renderMatchs(wrap){
+  const cg=computeCagnottes();
+  const u=session.email;
+  const all=matchesSorted();
+  const total=all.length;
+  const done=all.filter(isFinished).length;
+  const myCount=all.filter(m=>myProno(m.id)).length;
+
+  let html=DEMO_BANNER;
+  html+=`<div class="stats">
+    <div class="stat"><div class="v">${cg.n}</div><div class="l">Joueurs engagés</div></div>
+    <div class="stat"><div class="v">${euros(cg.mise*cg.n)}</div><div class="l">Cagnotte / match</div></div>
+    <div class="stat"><div class="v ink">${myCount}/${total}</div><div class="l">Mes pronos saisis</div></div>
+    <div class="stat"><div class="v ink">${done}</div><div class="l">Matchs joués</div></div>
+  </div>`;
+  if(cg.reportEnCours>0)html+=`<div class="demo-banner" style="background:#eef6ff;border-color:#9cc3f0;color:#1c4e85">🔁 <span><b>Report en cours : ${euros(cg.reportEnCours)}</b> — ajouté à la cagnotte du prochain match terminé (aucun score exact trouvé).</span></div>`;
+
+  const filters=[["tous","Tous"],["avenir","À venir"],["termines","Terminés"],["manquants","À pronostiquer"]];
+  html+=`<div class="filters">`+filters.map(f=>`<button class="chip ${ui.filter===f[0]?"active":""}" data-f="${f[0]}">${f[1]}</button>`).join("")+`</div>`;
+
+  let list=all;
+  if(ui.filter==="avenir")list=all.filter(m=>!isFinished(m));
+  else if(ui.filter==="termines")list=all.filter(isFinished);
+  else if(ui.filter==="manquants")list=all.filter(m=>!isFinished(m)&&!myProno(m.id));
+
+  if(!list.length){html+=`<div class="empty"><div class="ic">🗓️</div>Aucun match dans ce filtre.</div>`;}
+  else{
+    let curPhase=null;
+    list.forEach(m=>{
+      if(m.phase!==curPhase){curPhase=m.phase;html+=`<div class="phase-h">${esc(m.phase)}</div>`;}
+      html+=matchCard(m,cg,u);
+    });
+  }
+  wrap.innerHTML=html;
+  wrap.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{ui.filter=b.dataset.f;render();});
+  bindMatchInputs(wrap);
+}
+
+function matchCard(m,cg,u){
+  const locked=isLocked(m),done=isFinished(m);
+  const pr=myProno(m.id);
+  const info=cg.per[m.id]||{};
+  const grp=m.groupe?`<span class="grp">Groupe ${m.groupe}</span> · `:"";
+  let badge=`<span class="badge open">Ouvert</span>`;
+  if(done)badge=`<span class="badge done">Terminé</span>`;
+  else if(locked)badge=`<span class="badge lock">Fermé</span>`;
+
+  let scoreBlock;
+  if(done){
+    scoreBlock=`<div class="score-disp"><span class="lbl">Score final</span>${info.res.a} – ${info.res.b}</div>`;
+  }else if(locked){
+    scoreBlock=pr?`<div class="score-disp"><span class="lbl">Ton prono (verrouillé)</span>${pr.a} – ${pr.b}</div>`:`<div class="myprono" style="text-align:center;margin-top:10px">Match fermé — aucun prono saisi.</div>`;
+  }else{
+    scoreBlock=`<div class="score-in">
+      <input type="number" min="0" max="30" id="pa_${m.id}" value="${pr?pr.a:""}" placeholder="0">
+      <span class="dash">–</span>
+      <input type="number" min="0" max="30" id="pb_${m.id}" value="${pr?pr.b:""}" placeholder="0">
+    </div>
+    <div class="save-row" style="justify-content:center">
+      <button class="btn sm" data-save="${m.id}">${pr?"Modifier mon prono":"Valider mon prono"}</button>
+      <span class="feedback" id="fb_${m.id}"></span>
+    </div>`;
+  }
+
+  let foot="";
+  if(done){
+    const won=pr&&Number(pr.a)===Number(info.res.a)&&Number(pr.b)===Number(info.res.b);
+    let left;
+    if(info.winners.length===0)left=`<span class="lose-tag">Aucun score exact · cagnotte reportée</span>`;
+    else left=`<span class="myprono">${info.winners.length} gagnant${info.winners.length>1?"s":""} · ${euros(info.gainPar)} chacun</span>`;
+    const right=won?`<span class="win-tag">🎉 Gagné ${euros(info.gainPar)}</span>`:(pr?`<span class="lose-tag">Ton prono : ${pr.a}–${pr.b}</span>`:`<span class="lose-tag">Pas de prono</span>`);
+    foot=`<div class="match-foot">${left}${right}</div>`;
+  }else{
+    foot=`<div class="match-foot"><span class="pot-tag">💰 Cagnotte : ${euros(info.potTotal||cg.mise*cg.n)}</span>${pr&&!locked?`<span class="myprono">Ton prono : <b>${pr.a}–${pr.b}</b></span>`:""}</div>`;
+  }
+
+  return `<div class="match ${locked?"locked":""} ${done?"done":""}">
+    <div class="match-top"><span class="match-meta">${grp}${fmtDate(m.datetime)}</span>${badge}</div>
+    <div class="teams">
+      <span class="team"><span class="fl">${flag(m.teamA)}</span><span class="nm">${esc(m.teamA)}</span></span>
+      <span class="vs">VS</span>
+      <span class="team right"><span class="nm">${esc(m.teamB)}</span><span class="fl">${flag(m.teamB)}</span></span>
+    </div>
+    ${scoreBlock}${foot}
+  </div>`;
+}
+
+function bindMatchInputs(wrap){
+  wrap.querySelectorAll("[data-save]").forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.dataset.save;
+      const a=$("#pa_"+id).value,b=$("#pb_"+id).value;
+      const fb=$("#fb_"+id);
+      if(a===""||b===""||isNaN(a)||isNaN(b)||a<0||b<0){fb.textContent="Score invalide";fb.className="feedback";fb.style.color="var(--red)";return;}
+      const u=session.email;
+      db.pronos[u]=db.pronos[u]||{};
+      db.pronos[u][id]={a:parseInt(a),b:parseInt(b),ts:Date.now()};
+      saveDB();
+      fb.textContent="✓ Enregistré";fb.className="feedback ok";
+      toast("Prono enregistré : "+a+"–"+b);
+      btn.textContent="Modifier mon prono";
+    };
+  });
+}
+
+/* ============================ CLASSEMENT ============================ */
+function renderClassement(wrap){
+  const cg=computeCagnottes();
+  const parts=validatedList();
+  if(!parts.length){wrap.innerHTML=DEMO_BANNER+`<div class="empty"><div class="ic">🏆</div>Aucun joueur engagé pour l'instant.</div>`;return;}
+  const rows=parts.map(p=>{
+    const gain=cg.gains[p.email]||0;
+    const mise=cg.mise*cg.nbFinished;
+    return {email:p.email,prenom:p.prenom,gain,exacts:cg.exacts[p.email]||0,solde:gain-mise};
+  }).sort((a,b)=>b.gain-a.gain||b.solde-a.solde||b.exacts-a.exacts);
+
+  let html=DEMO_BANNER;
+  html+=`<div class="card"><h2>Classement <span>général</span></h2><p class="sub">${cg.nbFinished} match${cg.nbFinished>1?"s":""} terminé${cg.nbFinished>1?"s":""} · gains cumulés. Le solde tient compte de ${euros(cg.mise)} misés par match joué.</p>
+  <table class="lb"><thead><tr><th>#</th><th>Joueur</th><th class="num">Scores exacts</th><th class="num">Gains</th><th class="num">Solde</th></tr></thead><tbody>`;
+  const medals=["🥇","🥈","🥉"];
+  rows.forEach((r,i)=>{
+    const me=r.email===session.email;
+    html+=`<tr class="${me?"me":""}">
+      <td class="rk">${i<3?medals[i]:(i+1)}</td>
+      <td class="nm">${esc(r.prenom)}${me?" (toi)":""}</td>
+      <td class="num">${r.exacts}</td>
+      <td class="num">${euros(r.gain)}</td>
+      <td class="num ${r.solde>=0?"pos-amt":"neg-amt"}">${r.solde>=0?"+":""}${euros(r.solde)}</td>
+    </tr>`;
+  });
+  html+=`</tbody></table></div>`;
+  wrap.innerHTML=html;
+}
+
+/* ============================ CAGNOTTE ============================ */
+function renderCagnotte(wrap){
+  const cg=computeCagnottes();
+  let html=DEMO_BANNER;
+  html+=`<div class="stats">
+    <div class="stat"><div class="v">${euros(cg.mise)}</div><div class="l">Mise / joueur / match</div></div>
+    <div class="stat"><div class="v">${cg.n}</div><div class="l">Joueurs engagés</div></div>
+    <div class="stat"><div class="v">${euros(cg.mise*cg.n)}</div><div class="l">Cagnotte de base / match</div></div>
+    <div class="stat"><div class="v ink">${euros(cg.reportEnCours)}</div><div class="l">Report en cours</div></div>
+  </div>`;
+  const finished=matchesSorted().filter(isFinished);
+  if(!finished.length){wrap.innerHTML=html+`<div class="empty"><div class="ic">💰</div>Aucun match terminé. Les cagnottes apparaîtront ici une fois les scores saisis par l'organisateur.</div>`;return;}
+  html+=`<div class="card"><h2>Historique des <span>cagnottes</span></h2><p class="sub">Détail match par match : montant en jeu, gagnants et reports.</p>`;
+  finished.slice().reverse().forEach(m=>{
+    const info=cg.per[m.id];
+    const winNames=info.winners.map(e=>esc(db.participants[e].prenom)).join(", ");
+    html+=`<div class="match done" style="margin-bottom:10px">
+      <div class="match-top"><span class="match-meta">${m.groupe?"Groupe "+m.groupe+" · ":""}${fmtDate(m.datetime)}</span><span class="badge done">${info.res.a}–${info.res.b}</span></div>
+      <div class="teams"><span class="team"><span class="fl">${flag(m.teamA)}</span><span class="nm">${esc(m.teamA)}</span></span><span class="vs">VS</span><span class="team right"><span class="nm">${esc(m.teamB)}</span><span class="fl">${flag(m.teamB)}</span></span></div>
+      <div class="match-foot" style="margin-top:10px">
+        <span class="myprono">Mise : ${euros(info.potBrut)}${info.reportEntrant>0?` + report ${euros(info.reportEntrant)} = <b>${euros(info.potTotal)}</b>`:""}</span>
+        ${info.winners.length?`<span class="win-tag">${winNames} · ${euros(info.gainPar)} chacun</span>`:`<span class="pot-tag">↪️ Reporté : ${euros(info.reportSortant)}</span>`}
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  wrap.innerHTML=html;
+}
+
+/* ============================ MON COMPTE ============================ */
+function renderCompte(wrap){
+  const cg=computeCagnottes();
+  const p=db.participants[session.email];
+  const gain=cg.gains[session.email]||0;
+  const mise=cg.mise*cg.nbFinished;
+  const solde=gain-mise;
+  const exacts=cg.exacts[session.email]||0;
+  const myPronos=matchesSorted().filter(m=>myProno(m.id));
+  let html=DEMO_BANNER;
+  html+=`<div class="card"><h2>Salut <span>${esc(p.prenom)}</span> 👋</h2><p class="sub">${esc(p.email)}</p>
+    <div class="stats" style="margin-bottom:0">
+      <div class="stat"><div class="v">${euros(gain)}</div><div class="l">Gains cumulés</div></div>
+      <div class="stat"><div class="v ink">${exacts}</div><div class="l">Scores exacts</div></div>
+      <div class="stat"><div class="v ink">${euros(mise)}</div><div class="l">Misé (${cg.nbFinished} matchs)</div></div>
+      <div class="stat"><div class="v" style="color:${solde>=0?"var(--green)":"var(--red)"}">${solde>=0?"+":""}${euros(solde)}</div><div class="l">Solde actuel</div></div>
+    </div>
+  </div>`;
+  html+=`<div class="card"><h2>Mes <span>pronostics</span></h2><p class="sub">${myPronos.length} prono${myPronos.length>1?"s":""} saisi${myPronos.length>1?"s":""}.</p>`;
+  if(!myPronos.length)html+=`<div class="empty" style="padding:18px"><div class="ic">📝</div>Tu n'as pas encore saisi de prono. Va dans l'onglet Matchs !</div>`;
+  else{
+    myPronos.forEach(m=>{
+      const pr=myProno(m.id);const info=cg.per[m.id];const done=isFinished(m);
+      const won=done&&Number(pr.a)===Number(info.res.a)&&Number(pr.b)===Number(info.res.b);
+      html+=`<div class="part-row">
+        <div class="part-info"><b>${flag(m.teamA)} ${esc(m.teamA)} – ${esc(m.teamB)} ${flag(m.teamB)}</b><div class="meta">${m.groupe?"Groupe "+m.groupe+" · ":""}${fmtDate(m.datetime)}</div></div>
+        <div style="text-align:right"><b style="font-family:Playfair Display,serif;font-size:18px">${pr.a}–${pr.b}</b>${done?(won?`<div class="pill ok">Gagné ${euros(info.gainPar)}</div>`:`<div class="meta">résultat ${info.res.a}–${info.res.b}</div>`):`<div class="meta">en attente</div>`}</div>
+      </div>`;
+    });
+  }
+  html+=`</div>`;
+  wrap.innerHTML=html;
+}
+
+/* ============================ ADMIN ============================ */
+function renderAdmin(wrap){
+  if(!session.admin){
+    wrap.innerHTML=DEMO_BANNER+`<div class="card">
+      <h2>Espace <span>organisateur</span></h2>
+      <p class="sub">Réservé à l'organisateur : saisie des résultats, gestion des joueurs et du calendrier.</p>
+      <div class="fg"><label class="fl">Mot de passe admin</label><input class="inp" id="admPwd" type="password" placeholder="••••••••"></div>
+      <div class="err" id="admErr"></div>
+      <button class="btn" id="admLogin">Accéder</button>
+      <p class="form-note" style="font-size:11px;color:#999;margin-top:12px;text-align:center">Mot de passe par défaut : <b>${esc(ADMIN_DEFAULT)}</b> (modifiable une fois connecté).</p>
+    </div>`;
+    $("#admLogin").onclick=()=>{
+      if($("#admPwd").value===db.settings.adminCode){session.admin=true;render();toast("Mode admin activé 🔧");}
+      else{const e=$("#admErr");e.textContent="Mot de passe incorrect.";e.style.display="block";}
+    };
+    $("#admPwd").addEventListener("keydown",e=>{if(e.key==="Enter")$("#admLogin").click();});
+    return;
+  }
+
+  const cg=computeCagnottes();
+  let html=DEMO_BANNER;
+  // Réglages
+  html+=`<div class="card"><h2>⚙️ Réglages</h2>
+    <div class="adm-row" style="margin-top:8px">
+      <div style="flex:1"><div class="adm-lbl">Mise / joueur / match (€)</div><input class="inp" id="setMise" type="number" min="0" step="0.5" value="${cg.mise}"></div>
+      <div style="flex:1"><div class="adm-lbl">Mot de passe admin</div><input class="inp" id="setPwd" value="${esc(db.settings.adminCode)}"></div>
+    </div>
+    <button class="btn sm" id="saveSet" style="margin-top:12px">Enregistrer les réglages</button>
+  </div>`;
+  // Participants
+  const parts=Object.values(db.participants).sort((a,b)=>a.createdAt-b.createdAt);
+  html+=`<div class="card"><h2>👥 Participants <span>(${parts.length})</span></h2><p class="sub">Valide les joueurs engagés, retire les non-participants. Le code de chacun est affiché pour pouvoir le partager.</p>`;
+  if(!parts.length)html+=`<div class="empty" style="padding:16px">Aucun inscrit.</div>`;
+  parts.forEach(p=>{
+    html+=`<div class="part-row">
+      <div class="part-info"><b>${esc(p.prenom)}</b> <span class="pill ${p.validated?"ok":"no"}">${p.validated?"Engagé":"Non validé"}</span><div class="meta">${esc(p.email)} · code <b>${esc(p.code)}</b></div></div>
+      <div class="adm-row">
+        <button class="btn sm ghost" data-toggle="${esc(p.email)}">${p.validated?"Désengager":"Valider"}</button>
+        <button class="btn sm danger" data-del="${esc(p.email)}">Supprimer</button>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  // Matchs / résultats
+  html+=`<div class="card"><h2>📝 Matchs & résultats</h2><p class="sub">Saisis le <b>score final</b> pour clôturer un match et déclencher le calcul des cagnottes. Tu peux aussi corriger équipes, date et heure (utile pour la phase finale, équipes « À définir »).</p>`;
+  matchesSorted().forEach(m=>{
+    const res=db.results[m.id]||{};
+    html+=`<div class="adm-match">
+      <div class="adm-lbl">${esc(m.phase)}${m.groupe?" · Groupe "+m.groupe:""} · ${m.id}</div>
+      <div class="adm-row">
+        <input class="inp" data-ta="${m.id}" value="${esc(m.teamA)}">
+        <span style="font-weight:800;color:#bbb">vs</span>
+        <input class="inp" data-tb="${m.id}" value="${esc(m.teamB)}">
+      </div>
+      <div class="adm-row">
+        <span class="adm-lbl">Date</span><input class="inp" data-dt="${m.id}" type="datetime-local" value="${esc(m.datetime.slice(0,16))}" style="flex:1">
+      </div>
+      <div class="adm-row">
+        <span class="adm-lbl">Score final</span>
+        <input class="inp score" data-ra="${m.id}" type="number" min="0" value="${res.a!=null?res.a:""}" placeholder="-">
+        <span style="font-weight:800;color:#bbb">–</span>
+        <input class="inp score" data-rb="${m.id}" type="number" min="0" value="${res.b!=null?res.b:""}" placeholder="-">
+        <button class="btn sm" data-savem="${m.id}">Enregistrer</button>
+        ${db.results[m.id]?`<button class="btn sm danger" data-clearm="${m.id}">Effacer résultat</button>`:""}
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  wrap.innerHTML=html;
+
+  $("#saveSet").onclick=()=>{
+    const mise=parseFloat($("#setMise").value);
+    if(!isNaN(mise)&&mise>=0)db.settings.miseParMatch=mise;
+    const pwd=$("#setPwd").value.trim();if(pwd)db.settings.adminCode=pwd;
+    saveDB();render();toast("Réglages enregistrés");
+  };
+  wrap.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>{const p=db.participants[b.dataset.toggle];p.validated=!p.validated;saveDB();render();});
+  wrap.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>{
+    const em=b.dataset.del;
+    if(!confirm("Supprimer "+db.participants[em].prenom+" et ses pronos ?"))return;
+    delete db.participants[em];delete db.pronos[em];if(session.email===em)session.email=null;saveDB();render();toast("Participant supprimé");
+  });
+  wrap.querySelectorAll("[data-savem]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.savem;
+    const m=db.matches.find(x=>x.id===id);
+    m.teamA=wrap.querySelector('[data-ta="'+id+'"]').value.trim()||m.teamA;
+    m.teamB=wrap.querySelector('[data-tb="'+id+'"]').value.trim()||m.teamB;
+    const dt=wrap.querySelector('[data-dt="'+id+'"]').value;if(dt)m.datetime=dt.length===16?dt+":00":dt;
+    const ra=wrap.querySelector('[data-ra="'+id+'"]').value,rb=wrap.querySelector('[data-rb="'+id+'"]').value;
+    if(ra!==""&&rb!==""&&!isNaN(ra)&&!isNaN(rb))db.results[id]={a:parseInt(ra),b:parseInt(rb)};
+    else delete db.results[id];
+    saveDB();render();toast("Match "+id+" mis à jour");
+  });
+  wrap.querySelectorAll("[data-clearm]").forEach(b=>b.onclick=()=>{delete db.results[b.dataset.clearm];saveDB();render();toast("Résultat effacé");});
+}
+
+/* ============================ DÉMARRAGE ============================ */
+loadDB();
+loadSession();
+render();
+</script>
+</body>
+</html>
