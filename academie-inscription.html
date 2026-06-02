@@ -38,11 +38,16 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .slot.full .slot-time{text-decoration:line-through;color:#999}
 .slot-tag{font-size:11px;font-weight:700;color:#fff;background:#b03a3a;border-radius:50px;padding:3px 10px;white-space:nowrap}
 
-/* Photo coach */
-.coach-photo{display:block;max-width:340px;margin:0 auto 30px;border-radius:20px;overflow:hidden;border:1.5px solid #c9a84c40;box-shadow:0 6px 28px #0a162818}
-.coach-photo img{width:100%;height:auto;display:block}
-.coach-photo figcaption{background:linear-gradient(135deg,#0a1628,#162040);color:#fff;text-align:center;padding:12px 10px;font-size:13px;line-height:1.4}
-.coach-photo figcaption b{color:#c9a84c;font-family:'Playfair Display',serif;font-size:15px}
+/* Photo coach (carrousel) */
+.coach-carousel{max-width:340px;margin:0 auto 30px}
+.cc-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:20px 20px 0 0;border:1.5px solid #c9a84c40;border-bottom:none;box-shadow:0 6px 28px #0a162818;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.cc-track::-webkit-scrollbar{display:none}
+.cc-track img{flex:0 0 100%;width:100%;height:auto;display:block;scroll-snap-align:center}
+.cc-cap{background:linear-gradient(135deg,#0a1628,#162040);color:#fff;text-align:center;padding:12px 10px;font-size:13px;line-height:1.4;border-radius:0 0 20px 20px;border:1.5px solid #c9a84c40;border-top:none}
+.cc-cap b{color:#c9a84c;font-family:'Playfair Display',serif;font-size:15px}
+.cc-dots{display:flex;justify-content:center;gap:7px;margin-top:12px}
+.cc-dot{width:8px;height:8px;border-radius:50%;background:#c9a84c40;border:none;padding:0;cursor:pointer;transition:transform .2s,background .2s}
+.cc-dot.active{background:#c9a84c;transform:scale(1.25)}
 
 /* Calendrier */
 .calendrier{background:#fff;border-radius:20px;padding:24px 22px;border:1.5px solid #c9a84c20;box-shadow:0 4px 24px #c9a84c08;margin-bottom:32px}
@@ -130,10 +135,17 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 
 <div class="container">
 
-  <figure class="coach-photo">
-    <img src="coach-academie.webp" width="768" height="960" alt="Mathias Laval, coach de padel, en s&eacute;ance &agrave; l'acad&eacute;mie 4Padel Saint-Louis" loading="lazy">
-    <figcaption><b>Mathias Laval</b><br>Votre coach dipl&ocirc;m&eacute; d'&Eacute;tat &agrave; l'acad&eacute;mie</figcaption>
-  </figure>
+  <div class="coach-carousel">
+    <div class="cc-track" id="ccTrack">
+      <img src="_LAVAL019-768w.webp" width="768" height="960" alt="Mathias Laval, coach de padel dipl&ocirc;m&eacute; d'&Eacute;tat" loading="lazy">
+      <img src="_LAVAL018-768w.webp" width="768" height="960" alt="Mathias Laval en action au padel" loading="lazy">
+      <img src="_LAVAL015-768w.webp" width="768" height="960" alt="Mathias Laval, frappe au padel" loading="lazy">
+      <img src="_LAVAL014-768w.webp" width="768" height="960" alt="Mathias Laval en mouvement sur le court" loading="lazy">
+      <img src="_LAVAL020-768w.webp" width="768" height="960" alt="Mathias Laval &agrave; l'entra&icirc;nement &agrave; l'acad&eacute;mie" loading="lazy">
+    </div>
+    <div class="cc-cap"><b>Mathias Laval</b><br>Votre coach dipl&ocirc;m&eacute; d'&Eacute;tat &agrave; l'acad&eacute;mie</div>
+    <div class="cc-dots" id="ccDots"></div>
+  </div>
 
   <h2 class="section-title">Vos disponibilit&eacute;s <span>(cochez tous les cr&eacute;neaux qui vous conviennent)</span></h2>
 
@@ -334,6 +346,28 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 </div>
 
 <script>
+(function(){
+  var track=document.getElementById('ccTrack');
+  if(track){
+    var dotsWrap=document.getElementById('ccDots');
+    var imgs=track.querySelectorAll('img'),cur=0,dots=[];
+    imgs.forEach(function(_,idx){
+      var b=document.createElement('button');
+      b.className='cc-dot'+(idx===0?' active':'');
+      b.setAttribute('aria-label','Photo '+(idx+1));
+      b.addEventListener('click',function(){ go(idx); });
+      dotsWrap.appendChild(b); dots.push(b);
+    });
+    function active(idx){ cur=idx; dots.forEach(function(d,k){ d.classList.toggle('active',k===idx); }); }
+    function go(idx){ track.scrollTo({left:track.clientWidth*idx,behavior:'smooth'}); active(idx); }
+    var t;
+    track.addEventListener('scroll',function(){
+      clearTimeout(t);
+      t=setTimeout(function(){ var idx=Math.round(track.scrollLeft/track.clientWidth); if(idx!==cur) active(idx); },80);
+    });
+    setInterval(function(){ go((cur+1)%imgs.length); },4500);
+  }
+})();
 document.querySelectorAll('.slot').forEach(function(el){
   const cb=el.querySelector('input[type="checkbox"]');
   cb.addEventListener('click',function(e){ e.stopPropagation(); });
