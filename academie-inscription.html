@@ -34,6 +34,31 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .slot-time{font-size:14px;font-weight:600;color:#1a1a2e}
 .slot-level{font-size:12px;color:#c9a84c;font-weight:600;margin-top:2px}
 
+/* Calendrier */
+.calendrier{background:#fff;border-radius:20px;padding:24px 22px;border:1.5px solid #c9a84c20;box-shadow:0 4px 24px #c9a84c08;margin-bottom:32px}
+.cal-intro{font-size:13px;color:#555;line-height:1.6;text-align:center;margin-bottom:18px}
+.cal-meta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.cal-meta .chip{background:#0a1628;color:#fff;border-radius:50px;padding:7px 14px;font-size:11.5px;font-weight:600}
+.semestres{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+@media(max-width:560px){.semestres{grid-template-columns:1fr}}
+.semestre{background:#faf9f6;border-radius:16px;padding:18px 16px;border:1.5px solid #c9a84c25}
+.semestre h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:#0a1628;margin-bottom:4px}
+.semestre .sem-sub{font-size:11px;font-weight:700;color:#c9a84c;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.sem-row{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-top:1px solid #c9a84c18;font-size:12.5px}
+.sem-row:first-of-type{border-top:none}
+.sem-row .jour{font-weight:700;color:#1a1a2e;min-width:44px}
+.sem-row .dates{color:#555;flex:1}
+.vacances{background:#0a1628;border-radius:16px;padding:18px;margin-bottom:20px}
+.vacances h3{font-family:'Playfair Display',serif;font-size:14px;font-weight:900;color:#c9a84c;margin-bottom:12px}
+.vacances h3 .vac-zone{color:#ffffff99;font-weight:500;font-size:11px}
+.vac-row{display:flex;gap:9px;padding:6px 0;font-size:12.5px;color:#ffffffcc;line-height:1.45}
+.vac-row .vdot{width:6px;height:6px;border-radius:50%;background:#c9a84c;margin-top:6px;flex-shrink:0}
+.vac-row b{color:#fff;font-weight:600}
+.vac-row .vac-note{color:#c9a84c;font-style:normal}
+.cal-tarif-note{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cal-tarif-note .tn{font-size:12px;color:#666;font-weight:600;background:#c9a84c10;border:1px solid #c9a84c25;border-radius:10px;padding:8px 12px}
+.cal-tarif-note .tn b{color:#c9a84c}
+
 /* Tarifs */
 .tarifs{display:flex;gap:12px;justify-content:center;margin-bottom:32px;flex-wrap:wrap}
 .tarif-card{background:#fff;border-radius:14px;padding:16px 24px;border:1.5px solid #c9a84c30;text-align:center;flex:1;min-width:180px}
@@ -140,6 +165,48 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
         </div>
       </div>
       <p style="margin-top:12px;font-size:13px;color:#666;line-height:1.4;">Cochez un maximum de cr&eacute;neaux pour optimiser la constitution des groupes. Les groupes de 4 personnes inscrites ensemble sont prioritaires.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Calendrier <span>2026-2027</span></h2>
+
+  <div class="calendrier">
+    <p class="cal-intro">Saison construite sur <b>28 s&eacute;ances</b> r&eacute;parties en 2 semestres de 14 s&eacute;ances. Cr&eacute;neaux disponibles le lundi, mardi ou jeudi &mdash; 17h00 &agrave; 21h30 &mdash; 4Padel Saint-Louis.</p>
+
+    <div class="cal-meta">
+      <div class="chip">&#128197; Lun &middot; Mar &middot; Jeu</div>
+      <div class="chip">&#9201; 17h00 &mdash; 21h30</div>
+      <div class="chip">&#128205; 4Padel Saint-Louis</div>
+    </div>
+
+    <div class="semestres">
+      <div class="semestre">
+        <h3>Semestre 1</h3>
+        <div class="sem-sub">14 s&eacute;ances</div>
+        <div class="sem-row"><span class="jour">Lundi</span><span class="dates">31 ao&ucirc;t &rarr; 14 d&eacute;c. 2026</span></div>
+        <div class="sem-row"><span class="jour">Mardi</span><span class="dates">1<sup>er</sup> sept. &rarr; 15 d&eacute;c. 2026</span></div>
+        <div class="sem-row"><span class="jour">Jeudi</span><span class="dates">3 sept. &rarr; 17 d&eacute;c. 2026</span></div>
+      </div>
+      <div class="semestre">
+        <h3>Semestre 2</h3>
+        <div class="sem-sub">14 s&eacute;ances</div>
+        <div class="sem-row"><span class="jour">Lundi</span><span class="dates">25 janv. &rarr; 24 mai 2027</span></div>
+        <div class="sem-row"><span class="jour">Mardi</span><span class="dates">26 janv. &rarr; 25 mai 2027</span></div>
+        <div class="sem-row"><span class="jour">Jeudi</span><span class="dates">28 janv. &rarr; 27 mai 2027</span></div>
+      </div>
+    </div>
+
+    <div class="vacances">
+      <h3>&#127774; Vacances scolaires respect&eacute;es <span class="vac-zone">(zone R&eacute;union)</span></h3>
+      <div class="vac-row"><span class="vdot"></span><div><b>Toussaint</b> &middot; 10 &rarr; 26 oct. 2026</div></div>
+      <div class="vac-row"><span class="vdot"></span><div><b>&Eacute;t&eacute; austral</b> &middot; 19 d&eacute;c. 2026 &rarr; 24 janv. 2027 <span class="vac-note">(reprise anticip&eacute;e d'1 semaine)</span></div></div>
+      <div class="vac-row"><span class="vdot"></span><div><b>3<sup>e</sup> p&eacute;riode</b> &middot; 16 &rarr; 30 mars 2027</div></div>
+      <div class="vac-row"><span class="vdot"></span><div><b>4<sup>e</sup> p&eacute;riode</b> &middot; 5 &rarr; 19 mai 2027</div></div>
+    </div>
+
+    <div class="cal-tarif-note">
+      <div class="tn">Engagement annuel &middot; <b>28 s&eacute;ances</b> &middot; ~27&euro;/s&eacute;ance</div>
+      <div class="tn">Engagement semestriel &middot; <b>14 s&eacute;ances</b> &middot; 30&euro;/s&eacute;ance</div>
     </div>
   </div>
 
