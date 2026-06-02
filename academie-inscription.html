@@ -67,6 +67,17 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .tarif-label{font-size:12px;color:#666;margin-top:4px;font-weight:600}
 .tarif-detail{font-size:11px;color:#999;margin-top:2px}
 
+.tarif-card .pay-btn{display:block;margin-top:12px;padding:10px 0;border-radius:50px;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:13px;text-decoration:none;transition:transform 0.2s}
+.tarif-card .pay-btn:hover{transform:scale(1.03)}
+.pay-note{text-align:center;font-size:12.5px;color:#666;line-height:1.6;margin:-14px auto 26px;max-width:520px}
+.pay-note b{color:#0a1628}
+.conditions{background:#0a16280a;border:1.5px solid #c9a84c30;border-radius:14px;padding:16px 18px;margin-bottom:32px;font-size:12.5px;color:#555;line-height:1.6}
+.conditions .cond-title{font-weight:700;color:#0a1628;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.conditions ul{list-style:none;padding:0;margin:0}
+.conditions li{display:flex;gap:8px;padding:4px 0}
+.conditions li .cdot{width:6px;height:6px;border-radius:50%;background:#c9a84c;margin-top:6px;flex-shrink:0}
+.conditions li b{color:#1a1a2e;font-weight:600}
+
 /* Form */
 .form-card{background:#fff;border-radius:20px;padding:32px 28px;border:1.5px solid #c9a84c20;box-shadow:0 4px 24px #c9a84c08;margin-bottom:24px}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
@@ -217,12 +228,24 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
       <div class="tarif-price">750&euro;</div>
       <div class="tarif-label">Annuel</div>
       <div class="tarif-detail">28 s&eacute;ances &middot; ~27&euro;/s&eacute;ance</div>
+      <a class="pay-btn" href="https://buy.stripe.com/bJecMYcNZbU71wE1oNa7C04" target="_blank" rel="noopener">Payer en ligne</a>
     </div>
     <div class="tarif-card">
       <div class="tarif-price">420&euro;</div>
       <div class="tarif-label">Semestriel</div>
       <div class="tarif-detail">14 s&eacute;ances &middot; 30&euro;/s&eacute;ance</div>
+      <a class="pay-btn" href="https://buy.stripe.com/eVq28kcNZcYba3a1oNa7C03" target="_blank" rel="noopener">Payer en ligne</a>
     </div>
+  </div>
+
+  <p class="pay-note"><b>Paiement</b> : en 1 fois en ligne via Stripe (bouton ci-dessus), ou <b>en plusieurs fois</b> si n&eacute;cessaire, en accord avec le coach.</p>
+
+  <div class="conditions">
+    <div class="cond-title">&#8505;&#65039; Conditions</div>
+    <ul>
+      <li><span class="cdot"></span><div>Toute s&eacute;ance <b>manqu&eacute;e et non remplac&eacute;e</b> par une autre personne reste <b>due</b>.</div></li>
+      <li><span class="cdot"></span><div>Toute s&eacute;ance <b>report&eacute;e par le coach</b> sera <b>rattrap&eacute;e ou rembours&eacute;e</b>.</div></li>
+    </ul>
   </div>
 
   <h2 class="section-title"><span>Inscription</span></h2>
