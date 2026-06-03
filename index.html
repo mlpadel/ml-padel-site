@@ -1741,8 +1741,7 @@ function CoursCollectifsSection(){
             <h2 style={{fontSize:28,fontWeight:800,color:NAVY,marginTop:8}}>Cours <span style={{color:GOLD}}>À la carte</span></h2>
             <p style={{color:NAVY+"99",fontSize:15,maxWidth:560,margin:"16px auto 0",lineHeight:1.7}}>
               Choisissez votre thème, inscrivez-vous individuellement — on forme le groupe pour vous.<br/>
-              De 2 à 4 joueurs par session. Tarif dégressif selon le nombre de participants.<br/>
-              Le cours est confirmé dès 3 inscrits.
+              Le cours est confirmé dès qu'un nombre minimum de joueurs est atteint (indiqué sur chaque carte).
             </p>
           </div>
         </AnimatedSection>
@@ -1751,6 +1750,7 @@ function CoursCollectifsSection(){
             const isOpen=openForm===ev.id;
             const left=ev.maxPlaces-ev.nbInscrits;
             const pct=(ev.nbInscrits/ev.maxPlaces)*100;
+            const minToValidate=Math.min(ev.maxPlaces,Math.max(3,Math.ceil(ev.maxPlaces*0.75)));
             return(
               <AnimatedSection key={ev.id}>
                 <div style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
@@ -1783,6 +1783,10 @@ function CoursCollectifsSection(){
                     </div>
                     <div style={{height:8,borderRadius:4,background:NAVY+"12",overflow:"hidden"}}>
                       <div style={{height:"100%",borderRadius:4,width:pct+"%",background:ev.complet?"linear-gradient(90deg,#e74c3c,#c0392b)":`linear-gradient(90deg,${GOLD},${GOLD}cc)`,transition:"width 0.5s ease"}}/>
+                    </div>
+                    <div style={{marginTop:8,fontSize:11,color:NAVY+"80",display:"flex",alignItems:"center",gap:6}}>
+                      <span>{ev.nbInscrits>=minToValidate?"✅":"⏳"}</span>
+                      <span>{ev.nbInscrits>=minToValidate?"Cours confirmé":"Confirmé à partir de "+minToValidate+" inscrits"}</span>
                     </div>
                     {ev.inscrits.length>0&&(
                       <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
