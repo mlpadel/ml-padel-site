@@ -1770,8 +1770,8 @@ function CoursCollectifsSection(){
                     </div>
                     <div style={{textAlign:"center",minWidth:120}}>
                       <div style={{fontSize:12,color:NAVY+"80",marginBottom:4}}>{ev.heureCreuse?"\u2600\uFE0F Heures creuses":"\uD83C\uDF19 Heures pleines"}</div>
-                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.prixPar4}{"€"}<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
-                      <div style={{fontSize:11,color:NAVY+"70"}}>{"à"} 4 joueurs {"·"} {ev.prixPar3}{"€"} {"à"} 3</div>
+                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}{"€"}<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
+                      <div style={{fontSize:11,color:NAVY+"70"}}>{ev.maxPlaces>4?(ev.maxPlaces+" places"):("à 4 joueurs · "+ev.prixPar3+"€ à 3")}</div>
                     </div>
                   </div>
                   {/* Jauge */}
