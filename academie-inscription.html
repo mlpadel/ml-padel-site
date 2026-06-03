@@ -9,8 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-height:100vh}
-.header{background:linear-gradient(135deg,#0a1628 0%,#162040 100%);padding:32px 24px 40px;text-align:center}
-.header .logo{color:#c9a84c;font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px}
+.header{background:linear-gradient(135deg,#0a1628 0%,#162040 100%);padding:32px 24px 40px;text-align:center;position:relative}
+.header .logo{color:#c9a84c;font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;text-decoration:none;display:inline-block}
+.header .back-home{position:absolute;top:16px;left:16px;color:#ffffffaa;font-size:12px;font-weight:600;text-decoration:none;background:#ffffff12;border:1px solid #ffffff20;border-radius:50px;padding:6px 14px;transition:color .2s,border-color .2s}
+.header .back-home:hover{color:#c9a84c;border-color:#c9a84c55}
+@media(max-width:480px){.header .back-home{position:static;display:inline-block;margin-bottom:16px}}
 .header h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:900;color:#fff;margin-bottom:12px}
 .header h1 span{color:#c9a84c}
 .header .subtitle{color:#ffffffcc;font-size:14px;line-height:1.6}
@@ -123,7 +126,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 <body>
 
 <div class="header">
-  <div class="logo">&#127934; ML PADEL</div>
+  <a href="/" class="back-home">&#8592; Retour au site</a>
+  <a href="/" class="logo">&#127934; ML PADEL</a>
   <h1>Acad&eacute;mie Adulte <span>2026-2027</span></h1>
   <div class="subtitle">Programme annuel &middot; 3 soirs par semaine &middot; 4Padel Saint-Louis</div>
   <div class="badges">
