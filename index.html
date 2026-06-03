@@ -688,6 +688,9 @@ function Pricing(){
     {key:"stages",label:"Stages"},
   ];
 
+    // ── Tarifs SEPTEMBRE 2026 (a activer le moment venu — NE PAS afficher avant) ──
+    // Individuel: 55 EUR/h · Duo: 70 EUR/h (35/pers) · Trio: 75 EUR/h (25/pers) · Quatuor: 80 EUR/h (20/pers)
+    // + retirer disabled:true sur Trio/Quatuor et reactiver l'affichage du bonus Wallet -15% (compense la hausse).
   const data={
     individuel:[
       {title:"Cours individuel",price:"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
@@ -942,8 +945,8 @@ function TransitionPricing(){
 /* ─── Horaires & Disponibilités ─── */
 function Horaires(){
   const slots=[
-    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Lun – Ven · 6h – 16h",note:"Heures creuses uniquement",color:GOLD},
-    {icon:"🎓",label:"Académie adulte",horaire:"Lun – Jeu · 16h – 22h",note:"Séances hebdomadaires en soirée",color:"#6c9bcf"},
+    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Heures creuses",note:"Selon les disponibilités du coach",color:GOLD},
+    {icon:"🎓",label:"Académie adulte",horaire:"Lun · Mar · Jeu · 17h – 21h30",note:"Séances hebdomadaires en soirée",color:"#6c9bcf"},
     {icon:"🏕️",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complète ou week-end",color:"#e07b5a"},
   ];
 
@@ -3099,6 +3102,7 @@ function MLPadel(){
       <Hero/>
       <CounterStats/>
       <About/>
+      <DebutantStart/>
       <TransitionAbout/>
       <ExperienceClient/>
       <Événements/>
@@ -3129,6 +3133,51 @@ function MLPadel(){
   );
 }
 
+
+function DebutantStart(){
+  const cards=[
+    {icon:"\u{1F331}",title:"Je débute",desc:"Jamais ou presque joué ? On part des bases, en petit groupe et sans pression.",cta:"Cours Découverte",href:"#cours-collectifs"},
+    {icon:"\u{1F4C8}",title:"Je progresse",desc:"Tu joues déjà et veux structurer ton jeu : individuel, duo ou académie.",cta:"Voir les formules",href:"#tarifs"},
+    {icon:"\u{1F3C6}",title:"Compétition",desc:"Objectif tournois et classement : académie et coaching ciblé.",cta:"L'académie",href:"/academie-inscription.html"},
+  ];
+  return(
+    <section id="debuter" style={{padding:"72px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1000,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:40}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Première fois ?</span>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>Par où <span style={{color:GOLD}}>commencer</span> ?</h2>
+            <p style={{color:TEXT_MED,fontSize:15,maxWidth:560,margin:"14px auto 0",lineHeight:1.7}}>Choisis ton point de départ — on s'occupe du reste.</p>
+          </div>
+        </AnimatedSection>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:18,marginBottom:28}}>
+          {cards.map((c,i)=>(
+            <AnimatedSection key={i} delay={i*0.12}>
+              <a href={c.href} style={{display:"flex",flexDirection:"column",height:"100%",background:WHITE,borderRadius:18,padding:"26px 22px",border:`1px solid ${GOLD}20`,boxShadow:"0 2px 12px rgba(0,0,0,0.05)",textDecoration:"none",transition:"transform 0.25s, box-shadow 0.25s, border-color 0.25s"}}
+                onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow="0 10px 30px rgba(0,0,0,0.10)";e.currentTarget.style.borderColor=GOLD+"60";}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 2px 12px rgba(0,0,0,0.05)";e.currentTarget.style.borderColor=GOLD+"20";}}>
+                <span style={{fontSize:32,marginBottom:12}}>{c.icon}</span>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:19,fontWeight:900,color:NAVY,marginBottom:8}}>{c.title}</h3>
+                <p style={{color:TEXT_MED,fontSize:14,lineHeight:1.6,marginBottom:16,flex:1}}>{c.desc}</p>
+                <span style={{color:GOLD,fontWeight:700,fontSize:14}}>{c.cta} →</span>
+              </a>
+            </AnimatedSection>
+          ))}
+        </div>
+        <AnimatedSection>
+          <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:20,padding:"28px 26px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:20,boxShadow:`0 10px 30px ${NAVY}22`}}>
+            <div style={{flex:"1 1 280px"}}>
+              <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1,textTransform:"uppercase",borderRadius:50,padding:"4px 12px",marginBottom:10}}>Offre découverte</span>
+              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,color:WHITE,margin:"0 0 8px"}}>Ta première séance à <span style={{color:GOLD}}>15&euro;</span></h3>
+              <p style={{color:WHITE+"cc",fontSize:14,lineHeight:1.6,margin:0}}>Cours Découverte débutant·e, à 4 joueurs (60&euro; la séance · 15&euro;/pers · 1h). <strong style={{color:WHITE}}>Matériel prêté par le club</strong> — viens juste en baskets. Aucun niveau requis.</p>
+            </div>
+            <a href="#cours-collectifs" style={{flex:"0 0 auto",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,padding:"15px 28px",borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:15,boxShadow:`0 6px 22px ${GOLD}44`,whiteSpace:"nowrap"}}>Voir les cours Découverte →</a>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(<MLPadel/>);
 </script>
