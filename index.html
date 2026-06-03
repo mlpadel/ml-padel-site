@@ -2756,28 +2756,6 @@ function Événements(){
           </div>
         </AnimatedSection>
 
-        <AnimatedSection>
-          <div style={{background:`${NAVY}ee`,border:`1.5px solid ${GOLD}`,borderRadius:16,padding:"26px 24px",marginBottom:24,textAlign:"left",boxShadow:`0 0 30px ${GOLD}20`,display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:20}}>
-            <div style={{flex:"1 1 280px"}}>
-              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-                <span style={{fontSize:26}}>🎾</span>
-                <div>
-                  <div style={{fontSize:10,fontWeight:800,color:GOLD,letterSpacing:1.5,textTransform:"uppercase"}}>Événement · Americana</div>
-                  <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:21,fontWeight:900,color:WHITE,margin:0}}>Americana débutant</h3>
-                </div>
-              </div>
-              <div style={{display:"flex",flexWrap:"wrap",gap:10,fontSize:13,color:CREAM,alignItems:"center"}}>
-                <span>📅 Samedi 27 juin</span>
-                <span>🕐 17h – 19h</span>
-                <span style={{background:`${GOLD}15`,color:GOLD_PALE,padding:"2px 10px",borderRadius:20,fontWeight:600}}>Niv 1-2</span>
-                <span style={{background:`${GOLD}15`,color:GOLD_PALE,padding:"2px 10px",borderRadius:20,fontWeight:600}}>16 places</span>
-              </div>
-              <p style={{color:`${CREAM}90`,fontSize:13,margin:"10px 0 0",lineHeight:1.5}}>Format tournoi convivial à 16 joueurs. Matériel prêté par le club. <strong style={{color:WHITE}}>15&euro;/pers</strong>.</p>
-            </div>
-            <a href={wa("Bonjour Mathias, je souhaite m'inscrire à l'Americana débutant du samedi 27 juin (17h-19h) 🎾")} target="_blank" rel="noopener noreferrer" style={{flex:"0 0 auto",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,padding:"14px 28px",borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:15,boxShadow:`0 6px 22px ${GOLD}44`,whiteSpace:"nowrap"}}>S'inscrire (WhatsApp)</a>
-          </div>
-        </AnimatedSection>
-
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:20,textAlign:"left"}}>
           {offers.map((o,i)=>(
             <AnimatedSection key={o.id} delay={i*0.12}>
