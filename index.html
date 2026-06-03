@@ -1797,8 +1797,8 @@ function CoursCollectifsSection(){
                   {/* Bouton */}
                   {!isOpen&&(
                     <div style={{padding:"0 24px 20px"}}>
-                      <button onClick={()=>{setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
-                        {ev.complet?"\uD83D\uDD14 Liste d'attente":"\u270D\uFE0F S'inscrire"}
+                      <button onClick={()=>{if((ev.theme||"").toLowerCase().indexOf("americana")!==-1){window.location.href="/americana-inscription.html";return;}setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
+                        {(ev.theme||"").toLowerCase().indexOf("americana")!==-1?"\uD83C\uDFBE S'inscrire \u00e0 l'Americana \u2192":(ev.complet?"\uD83D\uDD14 Liste d'attente":"\u270D\uFE0F S'inscrire")}
                       </button>
                     </div>
                   )}
