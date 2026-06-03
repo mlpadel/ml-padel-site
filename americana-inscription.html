@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Americana &mdash; Inscription &mdash; ML Padel</title>
+<meta name="description" content="Inscris-toi a l'Americana de padel au 4Padel Saint-Louis avec ML Padel. Tournoi convivial, niveaux adaptes, materiel prete par le club.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-height:100vh}
+.header{background:linear-gradient(135deg,#0a1628 0%,#162040 100%);padding:32px 24px 40px;text-align:center;position:relative}
+.header .back-home{position:absolute;top:16px;left:16px;color:#ffffffaa;font-size:12px;font-weight:600;text-decoration:none;background:#ffffff12;border:1px solid #ffffff20;border-radius:50px;padding:6px 14px;transition:color .2s,border-color .2s}
+.header .back-home:hover{color:#c9a84c;border-color:#c9a84c55}
+@media(max-width:480px){.header .back-home{position:static;display:inline-block;margin-bottom:16px}}
+.header .logo{color:#c9a84c;font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;text-decoration:none;display:inline-block}
+.header h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,38px);font-weight:900;color:#fff;margin-bottom:12px}
+.header h1 span{color:#c9a84c}
+.header .subtitle{color:#ffffffcc;font-size:14px;line-height:1.6}
+.badges{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap}
+.badge{background:#ffffff10;border:1px solid #ffffff20;border-radius:50px;padding:8px 16px;color:#fff;font-size:12px;font-weight:600}
+.container{max-width:680px;margin:0 auto;padding:32px 20px}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:center;margin-bottom:8px;color:#1a1a2e}
+.section-title span{color:#c9a84c}
+.intro{text-align:center;color:#666;font-size:13px;line-height:1.6;margin-bottom:24px}
+
+.state{text-align:center;color:#666;font-size:14px;padding:40px 16px}
+.state a{color:#c9a84c;font-weight:700;text-decoration:none}
+
+.event{background:#fff;border-radius:18px;padding:22px 20px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:20px}
+.event .top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.event h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:900;color:#0a1628;margin-bottom:6px}
+.event .meta{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:#555}
+.event .niv{display:inline-block;background:#c9a84c15;border:1px solid #c9a84c30;border-radius:20px;padding:3px 12px;font-size:12px;color:#a07d1f;font-weight:700;margin-top:8px}
+.event .price{text-align:right;min-width:110px}
+.event .price .amt{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#c9a84c;line-height:1}
+.event .price .amt small{font-size:13px;font-weight:600}
+.event .price .sub{font-size:11px;color:#999;margin-top:2px}
+.gauge-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.gauge-row .cnt{font-size:13px;font-weight:600;color:#0a1628}
+.tag{font-size:11px;font-weight:700;border-radius:20px;padding:2px 10px}
+.tag.ok{color:#27ae60;background:#27ae6018}
+.tag.full{color:#e74c3c;background:#e74c3c18}
+.gauge{height:8px;border-radius:4px;background:#0a16281a;overflow:hidden;margin-bottom:12px}
+.gauge>div{height:100%;border-radius:4px;background:linear-gradient(90deg,#c9a84c,#e0cb82);transition:width .5s}
+.gauge.full>div{background:linear-gradient(90deg,#e74c3c,#c0392b)}
+.inscrits{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.inscrits span{font-size:11px;background:#0a16280a;border:1px solid #0a162815;border-radius:20px;padding:3px 10px;color:#0a1628cc}
+
+.btn{width:100%;padding:13px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .2s}
+.btn:hover{transform:scale(1.01)}
+.btn.ghost{background:transparent;border:1.5px solid #0a162820;color:#0a162888}
+.btn:disabled{opacity:.6;cursor:wait}
+
+.form{border-top:1px solid #c9a84c20;margin-top:16px;padding-top:16px;display:none}
+.form.open{display:block}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:500px){.row{grid-template-columns:1fr}}
+.fg{margin-bottom:12px}
+.fg label{display:block;font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+.fg label .opt{font-weight:500;color:#999}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid #c9a84c25;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a2e;background:#fff;outline:none;transition:border-color .3s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#c9a84c}
+.fg textarea{min-height:60px;resize:vertical}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px;display:none}
+.msg.s{background:#27ae6018;color:#27ae60;border:1px solid #27ae6030;display:block}
+.msg.e{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c30;display:block}
+.btn-row{display:flex;gap:10px}
+.btn-row .btn{width:auto}.btn-row .ghost{flex:1}.btn-row .submit{flex:2}
+
+.footer{text-align:center;padding:32px 20px;font-size:12px;color:#999}
+.footer a{color:#c9a84c;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="back-home">&#8592; Retour au site</a>
+  <a href="/" class="logo">&#127934; ML PADEL</a>
+  <h1>Americana <span>Padel</span></h1>
+  <div class="subtitle">Tournoi convivial &middot; niveaux adapt&eacute;s &middot; 4Padel Saint-Louis</div>
+  <div class="badges">
+    <div class="badge">&#127934; Mat&eacute;riel pr&ecirc;t&eacute; par le club</div>
+    <div class="badge">&#128176; Tarif par joueur</div>
+  </div>
+</div>
+
+<div class="container">
+  <h2 class="section-title"><span>Inscription</span> Americana</h2>
+  <p class="intro">Choisis ta date ci-dessous et inscris-toi en quelques secondes. Place confirm&eacute;e d&egrave;s validation.</p>
+  <div id="list"><div class="state">Chargement des dates&hellip;</div></div>
+</div>
+
+<div class="footer">
+  <a href="/">ML Padel</a> &mdash; Coaching Padel &agrave; La R&eacute;union<br>Coach Mathias Laval
+</div>
+
+<script>
+var CCT_API="https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
+var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent("Bonjour Mathias, je souhaite des infos sur l'Americana 🎾");
+var J=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+var M=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];
+function fmtDate(iso){var d=new Date(iso);return J[d.getDay()]+" "+d.getDate()+" "+M[d.getMonth()];}
+function fmtH(iso){var d=new Date(iso);return d.getHours()+"h"+(d.getMinutes()<10?"0":"")+d.getMinutes();}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+var listEl=document.getElementById("list");
+
+fetch(CCT_API+"?action=events")
+  .then(function(r){return r.json();})
+  .then(function(data){
+    var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf("americana")!==-1;}):[];
+    if(!evts.length){
+      listEl.innerHTML='<div class="state">Aucune Americana programm&eacute;e pour le moment.<br>&Eacute;cris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour &ecirc;tre pr&eacute;venu(e) de la prochaine date.</div>';
+      return;
+    }
+    listEl.innerHTML="";
+    evts.forEach(function(ev){listEl.appendChild(renderEvent(ev));});
+  })
+  .catch(function(){
+    listEl.innerHTML='<div class="state">Impossible de charger les dates pour le moment.<br>Contacte-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a>.</div>';
+  });
+
+function renderEvent(ev){
+  var prix=(ev.prixPerPlayer!=null?ev.prixPerPlayer:ev.prixPar4);
+  var left=ev.maxPlaces-ev.nbInscrits;
+  var pct=ev.maxPlaces?Math.round(ev.nbInscrits/ev.maxPlaces*100):0;
+  var full=!!ev.complet;
+  var card=document.createElement("div");
+  card.className="event";
+  var inscritsHtml="";
+  if(ev.inscrits&&ev.inscrits.length){
+    inscritsHtml='<div class="inscrits">'+ev.inscrits.map(function(p){return '<span>'+esc(p.prenom)+(p.niveau?' &middot; Niv '+esc(p.niveau):'')+'</span>';}).join("")+'</div>';
+  }
+  card.innerHTML=
+    '<div class="top">'+
+      '<div>'+
+        '<h3>'+esc(ev.theme)+'</h3>'+
+        '<div class="meta"><span>&#128197; '+fmtDate(ev.date)+'</span><span>&#9200; '+fmtH(ev.date)+' &mdash; '+fmtH(ev.dateFin)+'</span><span>&#9201; '+ev.dureeH+'h</span></div>'+
+        (ev.niveau?'<div class="niv">'+esc(ev.niveau)+'</div>':'')+
+      '</div>'+
+      '<div class="price"><div class="amt">'+prix+'<small>&euro;</small></div><div class="sub">par joueur</div></div>'+
+    '</div>'+
+    '<div class="gauge-row"><span class="cnt">'+ev.nbInscrits+'/'+ev.maxPlaces+' inscrits</span>'+
+      (full?'<span class="tag full">COMPLET</span>':'<span class="tag ok">'+left+' place'+(left>1?'s':'')+' restante'+(left>1?'s':'')+'</span>')+
+    '</div>'+
+    '<div class="gauge'+(full?' full':'')+'"><div style="width:'+pct+'%"></div></div>'+
+    inscritsHtml+
+    '<button class="btn toggle">'+(full?'🔔 Liste d\'attente':'✍️ S\'inscrire')+'</button>'+
+    '<div class="form">'+
+      '<div class="msg"></div>'+
+      '<div class="row">'+
+        '<div class="fg"><label>Pr&eacute;nom</label><input class="f-prenom" type="text" placeholder="Votre pr&eacute;nom" required></div>'+
+        '<div class="fg"><label>T&eacute;l&eacute;phone</label><input class="f-tel" type="tel" placeholder="0692 XX XX XX" required></div>'+
+      '</div>'+
+      '<div class="fg"><label>Email</label><input class="f-email" type="email" placeholder="votre@email.com" required></div>'+
+      '<div class="fg"><label>Niveau estim&eacute; <span class="opt">(optionnel)</span></label>'+
+        '<select class="f-niveau"><option value="">Choisissez</option>'+
+        '<option value="1">Niv 1 &mdash; D&eacute;butant</option><option value="2">Niv 2 &mdash; Initi&eacute;</option>'+
+        '<option value="3">Niv 3 &mdash; Interm&eacute;diaire</option><option value="4">Niv 4 &mdash; Avanc&eacute;</option>'+
+        '<option value="5">Niv 5 &mdash; Comp&eacute;tition</option></select></div>'+
+      '<div class="fg"><label>Remarque <span class="opt">(optionnel)</span></label><textarea class="f-comm" placeholder="Partenaire, question..."></textarea></div>'+
+      '<div class="btn-row">'+
+        '<button class="btn ghost cancel">Annuler</button>'+
+        '<button class="btn submit">'+(full?'Rejoindre la liste d\'attente':'Confirmer l\'inscription')+'</button>'+
+      '</div>'+
+    '</div>';
+
+  var form=card.querySelector(".form");
+  var msg=card.querySelector(".msg");
+  card.querySelector(".toggle").addEventListener("click",function(){form.classList.toggle("open");});
+  card.querySelector(".cancel").addEventListener("click",function(){form.classList.remove("open");});
+  var submitBtn=card.querySelector(".submit");
+  submitBtn.addEventListener("click",function(){
+    var prenom=card.querySelector(".f-prenom").value.trim();
+    var tel=card.querySelector(".f-tel").value.trim();
+    var email=card.querySelector(".f-email").value.trim();
+    var niveau=card.querySelector(".f-niveau").value;
+    var commentaire=card.querySelector(".f-comm").value.trim();
+    msg.className="msg";
+    if(!prenom||!email||!tel){msg.className="msg e";msg.textContent="Prénom, email et téléphone requis.";return;}
+    submitBtn.disabled=true;submitBtn.textContent="Envoi…";
+    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"inscription",eventId:ev.id,prenom:prenom,email:email,telephone:tel,niveau:niveau,commentaire:commentaire})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        submitBtn.disabled=false;submitBtn.textContent=full?"Rejoindre la liste d'attente":"Confirmer l'inscription";
+        if(res.success){
+          msg.className="msg s";
+          msg.textContent=res.message||"Inscription enregistrée ! Mathias te recontacte pour confirmer.";
+          card.querySelector(".toggle").style.display="none";
+          card.querySelector(".btn-row").style.display="none";
+        }else{
+          msg.className="msg e";msg.textContent=res.error||"Erreur lors de l'inscription.";
+        }
+      })
+      .catch(function(){submitBtn.disabled=false;submitBtn.textContent="Confirmer l'inscription";msg.className="msg e";msg.textContent="Erreur réseau. Réessayez.";});
+  });
+  return card;
+}
+</script>
+</body>
+</html>
