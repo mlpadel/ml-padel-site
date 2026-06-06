@@ -1,1 +1,150 @@
-test
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Americana Débutant — Inscription — ML Padel</title>
+<meta name="description" content="Inscris-toi à l'Americana débutant du 20 juin 2026 au 4Padel Saint-Louis avec ML Padel. Tournoi convivial, niveau 1-2, matériel prêté.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:#f5f2eb;color:#1a1a2e;min-height:100vh}
+.header{background:linear-gradient(135deg,#0a1628 0%,#162040 100%);padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+.header .logo{color:#c9a84c;font-family:'Playfair Display',serif;font-size:14px;font-weight:900;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:8px}
+.header .back-home{color:#ffffffaa;font-size:13px;font-weight:600;text-decoration:none;background:#ffffff10;border:1px solid #ffffff20;border-radius:50px;padding:7px 16px;transition:all .2s}
+.header .back-home:hover{color:#c9a84c;border-color:#c9a84c55}
+@media(max-width:480px){.header{flex-direction:column;gap:12px;text-align:center}}
+.container{max-width:640px;margin:0 auto;padding:32px 20px 48px}
+.event-card{background:#fff;border-radius:20px;padding:28px 24px;border:1.5px solid #c9a84c30;box-shadow:0 6px 24px #c9a84c10;margin-bottom:32px;position:relative;overflow:hidden}
+.event-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#c9a84c,#e0cb82)}
+.card-badge{display:inline-block;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:16px}
+.card-icon{font-size:36px;margin-bottom:12px;display:block}
+.card-title{font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,28px);font-weight:900;color:#0a1628;margin-bottom:16px;line-height:1.2}
+.card-details{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+@media(max-width:400px){.card-details{grid-template-columns:1fr}}
+.card-detail{display:flex;align-items:center;gap:8px;font-size:14px;color:#444;font-weight:500}
+.card-detail .icon{font-size:18px;width:24px;text-align:center;flex-shrink:0}
+.card-detail strong{color:#0a1628}
+.card-price-box{background:#f5f2eb;border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-price{font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#c9a84c;line-height:1}
+.card-price small{font-size:14px;font-weight:600;color:#888}
+.card-price-note{font-size:12px;color:#888;max-width:180px;text-align:right;line-height:1.4}
+.card-inscription-note{font-size:13px;color:#666;text-align:center;margin-bottom:16px;font-style:italic}
+.btn-cta{display:block;width:100%;padding:14px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:transform .2s,box-shadow .2s;text-align:center;text-decoration:none}
+.btn-cta:hover{transform:scale(1.02);box-shadow:0 4px 16px #c9a84c40}
+.section{background:#fff;border-radius:20px;padding:28px 24px;border:1px solid #0a16280a;margin-bottom:24px}
+.section-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#0a1628;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-title .st-icon{font-size:22px}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(to bottom,#c9a84c,#c9a84c50)}
+.timeline-item{position:relative;margin-bottom:16px}
+.timeline-item:last-child{margin-bottom:0}
+.timeline-item::before{content:'';position:absolute;left:-22px;top:6px;width:10px;height:10px;border-radius:50%;background:#c9a84c;border:2px solid #fff;box-shadow:0 0 0 2px #c9a84c40}
+.timeline-item .tl-label{font-size:11px;font-weight:700;color:#c9a84c;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+.timeline-item .tl-text{font-size:14px;color:#444;line-height:1.5}
+.timeline-item .tl-text strong{color:#0a1628}
+.info-list{list-style:none;padding:0}
+.info-list li{padding:10px 0;border-bottom:1px solid #0a16280a;font-size:14px;color:#444;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.info-list li:last-child{border-bottom:none}
+.info-list li .li-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.promo-box{background:linear-gradient(135deg,#c9a84c10,#c9a84c05);border:1px solid #c9a84c30;border-radius:14px;padding:16px 20px;margin-top:16px;text-align:center}
+.promo-box .promo-tag{display:inline-block;background:#c9a84c;color:#0a1628;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:8px;letter-spacing:1px}
+.promo-box p{font-size:13px;color:#555;line-height:1.5}
+.promo-box strong{color:#0a1628}
+.payment-section{background:#fff;border-radius:20px;padding:28px 24px;border:1px solid #0a16280a;margin-bottom:24px;text-align:center}
+.payment-note{font-size:14px;color:#555;margin-bottom:20px;line-height:1.6}
+.payment-options{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.payment-opt{display:flex;align-items:center;gap:6px;background:#f5f2eb;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;color:#0a1628}
+.btn-stripe{display:inline-block;padding:14px 40px;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#635bff,#7a73ff);color:#fff;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .2s,box-shadow .2s;text-decoration:none}
+.btn-stripe:hover{transform:scale(1.02);box-shadow:0 4px 16px #635bff40}
+.form-section{background:#fff;border-radius:20px;padding:28px 24px;border:1.5px solid #c9a84c30;box-shadow:0 6px 24px #c9a84c10}
+.form-section .section-title{justify-content:center}
+.form-intro{text-align:center;font-size:13px;color:#666;margin-bottom:20px;line-height:1.6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+@media(max-width:500px){.row{grid-template-columns:1fr}}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+.fg label .opt{font-weight:500;color:#999;font-size:11px}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #c9a84c25;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a2e;background:#fff;outline:none;transition:border-color .3s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#c9a84c}
+.fg textarea{min-height:60px;resize:vertical}
+.msg{padding:12px 16px;border-radius:12px;font-size:13px;font-weight:600;margin-bottom:14px;display:none}
+.msg.s{background:#27ae6018;color:#27ae60;border:1px solid #27ae6030;display:block}
+.msg.e{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c30;display:block}
+.btn-submit{display:block;width:100%;padding:14px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;letter-spacing:.5px;transition:transform .2s,box-shadow .2s;margin-top:4px}
+.btn-submit:hover{transform:scale(1.02);box-shadow:0 4px 16px #c9a84c40}
+.btn-submit:disabled{opacity:.6;cursor:wait}
+.footer{text-align:center;padding:32px 20px;font-size:12px;color:#999}
+.footer a{color:#c9a84c;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="https://www.mlpadel.fr" class="logo">🎾 ML PADEL</a>
+  <a href="https://www.mlpadel.fr" class="back-home">← Retour au site</a>
+</div>
+<div class="container">
+  <div class="event-card" id="event-top">
+    <span class="card-badge">Loisir</span>
+    <span class="card-icon">🎾</span>
+    <h1 class="card-title">Americana débutant</h1>
+    <div class="card-details">
+      <div class="card-detail"><span class="icon">📅</span><strong>Sam 20 juin</strong></div>
+      <div class="card-detail"><span class="icon">⏰</span><strong>14h00 — 15h30</strong></div>
+      <div class="card-detail"><span class="icon">⏱️</span> Durée : <strong>1h30</strong></div>
+      <div class="card-detail"><span class="icon">📊</span> Niv <strong>1-2</strong></div>
+      <div class="card-detail"><span class="icon">📍</span><strong>4Padel Saint-Louis</strong></div>
+      <div class="card-detail"><span class="icon">👥</span> Inscription <strong>seul(e) ou en groupe</strong></div>
+    </div>
+    <div class="card-price-box">
+      <div class="card-price">15€<small>,pers</small></div>
+      <div class="card-price-note">Paiement en ligne (CB) ou sur place en espèces</div>
+    </div>
+    <p class="card-inscription-note">Inscription individuelle ou en groupe — venez comme vous êtes !</p>
+    <a href="#formulaire" class="btn-cta">✍️ S'inscrire</a>
+  </div>
+  <div class="section">
+    <h2 class="section-title"><span class="st-icon">🏆</span> Format du mini-tournoi loisir</h2>
+    <div class="timeline">
+      <div class="timeline-item"><div class="tl-label">Accueil — 10 min</div><div class="tl-text"><strong>Accueil &amp; explication des règles</strong> — on vous met à l'aise, on explique le format et on forme les premières équipes.</div></div>
+      <div class="timeline-item"><div class="tl-label">Matchs — 1h10</div><div class="tl-text"><strong>Matchs en rotation</strong> — matchs en 15 points, changement de partenaire à chaque rotation. Minimum 5 rotations pour que tout le monde joue avec tout le monde.</div></div>
+      <div class="timeline-item"><div class="tl-label">Convivialité — 10 min</div><div class="tl-text"><strong>Pot de l'amitié</strong> — (on échange, on rigole, on remet les lots et on se donne rendez-vous pour la prochaine !</div></div>
+    </div>
+  </div>
+  <div class="section">
+    <h2 class="section-title"><span class="st-icon">ℹ️</span> Infos pratiques</h2>
+    <ul class="info-list">
+      <li><span class="li-icon">🏅</span><span><strong>Certification Niveau 1/2</strong> — vous jouez, on évalue, et vous repartez avec votre niveau validé.</span></li>
+      <li><span class="li-icon">💧</span><span><strong>Pensez a amener de l'eau</strong> — il fait chaud sur les terrains, hydratez-vous bien !</span></li>
+      <li><span class="li-icon">👟</span><span><strong>Tenue de sport obligatoire</strong> — chaussures de sport propres exigées sur les terrains.</span></li>
+      <li><span class="li-icon">🎾</span><span><strong>Prêt de raquettes possible</strong> — pas besoin d'investir, le club vous équipe.</span></li>
+      <li><span class="li-icon">🎁</span><span><strong>Petits lots pour chaque participant</strong> — tout le monde repart avec un souvenir !</span></li>
+    </ul>
+    <div class="promo-box"><span class="promo-tag">PROMO</span><p><strong>-10% sur votre prochain cours individuel</strong> avec Mathias Laval pour tous les participants de l'Americana.</p></div>
+  </div>
+  <div class="payment-section">
+    <h2 class="section-title" style="justify-content:center"><span class="st-icon">💳</span> Paiement</h2>
+    <p class="payment-note">Paiement en ligne (CB) ou sur place en espèces uniquement.<br>Le paiement en ligne garantit votre place immédiatement.</p>
+    <div class="payment-options"><div class="payment-opt">💳 Carte bancaire (en ligne)</div><div class="payment-opt">💶 espèces (sur place)</div></div>
+    <a href="https://buy.stripe.com/6oE14T5Nz5mA2Oc5kk" target="_blank" rel="noopener" class="btn-stripe">Payer en ligne — 15€</a>
+  </div>
+  <div class="form-section" id="formulaire">
+    <h2 class="section-title"><span class="st-icon">✍️</span> Inscription</h2>
+    <p class="form-intro">Inscription individuelle ou en groupe — vous pouvez vous inscrire seul(e) ou à plusieurs pour participer.<br>Place confirmée dès validation.</p>
+    <div id="msg" class="msg"></div>
+    <div class="row"><div class="fg"><label>Nom *</label><input type="text" id="f-nom" placeholder="Votre nom" required></div><div class="fg"><label>Prénom *</label><input type="text" id="f-prenom" placeholder="Votre prénom" required></div></div>
+    <div class="row"><div class="fg"><label>Email *</label><input type="email" id="f-email" placeholder="votre@email.com" required></div><div class="fg"><label>Téléphone *</label><input type="tel" id="f-tel" placeholder="0692 XX XX XX" required></div></div>
+    <div class="row"><div class="fg"><label>Niveau estimé</label><select id="f-niveau"><option value="">Choisissez</option><option value="1">Niv 1 — Débutant</option><option value="2">Niv 2 — Initié</option><option value="3">Niv 3 — Intermédiaire</option><option value="4">Niv 4 — Avancé</option><option value="5">Niv 5 — Compétition</option><option value="6">Niv 6 — Expert</option><option value="7">Niv 7 — Pro</option></select></div><div class="fg"><label>Nombre de participants</label><select id="f-nb"><option value="1">1 personne</option><option value="2">2 personnes</option><option value="3">3 personnes</option><option value="4">4 personnes</option></select></div></div>
+    <div class="fg"><label>Commentaire <span class="opt">(optionnel)</span></label><textarea id="f-comm" placeholder="Partenaire préféré, question, remarque..."></textarea></div>
+    <button class="btn-submit" id="btn-submit" onclick="submitForm()">S'inscrire</button>
+  </div>
+</div>
+<div class="footer"><a href="https://www.mlpadel.fr">ML Padel</a> — Coaching Padel à La Réunion<br>Coach Mathias Laval</div>
+<script>
+var GAS_URL="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
+function submitForm(){var n=document.getElementById("f-nom").value.trim(),p=document.getElementById("f-prenom").value.trim(),e=document.getElementById("f-email").value.trim(),t=document.getElementById("f-tel").value.trim(),nv=document.getElementById("f-niveau").value,nb=document.getElementById("f-nb").value,c=document.getElementById("f-comm").value.trim(),m=document.getElementById("msg"),b=document.getElementById("btn-submit");m.className="msg";if(!n||!p||!e||!t){m.className="msg e";m.textContent="Veuillez remplir tous les champs obligatoires.";return}b.disabled=!0;b.textContent="Envoi...";fetch(GAS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"stage_inscription",stage:"Americana (20 juin 2026)",nom:n,prenom:p,email:e,telephone:t,niveau:nv,nbParticipants:nb,commentaire:c})}).then(function(r){return r.json()}).then(function(r){b.disabled=!1;b.textContent="S'inscrire";if(r.success){m.className="msg s";m.textContent=r.message||"Inscription enregistrée ! Mathias vous recontacte.";b.style.display="none"}else{m.className="msg e";m.textContent=r.error||"Erreur. Réessayez."}}).catch(function(){b.disabled=!1;b.textContent="S'inscrire";m.className="msg e";m.textContent="Erreur réseau. Réessayez."})}
+document.querySelector(".btn-cta").addEventListener("click",function(e){e.preventDefault();document.getElementById("formulaire").scrollIntoView({behavior:"smooth",block:"start"})});
+</script>
+</body>
+</html>
