@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Americana &mdash; Inscription &mdash; ML Padel</title>
-<meta name="description" content="Inscris-toi a l'Americana de padel au 4Padel Saint-Louis avec ML Padel. Tournoi convivial, niveaux adaptes, materiel prete par le club.">
+<meta name="description" content="Inscris-toi à l'Americana de padel au 4Padel Saint-Louis avec ML Padel. Tournoi convivial, niveaux adaptés, matériel prêté par le club.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -20,90 +20,47 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .header .subtitle{color:#ffffffcc;font-size:14px;line-height:1.6}
 .badges{display:flex;justify-content:center;gap:12px;margin-top:20px;flex-wrap:wrap}
 .badge{background:#ffffff10;border:1px solid #ffffff20;border-radius:50px;padding:8px 16px;color:#fff;font-size:12px;font-weight:600}
-.container{max-width:680px;margin:0 auto;padding:32px 20px}
+.container{max-width:720px;margin:0 auto;padding:32px 20px}
 .section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;text-align:center;margin-bottom:8px;color:#1a1a2e}
 .section-title span{color:#c9a84c}
 .intro{text-align:center;color:#666;font-size:13px;line-height:1.6;margin-bottom:24px}
-.state{text-align:center;color:#666;font-size:14px;padding:40px 16px}
-.state a{color:#c9a84c;font-weight:700;text-decoration:none}
-
-/* --- RECAP SECTION --- */
-.recap{max-width:680px;margin:0 auto;padding:32px 20px 0}
-.recap-card{background:#fff;border-radius:18px;padding:28px 24px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08}
-.recap-card h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#0a1628;margin-bottom:18px;text-align:center}
-.recap-card h2 span{color:#c9a84c}
-.recap-timeline{position:relative;padding-left:28px;margin-bottom:20px}
-.recap-timeline::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:linear-gradient(180deg,#c9a84c,#e0cb82)}
-.recap-step{position:relative;margin-bottom:14px}
-.recap-step::before{content:'';position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:#c9a84c;border:2px solid #fff;box-shadow:0 0 0 2px #c9a84c40}
-.recap-step strong{font-size:14px;color:#0a1628;display:block;margin-bottom:2px}
-.recap-step p{font-size:13px;color:#555;line-height:1.5;margin:0}
-.recap-extras{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
-@media(max-width:500px){.recap-extras{grid-template-columns:1fr}}
-.recap-extra{display:flex;align-items:center;gap:8px;font-size:13px;color:#0a1628;background:#faf9f6;border-radius:12px;padding:10px 14px}
-.recap-extra .icon{font-size:18px;flex-shrink:0}
-.recap-promo{margin-top:18px;background:linear-gradient(135deg,#0a1628,#162040);border-radius:14px;padding:16px 20px;text-align:center}
-.recap-promo p{color:#ffffffcc;font-size:13px;line-height:1.5}
-.recap-promo strong{color:#c9a84c}
-.btn-stripe{display:inline-block;margin-top:12px;padding:12px 32px;border-radius:50px;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;transition:transform .2s}
-.btn-stripe:hover{transform:scale(1.03)}
-.event{background:#fff;border-radius:18px;padding:22px 20px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:20px}
-.event .top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
-.event h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:900;color:#0a1628;margin-bottom:6px}
-.event .meta{display:flex;flex-wrap:wrap;gap:8px;font-size:13px;color:#555}
-.event .niv{display:inline-block;background:#c9a84c15;border:1px solid #c9a84c30;border-radius:20px;padding:3px 12px;font-size:12px;color:#a07d1f;font-weight:700;margin-top:8px}
-.event .price{text-align:right;min-width:110px}
-.event .price .amt{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:#c9a84c;line-height:1}
-.event .price .amt small{font-size:13px;font-weight:600}
-.event .price .sub{font-size:11px;color:#999;margin-top:2px}
-.gauge-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.gauge-row .cnt{font-size:13px;font-weight:600;color:#0a1628}
-.tag{font-size:11px;font-weight:700;border-radius:20px;padding:2px 10px}
-.tag.ok{color:#27ae60;background:#27ae6018}
-.tag.full{color:#e74c3c;background:#e74c3c18}
-.gauge{height:8px;border-radius:4px;background:#0a16281a;overflow:hidden;margin-bottom:12px}
-.gauge>div{height:100%;border-radius:4px;background:linear-gradient(90deg,#c9a84c,#e0cb82);transition:width .5s}
-.gauge.full>div{background:linear-gradient(90deg,#e74c3c,#c0392b)}
-.inscrits{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
-.inscrits span{font-size:11px;background:#0a16280a;border:1px solid #0a162815;border-radius:20px;padding:3px 10px;color:#0a1628cc}
-
-.btn{width:100%;padding:13px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .2s}
-.btn:hover{transform:scale(1.01)}
-.btn.ghost{background:transparent;border:1.5px solid #0a162820;color:#0a162888}
-.btn:disabled{opacity:.6;cursor:wait}
-.form{border-top:1px solid #c9a84c20;margin-top:16px;padding-top:16px;display:none}
-.form.open{display:block}
+.desc-card{background:#fff;border-radius:18px;padding:28px 24px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:28px}
+.desc-card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#0a1628;margin-bottom:14px}
+.desc-card h3 span{color:#c9a84c}
+.desc-card p{font-size:14px;color:#444;line-height:1.7;margin-bottom:12px}
+.desc-card ul{list-style:none;padding:0;margin:0 0 12px 0}
+.desc-card ul li{font-size:13px;color:#444;line-height:1.7;padding:4px 0 4px 22px;position:relative}
+.desc-card ul li::before{content:"";position:absolute;left:0;top:11px;width:8px;height:8px;background:#c9a84c;border-radius:50%;opacity:.7}
+.highlight-box{background:#c9a84c10;border:1px solid #c9a84c30;border-radius:12px;padding:14px 18px;margin-top:16px}
+.highlight-box p{font-size:13px;color:#0a1628;margin:0;font-weight:500}
+.price-banner{text-align:center;margin-bottom:28px;padding:18px;background:linear-gradient(135deg,#0a1628,#162040);border-radius:16px}
+.price-banner .amt{font-family:'Playfair Display',serif;font-size:38px;font-weight:900;color:#c9a84c}
+.price-banner .amt small{font-size:16px;font-weight:600}
+.price-banner .sub{color:#ffffffcc;font-size:13px;margin-top:4px}
+.price-banner .payment-info{color:#ffffffaa;font-size:12px;margin-top:8px;font-style:italic}
+.form-card{background:#fff;border-radius:18px;padding:28px 24px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:28px}
+.form-card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#0a1628;margin-bottom:6px}
+.form-card .form-intro{font-size:13px;color:#666;margin-bottom:20px;line-height:1.5}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 @media(max-width:500px){.row{grid-template-columns:1fr}}
-.fg{margin-bottom:12px}
+.fg{margin-bottom:14px}
 .fg label{display:block;font-size:12px;font-weight:700;color:#1a1a2e;margin-bottom:6px}
 .fg label .opt{font-weight:500;color:#999}
-.fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border-radius:12px;border:1.5px solid #c9a84c25;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a2e;background:#fff;outline:none;transition:border-color .3s}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid #c9a84c25;font-family:'DM Sans',sans-serif;font-size:14px;color:#1a1a2e;background:#fff;outline:none;transition:border-color .3s}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#c9a84c}
-.fg textarea{min-height:60px;resize:vertical}
-.msg{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px;display:none}
+.fg textarea{min-height:70px;resize:vertical}
+.mention{font-size:12px;color:#888;line-height:1.5;margin-bottom:16px;padding:10px 14px;background:#f5f4f0;border-radius:10px}
+.msg{padding:12px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:14px;display:none}
 .msg.s{background:#27ae6018;color:#27ae60;border:1px solid #27ae6030;display:block}
 .msg.e{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c30;display:block}
-.btn-row{display:flex;gap:10px}
-.btn-row .btn{width:auto}.btn-row .ghost{flex:1}.btn-row .submit{flex:2}
-
+.btn{width:100%;padding:14px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .2s,opacity .2s}
+.btn:hover{transform:scale(1.01)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn-stripe{background:linear-gradient(135deg,#635bff,#7c75ff);color:#fff;margin-top:10px;font-size:14px}
+.btn-stripe:hover{transform:scale(1.01)}
+.btn-sep{text-align:center;font-size:12px;color:#999;margin:10px 0;font-weight:600}
 .footer{text-align:center;padding:32px 20px;font-size:12px;color:#999}
 .footer a{color:#c9a84c;text-decoration:none;font-weight:600}
-
-/* --- CONFIRMATION --- */
-.confirmation{text-align:center;padding:8px 0}
-.confirmation .check{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#27ae60,#2ecc71);margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
-.confirmation .check svg{width:32px;height:32px;stroke:#fff;stroke-width:3;fill:none}
-.confirmation h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#0a1628;margin-bottom:4px}
-.confirmation .conf-sub{color:#555;font-size:13px;margin-bottom:20px}
-.confirmation .conf-recap{background:#faf9f6;border-radius:14px;padding:16px 20px;margin-bottom:20px;text-align:left}
-.confirmation .conf-recap p{font-size:13px;color:#333;line-height:1.7;margin:0}
-.confirmation .conf-recap strong{color:#0a1628}.confirmation .conf-pay{background:linear-gradient(135deg,#0a1628,#162040);border-radius:14px;padding:20px;margin-bottom:16px}
-.confirmation .conf-pay p{color:#ffffffcc;font-size:13px;margin-bottom:12px}
-.confirmation .conf-pay .btn-stripe{margin-top:0}
-.confirmation .conf-contact{margin-top:12px}
-.confirmation .conf-wa{display:inline-block;padding:11px 28px;border-radius:50px;background:#25d366;color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:transform .2s}
-.confirmation .conf-wa:hover{transform:scale(1.03)}
 </style>
 </head>
 <body>
@@ -112,170 +69,181 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
   <a href="/" class="back-home">&#8592; Retour au site</a>
   <a href="/" class="logo">&#127934; ML PADEL</a>
   <h1>Americana <span>Padel</span></h1>
-  <div class="subtitle">Tournoi convivial &middot; niveaux adapt&eacute;s &middot; 4Padel Saint-Louis</div>
+  <div class="subtitle">Tournoi convivial &middot; niveaux adaptés &middot; 4Padel Saint-Louis</div>
   <div class="badges">
-    <div class="badge">&#127934; Mat&eacute;riel pr&ecirc;t&eacute; par le club</div>
-    <div class="badge">&#128176; Tarif par joueur</div>
-  </div>
-</div>
-
-<!-- SECTION RECAP FORMAT -->
-<div class="recap">
-  <div class="recap-card">
-    <h2>&#127942; <span>Format</span> du mini-tournoi loisir</h2>
-
-    <div class="recap-timeline">
-      <div class="recap-step">
-        <strong>&#128075; Accueil &amp; r&egrave;gles (10 min)</strong>
-        <p>Pr&eacute;sentation du format, constitution des &eacute;quipes et explication des r&egrave;gles.</p>
-      </div>      <div class="recap-step">
-        <strong>&#127934; Matchs en rotation (1h10)</strong>
-        <p>Format au meilleur des <strong>15 points</strong> (ex : 9-6). Chaque joueur cumule sa diff&eacute;rence de points. Rotation apr&egrave;s chaque match pour jouer avec un maximum de partenaires. <strong>5 rotations minimum</strong> garanties.</p>
-      </div>
-      <div class="recap-step">
-        <strong>&#127867; Pot de l'amiti&eacute; (10 min)</strong>
-        <p>&Eacute;change de num&eacute;ros, ajout au groupe WhatsApp ML Padel et remise d'une <strong>certification Niveau 1/2</strong>.</p>
-      </div>
-    </div>
-
-    <div class="recap-extras">
-      <div class="recap-extra"><span class="icon">&#128166;</span> Pensez &agrave; amener de l'eau</div>
-      <div class="recap-extra"><span class="icon">&#128092;</span> Tenue de sport obligatoire</div>
-      <div class="recap-extra"><span class="icon">&#127934;</span> Pr&ecirc;t de raquettes possible</div>
-      <div class="recap-extra"><span class="icon">&#127873;</span> Petits lots pour chaque participant</div>
-    </div>
-
-    <div class="recap-promo">
-      <p>&#127775; Chaque participant re&ccedil;oit <strong>-10% sur son prochain cours individuel</strong> avec Mathias Laval.</p>
-      <a href="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05" target="_blank" rel="noopener" class="btn-stripe" id="stripe-btn">&#128179; Payer en ligne (15&euro;)</a>
-    </div>
+    <div class="badge">&#127934; Matériel prêté par le club</div>
+    <div class="badge">&#128176; 15&euro; par joueur</div>
+    <div class="badge">&#128101; Seul(e) ou en groupe</div>
   </div>
 </div>
 
 <div class="container">
-  <h2 class="section-title"><span>Inscription</span> Americana</h2>
-  <p class="intro">Choisis ta date ci-dessous et inscris-toi en quelques secondes. Place confirm&eacute;e d&egrave;s validation.</p>
-  <div id="list"><div class="state">Chargement des dates&hellip;</div></div>
+
+  <div class="desc-card">
+    <h3>&#127934; Qu’est-ce qu’une <span>Americana</span> ?</h3>
+    <p>L’Americana est un format de tournoi convivial où les équipes changent à chaque match. C’est le format idéal pour découvrir le padel, rencontrer de nouveaux partenaires et progresser dans une ambiance décontractée.</p>
+    <ul>
+      <li><strong>Rotation des partenaires :</strong> vous changez de coéquipier à chaque tour pour jouer avec tout le monde</li>
+      <li><strong>Matchs courts :</strong> format en sets rapides pour maximiser le temps de jeu</li>
+      <li><strong>Niveaux adaptés :</strong> les groupes sont constitués en fonction du niveau de chacun</li>
+      <li><strong>Classement individuel :</strong> chaque joueur accumule des points — le meilleur score remporte la compétition</li>
+      <li><strong>Matériel prêté :</strong> raquettes disponibles gratuitement sur place au 4Padel</li>
+      <li><strong>Durée :</strong> environ 2h à 2h30 selon le nombre de participants</li>
+    </ul>
+    <div class="highlight-box">
+      <p>&#128205; <strong>Lieu :</strong> 4Padel Saint-Louis — La Réunion<br>
+      &#128197; <strong>Fréquence :</strong> sessions organisées régulièrement, inscrivez-vous pour réserver votre place<br>
+      &#127942; <strong>Convivialité :</strong> ouvert à tous niveaux, de débutant à compétiteur</p>
+    </div>
+  </div>
+
+  <div class="price-banner">
+    <div class="amt">15<small>&euro;</small></div>
+    <div class="sub">par joueur &middot; terrain + animation + organisation</div>
+    <div class="payment-info">Paiement en ligne (CB) ou sur place en espèces uniquement.</div>
+  </div>
+
+  <div class="form-card">
+    <h3>&#9997;&#65039; <span>Inscription</span></h3>
+    <p class="form-intro">Inscription individuelle ou en groupe — vous pouvez vous inscrire seul(e) ou à plusieurs pour participer. Remplissez le formulaire ci-dessous et Mathias vous recontacte pour confirmer votre place.</p>
+
+    <div id="formMsg" class="msg"></div>
+
+    <form id="americanaForm" onsubmit="return false;">
+      <div class="row">
+        <div class="fg">
+          <label>Nom *</label>
+          <input id="f-nom" type="text" placeholder="Votre nom" required>
+        </div>
+        <div class="fg">
+          <label>Prénom *</label>
+          <input id="f-prenom" type="text" placeholder="Votre prénom" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="fg">
+          <label>Email *</label>
+          <input id="f-email" type="email" placeholder="votre@email.com" required>
+        </div>
+        <div class="fg">
+          <label>Téléphone *</label>
+          <input id="f-tel" type="tel" placeholder="0692 XX XX XX" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="fg">
+          <label>Niveau estimé</label>
+          <select id="f-niveau">
+            <option value="">Choisissez votre niveau</option>
+            <option value="1 - Débutant">Niv 1 — Débutant</option>
+            <option value="2 - Initié">Niv 2 — Initié</option>
+            <option value="3 - Intermédiaire">Niv 3 — Intermédiaire</option>
+            <option value="4 - Avancé">Niv 4 — Avancé</option>
+            <option value="5 - Compétition">Niv 5 — Compétition</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Nombre de participants</label>
+          <select id="f-nb">
+            <option value="1">1 personne</option>
+            <option value="2">2 personnes</option>
+            <option value="3">3 personnes</option>
+            <option value="4">4 personnes</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Date souhaitée <span class="opt">(optionnel)</span></label>
+        <input id="f-date" type="date">
+      </div>
+      <div class="fg">
+        <label>Commentaire <span class="opt">(optionnel)</span></label>
+        <textarea id="f-comm" placeholder="Partenaire souhaité, question, disponibilités..."></textarea>
+      </div>
+
+      <div class="mention">
+        &#128179; <strong>Paiement en ligne (CB) ou sur place en espèces uniquement.</strong><br>
+        Vous pouvez régler maintenant par carte ou le jour de l’événement en liquide.
+      </div>
+
+      <button type="button" class="btn" id="btnSubmit" onclick="submitForm()">&#9989; Confirmer mon inscription</button>
+      <div class="btn-sep">ou</div>
+      <button type="button" class="btn btn-stripe" onclick="window.open('https://buy.stripe.com/6oE14T5Nz5mA2Oc5kk','_blank')">&#128179; Payer en ligne — 15€</button>
+    </form>
+  </div>
+
 </div>
 
 <div class="footer">
-  <a href="/">ML Padel</a> &mdash; Coaching Padel &agrave; La R&eacute;union<br>Coach Mathias Laval
+  <a href="/">ML Padel</a> &mdash; Coaching Padel à La Réunion<br>Coach Mathias Laval
 </div>
+
 <script>
-var CCT_API="https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
-var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent("Bonjour Mathias, je souhaite des infos sur l'Americana \u{1f3be}");
-var J=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
-var M=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];
-function fmtDate(iso){var d=new Date(iso);return J[d.getDay()]+" "+d.getDate()+" "+M[d.getMonth()];}
-function fmtH(iso){var d=new Date(iso);return d.getHours()+"h"+(d.getMinutes()<10?"0":"")+d.getMinutes();}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+var WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
-var listEl=document.getElementById("list");
+function submitForm(){
+  var nom=document.getElementById("f-nom").value.trim();
+  var prenom=document.getElementById("f-prenom").value.trim();
+  var email=document.getElementById("f-email").value.trim();
+  var tel=document.getElementById("f-tel").value.trim();
+  var niveau=document.getElementById("f-niveau").value;
+  var nb=document.getElementById("f-nb").value;
+  var dateSouhaitee=document.getElementById("f-date").value;
+  var commentaire=document.getElementById("f-comm").value.trim();
+  var msgEl=document.getElementById("formMsg");
 
-fetch(CCT_API+"?action=events")
-.then(function(r){return r.json();})
-.then(function(data){
-var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf("americana")!==-1;}):[];
-if(!evts.length){
-listEl.innerHTML='<div class="state">Aucune Americana programmée pour le moment.<br>Écris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour être prévenu(e) de la prochaine date.</div>';
-return;
-}
-listEl.innerHTML="";
-evts.forEach(function(ev){listEl.appendChild(renderEvent(ev));});
-})
-.catch(function(){
-listEl.innerHTML='<div class="state">Impossible de charger les dates pour le moment.<br>Contacte-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a>.</div>';
-});
-function renderEvent(ev){
-var prix=(ev.prixPerPlayer!=null?ev.prixPerPlayer:ev.prixPar4);
-var left=ev.maxPlaces-ev.nbInscrits;
-var pct=ev.maxPlaces?Math.round(ev.nbInscrits/ev.maxPlaces*100):0;
-var full=!!ev.complet;
-var card=document.createElement("div");
-card.className="event";
-var inscritsHtml="";
-if(ev.inscrits&&ev.inscrits.length){
-inscritsHtml='<div class="inscrits">'+ev.inscrits.map(function(p){return '<span>'+esc(p.prenom)+(p.niveau?' · Niv '+esc(p.niveau):'')+'</span>';}).join("")+'</div>';
-}
-card.innerHTML=
-'<div class="top">'+
-'<div>'+
-'<h3>'+esc(ev.theme)+'</h3>'+
-'<div class="meta"><span>\u{1f4c5} '+fmtDate(ev.date)+'</span><span>⏰ '+fmtH(ev.date)+' — '+fmtH(ev.dateFin)+'</span><span>⏱ '+ev.dureeH+'h</span></div>'+
-(ev.niveau?'<div class="niv">'+esc(ev.niveau)+'</div>':'')+
-'</div>'+
-'<div class="price"><div class="amt">'+prix+'<small>€</small></div><div class="sub">par joueur</div></div>'+
-'</div>'+
-'<div class="gauge-row"><span class="cnt">'+ev.nbInscrits+'/'+ev.maxPlaces+' inscrits</span>'+
-(full?'<span class="tag full">COMPLET</span>':'<span class="tag ok">'+left+' place'+(left>1?'s':'')+' restante'+(left>1?'s':'')+'</span>')+
-'</div>'+
-'<div class="gauge'+(full?' full':'')+'"><div style="width:'+pct+'%"></div></div>'+
-inscritsHtml+
-'<button class="btn toggle">'+(full?'\u{1f514} Liste d\'attente':'✍️ S\'inscrire')+'</button>'+
-'<div class="form">'+
-'<div class="msg"></div>'+
-'<div class="row">'+
-'<div class="fg"><label>Prénom</label><input class="f-prenom" type="text" placeholder="Votre prénom" required></div>'+
-'<div class="fg"><label>Téléphone</label><input class="f-tel" type="tel" placeholder="0692 XX XX XX" required></div>'+
-'</div>';'<div class="fg"><label>Email</label><input class="f-email" type="email" placeholder="votre@email.com" required></div>'+
-'<div class="fg"><label>Niveau estimé <span class="opt">(optionnel)</span></label>'+
-'<select class="f-niveau"><option value="">Choisissez</option>'+
-'<option value="1">Niv 1 — Débutant</option><option value="2">Niv 2 — Initié</option>'+
-'<option value="3">Niv 3 — Intermédiaire</option><option value="4">Niv 4 — Avancé</option>'+
-'<option value="5">Niv 5 — Compétition</option></select></div>'+
-'<div class="fg"><label>Remarque <span class="opt">(optionnel)</span></label><textarea class="f-comm" placeholder="Partenaire, question..."></textarea></div>'+
-'<div class="btn-row">'+
-'<button class="btn ghost cancel">Annuler</button>'+
-'<button class="btn submit">'+(full?'Rejoindre la liste d\'attente':'Confirmer l\'inscription')+'</button>'+
-'</div>'+
-'</div>';
+  msgEl.className="msg";
 
-var form=card.querySelector(".form");
-var msg=card.querySelector(".msg");
-card.querySelector(".toggle").addEventListener("click",function(){form.classList.toggle("open");});
-card.querySelector(".cancel").addEventListener("click",function(){form.classList.remove("open");});
-var submitBtn=card.querySelector(".submit");
-submitBtn.addEventListener("click",function(){
-var prenom=card.querySelector(".f-prenom").value.trim();
-var tel=card.querySelector(".f-tel").value.trim();
-var email=card.querySelector(".f-email").value.trim();
-var niveau=card.querySelector(".f-niveau").value;
-var commentaire=card.querySelector(".f-comm").value.trim();
-msg.className="msg";
-if(!prenom||!email||!tel){msg.className="msg e";msg.textContent="Prénom, email et téléphone requis.";return;}
-submitBtn.disabled=true;submitBtn.textContent="Envoi…";
-fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"inscription",eventId:ev.id,prenom:prenom,email:email,telephone:tel,niveau:niveau,commentaire:commentaire})}).then(function(r){return r.json();})
-.then(function(res){
-submitBtn.disabled=false;submitBtn.textContent=full?"Rejoindre la liste d'attente":"Confirmer l'inscription";
-if(res.success){
-var stripeUrl="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05?prefilled_email="+encodeURIComponent(email)+"&client_reference_id="+encodeURIComponent(ev.id+"_"+prenom);
-card.innerHTML=
-'<div class="confirmation">'+
-'<div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'+
-'<h3>Inscription confirmée !</h3>'+
-'<p class="conf-sub">Merci <strong>'+esc(prenom)+'</strong>, ta place est réservée.</p>'+
-'<div class="conf-recap">'+
-'<p><strong>\u{1f4c5} Événement :</strong> '+esc(ev.theme)+'</p>'+
-'<p><strong>\u{23f0} Date :</strong> '+fmtDate(ev.date)+' de '+fmtH(ev.date)+' à '+fmtH(ev.dateFin)+'</p>'+
-'<p><strong>\u{1f4e7} Email :</strong> '+esc(email)+'</p>'+
-'<p><strong>\u{1f4f1} Tél :</strong> '+esc(tel)+'</p>'+
-'</div>'+
-'<div class="conf-pay">'+
-'<p>\u{1f4b3} Pour faciliter le jour J, règle ta participation en ligne :</p>'+
-'<a href="'+stripeUrl+'" target="_blank" rel="noopener" class="btn-stripe">\u{1f4b3} Payer en ligne (15€)</a>'+
-'</div>'+
-'<div class="conf-contact">'+
-'<a href="'+WHATSAPP+'" target="_blank" rel="noopener" class="conf-wa">\u{1f4ac} Contacter Mathias</a>'+
-'</div>'+
-'</div>';
-card.scrollIntoView({behavior:"smooth",block:"center"});
-}else{
-msg.className="msg e";msg.textContent=res.error||"Erreur lors de l'inscription.";
-}
-})
-.catch(function(){submitBtn.disabled=false;submitBtn.textContent="Confirmer l'inscription";msg.className="msg e";msg.textContent="Erreur réseau. Réessayez.";});
-});
-return card;
+  if(!nom||!prenom||!email||!tel){
+    msgEl.className="msg e";
+    msgEl.textContent="Merci de remplir tous les champs obligatoires (nom, prénom, email, téléphone).";
+    msgEl.scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+
+  var btn=document.getElementById("btnSubmit");
+  btn.disabled=true;
+  btn.textContent="Envoi en cours…";
+
+  var remarque="";
+  if(nb&&nb!=="1") remarque+="Nb participants: "+nb+". ";
+  if(dateSouhaitee) remarque+="Date souhaitée: "+dateSouhaitee+". ";
+  if(commentaire) remarque+=commentaire;
+
+  var params=new URLSearchParams({
+    action:"stage_inscription",
+    stage:"Americana",
+    prenom:prenom,
+    nom:nom,
+    email:email,
+    telephone:tel,
+    niveau:niveau||"Non précisé",
+    creneaux:"Americana",
+    attentes:remarque
+  });
+
+  fetch(WALLET_API+"?"+params.toString(),{method:"GET"})
+    .then(function(r){return r.json();})
+    .then(function(res){
+      btn.disabled=false;
+      btn.textContent="✅ Confirmer mon inscription";
+      if(res.success||res.status==="ok"){
+        msgEl.className="msg s";
+        msgEl.textContent="Inscription envoyée ! Mathias vous recontacte pour confirmer votre place.";
+        document.getElementById("americanaForm").reset();
+      }else{
+        msgEl.className="msg e";
+        msgEl.textContent=res.message||"Erreur lors de l'inscription. Réessayez.";
+      }
+      msgEl.scrollIntoView({behavior:"smooth",block:"center"});
+    })
+    .catch(function(){
+      btn.disabled=false;
+      btn.textContent="✅ Confirmer mon inscription";
+      msgEl.className="msg e";
+      msgEl.textContent="Erreur réseau. Vérifiez votre connexion et réessayez.";
+      msgEl.scrollIntoView({behavior:"smooth",block:"center"});
+    });
 }
 </script>
 </body>
