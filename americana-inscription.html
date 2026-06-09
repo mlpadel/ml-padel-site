@@ -28,6 +28,27 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .state{text-align:center;color:#666;font-size:14px;padding:40px 16px}
 .state a{color:#c9a84c;font-weight:700;text-decoration:none}
 
+/* --- RECAP SECTION --- */
+.recap{max-width:680px;margin:0 auto;padding:32px 20px 0}
+.recap-card{background:#fff;border-radius:18px;padding:28px 24px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08}
+.recap-card h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#0a1628;margin-bottom:18px;text-align:center}
+.recap-card h2 span{color:#c9a84c}
+.recap-timeline{position:relative;padding-left:28px;margin-bottom:20px}
+.recap-timeline::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:linear-gradient(180deg,#c9a84c,#e0cb82)}
+.recap-step{position:relative;margin-bottom:14px}
+.recap-step::before{content:'';position:absolute;left:-24px;top:5px;width:12px;height:12px;border-radius:50%;background:#c9a84c;border:2px solid #fff;box-shadow:0 0 0 2px #c9a84c40}
+.recap-step strong{font-size:14px;color:#0a1628;display:block;margin-bottom:2px}
+.recap-step p{font-size:13px;color:#555;line-height:1.5;margin:0}
+.recap-extras{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+@media(max-width:500px){.recap-extras{grid-template-columns:1fr}}
+.recap-extra{display:flex;align-items:center;gap:8px;font-size:13px;color:#0a1628;background:#faf9f6;border-radius:12px;padding:10px 14px}
+.recap-extra .icon{font-size:18px;flex-shrink:0}
+.recap-promo{margin-top:18px;background:linear-gradient(135deg,#0a1628,#162040);border-radius:14px;padding:16px 20px;text-align:center}
+.recap-promo p{color:#ffffffcc;font-size:13px;line-height:1.5}
+.recap-promo strong{color:#c9a84c}
+.btn-stripe{display:inline-block;margin-top:12px;padding:12px 32px;border-radius:50px;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;transition:transform .2s}
+.btn-stripe:hover{transform:scale(1.03)}
+
 .event{background:#fff;border-radius:18px;padding:22px 20px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:20px}
 .event .top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
 .event h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:900;color:#0a1628;margin-bottom:6px}
@@ -69,12 +90,24 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .btn-row{display:flex;gap:10px}
 .btn-row .btn{width:auto}.btn-row .ghost{flex:1}.btn-row .submit{flex:2}
 
-.fg .field-error{font-size:11px;color:#e74c3c;margin-top:4px;display:none;font-weight:600}
-.fg .field-error.visible{display:block}
-.fg input.invalid,.fg select.invalid{border-color:#e74c3c !important;background:#fdf0f0}
-
 .footer{text-align:center;padding:32px 20px;font-size:12px;color:#999}
 .footer a{color:#c9a84c;text-decoration:none;font-weight:600}
+
+/* --- CONFIRMATION --- */
+.confirmation{text-align:center;padding:8px 0}
+.confirmation .check{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#27ae60,#2ecc71);margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+.confirmation .check svg{width:32px;height:32px;stroke:#fff;stroke-width:3;fill:none}
+.confirmation h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#0a1628;margin-bottom:4px}
+.confirmation .conf-sub{color:#555;font-size:13px;margin-bottom:20px}
+.confirmation .conf-recap{background:#faf9f6;border-radius:14px;padding:16px 20px;margin-bottom:20px;text-align:left}
+.confirmation .conf-recap p{font-size:13px;color:#333;line-height:1.7;margin:0}
+.confirmation .conf-recap strong{color:#0a1628}
+.confirmation .conf-pay{background:linear-gradient(135deg,#0a1628,#162040);border-radius:14px;padding:20px;margin-bottom:16px}
+.confirmation .conf-pay p{color:#ffffffcc;font-size:13px;margin-bottom:12px}
+.confirmation .conf-pay .btn-stripe{margin-top:0}
+.confirmation .conf-contact{margin-top:12px}
+.confirmation .conf-wa{display:inline-block;padding:11px 28px;border-radius:50px;background:#25d366;color:#fff;font-weight:700;font-size:13px;text-decoration:none;transition:transform .2s}
+.confirmation .conf-wa:hover{transform:scale(1.03)}
 </style>
 </head>
 <body>
@@ -90,6 +123,40 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
   </div>
 </div>
 
+<!-- SECTION RECAP FORMAT -->
+<div class="recap">
+  <div class="recap-card">
+    <h2>&#127942; <span>Format</span> du mini-tournoi loisir</h2>
+
+    <div class="recap-timeline">
+      <div class="recap-step">
+        <strong>&#128075; Accueil &amp; r&egrave;gles (10 min)</strong>
+        <p>Pr&eacute;sentation du format, constitution des &eacute;quipes et explication des r&egrave;gles.</p>
+      </div>
+      <div class="recap-step">
+        <strong>&#127934; Matchs en rotation (1h10)</strong>
+        <p>Format au meilleur des <strong>15 points</strong> (ex : 9-6). Chaque joueur cumule sa diff&eacute;rence de points. Rotation apr&egrave;s chaque match pour jouer avec un maximum de partenaires. <strong>5 rotations minimum</strong> garanties.</p>
+      </div>
+      <div class="recap-step">
+        <strong>&#127867; Pot de l'amiti&eacute; (10 min)</strong>
+        <p>&Eacute;change de num&eacute;ros, ajout au groupe WhatsApp ML Padel et remise d'une <strong>certification Niveau 1/2</strong>.</p>
+      </div>
+    </div>
+
+    <div class="recap-extras">
+      <div class="recap-extra"><span class="icon">&#128166;</span> Pensez &agrave; amener de l'eau</div>
+      <div class="recap-extra"><span class="icon">&#128092;</span> Tenue de sport obligatoire</div>
+      <div class="recap-extra"><span class="icon">&#127934;</span> Pr&ecirc;t de raquettes possible</div>
+      <div class="recap-extra"><span class="icon">&#127873;</span> Petits lots pour chaque participant</div>
+    </div>
+
+    <div class="recap-promo">
+      <p>&#127775; Chaque participant re&ccedil;oit <strong>-10% sur son prochain cours individuel</strong> avec Mathias Laval.</p>
+      <a href="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05" target="_blank" rel="noopener" class="btn-stripe" id="stripe-btn">&#128179; Payer en ligne (15&euro;)</a>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <h2 class="section-title"><span>Inscription</span> Americana</h2>
   <p class="intro">Choisis ta date ci-dessous et inscris-toi en quelques secondes. Place confirm&eacute;e d&egrave;s validation.</p>
@@ -102,7 +169,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 
 <script>
 var CCT_API="https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
-var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent("Bonjour Mathias, je souhaite des infos sur l'Americana 🎾");
+var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent("Bonjour Mathias, je souhaite des infos sur l'Americana \u{1f3be}");
 var J=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
 var M=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];
 function fmtDate(iso){var d=new Date(iso);return J[d.getDay()]+" "+d.getDate()+" "+M[d.getMonth()];}
@@ -112,119 +179,112 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return
 var listEl=document.getElementById("list");
 
 fetch(CCT_API+"?action=events")
-  .then(function(r){return r.json();})
-  .then(function(data){
-    var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf("americana")!==-1;}):[];
-    if(!evts.length){
-      listEl.innerHTML='<div class="state">Aucune Americana programmée pour le moment.<br>Écris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour être prévenu(e) de la prochaine date.</div>';
-      return;
-    }
-    listEl.innerHTML="";
-    evts.forEach(function(ev){listEl.appendChild(renderEvent(ev));});
-  })
-  .catch(function(){
-    listEl.innerHTML='<div class="state">Impossible de charger les dates pour le moment.<br>Contacte-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a>.</div>';
-  });
+.then(function(r){return r.json();})
+.then(function(data){
+var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf("americana")!==-1;}):[];
+if(!evts.length){
+listEl.innerHTML='<div class="state">Aucune Americana programmée pour le moment.<br>Écris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour être prévenu(e) de la prochaine date.</div>';
+return;
+}
+listEl.innerHTML="";
+evts.forEach(function(ev){listEl.appendChild(renderEvent(ev));});
+})
+.catch(function(){
+listEl.innerHTML='<div class="state">Impossible de charger les dates pour le moment.<br>Contacte-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a>.</div>';
+});
 
 function renderEvent(ev){
-  var prix=(ev.prixPerPlayer!=null?ev.prixPerPlayer:ev.prixPar4);
-  var left=ev.maxPlaces-ev.nbInscrits;
-  var pct=ev.maxPlaces?Math.round(ev.nbInscrits/ev.maxPlaces*100):0;
-  var full=!!ev.complet;
-  var card=document.createElement("div");
-  card.className="event";
-  var inscritsHtml="";
-  if(ev.inscrits&&ev.inscrits.length){
-    inscritsHtml='<div class="inscrits">'+ev.inscrits.map(function(p){return '<span>'+esc(p.prenom)+(p.niveau?' · Niv '+esc(p.niveau):'')+'</span>';}).join("")+'</div>';
-  }
-  card.innerHTML=
-    '<div class="top">'+
-      '<div>'+
-        '<h3>'+esc(ev.theme)+'</h3>'+
-        '<div class="meta"><span>&#128197; '+fmtDate(ev.date)+'</span><span>&#9200; '+fmtH(ev.date)+' — '+fmtH(ev.dateFin)+'</span><span>&#9201; '+ev.dureeH+'h</span></div>'+
-        (ev.niveau?'<div class="niv">'+esc(ev.niveau)+'</div>':'')+
-      '</div>'+
-      '<div class="price"><div class="amt">'+prix+'<small>€</small></div><div class="sub">par joueur</div></div>'+
-    '</div>'+
-    '<div class="gauge-row"><span class="cnt">'+ev.nbInscrits+'/'+ev.maxPlaces+' inscrits</span>'+
-      (full?'<span class="tag full">COMPLET</span>':'<span class="tag ok">'+left+' place'+(left>1?'s':'')+' restante'+(left>1?'s':'')+'</span>')+
-    '</div>'+
-    '<div class="gauge'+(full?' full':'')+'"><div style="width:'+pct+'%"></div></div>'+
-    inscritsHtml+
-    '<button class="btn toggle">'+(full?'🔔 Liste d\'attente':'✍️ S\'inscrire')+'</button>'+
-    '<div class="form">'+
-      '<div class="msg"></div>'+
-      '<div class="row">'+
-        '<div class="fg"><label>Prénom</label><input class="f-prenom" type="text" placeholder="Votre prénom" required></div>'+
-        '<div class="fg"><label>Téléphone</label><input class="f-tel" type="tel" placeholder="0692 XX XX XX" required><div class="field-error err-tel">Numéro invalide (ex: 0692 XX XX XX)</div></div>'+
-      '</div>'+
-      '<div class="fg"><label>Email</label><input class="f-email" type="email" placeholder="votre@email.com" required><div class="field-error err-email">Veuillez entrer une adresse email valide</div></div>'+
-      '<div class="fg"><label>Niveau estimé <span class="opt">(optionnel)</span></label>'+
-        '<select class="f-niveau"><option value="">Choisissez</option>'+
-        '<option value="1">Niv 1 — Débutant</option><option value="2">Niv 2 — Initié</option>'+
-        '<option value="3">Niv 3 — Intermédiaire</option><option value="4">Niv 4 — Avancé</option>'+
-        '<option value="5">Niv 5 — Compétition</option></select></div>'+
-      '<div class="fg"><label>Remarque <span class="opt">(optionnel)</span></label><textarea class="f-comm" placeholder="Partenaire, question..."></textarea></div>'+
-      '<div class="btn-row">'+
-        '<button class="btn ghost cancel">Annuler</button>'+
-        '<button class="btn submit">'+(full?'Rejoindre la liste d\'attente':'Confirmer l\'inscription')+'</button>'+
-      '</div>'+
-    '</div>';
+var prix=(ev.prixPerPlayer!=null?ev.prixPerPlayer:ev.prixPar4);
+var left=ev.maxPlaces-ev.nbInscrits;
+var pct=ev.maxPlaces?Math.round(ev.nbInscrits/ev.maxPlaces*100):0;
+var full=!!ev.complet;
+var card=document.createElement("div");
+card.className="event";
+var inscritsHtml="";
+if(ev.inscrits&&ev.inscrits.length){
+inscritsHtml='<div class="inscrits">'+ev.inscrits.map(function(p){return '<span>'+esc(p.prenom)+(p.niveau?' · Niv '+esc(p.niveau):'')+'</span>';}).join("")+'</div>';
+}
+card.innerHTML=
+'<div class="top">'+
+'<div>'+
+'<h3>'+esc(ev.theme)+'</h3>'+
+'<div class="meta"><span>\u{1f4c5} '+fmtDate(ev.date)+'</span><span>⏰ '+fmtH(ev.date)+' — '+fmtH(ev.dateFin)+'</span><span>⏱ '+ev.dureeH+'h</span></div>'+
+(ev.niveau?'<div class="niv">'+esc(ev.niveau)+'</div>':'')+
+'</div>'+
+'<div class="price"><div class="amt">'+prix+'<small>€</small></div><div class="sub">par joueur</div></div>'+
+'</div>'+
+'<div class="gauge-row"><span class="cnt">'+ev.nbInscrits+'/'+ev.maxPlaces+' inscrits</span>'+
+(full?'<span class="tag full">COMPLET</span>':'<span class="tag ok">'+left+' place'+(left>1?'s':'')+' restante'+(left>1?'s':'')+'</span>')+
+'</div>'+
+'<div class="gauge'+(full?' full':'')+'"><div style="width:'+pct+'%"></div></div>'+
+inscritsHtml+
+'<button class="btn toggle">'+(full?'\u{1f514} Liste d\'attente':'✍️ S\'inscrire')+'</button>'+
+'<div class="form">'+
+'<div class="msg"></div>'+
+'<div class="row">'+
+'<div class="fg"><label>Prénom</label><input class="f-prenom" type="text" placeholder="Votre prénom" required></div>'+
+'<div class="fg"><label>Téléphone</label><input class="f-tel" type="tel" placeholder="0692 XX XX XX" required></div>'+
+'</div>'+
+'<div class="fg"><label>Email</label><input class="f-email" type="email" placeholder="votre@email.com" required></div>'+
+'<div class="fg"><label>Niveau estimé <span class="opt">(optionnel)</span></label>'+
+'<select class="f-niveau"><option value="">Choisissez</option>'+
+'<option value="1">Niv 1 — Débutant</option><option value="2">Niv 2 — Initié</option>'+
+'<option value="3">Niv 3 — Intermédiaire</option><option value="4">Niv 4 — Avancé</option>'+
+'<option value="5">Niv 5 — Compétition</option></select></div>'+
+'<div class="fg"><label>Remarque <span class="opt">(optionnel)</span></label><textarea class="f-comm" placeholder="Partenaire, question..."></textarea></div>'+
+'<div class="btn-row">'+
+'<button class="btn ghost cancel">Annuler</button>'+
+'<button class="btn submit">'+(full?'Rejoindre la liste d\'attente':'Confirmer l\'inscription')+'</button>'+
+'</div>'+
+'</div>';
 
-  var form=card.querySelector(".form");
-  var msg=card.querySelector(".msg");
-  card.querySelector(".toggle").addEventListener("click",function(){form.classList.toggle("open");});
-  card.querySelector(".cancel").addEventListener("click",function(){form.classList.remove("open");});
-  var submitBtn=card.querySelector(".submit");
-  submitBtn.addEventListener("click",function(){
-    var prenom=card.querySelector(".f-prenom").value.trim();
-    var tel=card.querySelector(".f-tel").value.trim();
-    var email=card.querySelector(".f-email").value.trim();
-    var niveau=card.querySelector(".f-niveau").value;
-    var commentaire=card.querySelector(".f-comm").value.trim();
-    msg.className="msg";
-    // Reset validation states
-    card.querySelectorAll('.invalid').forEach(function(el){el.classList.remove('invalid');});
-    card.querySelectorAll('.field-error').forEach(function(el){el.classList.remove('visible');});
-    var hasError=false;
-    // Prénom requis
-    if(!prenom){hasError=true;}
-    // Validation email
-    var emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if(!email||!emailRegex.test(email)){
-      card.querySelector('.f-email').classList.add('invalid');
-      card.querySelector('.err-email').classList.add('visible');
-      hasError=true;
-    }
-    // Validation téléphone
-    var telClean=tel.replace(/[\s.\-]/g,'');
-    var telRegex=/^(\+?\d{1,3})?\d{9,10}$/;
-    if(!tel||!telRegex.test(telClean)){
-      card.querySelector('.f-tel').classList.add('invalid');
-      card.querySelector('.err-tel').classList.add('visible');
-      hasError=true;
-    }else{tel=telClean;}
-    if(hasError){msg.className="msg e";msg.textContent="Veuillez corriger les champs en erreur.";return;}
-    submitBtn.disabled=true;submitBtn.textContent="Envoi…";
-    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"inscription",eventId:ev.id,prenom:prenom,email:email,telephone:tel,niveau:niveau,commentaire:commentaire})})
-      .then(function(r){return r.json();})
-      .then(function(res){
-        submitBtn.disabled=false;submitBtn.textContent=full?"Rejoindre la liste d'attente":"Confirmer l'inscription";
-        if(res.success){
-          msg.className="msg s";
-          msg.textContent=res.message||"Inscription enregistrée ! Mathias te recontacte pour confirmer.";
-          card.querySelector(".toggle").style.display="none";
-          card.querySelector(".btn-row").style.display="none";
-        }else{
-          msg.className="msg e";msg.textContent=res.error||"Erreur lors de l'inscription.";
-        }
-      })
-      .catch(function(){submitBtn.disabled=false;submitBtn.textContent="Confirmer l'inscription";msg.className="msg e";msg.textContent="Erreur réseau. Réessayez.";});
-  });
-  // Live validation: clear errors on input
-  card.querySelector('.f-email').addEventListener('input',function(){this.classList.remove('invalid');card.querySelector('.err-email').classList.remove('visible');});
-  card.querySelector('.f-tel').addEventListener('input',function(){this.classList.remove('invalid');card.querySelector('.err-tel').classList.remove('visible');});
-  return card;
+var form=card.querySelector(".form");
+var msg=card.querySelector(".msg");
+card.querySelector(".toggle").addEventListener("click",function(){form.classList.toggle("open");});
+card.querySelector(".cancel").addEventListener("click",function(){form.classList.remove("open");});
+var submitBtn=card.querySelector(".submit");
+submitBtn.addEventListener("click",function(){
+var prenom=card.querySelector(".f-prenom").value.trim();
+var tel=card.querySelector(".f-tel").value.trim();
+var email=card.querySelector(".f-email").value.trim();
+var niveau=card.querySelector(".f-niveau").value;
+var commentaire=card.querySelector(".f-comm").value.trim();
+msg.className="msg";
+if(!prenom||!email||!tel){msg.className="msg e";msg.textContent="Prénom, email et téléphone requis.";return;}
+submitBtn.disabled=true;submitBtn.textContent="Envoi…";
+fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"inscription",eventId:ev.id,prenom:prenom,email:email,telephone:tel,niveau:niveau,commentaire:commentaire})})
+.then(function(r){return r.json();})
+.then(function(res){
+submitBtn.disabled=false;submitBtn.textContent=full?"Rejoindre la liste d'attente":"Confirmer l'inscription";
+if(res.success){
+var stripeUrl="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05?prefilled_email="+encodeURIComponent(email)+"&client_reference_id="+encodeURIComponent(ev.id+"_"+prenom);
+card.innerHTML=
+'<div class="confirmation">'+
+'<div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'+
+'<h3>Inscription confirmée !</h3>'+
+'<p class="conf-sub">Merci <strong>'+esc(prenom)+'</strong>, ta place est réservée.</p>'+
+'<div class="conf-recap">'+
+'<p><strong>\u{1f4c5} Événement :</strong> '+esc(ev.theme)+'</p>'+
+'<p><strong>\u{23f0} Date :</strong> '+fmtDate(ev.date)+' de '+fmtH(ev.date)+' à '+fmtH(ev.dateFin)+'</p>'+
+'<p><strong>\u{1f4e7} Email :</strong> '+esc(email)+'</p>'+
+'<p><strong>\u{1f4f1} Tél :</strong> '+esc(tel)+'</p>'+
+'</div>'+
+'<div class="conf-pay">'+
+'<p>\u{1f4b3} Pour faciliter le jour J, règle ta participation en ligne :</p>'+
+'<a href="'+stripeUrl+'" target="_blank" rel="noopener" class="btn-stripe">\u{1f4b3} Payer en ligne (15€)</a>'+
+'</div>'+
+'<div class="conf-contact">'+
+'<a href="'+WHATSAPP+'" target="_blank" rel="noopener" class="conf-wa">\u{1f4ac} Contacter Mathias</a>'+
+'</div>'+
+'</div>';
+card.scrollIntoView({behavior:"smooth",block:"center"});
+}else{
+msg.className="msg e";msg.textContent=res.error||"Erreur lors de l'inscription.";
+}
+})
+.catch(function(){submitBtn.disabled=false;submitBtn.textContent="Confirmer l'inscription";msg.className="msg e";msg.textContent="Erreur réseau. Réessayez.";});
+});
+return card;
 }
 </script>
 </body>
