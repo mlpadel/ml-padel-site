@@ -24,8 +24,9 @@
 <meta name="geo.position" content="-21.2833;55.4167"/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://www.mlpadel.fr/"/>
-<link rel="icon" type="image/png" sizes="32x32" href="LOGO%20ML%20PADEL%202025%20(1).png"/>
-<link rel="apple-touch-icon" sizes="180x180" href="LOGO%20ML%20PADEL%202025%20(1).png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180.png"/>
+<link rel="preload" as="image" href="_LAVAL012-1080w.webp" fetchpriority="high"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -164,6 +165,16 @@ const PHONE = "0692 62 73 72";
 const PHONE_LINK = "tel:+262692627372";
 const EMAIL = "mathias.laval38@gmail.com";
 
+/* ─── Responsive images ───
+   Génère un srcSet 480/768/1080 à partir d'un src en "...-1080w.webp".
+   Le navigateur choisit la bonne taille selon l'écran (gros gain mobile).
+   Si le src n'est pas un -1080w.webp, retourne null (pas de srcSet). */
+const srcSetFor = (src) => {
+  if (!src || !/-1080w\.webp$/.test(src)) return null;
+  const base = src.replace(/-1080w\.webp$/, "");
+  return `${base}-480w.webp 480w, ${base}-768w.webp 768w, ${src} 1080w`;
+};
+
 /* ─── Fonts & Global CSS ─── */
 const fontLink = (
   <style>{`
@@ -243,7 +254,7 @@ function Carousel({images,height=420}){
             scrollSnapAlign:"center",borderRadius:16,overflow:"hidden",flexShrink:0,
           }}>
             {img.src?(
-              <img src={img.src} alt={img.alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
+              <img src={img.src} srcSet={srcSetFor(img.src)} sizes="(max-width:768px) 85vw, 600px" alt={img.alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover"}}/>
             ):null}
             
           </div>
@@ -259,7 +270,7 @@ function Carousel({images,height=420}){
 function PhotoBanner({src,alt,height=280,overlay=true,objectPos="center center"}){
   return(
     <div style={{width:"100%",height,position:"relative",overflow:"hidden",filter:o.disabled?"grayscale(0.7)":"none",opacity:o.disabled?0.65:1,zIndex:1}}>
-      <img src={src} alt={alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:objectPos,display:"block"}}/>
+      <img src={src} srcSet={srcSetFor(src)} sizes="100vw" alt={alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:objectPos,display:"block"}}/>
       {overlay&&<div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,${NAVY}33 0%,transparent 30%,transparent 70%,${NAVY}33 100%)`}}/>}
     </div>
   );
@@ -554,7 +565,7 @@ function About(){
             border:`2px solid ${GOLD}20`,
             position:"relative",overflow:"hidden",
           }}>
-            {coachPhotos.map((ph,i)=>React.createElement("img",{key:i,src:ph,alt:"Coach Mathias Laval",loading:"eager",style:{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 15%",display:"block",minHeight:380,position:"absolute",top:0,left:0,opacity:i===coachIdx?1:0,transition:"opacity 0.8s ease"}}))}
+            {coachPhotos.map((ph,i)=>React.createElement("img",{key:i,src:ph,srcSet:srcSetFor(ph),sizes:"(max-width:768px) 100vw, 600px",alt:"Coach Mathias Laval",loading:"eager",style:{width:"100%",height:"100%",objectFit:"cover",objectPosition:"center 15%",display:"block",minHeight:380,position:"absolute",top:0,left:0,opacity:i===coachIdx?1:0,transition:"opacity 0.8s ease"}}))}
             <div style={{
               position:"absolute",bottom:0,left:0,right:0,height:4,
               background:`linear-gradient(90deg,${GOLD},${GOLD_LIGHT},${GOLD})`,
@@ -1591,7 +1602,7 @@ function Gallery(){
                   border:"1px solid "+GOLD+"18",aspectRatio:"4/3",
                   position:"relative",cursor:"pointer",
                 }},
-                  React.createElement("img",{src:p.src,alt:p.alt,loading:"lazy",style:{width:"100%",height:"100%",objectFit:"cover",display:"block"}}),
+                  React.createElement("img",{src:p.src,srcSet:srcSetFor(p.src),sizes:"(max-width:768px) 50vw, 280px",alt:p.alt,loading:"lazy",style:{width:"100%",height:"100%",objectFit:"cover",display:"block"}}),
                 ))
               ),
               React.createElement("div",{style:{display:"flex",justifyContent:"center",alignItems:"center",gap:16,marginTop:16}},
@@ -2701,7 +2712,7 @@ function TeamSection(){
                   border:`3px solid ${GOLD}33`,boxShadow:`0 20px 60px ${NAVY}22`,
                   position:"relative",
                 }}>
-                  <img src={m.photo} alt={m.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
+                  <img src={m.photo} srcSet={srcSetFor(m.photo)} sizes="(max-width:768px) 90vw, 350px" alt={m.name} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}/>
                   <div style={{position:"absolute",bottom:0,left:0,right:0,padding:"40px 20px 16px",background:`linear-gradient(transparent,${NAVY}cc)`}}>
                     <div style={{color:GOLD,fontWeight:700,fontSize:11,letterSpacing:1.5,textTransform:"uppercase"}}>Coach principal</div>
                   </div>
