@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ===== SEO — modifier par événement ===== -->
 <title>Americana &mdash; Inscription &mdash; ML Padel</title>
 <meta name="description" content="Inscris-toi a l'Americana de padel au 4Padel Saint-Louis avec ML Padel. Tournoi convivial, niveaux adaptes, materiel prete par le club.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,8 +28,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 
 .state{text-align:center;color:#666;font-size:14px;padding:40px 16px}
 .state a{color:#c9a84c;font-weight:700;text-decoration:none}
-
-/* --- RECAP SECTION --- */
 .recap{max-width:680px;margin:0 auto;padding:32px 20px 0}
 .recap-card{background:#fff;border-radius:18px;padding:28px 24px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08}
 .recap-card h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:#0a1628;margin-bottom:18px;text-align:center}
@@ -48,7 +47,6 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .recap-promo strong{color:#c9a84c}
 .btn-stripe{display:inline-block;margin-top:12px;padding:12px 32px;border-radius:50px;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:14px;text-decoration:none;font-family:'DM Sans',sans-serif;transition:transform .2s}
 .btn-stripe:hover{transform:scale(1.03)}
-
 .event{background:#fff;border-radius:18px;padding:22px 20px;border:1.5px solid #c9a84c25;box-shadow:0 4px 18px #c9a84c08;margin-bottom:20px}
 .event .top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
 .event h3{font-family:'Playfair Display',serif;font-size:19px;font-weight:900;color:#0a1628;margin-bottom:6px}
@@ -68,12 +66,10 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .gauge.full>div{background:linear-gradient(90deg,#e74c3c,#c0392b)}
 .inscrits{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
 .inscrits span{font-size:11px;background:#0a16280a;border:1px solid #0a162815;border-radius:20px;padding:3px 10px;color:#0a1628cc}
-
 .btn{width:100%;padding:13px 0;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;font-weight:700;font-size:15px;font-family:'DM Sans',sans-serif;transition:transform .2s}
 .btn:hover{transform:scale(1.01)}
 .btn.ghost{background:transparent;border:1.5px solid #0a162820;color:#0a162888}
 .btn:disabled{opacity:.6;cursor:wait}
-
 .form{border-top:1px solid #c9a84c20;margin-top:16px;padding-top:16px;display:none}
 .form.open{display:block}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
@@ -89,11 +85,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .msg.e{background:#e74c3c18;color:#e74c3c;border:1px solid #e74c3c30;display:block}
 .btn-row{display:flex;gap:10px}
 .btn-row .btn{width:auto}.btn-row .ghost{flex:1}.btn-row .submit{flex:2}
-
 .footer{text-align:center;padding:32px 20px;font-size:12px;color:#999}
 .footer a{color:#c9a84c;text-decoration:none;font-weight:600}
-
-/* --- CONFIRMATION --- */
 .confirmation{text-align:center;padding:8px 0}
 .confirmation .check{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#27ae60,#2ecc71);margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
 .confirmation .check svg{width:32px;height:32px;stroke:#fff;stroke-width:3;fill:none}
@@ -112,6 +105,15 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 </head>
 <body>
 
+<script>
+var CONFIG = {
+  FILTER: "americana",
+  STRIPE_LINK: "https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05",
+  WHATSAPP_MSG: "Bonjour Mathias, je souhaite des infos sur l'Americana \u{1f3be}",
+  EMPTY_MSG: "Aucune Americana programmée pour le moment."
+};
+</script>
+
 <div class="header">
   <a href="/" class="back-home">&#8592; Retour au site</a>
   <a href="/" class="logo">&#127934; ML PADEL</a>
@@ -123,11 +125,9 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
   </div>
 </div>
 
-<!-- SECTION RECAP FORMAT -->
 <div class="recap">
   <div class="recap-card">
     <h2>&#127942; <span>Format</span> du mini-tournoi loisir</h2>
-
     <div class="recap-timeline">
       <div class="recap-step">
         <strong>&#128075; Accueil &amp; r&egrave;gles (10 min)</strong>
@@ -142,17 +142,15 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
         <p>&Eacute;change de num&eacute;ros, ajout au groupe WhatsApp ML Padel et remise d'une <strong>certification Niveau 1/2</strong>.</p>
       </div>
     </div>
-
     <div class="recap-extras">
       <div class="recap-extra"><span class="icon">&#128166;</span> Pensez &agrave; amener de l'eau</div>
       <div class="recap-extra"><span class="icon">&#128092;</span> Tenue de sport obligatoire</div>
       <div class="recap-extra"><span class="icon">&#127934;</span> Pr&ecirc;t de raquettes possible</div>
       <div class="recap-extra"><span class="icon">&#127873;</span> Petits lots pour chaque participant</div>
     </div>
-
     <div class="recap-promo">
       <p>&#127775; Chaque participant re&ccedil;oit <strong>-10% sur son prochain cours individuel</strong> avec Mathias Laval.</p>
-      <a href="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05" target="_blank" rel="noopener" class="btn-stripe" id="stripe-btn">&#128179; Payer en ligne (15&euro;)</a>
+      <a href="#" target="_blank" rel="noopener" class="btn-stripe" id="stripe-btn">&#128179; Payer en ligne</a>
     </div>
   </div>
 </div>
@@ -169,22 +167,30 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 
 <script>
 var CCT_API="https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3Nv34XPpWlXiyIjqHuuenIarP3pxCwfX5_ATn2CVCbd8F5w/exec";
-var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent("Bonjour Mathias, je souhaite des infos sur l'Americana \u{1f3be}");
+var WHATSAPP="https://wa.me/262692627372?text="+encodeURIComponent(CONFIG.WHATSAPP_MSG);
 var J=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
 var M=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];
 function fmtDate(iso){var d=new Date(iso);return J[d.getDay()]+" "+d.getDate()+" "+M[d.getMonth()];}
 function fmtH(iso){var d=new Date(iso);return d.getHours()+"h"+(d.getMinutes()<10?"0":"")+d.getMinutes();}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
 
+var stripeBtnStatic=document.getElementById("stripe-btn");
+if(stripeBtnStatic && !CONFIG.STRIPE_LINK){stripeBtnStatic.style.display="none";}
+if(stripeBtnStatic && CONFIG.STRIPE_LINK){stripeBtnStatic.href=CONFIG.STRIPE_LINK;}
+
 var listEl=document.getElementById("list");
 
 fetch(CCT_API+"?action=events")
 .then(function(r){return r.json();})
 .then(function(data){
-var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf("americana")!==-1;}):[];
+var evts=Array.isArray(data)?data.filter(function(e){return (e.theme||"").toLowerCase().indexOf(CONFIG.FILTER.toLowerCase())!==-1;}):[];
 if(!evts.length){
-listEl.innerHTML='<div class="state">Aucune Americana programmée pour le moment.<br>Écris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour être prévenu(e) de la prochaine date.</div>';
+listEl.innerHTML='<div class="state">'+esc(CONFIG.EMPTY_MSG)+'<br><br>Écris-nous sur <a href="'+WHATSAPP+'" target="_blank" rel="noopener">WhatsApp</a> pour être prévenu(e) de la prochaine date.</div>';
 return;
+}
+if(stripeBtnStatic && CONFIG.STRIPE_LINK){
+  var firstPrix=evts[0].prixPerPlayer!=null?evts[0].prixPerPlayer:evts[0].prixPar4;
+  stripeBtnStatic.textContent="\u{1f4b3} Payer en ligne ("+firstPrix+"€)";
 }
 listEl.innerHTML="";
 evts.forEach(function(ev){listEl.appendChild(renderEvent(ev));});
@@ -257,7 +263,11 @@ fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.str
 .then(function(res){
 submitBtn.disabled=false;submitBtn.textContent=full?"Rejoindre la liste d'attente":"Confirmer l'inscription";
 if(res.success){
-var stripeUrl="https://buy.stripe.com/dRm7sE7tFbU75MUaZna7C05?prefilled_email="+encodeURIComponent(email)+"&client_reference_id="+encodeURIComponent(ev.id+"_"+prenom);
+var stripeHtml="";
+if(CONFIG.STRIPE_LINK){
+  var stripeUrl=CONFIG.STRIPE_LINK+"?prefilled_email="+encodeURIComponent(email)+"&client_reference_id="+encodeURIComponent(ev.id+"_"+prenom);
+  stripeHtml='<div class="conf-pay"><p>\u{1f4b3} Pour faciliter le jour J, règle ta participation en ligne :</p><a href="'+stripeUrl+'" target="_blank" rel="noopener" class="btn-stripe">\u{1f4b3} Payer en ligne ('+prix+'€)</a></div>';
+}
 card.innerHTML=
 '<div class="confirmation">'+
 '<div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'+
@@ -265,14 +275,11 @@ card.innerHTML=
 '<p class="conf-sub">Merci <strong>'+esc(prenom)+'</strong>, ta place est réservée.</p>'+
 '<div class="conf-recap">'+
 '<p><strong>\u{1f4c5} Événement :</strong> '+esc(ev.theme)+'</p>'+
-'<p><strong>\u{23f0} Date :</strong> '+fmtDate(ev.date)+' de '+fmtH(ev.date)+' à '+fmtH(ev.dateFin)+'</p>'+
+'<p><strong>⏰ Date :</strong> '+fmtDate(ev.date)+' de '+fmtH(ev.date)+' à '+fmtH(ev.dateFin)+'</p>'+
 '<p><strong>\u{1f4e7} Email :</strong> '+esc(email)+'</p>'+
 '<p><strong>\u{1f4f1} Tél :</strong> '+esc(tel)+'</p>'+
 '</div>'+
-'<div class="conf-pay">'+
-'<p>\u{1f4b3} Pour faciliter le jour J, règle ta participation en ligne :</p>'+
-'<a href="'+stripeUrl+'" target="_blank" rel="noopener" class="btn-stripe">\u{1f4b3} Payer en ligne (15€)</a>'+
-'</div>'+
+stripeHtml+
 '<div class="conf-contact">'+
 '<a href="'+WHATSAPP+'" target="_blank" rel="noopener" class="conf-wa">\u{1f4ac} Contacter Mathias</a>'+
 '</div>'+
