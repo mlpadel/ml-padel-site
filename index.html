@@ -1697,6 +1697,10 @@ function CoursCollectifsSection(){
   const[formData,setFormData]=React.useState({prenom:"",email:"",telephone:"",niveau:"",commentaire:""});
   const[submitting,setSubmitting]=React.useState(false);
   const[feedback,setFeedback]=React.useState(null);
+  const[openUnsub,setOpenUnsub]=React.useState(null);
+  const[unsubData,setUnsubData]=React.useState({email:"",prenom:""});
+  const[unsubmitting,setUnsubmitting]=React.useState(false);
+  const[unsubFeedback,setUnsubFeedback]=React.useState(null);
 
   React.useEffect(()=>{
     fetch(CCT_API+"?action=events")
@@ -1728,6 +1732,27 @@ function CoursCollectifsSection(){
     }).catch(()=>{setSubmitting(false);setFeedback({t:"e",m:"Erreur réseau"});});
   };
 
+  const doUnsubscribe=(evId)=>{
+    if(!unsubData.email||!unsubData.prenom){setUnsubFeedback({t:"e",m:"Email et prénom requis"});return;}
+    setUnsubmitting(true);setUnsubFeedback(null);
+    fetch(CCT_API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action:"desinscription",eventId:evId,email:unsubData.email.trim(),prenom:unsubData.prenom.trim()})})
+    .then(r=>r.json()).then(res=>{
+      setUnsubmitting(false);
+      if(res.success){
+        setUnsubFeedback({t:"s",m:res.message||"Désinscription confirmée. Email de confirmation envoyé."});
+        setEvents(prev=>prev.map(ev=>{
+          if(ev.id!==evId)return ev;
+          const u={...ev};
+          if(res.wasStatut==="attente"){u.nbAttente=Math.max(0,ev.nbAttente-1);}
+          else{u.inscrits=ev.inscrits.filter(p=>p.prenom.toLowerCase()!==unsubData.prenom.trim().toLowerCase());u.nbInscrits=Math.max(0,ev.nbInscrits-1);u.complet=u.nbInscrits>=ev.maxPlaces;}
+          return u;
+        }));
+        setUnsubData({email:"",prenom:""});
+        setTimeout(()=>{setOpenUnsub(null);setUnsubFeedback(null);},3500);
+      }else{setUnsubFeedback({t:"e",m:res.error||"Aucune inscription trouvée avec ces infos"});}
+    }).catch(()=>{setUnsubmitting(false);setUnsubFeedback({t:"e",m:"Erreur réseau"});});
+  };
+
   if(loading||events.length===0)return null;
   return(
     <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND}}>
@@ -1746,6 +1771,7 @@ function CoursCollectifsSection(){
         <div style={{display:"flex",flexDirection:"column",gap:20}}>
           {events.map(ev=>{
             const isOpen=openForm===ev.id;
+            const isUnsubOpen=openUnsub===ev.id;
             const left=ev.maxPlaces-ev.nbInscrits;
             const pct=(ev.nbInscrits/ev.maxPlaces)*100;
             return(
@@ -1788,11 +1814,39 @@ function CoursCollectifsSection(){
                     )}
                   </div>
                   {/* Bouton */}
-                  {!isOpen&&(
+                  {!isOpen&&!isUnsubOpen&&(
                     <div style={{padding:"0 24px 20px"}}>
                       <button onClick={()=>{setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
                         {ev.complet?"\uD83D\uDD14 Liste d'attente":"\u270D\uFE0F S'inscrire"}
                       </button>
+                      <div style={{textAlign:"center",marginTop:10}}>
+                        <button onClick={()=>{setOpenUnsub(ev.id);setUnsubFeedback(null);}} style={{background:"none",border:"none",color:NAVY+"70",fontSize:12,fontWeight:600,cursor:"pointer",textDecoration:"underline"}}>
+                          D&eacute;j&agrave; inscrit&middot;e ? Se d&eacute;sinscrire
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {/* Formulaire d&eacute;sinscription */}
+                  {isUnsubOpen&&(
+                    <div style={{padding:"0 24px 24px",borderTop:`1px solid ${NAVY}10`,background:NAVY+"03"}}>
+                      <div style={{paddingTop:16,display:"flex",flexDirection:"column",gap:12}}>
+                        <div style={{fontSize:13,color:NAVY+"99",lineHeight:1.5}}>
+                          Pour vous d&eacute;sinscrire, saisissez l'email et le pr&eacute;nom utilis&eacute;s &agrave; l'inscription. Un email de confirmation vous sera envoy&eacute;.
+                        </div>
+                        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                          <input placeholder="Pr&eacute;nom *" required value={unsubData.prenom} onChange={e=>setUnsubData({...unsubData,prenom:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                          <input placeholder="Email *" type="email" required value={unsubData.email} onChange={e=>setUnsubData({...unsubData,email:e.target.value})} style={{flex:"1 1 180px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                        </div>
+                        {unsubFeedback&&(
+                          <div style={{padding:"10px 16px",borderRadius:8,fontSize:13,fontWeight:600,background:unsubFeedback.t==="s"?"#27ae6018":"#e74c3c18",color:unsubFeedback.t==="s"?"#27ae60":"#e74c3c",border:`1px solid ${unsubFeedback.t==="s"?"#27ae6030":"#e74c3c30"}`}}>{unsubFeedback.m}</div>
+                        )}
+                        <div style={{display:"flex",gap:10}}>
+                          <button onClick={()=>{setOpenUnsub(null);setUnsubFeedback(null);setUnsubData({email:"",prenom:""});}} style={{flex:1,padding:"12px",border:`1px solid ${NAVY}20`,borderRadius:10,background:"transparent",color:NAVY+"80",fontWeight:600,fontSize:14,cursor:"pointer"}}>Annuler</button>
+                          <button onClick={()=>doUnsubscribe(ev.id)} disabled={unsubmitting} style={{flex:2,padding:"12px",border:"none",borderRadius:10,background:"#e74c3c",color:"#fff",fontWeight:700,fontSize:14,cursor:"pointer",opacity:unsubmitting?0.6:1}}>
+                            {unsubmitting?"Envoi...":"Confirmer la d\u00E9sinscription"}
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
                   {/* Formulaire */}
