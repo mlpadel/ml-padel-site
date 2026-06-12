@@ -701,10 +701,10 @@ function Pricing(){
 
   const data={
     individuel:[
-      {title:"Cours individuel",price:"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+      {title:"Cours individuel",price:"55",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv,walletCr:"55 crédits",walletEff:"jusqu’à 47,80 € effectif/h"},
     ],
     collectif:[
-      {title:"Duo",price:"60",unit:"€/heure",desc:"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.collectifDuo},
+      {title:"Duo",price:"70",unit:"€/heure",desc:"1h · 2 joueurs · 35€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.collectifDuo,walletCr:"35 crédits/pers",walletEff:"jusqu’à 30,40 € effectif/pers"},
       {title:"Trio",disabled:true,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:CALCOM.collectifTrio},
       {title:"Quatuor",disabled:true,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:CALCOM.collectifQuatuor},
     ],
@@ -713,10 +713,10 @@ function Pricing(){
       {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"/academie-inscription.html"},
     ],
     stages:[
-      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 joueurs · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:4},
+      {title:"Stage vacances",price:"150",unit:"€/joueur",desc:"1 terrain · 4 joueurs · 1h30 · 5 jours",features:["Stage complet (semaine)","Niveaux adaptés","Idéal vacances scolaires"],link:CALCOM.stage,spotsLeft:null,spotsTotal:4,walletCr:"150 crédits",walletEff:"jusqu’à 130,40 € effectif"},
       {title:"Stage 2 terrains",price:"120",unit:"€/joueur",desc:"2 terrains · 4 joueurs/terrain · 1h30 · 5 jours",features:["Économie de 20%","Plus de créneaux","8 joueurs par groupe"],popular:true,badge:"–20%",link:CALCOM.stage,spotsLeft:null,spotsTotal:8},
-      {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4},
-      {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8},
+      {title:"Masterclass WE 4j",price:"100",unit:"€/joueur",desc:"2 × 3h · 4 joueurs max",features:["Week-end intensif","Petit groupe","Perfectionnement ciblé"],link:CALCOM.masterclass4,walletCr:"100 crédits",walletEff:"jusqu’à 87,00 € effectif"},
+      {title:"Masterclass WE 8j",price:"80",unit:"€/joueur",desc:"2 × 3h · 8 joueurs",features:["Week-end intensif","Grand groupe","Tarif réduit"],link:CALCOM.masterclass8,walletCr:"80 crédits",walletEff:"jusqu’à 69,60 € effectif"},
       {title:"Stage Océan Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Réunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
     ],
   };
@@ -737,6 +737,18 @@ function Pricing(){
             }}>
               Trouve la formule <span style={{color:GOLD}}>idéale</span>
             </h2>
+            <a href="#wallet" style={{
+              display:"inline-flex",alignItems:"center",gap:10,marginTop:18,
+              background:`linear-gradient(135deg,${NAVY},${NAVY_MID})`,
+              border:`1px solid ${GOLD}50`,borderRadius:50,
+              padding:"10px 20px",textDecoration:"none",
+              boxShadow:`0 4px 18px ${NAVY}30`,
+            }}>
+              <span style={{fontSize:16}}>💳</span>
+              <span style={{fontSize:12.5,color:CREAM,fontWeight:600,lineHeight:1.4,textAlign:"left"}}>
+                Nouveaux tarifs 2026 — <span style={{color:GOLD,fontWeight:700}}>le Wallet préserve votre ancien prix</span> grâce aux bonus de recharge&nbsp;→
+              </span>
+            </a>
           </div>
 
           <div className="pricing-tabs" style={{
@@ -836,6 +848,25 @@ function Pricing(){
                   {o.unit&&!o.disabled&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
                 </div>
                 {o.subPrice&&!o.disabled&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
+
+                {o.walletCr&&!o.disabled&&!o.soon&&(
+                  <a href="#wallet" style={{
+                    display:"flex",alignItems:"center",gap:8,textDecoration:"none",
+                    background:`linear-gradient(135deg,${GOLD}12,${GOLD}06)`,
+                    border:`1px solid ${GOLD}35`,borderRadius:10,
+                    padding:"8px 10px",marginTop:6,
+                  }}>
+                    <span style={{fontSize:15}}>💳</span>
+                    <span style={{display:"block"}}>
+                      <span style={{display:"block",fontSize:11.5,fontWeight:700,color:TEXT_DARK}}>
+                        Avec le Wallet : {o.walletCr}
+                      </span>
+                      <span style={{display:"block",fontSize:10.5,color:TEXT_LIGHT,marginTop:1}}>
+                        {o.walletEff} grâce aux bonus de recharge
+                      </span>
+                    </span>
+                  </a>
+                )}
 
                 <div style={{margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
                   {o.features.map((f,fi)=>(
@@ -1005,6 +1036,7 @@ function Wallet(){
 
   const uses=[
     {name:"Cours individuel (1h)",credits:"55 cr."},
+    {name:"Collectif duo (1h)",credits:"35 cr./pers"},
     {name:"Collectif 4j (1h)",credits:"20 cr./pers"},
     {name:"Stage vacances",credits:"150 cr."},
     {name:"Masterclass WE",credits:"100 cr."},
@@ -1031,8 +1063,10 @@ function Wallet(){
               Chargez. Jouez. <span style={{color:GOLD}}>Économisez.</span>
             </h2>
             <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
-              1 crédit = 1€ — Plus vous chargez, plus vous gagnez de crédits bonus.
-              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
+              Le Wallet, c’est le pack version moderne : 1 crédit = 1€, simple et transparent.
+              Chaque recharge vous offre des crédits bonus (+5 à +15%) — de quoi amortir les nouveaux
+              tarifs 2026 et conserver votre prix d’avant, voire mieux.
+              Utilisable sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
             </p>
           </div>
         </AnimatedSection>
@@ -2159,7 +2193,10 @@ function FAQ(){
     {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, 2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
     {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
-    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (50 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
+    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (55 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
+    {q:"Pourquoi les tarifs ont-ils changé en 2026 ?",a:"Les tarifs des cours individuels et duo ont été ajustés pour la saison 2026-2027 (individuel 55€/h, duo 35€/pers). Mais avec le Wallet, vous conservez votre prix d’avant : par exemple, une recharge de 200€ donne 220 crédits, soit 4 cours individuels à 50€ effectif — l’ancien tarif. Avec la recharge 300€ (+15%), vous descendez même en dessous."},
+    {q:"Le wallet est-il obligatoire pour réserver ?",a:"Non. Vous pouvez toujours réserver et payer en direct (espèces, CB, chèque) au tarif affiché. Le Wallet est simplement le moyen le plus avantageux : les bonus de recharge font baisser votre prix effectif de 5 à 13% selon le palier."},
+    {q:"J’avais l’habitude des packs, que deviennent-ils ?",a:"Le Wallet remplace les anciens packs, en mieux : même logique de prépaiement avec remise, mais sans engagement sur un seul type de cours. 1 crédit = 1€, utilisable sur toutes les prestations unitaires (individuel, collectif, stage, masterclass), au lieu d’un pack figé sur 10h."},
     {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
     {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
