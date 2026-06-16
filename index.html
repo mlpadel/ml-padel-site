@@ -2695,6 +2695,7 @@ function Événements(){
       days:"Lundi · Mardi · Jeudi · Vendredi",
       slots:["7h – 8h30","8h30 – 10h"],
       semaines:"29 juin – 3 juil. ou 6 – 10 juil.",
+      fullNote:"8h30 – 10h complet · 6 – 10 juil.",
       badge:"HEURES CREUSES",
       color:GOLD,
     },
@@ -2810,6 +2811,12 @@ function Événements(){
                     <span style={{fontSize:14}}>📋</span>
                     <span style={{fontSize:13,color:o.id==="soiree-mini"?"#e07b5a":CREAM,fontWeight:o.id==="soiree-mini"?700:400}}>{o.semaines}</span>
                   </div>
+                  {o.fullNote&&(
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{fontSize:14}}>🔴</span>
+                    <span style={{fontSize:12,color:"#ff9b9b",fontWeight:700,textDecoration:"line-through"}}>{o.fullNote}</span>
+                  </div>
+                  )}
                 </div>
 
                 {o.complet?(
@@ -2849,7 +2856,7 @@ function StageJuilletForm(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
   const offres=[
-    {id:"matin-hc",label:"Stage Matin HC — 100€",price:100,slots:["7h – 8h30","8h30 – 10h"],semaines:["29 juin – 3 juillet","6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
+    {id:"matin-hc",label:"Stage Matin HC — 100€",price:100,slots:["7h – 8h30","8h30 – 10h"],fullByWeek:{"6 – 10 juillet":["8h30 – 10h"]},semaines:["29 juin – 3 juillet","6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
     {id:"soiree-hp",label:"Stage Soirée HP — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
     {id:"soiree-mini",label:"Stage Soirée Mini — 90€",price:90,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["20h – 21h30"],semaines:["1 – 3 juillet"],days:"Me/Je/Ve"},
   ];
@@ -2999,7 +3006,7 @@ function StageJuilletForm(){
                 <label style={{...labelStyle,marginBottom:12}}>Créneau horaire souhaité * <span style={{fontWeight:500,color:TEXT_LIGHT}}>({selectedOffre.days})</span></label>
                 <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:20}}>
                   {selectedOffre.slots.map(sl=>{
-                    const isFull=(selectedOffre.fullSlots||[]).includes(sl);
+                    const isFull=(selectedOffre.fullSlots||[]).includes(sl)||((selectedOffre.fullByWeek&&form.semaine)?(selectedOffre.fullByWeek[form.semaine]||[]).includes(sl):false);
                     const selected=form.creneau===sl;
                     return(
                       <label key={sl} style={{
@@ -3033,7 +3040,7 @@ function StageJuilletForm(){
                         transition:"all 0.3s",flex:"1 1 auto",minWidth:160,
                       }}>
                         <input type="radio" name="semaine" value={sem} checked={selected}
-                          onChange={e=>setForm({...form,semaine:e.target.value})}
+                          onChange={e=>{const ns=e.target.value;const fbw=(selectedOffre.fullByWeek&&selectedOffre.fullByWeek[ns])||[];setForm({...form,semaine:ns,creneau:fbw.includes(form.creneau)?"":form.creneau});}}
                           style={{accentColor:GOLD}}/>
                         <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>{sem}</span>
                       </label>
