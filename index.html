@@ -2709,6 +2709,7 @@ function Événements(){
       semaines:"6 – 10 juil.",
       badge:"HEURES PLEINES",
       popular:true,
+      complet:true,
       color:"#e0cb82",
     },
     {
@@ -2772,7 +2773,7 @@ function Événements(){
               onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)";e.currentTarget.style.boxShadow=`0 8px 30px ${GOLD}25`}}
               onMouseLeave={e=>{e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow=o.popular?`0 0 30px ${GOLD}20`:`0 4px 20px rgba(0,0,0,0.3)`}}
               >
-                {o.popular&&<div style={{position:"absolute",top:12,right:-28,background:GOLD,color:NAVY,fontSize:10,fontWeight:800,padding:"4px 32px",transform:"rotate(45deg)",letterSpacing:1}}>POPULAIRE</div>}
+                {o.complet?<div style={{position:"absolute",top:12,right:-28,background:"#e74c3c",color:"#fff",fontSize:10,fontWeight:800,padding:"4px 32px",transform:"rotate(45deg)",letterSpacing:1}}>COMPLET</div>:(o.popular&&<div style={{position:"absolute",top:12,right:-28,background:GOLD,color:NAVY,fontSize:10,fontWeight:800,padding:"4px 32px",transform:"rotate(45deg)",letterSpacing:1}}>POPULAIRE</div>)}
 
                 <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
                   <span style={{fontSize:28}}>{o.emoji}</span>
@@ -2806,6 +2807,9 @@ function Événements(){
                   </div>
                 </div>
 
+                {o.complet?(
+                  <div style={{display:"block",textAlign:"center",padding:"12px 0",borderRadius:50,background:"#ffffff12",border:"2px solid #e74c3c66",color:"#ff9b9b",fontWeight:700,fontSize:14}}>COMPLET</div>
+                ):(
                 <a href="#stage-juillet-form"
                   onClick={()=>setSelectedOffer(o.id)}
                   style={{
@@ -2820,6 +2824,7 @@ function Événements(){
                 >
                   S'inscrire →
                 </a>
+                )}
               </div>
             </AnimatedSection>
           ))}
@@ -2840,7 +2845,7 @@ function StageJuilletForm(){
 
   const offres=[
     {id:"matin-hc",label:"Stage Matin HC — 100€",price:100,slots:["7h – 8h30","8h30 – 10h"],semaines:["29 juin – 3 juillet","6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
-    {id:"soiree-hp",label:"Stage Soirée HP — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["18h30 – 20h","20h – 21h30"],semaines:["6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
+    {id:"soiree-hp",label:"Stage Soirée HP — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
     {id:"soiree-mini",label:"Stage Soirée Mini — 90€",price:90,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["1 – 3 juillet"],days:"Me/Je/Ve"},
   ];
 
