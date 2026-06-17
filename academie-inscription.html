@@ -40,6 +40,9 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
 .slot.full{opacity:0.6;cursor:not-allowed;pointer-events:none;background:#f4f4f4;border-color:#e0e0e0}
 .slot.full .slot-time{text-decoration:line-through;color:#999}
 .slot-tag{font-size:11px;font-weight:700;color:#fff;background:#b03a3a;border-radius:50px;padding:3px 10px;white-space:nowrap}
+.slot-wait{font-size:10px;font-weight:700;color:#a0741f;background:#f3e2bd;border-radius:50px;padding:3px 9px;white-space:nowrap}
+.full-banner{background:linear-gradient(135deg,#0a1628,#162040);color:#fff;border-radius:14px;padding:16px 18px;font-size:13px;line-height:1.55;margin-bottom:24px;text-align:center}
+.full-banner strong{color:#c9a84c}
 
 /* Photo coach (carrousel) */
 .coach-carousel{max-width:340px;margin:0 auto 30px}
@@ -151,26 +154,29 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
     <div class="cc-dots" id="ccDots"></div>
   </div>
 
-  <h2 class="section-title">Vos disponibilit&eacute;s <span>(cochez tous les cr&eacute;neaux qui vous conviennent)</span></h2>
+  <div class="full-banner"><strong>Saison 2026-2027 compl&egrave;te</strong> &mdash; tous les groupes sont complets. Inscris-toi en <b>liste d'attente</b> sur le(s) cr&eacute;neau(x) qui te conviennent (niveau indiqu&eacute;) : on te recontacte d&egrave;s qu'une place se lib&egrave;re.
+</div>
+
+  <h2 class="section-title">Liste d'attente <span>(coche les cr&eacute;neaux qui te conviennent)</span></h2>
 
   <div class="creneaux-grid">
     <div class="jour-group">
       <div class="jour-label"><span class="dot"></span>Lundi</div>
       <div class="slots">
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Lundi 17h-18h30" disabled>
-          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Lundi 17h-18h30">
+          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div><div class="slot-level">Niv. 4</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Lundi 18h30-20h" disabled>
-          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Lundi 18h30-20h">
+          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div><div class="slot-level">Niv. 3</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Lundi 20h-21h30" disabled>
-          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Lundi 20h-21h30">
+          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div><div class="slot-level">Niv. 5/6</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
       </div>
     </div>
@@ -178,20 +184,20 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
     <div class="jour-group">
       <div class="jour-label"><span class="dot"></span>Mardi</div>
       <div class="slots">
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Mardi 17h-18h30" disabled>
-          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Mardi 17h-18h30">
+          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div><div class="slot-level">Niv. 5/6</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Mardi 18h30-20h" disabled>
-          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Mardi 18h30-20h">
+          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div><div class="slot-level">Niv. 3</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Mardi 20h-21h30" disabled>
-          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Mardi 20h-21h30">
+          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div><div class="slot-level">Niv. 3</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
       </div>
     </div>
@@ -201,17 +207,18 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
       <div class="slots">
         <div class="slot">
           <input type="checkbox" name="creneau" value="Jeudi 17h-18h30">
-          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div></div>
+          <div class="slot-info"><div class="slot-time">17h &mdash; 18h30</div><div class="slot-level">Niv. 4</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Jeudi 18h30-20h" disabled>
-          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Jeudi 18h30-20h">
+          <div class="slot-info"><div class="slot-time">18h30 &mdash; 20h</div><div class="slot-level">Niv. 6</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
-        <div class="slot full">
-          <input type="checkbox" name="creneau" value="Jeudi 20h-21h30" disabled>
-          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div></div>
-          <span class="slot-tag">Complet</span>
+        <div class="slot">
+          <input type="checkbox" name="creneau" value="Jeudi 20h-21h30">
+          <div class="slot-info"><div class="slot-time">20h &mdash; 21h30</div><div class="slot-level">Niv. 5</div></div>
+          <span class="slot-wait">Liste d'attente</span>
         </div>
       </div>
       <p style="margin-top:12px;font-size:13px;color:#666;line-height:1.4;">Cochez un maximum de cr&eacute;neaux pour optimiser la constitution des groupes. &Agrave; l'inscription, les <b>groupes de 4 joueurs</b> inscrits ensemble et les <b>engagements en cycle annuel</b> sont prioritaires.</p>
@@ -287,8 +294,8 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
     </ul>
   </div>
 
-  <h2 class="section-title"><span>Inscription</span></h2>
-  <p style="text-align:center;color:#666;font-size:13px;margin-bottom:24px">Remplissez le formulaire ci-dessous pour r&eacute;server votre place</p>
+  <h2 class="section-title"><span>Liste d'attente</span></h2>
+  <p style="text-align:center;color:#666;font-size:13px;margin-bottom:24px">Remplis le formulaire pour rejoindre la liste d'attente. On te recontacte d&egrave;s qu'une place se lib&egrave;re sur ton cr&eacute;neau.</p>
 
   <div class="form-card">
     <form id="academieForm">
@@ -340,12 +347,12 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
         <textarea name="attentes" placeholder="Ex : nous formons un groupe de 4 avec... &middot; objectifs, contraintes, questions"></textarea>
       </div>
       <div class="error-msg" id="formError"></div>
-      <button type="submit" class="submit-btn" id="submitBtn">Valider mon inscription</button>
+      <button type="submit" class="submit-btn" id="submitBtn">Rejoindre la liste d'attente</button>
     </form>
     <div class="success-msg" id="formSuccess">
-      <div class="icon">&#127934;</div>
-      <h3>Inscription <span>enregistr&eacute;e</span> !</h3>
-      <p>Mathias vous contactera pour confirmer votre place et organiser le paiement.<br>Un email de confirmation a &eacute;t&eacute; envoy&eacute;.</p>
+      <div class="icon">&#9989;</div>
+      <h3>Liste d'attente <span>enregistr&eacute;e</span> !</h3>
+      <p>Tu es sur la liste d'attente. Mathias te contactera d&egrave;s qu'une place se lib&egrave;re sur ton cr&eacute;neau.</p>
     </div>
   </div>
 
@@ -423,6 +430,7 @@ document.getElementById('academieForm').addEventListener('submit',async function
   try{
     const params=new URLSearchParams({
       action:"academie_inscription",
+      liste_attente:"oui",
       nom:nom,prenom:prenom,tel:tel,email:email,
       niveau:niveau,engagement:engagement,
       creneau:creneau,attentes:attentes||"(aucune)"
@@ -441,7 +449,7 @@ document.getElementById('academieForm').addEventListener('submit',async function
     errorDiv.textContent=err.message||"Erreur de connexion. R\u00e9essayez.";
     errorDiv.style.display='block';
     btn.disabled=false;
-    btn.textContent="Valider mon inscription";
+    btn.textContent="Rejoindre la liste d'attente";
   }
 });
 </script>
