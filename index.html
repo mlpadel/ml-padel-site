@@ -691,6 +691,7 @@ function Pricing(){
     // ── Tarifs SEPTEMBRE 2026 (a activer le moment venu — NE PAS afficher avant) ──
     // Individuel: 55 EUR/h · Duo: 70 EUR/h (35/pers) · Trio: 75 EUR/h (25/pers) · Quatuor: 80 EUR/h (20/pers)
     // + retirer disabled:true sur Trio/Quatuor et reactiver l'affichage du bonus Wallet -15% (compense la hausse).
+  const NT=(new Date()>=new Date('2026-07-12T00:00:00+04:00'));
   const data={
     individuel:[
       {title:"Cours individuel",price:"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
