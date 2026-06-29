@@ -768,7 +768,7 @@ function Pricing(){
           gap:18,
         }}>
           {items.map((o,i)=>(
-            <AnimatedSection key={`${tab}-${i}`} delay={i*0.18}>
+            <AnimatedSection key={`${tab}-${i}`} delay={i*0.18} style={{height:"100%"}}>
               <div style={{
                 background:WHITE,
                 border:`${o.popular?3:2}px solid ${o.popular?GOLD+"40":"#eee"}`,
