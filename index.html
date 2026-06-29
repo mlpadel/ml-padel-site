@@ -694,7 +694,7 @@ function Pricing(){
   const NT=(new Date()>=new Date('2026-07-12T00:00:00+04:00'));
   const data={
     individuel:[
-      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:NT?"https://cal.com/ml-padel/cours-individuel?duration=60&overlayCalendar=true":CALCOM.indiv,walletLink:NT?"https://cal.com/ml-padel/indiv-wallet?duration=60&overlayCalendar=true":null,subPrice:NT?"ou 51€/h avec wallet (-15%)":undefined},
     ],
     collectif:[
       {title:"Duo",price:"60",unit:"€/heure",desc:"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.collectifDuo},
