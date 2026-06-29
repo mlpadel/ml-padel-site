@@ -694,7 +694,7 @@ function Pricing(){
   const NT=(new Date()>=new Date('2026-07-12T00:00:00+04:00'));
   const data={
     individuel:[
-      {title:"Cours individuel",price:"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
+      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indiv},
     ],
     collectif:[
       {title:"Duo",price:"60",unit:"€/heure",desc:"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.collectifDuo},
