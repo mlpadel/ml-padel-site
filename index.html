@@ -840,7 +840,7 @@ function Pricing(){
                 </div>
                 {o.subPrice&&!o.disabled&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
 
-                <div style={{margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
+                <div style={{flexGrow:1,margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
                   {o.features.map((f,fi)=>(
                     <div key={fi} style={{
                       display:"flex",alignItems:"center",gap:8,
