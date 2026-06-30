@@ -261,7 +261,7 @@ function Carousel({images,height=420}){
 function PhotoBanner({src,alt,height=280,overlay=true,objectPos="center center"}){
   return(
     <div style={{width:"100%",height,position:"relative",overflow:"hidden",filter:o.disabled?"grayscale(0.7)":"none",opacity:o.disabled?0.65:1,zIndex:1}}>
-      <img src={src} alt={alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:objectPos,display:"block"}}/>
+      <img src={src} srcSet={_ss(src)} sizes="(max-width:768px) 100vw, 1080px" alt={alt||""} loading="lazy" style={{width:"100%",height:"100%",objectFit:"cover",objectPosition:objectPos,display:"block"}}/>
       {overlay&&<div style={{position:"absolute",inset:0,background:`linear-gradient(180deg,${NAVY}33 0%,transparent 30%,transparent 70%,${NAVY}33 100%)`}}/>}
     </div>
   );
