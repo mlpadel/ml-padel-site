@@ -217,6 +217,7 @@ function useInView(threshold=0.08){
   return[ref,inView];
 }
 
+function _ss(s){if(!s||!/-\d+w\.webp$/.test(s))return undefined;var ow=parseInt(s.match(/-(\d+)w\.webp$/)[1],10);var b=s.replace(/-\d+w\.webp$/,'');var o=[];[480,768].forEach(function(w){if(w<ow)o.push(b+'-'+w+'w.webp '+w+'w');});o.push(s+' '+ow+'w');return o.join(', ');}
 function AnimatedSection({children,style={},delay=0}){
   const[ref,inView]=useInView();
   return(
