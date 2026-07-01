@@ -693,19 +693,19 @@ function SeasonBanner(){
       <div style={{background:WHITE,border:"1px solid #eae6db",borderRadius:14,padding:"22px",marginTop:14}}>
         <h4 style={{fontFamily:"'Playfair Display',serif",color:TEXT_DARK,fontSize:19,fontWeight:800,margin:"0 0 6px"}}>La Wallet remplace les packs de 5 ou 10 séances</h4>
         <p style={{fontSize:14,lineHeight:1.6,color:TEXT_MED,margin:"0 0 16px"}}>Fini le carnet figé à consommer. Tu recharges <b style={{color:TEXT_DARK}}>une seule fois</b>, puis tu piochent à ton rythme : un indiv cette semaine, un duo la prochaine, un trio quand tu veux. Ton crédit t’attend — tu ne repaies pas à chaque cours.</p>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:10}}>
-          {tiers.map(function(x,i){return (<div key={i} style={{background:x.best?NAVY:CREAM,border:x.best?("2px solid "+GOLD):"1px solid #eee",borderRadius:12,padding:"14px 8px",textAlign:"center"}}><div style={{fontSize:12,color:x.best?GOLD_LIGHT:TEXT_MED}}>{x.a} rechargés</div><div style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:GOLD,lineHeight:1.1,margin:"3px 0"}}>{x.b}</div><div style={{fontSize:12,color:x.best?GOLD_LIGHT:TEXT_LIGHT}}>{x.c}</div></div>);})}
+        <div style={{display:"flex",flexWrap:"wrap",justifyContent:"center",gap:10}}>
+          {tiers.map(function(x,i){return (<div key={i} style={{background:x.best?NAVY:CREAM,border:x.best?("2px solid "+GOLD):"1px solid #eee",borderRadius:12,padding:"14px 8px",textAlign:"center",flex:"1 1 140px",maxWidth:220}}><div style={{fontSize:12,color:x.best?GOLD_LIGHT:TEXT_MED}}>{x.a} rechargés</div><div style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:GOLD,lineHeight:1.1,margin:"3px 0"}}>{x.b}</div><div style={{fontSize:12,color:x.best?GOLD_LIGHT:TEXT_LIGHT}}>{x.c}</div></div>);})}
         </div>
         <p style={{textAlign:"center",color:TEXT_LIGHT,fontSize:13,margin:"12px 0 0"}}>Jusqu’à <b style={{color:GOLD}}>15 % de coaching en plus, offert.</b></p>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:8,marginTop:14}}>
         {args.map(function(a,i){return (<div key={i} style={{background:WHITE,border:"1px solid #eae6db",borderRadius:12,padding:"12px 14px",display:"flex",alignItems:"center",gap:10}}><span style={{color:GOLD,fontWeight:900,fontSize:16}}>✓</span><span style={{fontSize:13,color:TEXT_MED}}>{a}</span></div>);})}
       </div>
-      <div style={{background:NAVY_LIGHT,borderRadius:14,padding:"16px 20px",marginTop:14,display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:12}}>
+      <div style={{background:NAVY_LIGHT,borderRadius:14,padding:"16px 20px",marginTop:14,display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:12,textAlign:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:12,flex:"1 1 300px",textAlign:"left"}}><span style={{fontSize:26}}>🎁</span><div><div style={{color:"#fff",fontWeight:700,fontSize:15}}>Carte cadeau</div><div style={{color:GOLD_LIGHT,fontSize:13,lineHeight:1.5}}>Offre la progression à un proche — mêmes avantages, jusqu’à +15 %.</div></div></div>
         <a href="#wallet" style={{background:GOLD,color:NAVY,fontWeight:800,fontSize:14,textDecoration:"none",padding:"12px 26px",borderRadius:50,whiteSpace:"nowrap"}}>Recharger ma wallet</a>
       </div>
-      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>La Wallet s’utilise sur les créneaux heures creuses et hors stages.</p>
+      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>La Wallet s’utilise sur les créneaux cours particuliers uniquement (individuel, duo, trio, quatuor).</p>
     </div>
   );
 }
