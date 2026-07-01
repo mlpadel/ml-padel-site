@@ -3457,16 +3457,7 @@ s.textContent='nav[aria-label]{top:42px!important}';
 document.head.appendChild(s);
 })();
 </script>
-<script>
-setTimeout(function(){
-document.querySelectorAll('a').forEach(function(a){
-if(a.textContent.trim()==='Acad\u00e9mie'){a.textContent='Acad\u00e9mie \ud83c\udd95'}
-});
-document.querySelectorAll('button,div').forEach(function(el){
-if(el.textContent.trim()==='Acad\u00e9mie'){el.textContent='Acad\u00e9mie \ud83c\udd95'}
-});
-},3000);
-</script>
+ 
 <script>
 (function(){
   let clickCount=0,clickTimer=null;
