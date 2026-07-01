@@ -712,7 +712,7 @@ function SeasonBanner(){
 function SeasonBanner(){
   const T=[{a:"100 €",b:"+5%",c:"= 105 € de crédit"},{a:"200 €",b:"+10%",c:"= 220 € de crédit"},{a:"300 €",b:"+15%",c:"= 345 € de crédit",best:true}];
   const A=["Souplesse totale : seul, à 2, 3 ou 4","Zéro pack à finir sous pression","Débit automatique, rien à gérer","Tu avances à ton rythme"];
-  return (<div style={{maxWidth:900,margin:"0 auto 34px"}}>{/*[[S]]*/}</div>);
+  return (<div style={{maxWidth:900,margin:"0 auto 34px"}}><div style={{background:"linear-gradient(135deg,#0a1628,#162040)",borderRadius:16,padding:"26px 22px",textAlign:"center"}}><span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1,padding:"4px 14px",borderRadius:50}}>NOUVEAUTÉ</span><h3 style={{fontFamily:"'Playfair Display',serif",color:"#fff",fontSize:"clamp(20px,3vw,26px)",fontWeight:900,margin:"12px 0 8px",lineHeight:1.25}}>Une nouvelle saison pour progresser à ton rythme</h3><p style={{color:GOLD_LIGHT,fontSize:14,lineHeight:1.6,maxWidth:560,margin:"0 auto"}}>Les tarifs des cours évoluent — un simple alignement sur la réalité du coaching padel à La Réunion. Et surtout, une formule bien plus souple que les anciens packs.</p></div>{/*[[S]]*/}</div>);
 }
 function Pricing(){
   const[tab,setTab]=useState("individuel");
