@@ -985,9 +985,17 @@ function TransitionPricing(){
 /* ─── Horaires & Disponibilités ─── */
 function Horaires(){
   const slots=[
-    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Heures creuses",note:"Selon les disponibilités du coach",color:GOLD},
+    {icon:"👤",label:"Cours individuels & collectifs",horaire:"Matin · en semaine",note:"Créneaux heures creuses détaillés ci-dessous",color:GOLD},
     {icon:"🎓",label:"Académie adulte",horaire:"Lun · Mar · Jeu · 17h – 21h30",note:"Séances hebdomadaires en soirée",color:"#6c9bcf"},
     {icon:"🏕️",label:"Stages vacances & Masterclass",horaire:"Vacances scolaires",note:"Semaine complète ou week-end",color:"#e07b5a"},
+  ];
+  const jours=[
+    {j:"Lundi",h:"6h30 – 10h30"},
+    {j:"Mardi",h:"6h30 – 10h30"},
+    {j:"Mercredi",h:"6h30 – 10h30"},
+    {j:"Jeudi",h:"6h30 – 9h30"},
+    {j:"Vendredi",h:"6h30 – 10h30"},
+    {j:"Samedi",h:"8h30 – 13h",note:"selon planning"},
   ];
 
   return(
@@ -1019,6 +1027,28 @@ function Horaires(){
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Créneaux heures creuses détaillés */}
+            <div style={{marginTop:24,paddingTop:22,borderTop:`1px solid ${GOLD}18`}}>
+              <div style={{fontSize:13,fontWeight:800,color:GOLD,letterSpacing:1.5,textTransform:"uppercase",marginBottom:14}}>
+                ☀️ Créneaux heures creuses — cours particuliers
+              </div>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:10}}>
+                {jours.map((d,i)=>(
+                  <div key={i} style={{
+                    background:`${GOLD}0a`,border:`1px solid ${GOLD}22`,borderRadius:12,
+                    padding:"12px 14px",textAlign:"center",
+                  }}>
+                    <div style={{fontSize:13,fontWeight:700,color:TEXT_DARK,marginBottom:4}}>{d.j}</div>
+                    <div style={{fontSize:15,fontWeight:800,color:GOLD}}>{d.h}</div>
+                    {d.note&&(<div style={{fontSize:11,color:TEXT_LIGHT,marginTop:2,fontStyle:"italic"}}>{d.note}</div>)}
+                  </div>
+                ))}
+              </div>
+              <p style={{fontSize:12.5,color:TEXT_MED,marginTop:14,lineHeight:1.5}}>
+                Créneaux en dehors de ces horaires possibles sur demande (heures pleines). Réservation en ligne ou via WhatsApp.
+              </p>
             </div>
           </div>
         </AnimatedSection>
