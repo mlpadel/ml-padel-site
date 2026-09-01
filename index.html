@@ -1040,8 +1040,10 @@ function Wallet(){
   ];
 
   const uses=[
-    {name:"Cours individuel (1h)",credits:"55 cr."},
-    {name:"Collectif 4j (1h)",credits:"20 cr./pers"},
+    {name:"Cours individuel (1h)",credits:"60 cr."},
+    {name:"Duo (1h)",credits:"35 cr./pers"},
+    {name:"Trio (1h)",credits:"25 cr./pers"},
+    {name:"Quatuor (1h)",credits:"20 cr./pers"},
     {name:"Stage vacances",credits:"150 cr."},
     {name:"Masterclass WE",credits:"100 cr."},
   ];
@@ -2145,7 +2147,7 @@ function FAQ(){
     {q:"Où se déroulent les cours ?",a:"Au 4Padel Saint-Louis, 2 rue Benoite Boulard, 97450 Saint-Louis, La Réunion."},
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
     {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
-    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (50 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : les packs 10h (déjà remisés à -10%), l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
+    {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (60 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (150 cr.) et masterclass week-end (80-100 cr.). Les crédits ne sont PAS utilisables sur : l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
     {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
     {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
@@ -3171,12 +3173,11 @@ function MLPadel(){
       <Événements/>
       {false && <StageJuilletForm/>}
       <Pricing/>
-            
+      <Wallet/>
+      <WalletClient/>
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
-      <Wallet/>
-      <WalletClient/>
       <TeamSection/>
       <InstagramSection/>
       <Gallery/>
