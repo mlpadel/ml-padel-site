@@ -711,8 +711,8 @@ function SeasonBanner(){
   const tabs=[
     {key:"individuel",label:"Individuels"},
     {key:"collectif",label:"Collectifs"},
+    {key:"stages",label:"Stages"},
     {key:"académie",label:"Académie"},
-    /*STAGES_OFF{key:"stages",label:"Stages"},*/
   ];
 
     // ── Tarifs SEPTEMBRE 2026 (a activer le moment venu — NE PAS afficher avant) ──
@@ -781,6 +781,16 @@ function SeasonBanner(){
             <p style={{fontSize:13,color:"#8a7a5a",textAlign:"center",marginTop:18,marginBottom:10,fontStyle:"italic",opacity:0.85}}>Durée modifiable lors de la réservation sur Cal.com</p><div style={{textAlign:"center",marginBottom:18}}><a href="/etre-alerte.html" style={{display:"inline-block",background:"#0a1628",color:"#c9a84c",fontWeight:700,fontSize:13,textDecoration:"none",padding:"9px 22px",borderRadius:50,border:"1px solid #c9a84c55"}}>🔔 Être alerté quand une dispo se libère</a></div>
         </AnimatedSection>
 
+        {tab==="stages"&&(
+          <AnimatedSection>
+            <div style={{textAlign:"center",marginBottom:28}}>
+              <img src="offre-stages-2026.webp" alt="Offre stages & masterclass ML Padel 2026-2027 — Stage soirée 120/150€, matin heures creuses 100/125€, masterclass week-end 4 joueurs 50/100€, 8 joueurs 30/60€" loading="lazy" style={{width:"100%",maxWidth:560,height:"auto",borderRadius:16,boxShadow:`0 10px 34px ${NAVY}22`,border:`1px solid ${GOLD}25`}}/>
+              <p style={{color:TEXT_MED,fontSize:13,marginTop:12,lineHeight:1.6}}>
+                Tarifs par joueur · tous niveaux · les groupes sont formés selon ton niveau. <a href="#stage-juillet-form" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Pré-inscription stage →</a>
+              </p>
+            </div>
+          </AnimatedSection>
+        )}
         {tab==="académie"&&(
           <AnimatedSection>
             <div style={{maxWidth:680,margin:"0 auto 24px",background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:16,padding:"16px 22px",textAlign:"center",boxShadow:`0 6px 22px ${NAVY}22`}}>
