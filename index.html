@@ -3000,6 +3000,12 @@ function StageJuilletForm(){
             <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
               Tous niveaux acceptés. Choisis ton créneau préféré — les groupes sont formés selon ton niveau et ta dispo.
             </p>
+            <div style={{maxWidth:560,margin:"22px auto 0",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,borderRadius:14,padding:"14px 20px",display:"flex",alignItems:"center",gap:12,boxShadow:`0 8px 26px ${GOLD}33`}}>
+              <span style={{fontSize:26,lineHeight:1}}>👥</span>
+              <p style={{margin:0,textAlign:"left",fontSize:14,fontWeight:700,color:NAVY,lineHeight:1.5}}>
+                Un groupe de 4 joueurs qui s'inscrit ensemble est <span style={{textDecoration:"underline"}}>prioritaire</span> sur les inscriptions individuelles.
+              </p>
+            </div>
           </div>
         </AnimatedSection>
 
@@ -3085,7 +3091,8 @@ function StageJuilletForm(){
 
             {/* Groupe déjà formé */}
             <div style={{marginBottom:20}}>
-              <label style={labelStyle}>Groupe déjà formé ? <span style={{fontWeight:500,color:TEXT_LIGHT}}>(noms des 4 joueurs si applicable)</span></label>
+              <label style={labelStyle}>Groupe déjà formé ? <span style={{fontWeight:700,color:GOLD}}>★ inscription prioritaire</span></label>
+              <p style={{fontSize:12,color:TEXT_LIGHT,margin:"0 0 8px"}}>Renseigne les 4 joueurs de ton groupe : vous êtes prioritaires sur la formation des créneaux.</p>
               <input style={inputStyle} value={form.groupe} onChange={e=>setForm({...form,groupe:e.target.value})} placeholder="Ex: Jean, Marie, Paul, Sophie" onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=`${GOLD}25`}/>
             </div>
 
