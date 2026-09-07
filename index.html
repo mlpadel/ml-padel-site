@@ -2902,7 +2902,7 @@ function StageJuilletForm(){
 
   const[form,setForm]=useState({
     nom:"",prenom:"",email:"",tel:"",niveau:"3",
-    offre:"stage-oct",creneau:"",semaine:"12 – 15 octobre",
+    offre:"stage-oct",creneau:[],semaine:"12 – 15 octobre",
     groupe:"",commentaire:"",
   });
   const[sending,setSending]=useState(false);
@@ -2913,7 +2913,7 @@ function StageJuilletForm(){
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
-    if(!form.nom||!form.prenom||!form.email||!form.tel||!form.offre||!form.creneau||!form.semaine){
+    if(!form.nom||!form.prenom||!form.email||!form.tel||!form.offre||!form.creneau.length||!form.semaine){
       setError("Merci de remplir tous les champs obligatoires.");return;
     }
     setSending(true);setError("");
@@ -2923,7 +2923,7 @@ function StageJuilletForm(){
         nom:form.nom,prenom:form.prenom,email:form.email,tel:form.tel,
         niveau:form.niveau,
         stage:selectedOffre?selectedOffre.label:"",
-        creneaux:form.creneau,
+        creneaux:form.creneau.join(", "),
         semaine:form.semaine,
         groupe:form.groupe,
         attentes:form.commentaire,
@@ -2953,7 +2953,7 @@ function StageJuilletForm(){
           <div style={{textAlign:"left",background:WARM_WHITE,borderRadius:14,padding:"16px 22px",marginBottom:22,border:`1px solid ${GOLD}20`}}>
             <div style={{fontSize:11,fontWeight:700,color:GOLD,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Récapitulatif</div>
             {selectedOffre&&<div style={recapRow}><span style={recapKey}>Stage</span><span style={recapVal}>{selectedOffre.label}</span></div>}
-            {form.creneau&&<div style={recapRow}><span style={recapKey}>Créneau</span><span style={recapVal}>{form.creneau}</span></div>}
+            {form.creneau.length>0&&<div style={recapRow}><span style={recapKey}>Créneaux</span><span style={recapVal}>{form.creneau.join(", ")}</span></div>}
             {form.semaine&&<div style={{...recapRow,borderBottom:"none"}}><span style={recapKey}>Semaine</span><span style={recapVal}>{form.semaine}</span></div>}
           </div>
           <div style={{background:`${GOLD}10`,borderRadius:14,padding:"16px 20px",borderLeft:`3px solid ${GOLD}`,textAlign:"left"}}>
@@ -3041,11 +3041,12 @@ function StageJuilletForm(){
             {/* Créneau + Semaine (visible si offre choisie) */}
             {selectedOffre&&(
               <div style={{marginBottom:24}}>
-                <label style={{...labelStyle,marginBottom:12}}>Créneau horaire souhaité * <span style={{fontWeight:500,color:TEXT_LIGHT}}>({selectedOffre.days})</span></label>
+                <label style={{...labelStyle,marginBottom:6}}>Créneau(x) horaire(s) souhaité(s) * <span style={{fontWeight:500,color:TEXT_LIGHT}}>({selectedOffre.days})</span></label>
+                <p style={{fontSize:12,color:TEXT_LIGHT,margin:"0 0 12px"}}>Tu peux cocher plusieurs créneaux si tu es disponible — ça facilite la formation des groupes.</p>
                 <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:20}}>
                   {selectedOffre.slots.map(sl=>{
                     const isFull=(selectedOffre.fullSlots||[]).includes(sl)||((selectedOffre.fullByWeek&&form.semaine)?(selectedOffre.fullByWeek[form.semaine]||[]).includes(sl):false);
-                    const selected=form.creneau===sl;
+                    const selected=form.creneau.includes(sl);
                     return(
                       <label key={sl} style={{
                         display:"flex",alignItems:"center",gap:8,
@@ -3054,8 +3055,8 @@ function StageJuilletForm(){
                         border:`1.5px solid ${isFull?"#e74c3c55":(selected?GOLD:GOLD+"25")}`,
                         transition:"all 0.3s",flex:"1 1 auto",minWidth:140,opacity:isFull?0.85:1,
                       }}>
-                        <input type="radio" name="creneau" value={sl} checked={selected} disabled={isFull}
-                          onChange={e=>setForm({...form,creneau:e.target.value})}
+                        <input type="checkbox" value={sl} checked={selected} disabled={isFull}
+                          onChange={e=>setForm({...form,creneau:e.target.checked?[...form.creneau,sl]:form.creneau.filter(c=>c!==sl)})}
                           style={{accentColor:GOLD}}/>
                         <span style={{fontSize:13,fontWeight:600,color:isFull?"#e74c3c":TEXT_DARK}}>
                           {sl}{isFull&&<span style={{fontWeight:700}}> (complet)</span>}
@@ -3082,6 +3083,12 @@ function StageJuilletForm(){
             <div style={{marginBottom:24}}>
               <label style={labelStyle}>Commentaire / Attentes</label>
               <textarea style={{...inputStyle,minHeight:80,resize:"vertical"}} value={form.commentaire} onChange={e=>setForm({...form,commentaire:e.target.value})} placeholder="Objectifs, niveau des membres du groupe, contraintes..." onFocus={e=>e.target.style.borderColor=GOLD} onBlur={e=>e.target.style.borderColor=`${GOLD}25`}/>
+            </div>
+
+            <div style={{background:`${GOLD}10`,borderLeft:`3px solid ${GOLD}`,borderRadius:10,padding:"12px 16px",marginBottom:18}}>
+              <p style={{margin:0,fontSize:13,color:TEXT_DARK,lineHeight:1.6}}>
+                ℹ️ <strong>Il s'agit d'une pré-inscription.</strong> Elle ne valide pas encore définitivement ta place : Mathias revient vers toi pour confirmer ton créneau, former ton groupe et t'indiquer les modalités de paiement.
+              </p>
             </div>
 
             {error&&<p style={{color:"#e74c3c",fontSize:13,marginBottom:16,fontWeight:600}}>{error}</p>}
