@@ -2755,50 +2755,21 @@ function TeamSection(){
 
 /* ─── Événements & Stages ─── */
 function Événements(){
-  return null;/*STAGES_OFF*/const[selectedOffer,setSelectedOffer]=useState(null);
+  const[selectedOffer,setSelectedOffer]=useState(null);
 
   const offers=[
     {
-      id:"matin-hc",
-      title:"Stage Matin HC",
-      emoji:"☀️",
-      price:100,
-      sessions:"4 × 1h30",
-      days:"Lundi · Mardi · Jeudi · Vendredi",
-      slots:["8h30 – 10h"],
-      semaines:"6 – 10 juil.",
-      fullSlots:["8h30 – 10h"],fullNote:"Stage complet",complet:true,
-      badge:"HEURES CREUSES",
-      color:GOLD,
-    },
-    {
-      id:"soiree-hp",
-      title:"Stage Soirée HP",
+      id:"stage-oct",
+      title:"Stage Soirée",
       emoji:"🌙",
       price:120,
       sessions:"4 × 1h30",
-      days:"Lundi · Mardi · Jeudi · Vendredi",
+      days:"Lundi · Mardi · Mercredi · Jeudi",
       slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      semaines:"6 – 10 juil.",
-      badge:"HEURES PLEINES",
+      semaines:"12 – 15 oct.",
+      badge:"TOUS NIVEAUX",
       popular:true,
-      complet:true,
-      color:"#e0cb82",
-    },
-    {
-      id:"soiree-mini",
-      title:"Stage Soirée Mini",
-      emoji:"⚡",
-      price:90,
-      sessions:"3 × 1h30",
-      days:"Mercredi · Jeudi · Vendredi soir",
-      slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      semaines:"1 – 3 juil.",
-      badge:"FORMAT COURT",
-      color:"#e07b5a",
-      complet:true,
+      color:GOLD,
     },
   ];
 
@@ -2822,19 +2793,19 @@ function Événements(){
             fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",
             fontWeight:900,color:WHITE,marginBottom:12,
           }}>
-            Stages <span style={{color:GOLD}}>Juillet 2026</span>
+            Stage <span style={{color:GOLD}}>Octobre 2026</span>
           </h2>
           <p style={{color:`${CREAM}90`,fontSize:15,marginBottom:8,lineHeight:1.6}}>
-            Semaine de stages intensifs au 4Padel Saint-Louis
+            4 soirs intensifs au 4Padel Saint-Louis · tous niveaux acceptés
           </p>
           <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap",marginBottom:32}}>
             <span style={{background:`${GOLD}20`,color:GOLD,padding:"6px 16px",borderRadius:50,fontSize:12,fontWeight:700}}>
-              6 → 10 juillet
+              12 → 15 octobre
             </span>
           </div>
         </AnimatedSection>
 
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:20,textAlign:"left"}}>
+        <div style={{display:"grid",gridTemplateColumns:"minmax(280px,360px)",justifyContent:"center",gap:20,textAlign:"left"}}>
           {offers.map((o,i)=>(
             <AnimatedSection key={o.id} delay={i*0.12}>
               <div style={{
@@ -2914,8 +2885,8 @@ function Événements(){
 
         <AnimatedSection delay={0.4}>
           <p style={{color:`${CREAM}60`,fontSize:12,marginTop:24,lineHeight:1.6}}>
-            Groupes de 4 joueurs · Niveaux homogènes · Coach Mathias
-            <br/>Les groupes déjà formés (4 joueurs) sont prioritaires
+            Groupes de 4 joueurs · Coach Mathias · Tous niveaux acceptés
+            <br/>Pré-inscription libre — les groupes sont formés selon ton niveau et ta dispo
           </p>
         </AnimatedSection>
       </div>
@@ -2926,14 +2897,12 @@ function StageJuilletForm(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
   const offres=[
-    {id:"matin-hc",label:"Stage Matin HC — 100€",price:100,slots:["8h30 – 10h"],fullByWeek:{"6 – 10 juillet":["8h30 – 10h"]},semaines:["6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
-    {id:"soiree-hp",label:"Stage Soirée HP — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["6 – 10 juillet"],days:"Lu/Ma/Je/Ve"},
-    {id:"soiree-mini",label:"Stage Soirée Mini — 90€",price:90,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["1 – 3 juillet"],days:"Me/Je/Ve"},
+    {id:"stage-oct",label:"Stage Octobre — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["12 – 15 octobre"],days:"Lu/Ma/Me/Je"},
   ];
 
   const[form,setForm]=useState({
     nom:"",prenom:"",email:"",tel:"",niveau:"3",
-    offre:"",creneau:"",semaine:"",
+    offre:"stage-oct",creneau:"",semaine:"12 – 15 octobre",
     groupe:"",commentaire:"",
   });
   const[sending,setSending]=useState(false);
@@ -3013,13 +2982,13 @@ function StageJuilletForm(){
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:40}}>
             <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
-              Stages Juillet 2026 — 4Padel Saint-Louis
+              Stage Octobre 2026 — 4Padel Saint-Louis
             </span>
             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(24px,3.5vw,36px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
               Formulaire de <span style={{color:GOLD}}>pré-inscription</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
-              Choisis ton stage, ton créneau et ta semaine. Les groupes de 4 déjà formés sont prioritaires.
+              Tous niveaux acceptés. Choisis ton créneau préféré — les groupes sont formés selon ton niveau et ta dispo.
             </p>
           </div>
         </AnimatedSection>
@@ -3062,11 +3031,10 @@ function StageJuilletForm(){
                 </select>
               </div>
               <div>
-                <label style={labelStyle}>Formule choisie *</label>
-                <select style={{...inputStyle,cursor:"pointer"}} value={form.offre} onChange={e=>setForm({...form,offre:e.target.value,creneau:"",semaine:""})}>
-                  <option value="">— Choisir —</option>
-                  {offres.map(o=><option key={o.id} value={o.id}>{o.label}</option>)}
-                </select>
+                <label style={labelStyle}>Stage</label>
+                <div style={{...inputStyle,display:"flex",alignItems:"center",gap:8,background:`${GOLD}0c`,borderColor:`${GOLD}40`,fontWeight:700}}>
+                  <span style={{fontSize:16}}>🌙</span> Stage Octobre — 120€
+                </div>
               </div>
             </div>
 
@@ -3097,25 +3065,9 @@ function StageJuilletForm(){
                   })}
                 </div>
 
-                <label style={{...labelStyle,marginBottom:12}}>Semaine souhaitée *</label>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-                  {selectedOffre.semaines.map(sem=>{
-                    const selected=form.semaine===sem;
-                    return(
-                      <label key={sem} style={{
-                        display:"flex",alignItems:"center",gap:8,
-                        padding:"10px 16px",borderRadius:12,cursor:"pointer",
-                        background:selected?`${GOLD}12`:WHITE,
-                        border:`1.5px solid ${selected?GOLD:GOLD+"25"}`,
-                        transition:"all 0.3s",flex:"1 1 auto",minWidth:160,
-                      }}>
-                        <input type="radio" name="semaine" value={sem} checked={selected}
-                          onChange={e=>{const ns=e.target.value;const fbw=(selectedOffre.fullByWeek&&selectedOffre.fullByWeek[ns])||[];setForm({...form,semaine:ns,creneau:fbw.includes(form.creneau)?"":form.creneau});}}
-                          style={{accentColor:GOLD}}/>
-                        <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>{sem}</span>
-                      </label>
-                    );
-                  })}
+                <div style={{display:"flex",alignItems:"center",gap:8,padding:"12px 16px",borderRadius:12,background:`${GOLD}0c`,border:`1.5px solid ${GOLD}25`}}>
+                  <span style={{fontSize:16}}>📅</span>
+                  <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>Du 12 au 15 octobre 2026 · Lundi · Mardi · Mercredi · Jeudi</span>
                 </div>
               </div>
             )}
@@ -3145,7 +3097,7 @@ function StageJuilletForm(){
             >{sending?"Envoi en cours...":"Valider ma pré-inscription"}</button>
 
             <p style={{textAlign:"center",fontSize:11,color:TEXT_LIGHT,marginTop:12}}>
-              1 inscription = 1 semaine · Paiement après confirmation · Groupes de 4 prioritaires
+              Pré-inscription · Paiement après confirmation · Tous niveaux acceptés
             </p>
           </form>
         </AnimatedSection>
@@ -3197,7 +3149,7 @@ function MLPadel(){
       <TransitionAbout/>
       <ExperienceClient/>
       <Événements/>
-      {false && <StageJuilletForm/>}
+      <StageJuilletForm/>
       <Pricing/>
       <Wallet/>
       <WalletClient/>
