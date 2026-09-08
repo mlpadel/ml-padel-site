@@ -2776,6 +2776,7 @@ function Événements(){
       sessions:"4 × 1h30",
       days:"Lundi · Mardi · Mercredi · Jeudi",
       slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
+      fullSlots:["18h30 – 20h"],
       semaines:"12 – 15 oct.",
       badge:"TOUS NIVEAUX",
       popular:true,
@@ -2907,7 +2908,7 @@ function StageJuilletForm(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
   const offres=[
-    {id:"stage-oct",label:"Stage Octobre — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["12 – 15 octobre"],days:"Lu/Ma/Me/Je"},
+    {id:"stage-oct",label:"Stage Octobre — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["18h30 – 20h"],semaines:["12 – 15 octobre"],days:"Lu/Ma/Me/Je"},
   ];
 
   const[form,setForm]=useState({
