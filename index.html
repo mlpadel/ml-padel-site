@@ -523,13 +523,13 @@ function Hero(){
           >Contacter via WhatsApp</a>
 
           <a href={WHATSAPP_CHANNEL} target="_blank" rel="noopener noreferrer" style={{
-            background:"#25D366",
-            color:"#06251a",padding:"16px 32px",borderRadius:50,
-            textDecoration:"none",fontWeight:800,fontSize:16,
-            boxShadow:"0 8px 32px #25D36644",transition:"all 0.3s",
+            background:"#25D3660f",backdropFilter:"blur(10px)",
+            color:"#8fd9ae",padding:"16px 32px",borderRadius:50,
+            textDecoration:"none",fontWeight:600,fontSize:16,
+            border:"1px solid #25D36638",transition:"all 0.3s",
           }}
-          onMouseEnter={e=>{e.target.style.transform="translateY(-2px)";e.target.style.boxShadow="0 12px 40px #25D36666"}}
-          onMouseLeave={e=>{e.target.style.transform="translateY(0)";e.target.style.boxShadow="0 8px 32px #25D36644"}}
+          onMouseEnter={e=>{e.target.style.background="#25D3661c";e.target.style.borderColor="#25D36680"}}
+          onMouseLeave={e=>{e.target.style.background="#25D3660f";e.target.style.borderColor="#25D36638"}}
           >📣 Rejoindre ma chaîne</a>
         </div>
 
