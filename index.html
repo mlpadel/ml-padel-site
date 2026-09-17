@@ -145,6 +145,14 @@ const CALCOM = {
   collectifDuo: `${CALCOM_BASE}/collectif-duo-wallet`,
   collectifTrio: `${CALCOM_BASE}/cours-collectif-trio`,
   collectifQuatuor: `${CALCOM_BASE}/cours-collectif-quatuor`,
+  indivCb: `${CALCOM_BASE}/cours-individuel-cb`,
+  indivEspece: `${CALCOM_BASE}/cours-individuel-espece`,
+  duoCb: `${CALCOM_BASE}/cours-collectif-duo-cb`,
+  duoEspece: `${CALCOM_BASE}/cours-collectif-duo-espece`,
+  trioCb: `${CALCOM_BASE}/cours-collectif-trio-cb`,
+  trioEspece: `${CALCOM_BASE}/cours-collectif-trio-espece`,
+  quatuorCb: `${CALCOM_BASE}/cours-collectif-quatuor-cb`,
+  quatuorEspece: `${CALCOM_BASE}/cours-collectif-quatuor-espece`,
   indivWallet: `${CALCOM_BASE}/indiv-wallet`,
   collectifDuoWallet: `${CALCOM_BASE}/collectif-duo-wallet`,
   collectifTrioWallet: `${CALCOM_BASE}/cours-collectif-trio-wallet`,
@@ -721,12 +729,12 @@ function SeasonBanner(){
   const NT=(new Date()>=new Date('2000-01-01T00:00:00+04:00'));
   const data={
     individuel:[
-      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:NT?"https://cal.com/ml-padel/cours-individuel?duration=60&overlayCalendar=true":CALCOM.indiv,walletLink:NT?"https://cal.com/ml-padel/indiv-wallet?duration=60&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indivCb,especeLink:CALCOM.indivEspece,walletLink:NT?"https://cal.com/ml-padel/indiv-wallet?duration=60&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
     ],
     collectif:[
-      {title:"Duo",price:NT?"70":"60",unit:"€/heure",desc:NT?"1h · 2 joueurs · 35€/pers":"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:NT?"https://cal.com/ml-padel/cours-collectif-duo?duration=90&overlayCalendar=true":CALCOM.collectifDuo,walletLink:NT?"https://cal.com/ml-padel/collectif-duo-wallet?duration=90&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
-      {title:"Trio",disabled:!NT,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:"https://cal.com/ml-padel/cours-collectif-trio?duration=90&overlayCalendar=true",walletLink:"https://cal.com/ml-padel/cours-collectif-trio-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
-      {title:"Quatuor",disabled:!NT,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:"https://cal.com/ml-padel/cours-collectif-quatuor?duration=90&overlayCalendar=true",walletLink:"https://cal.com/ml-padel/cours-collectif-quatuor-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      {title:"Duo",price:NT?"70":"60",unit:"€/heure",desc:NT?"1h · 2 joueurs · 35€/pers":"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.duoCb,especeLink:CALCOM.duoEspece,walletLink:NT?"https://cal.com/ml-padel/collectif-duo-wallet?duration=90&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      {title:"Trio",disabled:!NT,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:CALCOM.trioCb,especeLink:CALCOM.trioEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-trio-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      {title:"Quatuor",disabled:!NT,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:CALCOM.quatuorCb,especeLink:CALCOM.quatuorEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-quatuor-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
     ],
     académie:[
       {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
@@ -922,9 +930,10 @@ function SeasonBanner(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >{o.isAcadémie?"Liste d'attente":"Réserver"}</a>
+                  >{o.isAcadémie?"Liste d'attente":(o.especeLink?"💳 Payer en ligne":"Réserver")}</a>
                 )}
-              {o.walletLink && !o.disabled && (<a href={o.walletLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:GOLD,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>Réserver avec ma wallet</a>)}
+              {o.especeLink && !o.disabled && (<a href={o.especeLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:"transparent",border:`1.5px solid ${NAVY}35`,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>🤝 Payer sur place</a>)}
+              {o.walletLink && !o.disabled && (<a href={o.walletLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:GOLD,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>{o.especeLink?"⭐ Payer avec ma wallet":"Réserver avec ma wallet"}</a>)}
               {o.disabled&&<div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%) rotate(-25deg)",background:"rgba(201,168,76,0.92)",color:"#fff",padding:"8px 80px",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase",zIndex:5,whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(0,0,0,0.3)",pointerEvents:"none"}}>{"À VENIR"}</div>}
               </div>
             </AnimatedSection>
