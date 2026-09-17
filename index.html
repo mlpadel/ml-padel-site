@@ -166,6 +166,7 @@ const CCT_API = "https://script.google.com/macros/s/AKfycbxWcFlv8c7niV5PJKfNTqR3
 const WALLET_API_GLOBAL = "https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
 const WHATSAPP_BASE = "https://wa.me/262692627372";
+const WHATSAPP_CHANNEL = "https://whatsapp.com/channel/0029Vb8v78WH5JLsqYqp3z1c";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
 const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite réserver un cours de padel 🎾");
 const INSTAGRAM = "https://instagram.com/ml_padel";
@@ -1562,7 +1563,7 @@ function WalletClient(){
 /* ─── Instagram / Réseaux ─── */
 function WhatsAppChannel(){
   const WA_GREEN="#25D366";
-  const CHANNEL="https://whatsapp.com/channel/0029Vb8v78WH5JLsqYqp3z1c";
+  const CHANNEL=WHATSAPP_CHANNEL;
   return(
     <section style={{padding:"80px 24px",background:`linear-gradient(160deg,${NAVY} 0%,#0d1d3a 60%,${NAVY} 100%)`,position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
@@ -2649,6 +2650,7 @@ function Footer(){
           <a href="#mentions-legales" style={{color:`${CREAM}40`,textDecoration:"none"}}>Mentions légales</a>
           <a href="#mentions-legales" style={{color:`${CREAM}40`,textDecoration:"none"}}>CGV</a>
           <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{color:`${CREAM}40`,textDecoration:"none"}}>Instagram</a>
+          <a href={WHATSAPP_CHANNEL} target="_blank" rel="noopener noreferrer" style={{color:"#25D366aa",textDecoration:"none",fontWeight:600}}>Chaîne WhatsApp</a>
         </div>
         <span style={{fontSize:11,color:`${CREAM}25`}}>
           © {new Date().getFullYear()} ML Padel &middot; La Réunion
