@@ -1560,6 +1560,39 @@ function WalletClient(){
 }
 
 /* ─── Instagram / Réseaux ─── */
+function WhatsAppChannel(){
+  const WA_GREEN="#25D366";
+  const CHANNEL="https://whatsapp.com/channel/0029Vb8v78WH5JLsqYqp3z1c";
+  return(
+    <section style={{padding:"80px 24px",background:`linear-gradient(160deg,${NAVY} 0%,#0d1d3a 60%,${NAVY} 100%)`,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:36,justifyContent:"center"}}>
+            <div style={{flex:"1 1 320px",minWidth:280}}>
+              <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Ne rate plus rien</span>
+              <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:WHITE,lineHeight:1.12}}>
+                Rejoins ma chaîne <span style={{color:WA_GREEN}}>WhatsApp</span>
+              </h2>
+              <p style={{color:`${CREAM}bb`,fontSize:15,lineHeight:1.7,marginTop:14}}>
+                Créneaux qui se libèrent, nouveaux stages, annulations météo, infos de dernière minute — <strong style={{color:WHITE}}>tout en direct sur ton téléphone</strong>.
+              </p>
+              <a href={CHANNEL} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",marginTop:22,background:WA_GREEN,color:"#06251a",fontWeight:800,fontSize:15,padding:"15px 30px",borderRadius:50,textDecoration:"none",boxShadow:`0 10px 30px ${WA_GREEN}44`}}>
+                Rejoindre la chaîne →
+              </a>
+              <p style={{color:`${CREAM}70`,fontSize:12,marginTop:12}}>Gratuit · Tu peux quitter quand tu veux · Ton numéro reste masqué</p>
+            </div>
+            <div style={{flex:"0 0 auto",textAlign:"center"}}>
+              <div style={{background:WHITE,padding:14,borderRadius:18,border:`2px solid ${GOLD}`,boxShadow:"0 12px 36px rgba(0,0,0,0.35)"}}>
+                <img src="whatsapp-channel-qr.png" alt="QR code de la chaîne WhatsApp ML Padel" width="190" height="190" loading="lazy" style={{display:"block",width:190,height:190}}/>
+              </div>
+              <p style={{color:`${CREAM}90`,fontSize:12,fontWeight:600,marginTop:10}}>📲 Scanne pour t'abonner</p>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
 function InstagramSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
@@ -3192,6 +3225,7 @@ function MLPadel(){
       <Horaires/>
       <TeamSection/>
       <InstagramSection/>
+      <WhatsAppChannel/>
       <Gallery/>
       <CoursCollectifsSection/>
       <PallapShop/>
