@@ -2831,6 +2831,7 @@ function Événements(){
       days:"Lundi · Mardi · Mercredi · Jeudi",
       slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
       fullSlots:["17h – 18h30","18h30 – 20h"],
+      urgentNote:"Dernier créneau disponible",
       semaines:"12 – 15 oct.",
       badge:"TOUS NIVEAUX",
       popular:true,
@@ -2924,6 +2925,13 @@ function Événements(){
                   </div>
                   )}
                 </div>
+
+                {o.urgentNote&&!o.complet&&(
+                  <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginBottom:12,padding:"9px 12px",borderRadius:10,background:"#e07b5a1f",border:"1px solid #e07b5a66"}}>
+                    <span style={{fontSize:14}}>⚡</span>
+                    <span style={{fontSize:12.5,color:"#f0a68a",fontWeight:800,letterSpacing:0.3}}>{o.urgentNote}</span>
+                  </div>
+                )}
 
                 {o.complet?(
                   <div style={{display:"block",textAlign:"center",padding:"12px 0",borderRadius:50,background:"#ffffff12",border:"2px solid #e74c3c66",color:"#ff9b9b",fontWeight:700,fontSize:14}}>COMPLET</div>
