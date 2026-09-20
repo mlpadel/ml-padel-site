@@ -194,6 +194,23 @@ const fontLink = (
     .back-to-top{position:fixed;bottom:30px;right:30px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0cb82);color:#0a1628;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(201,168,76,0.4);z-index:999;transition:all 0.3s;opacity:0;pointer-events:none;transform:translateY(20px)}
     .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
     .back-to-top:hover{transform:translateY(-3px)!important;box-shadow:0 8px 30px rgba(201,168,76,0.6)}
+    /* ── Barre de navigation basse (mobile) ── */
+    .bottomnav{display:none}
+    @keyframes pulseFab{0%,100%{box-shadow:0 8px 22px rgba(201,168,76,.45)}50%{box-shadow:0 10px 32px rgba(201,168,76,.85)}}
+    @media(max-width:900px){
+      .bottomnav{display:flex;align-items:flex-end;position:fixed;left:0;right:0;bottom:0;z-index:1001;background:rgba(10,22,40,0.95);backdrop-filter:blur(16px);border-top:1px solid rgba(201,168,76,0.22);padding:7px 2px calc(11px + env(safe-area-inset-bottom))}
+      .bn-a{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:rgba(245,242,235,0.48);font-size:9.5px;font-weight:700;padding:5px 0;transition:color .25s;-webkit-tap-highlight-color:transparent}
+      .bn-a .bn-ic{font-size:20px;line-height:1;transition:transform .3s}
+      .bn-a.on{color:#c9a84c}
+      .bn-a.on .bn-ic{transform:translateY(-3px) scale(1.15)}
+      .bn-fab{flex:0 0 78px;margin-top:-28px;gap:0}
+      .bn-circ{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0cb82);display:flex;align-items:center;justify-content:center;font-size:25px;border:4px solid #0a1628;box-shadow:0 8px 22px rgba(201,168,76,.45);animation:pulseFab 2.8s ease-in-out infinite;transition:transform .25s}
+      .bn-fab:active .bn-circ{transform:scale(.92);animation:none}
+      .bn-lbl{color:#c9a84c;font-size:9.5px;font-weight:900;margin-top:4px}
+      body{padding-bottom:86px}
+      .back-to-top{bottom:106px!important;right:16px!important;width:42px!important;height:42px!important;font-size:17px!important}
+    }
+    @media(prefers-reduced-motion:reduce){.bn-circ{animation:none!important}}
     @media(max-width:768px){
       .nav-desktop{display:none!important}
       .nav-mobile-btn{display:flex!important}
@@ -2706,6 +2723,47 @@ function BackToTop(){
   );
 }
 
+/* ─── Barre de navigation basse (mobile) ─── */
+function BottomNav(){
+  const items=[
+    {id:"événements",icon:"⭐",label:"À la une"},
+    {id:"tarifs",icon:"💶",label:"Tarifs"},
+    {id:"wallet",icon:"💳",label:"Wallet"},
+    {id:"contact",icon:"💬",label:"Contact"},
+  ];
+  const[active,setActive]=useState("événements");
+  useEffect(()=>{
+    const fn=()=>{
+      const y=window.scrollY+170;
+      let best=items[0].id;
+      items.forEach(it=>{
+        const el=document.getElementById(it.id);
+        if(el&&el.offsetTop<=y)best=it.id;
+      });
+      setActive(best);
+    };
+    fn();
+    window.addEventListener("scroll",fn,{passive:true});
+    return()=>window.removeEventListener("scroll",fn);
+  },[]);
+  const link=(it)=>(
+    <a key={it.id} className={`bn-a ${active===it.id?"on":""}`} href={`#${it.id}`}>
+      <span className="bn-ic">{it.icon}</span>{it.label}
+    </a>
+  );
+  return(
+    <nav className="bottomnav" aria-label="Navigation rapide">
+      {link(items[0])}
+      {link(items[1])}
+      <a className="bn-a bn-fab" href={CALCOM.general} target="_blank" rel="noopener noreferrer" aria-label="Réserver un cours">
+        <span className="bn-circ">🎾</span><span className="bn-lbl">RÉSERVER</span>
+      </a>
+      {link(items[2])}
+      {link(items[3])}
+    </nav>
+  );
+}
+
 /* ─── Animated Counter Hook ─── */
 function useCounter(end,duration=2000,startOnView=false){
   const[count,setCount]=useState(0);
@@ -3258,6 +3316,7 @@ function MLPadel(){
       {fontLink}
       <ScrollProgress/>
       <BackToTop/>
+      <BottomNav/>
       <PadelBackground/>
       <Navbar/>
       <Hero/>
