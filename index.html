@@ -211,6 +211,16 @@ const fontLink = (
       .back-to-top{bottom:106px!important;right:16px!important;width:42px!important;height:42px!important;font-size:17px!important}
     }
     @media(prefers-reduced-motion:reduce){.bn-circ{animation:none!important}}
+    /* ── Bandeau défilant ── */
+    .mlp-marquee{background:#0a1628;color:#c9a84c;overflow:hidden;white-space:nowrap;padding:13px 0;font-weight:800;letter-spacing:2.6px;font-size:11.5px;text-transform:uppercase;border-top:1px solid rgba(201,168,76,.18);border-bottom:1px solid rgba(201,168,76,.18);position:relative;z-index:1}
+    .mlp-track{display:inline-block;will-change:transform;animation:mlpScroll 26s linear infinite}
+    @keyframes mlpScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .mlp-marquee:hover .mlp-track{animation-play-state:paused}
+    /* ── Retour tactile sur les cartes (mobile uniquement) ── */
+    @media(hover:none){
+      .mlp-card:active{transform:translateY(-4px)!important;box-shadow:0 14px 44px rgba(201,168,76,.22)!important;border-color:#c9a84c!important}
+    }
+    @media(prefers-reduced-motion:reduce){.mlp-track{animation:none}}
     @media(max-width:768px){
       .nav-desktop{display:none!important}
       .nav-mobile-btn{display:flex!important}
@@ -434,9 +444,24 @@ function Navbar(){
 function Hero(){
   const heroImages=["./_LAVAL012-1080w.webp","./_LAVAL013-1080w.webp","./_LAVAL014-1080w.webp","./_LAVAL015-1080w.webp","./_LAVAL017-1080w.webp","./_LAVAL018-1080w.webp"];
   const[bgIdx,setBgIdx]=useState(0);
+  const bgRef=useRef(null);
   useEffect(()=>{
     const t=setInterval(()=>setBgIdx(p=>(p+1)%heroImages.length),5000);
     return()=>clearInterval(t);
+  },[]);
+  useEffect(()=>{
+    if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    let raf=null;
+    const fn=()=>{
+      if(raf)return;
+      raf=requestAnimationFrame(()=>{
+        const y=window.scrollY;
+        if(bgRef.current)bgRef.current.style.transform=`translate3d(0,${y<1000?y*0.3:300}px,0)`;
+        raf=null;
+      });
+    };
+    window.addEventListener("scroll",fn,{passive:true});
+    return()=>{window.removeEventListener("scroll",fn);if(raf)cancelAnimationFrame(raf)};
   },[]);
   return(
     <section id="hero" style={{
@@ -446,6 +471,7 @@ function Hero(){
       zIndex:1,
     }}>
       {/* Background carousel */}
+      <div ref={bgRef} style={{position:"absolute",inset:0,willChange:"transform"}}>
       {heroImages.map((img,i)=>(
         <div key={i} style={{
           position:"absolute",inset:0,
@@ -453,8 +479,10 @@ function Hero(){
           backgroundSize:"cover",backgroundPosition:"center center",
           opacity:i===bgIdx?0.55:0,
           transition:"opacity 1.5s ease-in-out",
+          transform:"scale(1.08)",
         }}/>
       ))}
+      </div>
       {/* Gradient overlay */}
       <div style={{
         position:"absolute",inset:0,
@@ -843,7 +871,7 @@ function SeasonBanner(){
         }}>
           {items.map((o,i)=>(
             <AnimatedSection key={`${tab}-${i}`} delay={i*0.18} style={{height:"100%"}}>
-              <div style={{
+              <div className="mlp-card" style={{
                 background:WHITE,
                 border:`${o.popular?3:2}px solid ${o.popular?GOLD+"40":"#eee"}`,
                 borderRadius:18,padding:26,position:"relative",height:"100%",
@@ -2723,6 +2751,17 @@ function BackToTop(){
   );
 }
 
+/* ─── Bandeau défilant ─── */
+function Marquee(){
+  const items=["Cours individuels","Duo · Trio · Quatuor","Stages vacances","Académie","Masterclass week-end","Wallet & bonus","4Padel Saint-Louis"];
+  const line=items.join("　·　")+"　·　";
+  return(
+    <div className="mlp-marquee" aria-hidden="true">
+      <div className="mlp-track"><span>{line}</span><span>{line}</span></div>
+    </div>
+  );
+}
+
 /* ─── Barre de navigation basse (mobile) ─── */
 function BottomNav(){
   const items=[
@@ -3320,6 +3359,7 @@ function MLPadel(){
       <PadelBackground/>
       <Navbar/>
       <Hero/>
+      <Marquee/>
       <CounterStats/>
       <About/>
       <DebutantStart/>
