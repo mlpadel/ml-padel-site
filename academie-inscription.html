@@ -298,7 +298,7 @@ body{font-family:'DM Sans',sans-serif;background:#faf9f6;color:#1a1a2e;min-heigh
   <p style="text-align:center;color:#666;font-size:13px;margin-bottom:24px">Remplis le formulaire pour rejoindre la liste d'attente. On te recontacte d&egrave;s qu'une place se lib&egrave;re sur ton cr&eacute;neau.</p>
 
   <div class="form-card">
-    <form id="academieForm">
+    <form id="academieForm"><input type="text" name="website" id="hp-acad" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <div class="form-row">
         <div class="form-group">
           <label>Nom</label>
@@ -398,6 +398,7 @@ document.querySelectorAll('.slot').forEach(function(el){
 const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
 document.getElementById('academieForm').addEventListener('submit',async function(e){
+  var _hp=document.getElementById("hp-acad");if(_hp&&_hp.value){e.preventDefault();return;}
   e.preventDefault();
   const form=this;
   const btn=document.getElementById('submitBtn');

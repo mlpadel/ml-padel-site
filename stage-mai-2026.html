@@ -418,7 +418,7 @@ h1 em {
   <p class="form-subtitle">Remplissez le formulaire ci-dessous pour réserver votre place</p>
 
   <div class="form-card">
-    <form id="stageForm">
+    <form id="stageForm"><input type="text" name="website" id="hp-stagemai" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <div class="form-row">
         <div class="form-group">
           <label>Nom</label>
@@ -507,6 +507,7 @@ h1 em {
 const WALLET_API = "https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
 document.getElementById('stageForm').addEventListener('submit', async function(e) {
+  var _hp=document.getElementById("hp-stagemai");if(_hp&&_hp.value){e.preventDefault();return;}
   e.preventDefault();
   const form = this;
   const btn = document.getElementById('submitBtn');

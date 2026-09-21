@@ -24,8 +24,8 @@
 <meta name="geo.position" content="-21.2833;55.4167"/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://www.mlpadel.fr/"/>
-<link rel="icon" type="image/png" sizes="32x32" href="LOGO%20ML%20PADEL%202025%20(1).png"/>
-<link rel="apple-touch-icon" sizes="180x180" href="LOGO%20ML%20PADEL%202025%20(1).png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet"/>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -195,6 +195,7 @@ const fontLink = (
     .back-to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
     .back-to-top:hover{transform:translateY(-3px)!important;box-shadow:0 8px 30px rgba(201,168,76,0.6)}
     /* ── Barre de navigation basse (mobile) ── */
+        .hp{position:absolute!important;left:-9999px!important;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
     .bottomnav{display:none}
     @keyframes pulseFab{0%,100%{box-shadow:0 8px 22px rgba(201,168,76,.45)}50%{box-shadow:0 10px 32px rgba(201,168,76,.85)}}
     @media(max-width:900px){
@@ -2527,6 +2528,7 @@ function Reviews(){
   const avg=reviews.length?reviews.reduce((s,r)=>s+r.rating,0)/reviews.length:0;
 
   const handleSubmit=async(e)=>{
+    if(document.getElementById("hp-avis")&&document.getElementById("hp-avis").value)return;
     e.preventDefault();
     if(!formName.trim()||!formRating||!formComment.trim())return;
     setSubmitting(true);
@@ -2598,7 +2600,7 @@ function Reviews(){
           </div>
 
           {showForm&&(
-            <form onSubmit={handleSubmit} style={{maxWidth:440,margin:"28px auto 0",textAlign:"left",background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:16,padding:24}}>
+            <form onSubmit={handleSubmit} style={{maxWidth:440,margin:"28px auto 0",textAlign:"left",background:CREAM+"06",border:"1px solid "+CREAM+"10",borderRadius:16,padding:24}}><input type="text" name="website" id="hp-avis" className="hp" tabIndex={-1} autoComplete="off" aria-hidden="true"/>
               <div style={{marginBottom:16}}>
                 <label style={{fontSize:12,fontWeight:600,color:CREAM+"60",display:"block",marginBottom:6}}>Prénom</label>
                 <input value={formName} onChange={e=>setFormName(e.target.value)} placeholder="Votre prénom"
@@ -2663,7 +2665,7 @@ function MentionsLegales(){
   var[showMentions,setShowMentions]=React.useState(false);
   var[showCGV,setShowCGV]=React.useState(false);
   return(
-    <section style={{padding:"60px 24px",background:CREAM}}>
+    <section id="mentions-legales" style={{padding:"60px 24px",background:CREAM,scrollMarginTop:80}}>
       <div style={sStyle}>
         <div style={{marginBottom:16}}>
           <div onClick={()=>setShowMentions(!showMentions)} style={{...h2s,padding:"18px 0",borderBottom:"1px solid "+GOLD+"30"}}>
@@ -3163,6 +3165,7 @@ function StageJuilletForm(){
   const selectedOffre=offres.find(o=>o.id===form.offre);
 
   const handleSubmit=async(e)=>{
+    if(document.getElementById("hp-stage")&&document.getElementById("hp-stage").value)return;
     e.preventDefault();
     if(!form.nom||!form.prenom||!form.email||!form.tel||!form.offre||!form.creneau.length||!form.semaine){
       setError("Merci de remplir tous les champs obligatoires.");return;
@@ -3254,7 +3257,7 @@ function StageJuilletForm(){
           <form onSubmit={handleSubmit} style={{
             background:WHITE,borderRadius:20,padding:"36px 32px",
             border:`1.5px solid ${GOLD}20`,boxShadow:`0 4px 24px ${GOLD}08`,
-          }}>
+          }}><input type="text" name="website" id="hp-stage" className="hp" tabIndex={-1} autoComplete="off" aria-hidden="true"/>
             {/* Nom / Prènom */}
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:16,marginBottom:20}}>
               <div>
