@@ -3,10 +3,10 @@
   <!-- mypadel mark — icône seule (sans wordmark), format carré 1:1 -->
   <!-- Usage : favicon, app icon, profil social, sticker -->
 
-  <rect x="40" y="40" width="920" height="920" rx="160" fill="#17233E"/>
+  <rect x="40" y="40" width="920" height="920" rx="160" fill="#FFFFFF"/>
 
   <g transform="translate(500 384) scale(1.4)" fill="none" stroke="#E6B85C" stroke-width="22" stroke-linejoin="round">
-    <path d="
+    <path fill="#17233E" d="
       M -22 380
       L -22 220
       C -32 215, -50 205, -70 185
