@@ -221,6 +221,15 @@ const fontLink = (
       .mlp-card:active{transform:translateY(-4px)!important;box-shadow:0 14px 44px rgba(201,168,76,.22)!important;border-color:#c9a84c!important}
     }
     @media(prefers-reduced-motion:reduce){.mlp-track{animation:none}}
+    /* ── Feuillage encadrant (fougères de La Réunion) ── */
+    .veg-frame{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+    .veg-cn{position:absolute;width:52vw;max-width:300px;height:auto;will-change:transform}
+    .veg-tl{top:0;left:0;transform-origin:0 0}
+    .veg-tr{top:0;right:0;transform-origin:100% 0}
+    .veg-bl{bottom:0;left:0;transform-origin:0 100%}
+    .veg-br{bottom:0;right:0;transform-origin:100% 100%}
+    @media(max-width:600px){.veg-cn{width:56vw;max-width:230px}}
+    @media(prefers-reduced-motion:reduce){.veg-cn{transform:none!important}}
     @media(max-width:768px){
       .nav-desktop{display:none!important}
       .nav-mobile-btn{display:flex!important}
@@ -2751,6 +2760,41 @@ function BackToTop(){
   );
 }
 
+/* ─── Feuillage encadrant (fougères photographiées à La Réunion) ─── */
+function VegFrame(){
+  const ref=useRef(null);
+  useEffect(()=>{
+    if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    const el=ref.current; if(!el)return;
+    const coins=Array.prototype.slice.call(el.children);
+    const sens=[[1,-1],[-1,-1],[1,1],[-1,1]];
+    let raf=null, t0=Date.now();
+    const peindre=()=>{
+      const y=window.scrollY||0, t=(Date.now()-t0)/1000;
+      coins.forEach((c,i)=>{
+        const vent=Math.sin(t*0.85+i*1.7)*0.9;
+        const rot=vent+Math.sin(y/280+i)*1.1;
+        const dx=sens[i][0]*Math.sin(y/360+i)*5;
+        c.style.transform=`translate(${dx.toFixed(2)}px,0) rotate(${rot.toFixed(2)}deg)`;
+      });
+      raf=null;
+    };
+    const onScroll=()=>{ if(!raf)raf=requestAnimationFrame(peindre); };
+    window.addEventListener("scroll",onScroll,{passive:true});
+    const tick=setInterval(()=>{ if(!raf)raf=requestAnimationFrame(peindre); },60);
+    peindre();
+    return()=>{window.removeEventListener("scroll",onScroll);clearInterval(tick);if(raf)cancelAnimationFrame(raf)};
+  },[]);
+  return(
+    <div className="veg-frame" ref={ref} aria-hidden="true">
+      <img className="veg-cn veg-tl" src="feuillage-tl.webp" alt="" loading="lazy"/>
+      <img className="veg-cn veg-tr" src="feuillage-tr.webp" alt="" loading="lazy"/>
+      <img className="veg-cn veg-bl" src="feuillage-bl.webp" alt="" loading="lazy"/>
+      <img className="veg-cn veg-br" src="feuillage-br.webp" alt="" loading="lazy"/>
+    </div>
+  );
+}
+
 /* ─── Bandeau défilant ─── */
 function Marquee(){
   const items=["Cours individuels","Duo · Trio · Quatuor","Stages vacances","Académie","Masterclass week-end","Wallet & bonus","4Padel Saint-Louis"];
@@ -3356,6 +3400,7 @@ function MLPadel(){
       <ScrollProgress/>
       <BackToTop/>
       <BottomNav/>
+      <VegFrame/>
       <PadelBackground/>
       <Navbar/>
       <Hero/>
