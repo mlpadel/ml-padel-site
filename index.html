@@ -376,9 +376,9 @@ function Navbar(){
   return(
     <nav aria-label="Navigation principale" style={{
       position:"fixed",top:0,left:0,right:0,zIndex:1000,
-      background:scrolled?`${WARM_WHITE}f0`:"transparent",
-      backdropFilter:scrolled?"blur(20px)":"none",
-      borderBottom:scrolled?`1px solid ${GOLD}18`:"none",
+      background:"transparent",
+      backdropFilter:"none",
+      borderBottom:"none",
       transition:"all 0.4s",padding:"0 24px",
     }}>
       <div style={{
@@ -2776,8 +2776,6 @@ function VegFrame(){
     let raf=null, t0=Date.now();
     const peindre=()=>{
       const y=window.scrollY||0, t=(Date.now()-t0)/1000;
-      const nav=document.querySelector('nav[aria-label="Navigation principale"]');
-      el.style.top=(nav?nav.offsetHeight:72)+"px";
       coins.forEach((c,i)=>{
         const vent=Math.sin(t*0.85+i*1.7)*0.9;
         const rot=vent+Math.sin(y/280+i)*1.1;
