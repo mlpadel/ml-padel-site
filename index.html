@@ -204,7 +204,8 @@ const fontLink = (
       .bn-a.on{color:#e8d48b}
       .bn-a.on .bn-ic{transform:translateY(-3px) scale(1.15)}
       .bn-fab{flex:0 0 82px;margin-top:-30px;gap:0}
-      .bn-circ{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#c9a84c,#e0cb82);display:flex;align-items:center;justify-content:center;font-size:29px;border:4px solid #0a1628;box-shadow:0 8px 22px rgba(201,168,76,.45);animation:pulseFab 2.8s ease-in-out infinite;transition:transform .25s}
+      .bn-circ{width:64px;height:64px;border-radius:19px;background:#17233E;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2.5px solid #c9a84c;box-shadow:0 0 0 4px #0a1628,0 8px 22px rgba(201,168,76,.5);animation:pulseFab 2.8s ease-in-out infinite;transition:transform .25s}
+      .bn-circ img{width:100%;height:100%;display:block}
       .bn-fab:active .bn-circ{transform:scale(.92);animation:none}
       .bn-lbl{color:#c9a84c;font-size:10px;font-weight:900;margin-top:4px}
       body{padding-bottom:86px}
@@ -2844,7 +2845,7 @@ function BottomNav(){
       {link(items[0])}
       {link(items[1])}
       <a className="bn-a bn-fab" href={CALCOM.general} target="_blank" rel="noopener noreferrer" aria-label="Réserver un cours">
-        <span className="bn-circ">🎾</span><span className="bn-lbl">RÉSERVER</span>
+        <span className="bn-circ"><img src="mypadel-mark.svg" alt="" width="64" height="64"/></span><span className="bn-lbl">RÉSERVER</span>
       </a>
       {link(items[2])}
       {link(items[3])}

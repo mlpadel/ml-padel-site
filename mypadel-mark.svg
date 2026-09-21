@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <!-- mypadel mark — icône seule (sans wordmark), format carré 1:1 -->
+  <!-- Usage : favicon, app icon, profil social, sticker -->
+
+  <rect x="40" y="40" width="920" height="920" rx="160" fill="#17233E"/>
+
+  <g transform="translate(500 500)" fill="none" stroke="#E6B85C" stroke-width="22" stroke-linejoin="round">
+    <path d="
+      M -22 380
+      L -22 220
+      C -32 215, -50 205, -70 185
+      C -100 155, -130 130, -160 100
+      C -178 80, -185 60, -185 30
+      L -185 -70
+      C -185 -160, -120 -230, 0 -230
+      C 120 -230, 185 -160, 185 -70
+      L 185 30
+      C 185 60, 178 80, 160 100
+      C 130 130, 100 155, 70 185
+      C 50 205, 32 215, 22 220
+      L 22 380
+      Z
+    "/>
+    <rect x="-22" y="220" width="44" height="160" fill="#E6B85C" stroke="none"/>
+    <rect x="-32" y="376" width="60" height="20" rx="10" fill="#E6B85C" stroke="none"/>
+    <g stroke="#17233E" stroke-width="4" stroke-linecap="round" fill="none">
+      <line x1="-22" y1="240" x2="22" y2="260"/>
+      <line x1="-22" y1="260" x2="22" y2="280"/>
+      <line x1="-22" y1="280" x2="22" y2="300"/>
+      <line x1="-22" y1="300" x2="22" y2="320"/>
+      <line x1="-22" y1="320" x2="22" y2="340"/>
+      <line x1="-22" y1="340" x2="22" y2="360"/>
+    </g>
+    <path d="M -40 130 L 40 130 L 0 190 Z" fill="#17233E" stroke="#E6B85C" stroke-width="10" stroke-linejoin="round"/>
+  </g>
+
+  <g transform="translate(500 500)">
+    <rect x="-112" y="-130" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="-54"  y="-130" width="50" height="38" rx="5" fill="#E6B85C"/>
+    <rect x="4"    y="-130" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="62"   y="-130" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+
+    <rect x="-112" y="-84" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="-54"  y="-84" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="4"    y="-84" width="50" height="38" rx="5" fill="#E6B85C"/>
+    <rect x="62"   y="-84" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+
+    <rect x="-112" y="-38" width="50" height="38" rx="5" fill="#E6B85C"/>
+    <rect x="-54"  y="-38" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="4"    y="-38" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="62"   y="-38" width="50" height="38" rx="5" fill="#E6B85C"/>
+
+    <rect x="-112" y="8" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="-54"  y="8" width="50" height="38" rx="5" fill="#E6B85C"/>
+    <rect x="4"    y="8" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="62"   y="8" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+
+    <rect x="-112" y="54" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="-54"  y="54" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="4"    y="54" width="50" height="38" rx="5" fill="none" stroke="#E6B85C" stroke-width="2.8" opacity="0.6"/>
+    <rect x="62"   y="54" width="50" height="38" rx="5" fill="#E6B85C"/>
+  </g>
+
+  <g transform="translate(870 850)">
+    <circle cx="0" cy="0" r="92" fill="#17233E"/>
+    <circle cx="0" cy="0" r="80" fill="#E6B85C"/>
+    <polyline points="-32,4 -8,28 36,-22" fill="none" stroke="#17233E" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
