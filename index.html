@@ -222,7 +222,8 @@ const fontLink = (
     }
     @media(prefers-reduced-motion:reduce){.mlp-track{animation:none}}
     /* ── Feuillage encadrant (fougères de La Réunion) ── */
-    .veg-frame{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}
+    .veg-frame{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:40;overflow:hidden}
+    @media(max-width:900px){.veg-frame{bottom:calc(78px + env(safe-area-inset-bottom))}}
     .veg-cn{position:absolute;width:52vw;max-width:300px;height:auto;will-change:transform}
     .veg-tl{top:0;left:0;transform-origin:0 0}
     .veg-tr{top:0;right:0;transform-origin:100% 0}
@@ -352,8 +353,12 @@ function Navbar(){
   const[scrolled,setScrolled]=useState(false);
   const[menuOpen,setMenuOpen]=useState(false);
   useEffect(()=>{
-    const fn=()=>setScrolled(window.scrollY>50);
-    window.addEventListener("scroll",fn);
+    let seuil=50;
+    const calc=()=>{const a=document.getElementById("apropos");seuil=a?Math.max(50,a.offsetTop-90):50;};
+    const fn=()=>setScrolled(window.scrollY>seuil);
+    calc();fn();
+    window.addEventListener("scroll",fn,{passive:true});
+    window.addEventListener("resize",()=>{calc();fn();});
     return()=>window.removeEventListener("scroll",fn);
   },[]);
 
@@ -620,7 +625,7 @@ function About(){
   ];
 
   return(
-    <section style={{padding:"80px 24px",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+    <section id="apropos" style={{padding:"80px 24px",maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
       <AnimatedSection>
         <div className="about-grid" style={{display:"flex",gap:48,alignItems:"center",flexWrap:"wrap"}}>
           {/* Photo placeholder */}
@@ -2771,6 +2776,8 @@ function VegFrame(){
     let raf=null, t0=Date.now();
     const peindre=()=>{
       const y=window.scrollY||0, t=(Date.now()-t0)/1000;
+      const nav=document.querySelector('nav[aria-label="Navigation principale"]');
+      el.style.top=(nav?nav.offsetHeight:72)+"px";
       coins.forEach((c,i)=>{
         const vent=Math.sin(t*0.85+i*1.7)*0.9;
         const rot=vent+Math.sin(y/280+i)*1.1;
