@@ -259,8 +259,13 @@ function useInView(threshold=0.08){
   const[inView,setInView]=useState(false);
   useEffect(()=>{
     const el=ref.current;if(!el)return;
+    if(typeof IntersectionObserver==="undefined"){setInView(true);return;}
     const obs=new IntersectionObserver(([e])=>{if(e.isIntersecting)setInView(true)},{threshold});
-    obs.observe(el);return()=>obs.disconnect();
+    obs.observe(el);
+    // filet de sécurité : sur certains navigateurs intégrés (Instagram, Facebook)
+    // l'observateur ne se déclenche jamais et le contenu resterait invisible
+    const secours=setTimeout(()=>setInView(true),2000);
+    return()=>{obs.disconnect();clearTimeout(secours)};
   },[threshold]);
   return[ref,inView];
 }
