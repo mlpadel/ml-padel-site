@@ -135,6 +135,10 @@ const TEXT_LIGHT = "#7a7f8e";
 const WHITE = "#ffffff";
 
 const CALCOM_BASE = "https://cal.com/ml-padel";
+/* Appli de réservation du club — produit hors wallet ML Padel */
+/* Renseigner l'URL ci-dessous active la carte "Coaching Collectif · 2 Coachs" */
+const APPLI_CLUB_URL = "#";
+
 const CALCOM = {
   indiv: `${CALCOM_BASE}/indiv-wallet?overlayCalendar=true`,
   collectif: `${CALCOM_BASE}/collectif-duo-wallet`,
@@ -812,6 +816,7 @@ function SeasonBanner(){
       {title:"Duo",price:NT?"70":"60",unit:"€/heure",desc:NT?"1h · 2 joueurs · 35€/pers":"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.duoCb,especeLink:CALCOM.duoEspece,walletLink:NT?"https://cal.com/ml-padel/collectif-duo-wallet?duration=90&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
       {title:"Trio",disabled:!NT,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:CALCOM.trioCb,especeLink:CALCOM.trioEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-trio-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
       {title:"Quatuor",disabled:!NT,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:CALCOM.quatuorCb,especeLink:CALCOM.quatuorEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-quatuor-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      ...(APPLI_CLUB_URL!=="#"?[{title:"Coaching Collectif · 2 Coachs",price:"25",unit:"€/joueur · 1h30",desc:"Journée · Format hybride",blurb:"Progresse plus vite avec 2 coachs qui alternent selon les terrains — technique, tactique, jeu. Groupe fixe, ambiance et exigence.",features:["4 joueurs (groupe complet obligatoire)","Créneaux fixes réservés pour ton groupe","Inscription en ligne sur l'appli du club","Paiement en ligne ou sur place, avec le club"],badge:"FACTURATION ENTREPRISE POSSIBLE",link:APPLI_CLUB_URL,cta:"Réserver sur l'appli du club"}]:[]),
     ],
     académie:[
       {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
@@ -953,6 +958,9 @@ function SeasonBanner(){
                   fontWeight:700,marginBottom:5,color:TEXT_DARK,
                 }}>{o.title}</h3>
                 <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14,display:o.disabled?"none":"block"}}>{o.desc}</p>
+                {o.blurb&&!o.disabled&&(
+                  <p style={{color:TEXT_MED,fontSize:13,lineHeight:1.6,marginBottom:14}}>{o.blurb}</p>
+                )}
 
                 <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
                   <span style={{
@@ -1007,7 +1015,7 @@ function SeasonBanner(){
                     if(!o.popular){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >{o.isAcadémie?"Liste d'attente":(o.especeLink?"💳 Payer en ligne":"Réserver")}</a>
+                  >{o.cta?o.cta:(o.isAcadémie?"Liste d'attente":(o.especeLink?"💳 Payer en ligne":"Réserver"))}</a>
                 )}
               {o.especeLink && !o.disabled && (<a href={o.especeLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:"transparent",border:`1.5px solid ${NAVY}35`,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>🤝 Payer sur place</a>)}
               {o.walletLink && !o.disabled && (<a href={o.walletLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:GOLD,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>{o.especeLink?"⭐ Payer avec ma wallet":"Réserver avec ma wallet"}</a>)}
