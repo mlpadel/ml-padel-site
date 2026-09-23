@@ -816,7 +816,7 @@ function SeasonBanner(){
       {title:"Duo",price:NT?"70":"60",unit:"€/heure",desc:NT?"1h · 2 joueurs · 35€/pers":"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.duoCb,especeLink:CALCOM.duoEspece,walletLink:NT?"https://cal.com/ml-padel/collectif-duo-wallet?duration=90&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
       {title:"Trio",disabled:!NT,price:"75",unit:"€/heure",desc:"1h · 3 joueurs · 25€/pers",features:["Match dirigé avec le coach","Travail en cadence au panier","Le plus populaire"],popular:true,link:CALCOM.trioCb,especeLink:CALCOM.trioEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-trio-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
       {title:"Quatuor",disabled:!NT,price:"80",unit:"€/heure",desc:"1h · 4 joueurs · 20€/pers",features:["Match coaché","Conseils tactiques","Travail des schémas de jeux","Meilleure valeur"],link:CALCOM.quatuorCb,especeLink:CALCOM.quatuorEspece,walletLink:"https://cal.com/ml-padel/cours-collectif-quatuor-wallet?duration=90&overlayCalendar=true",subPrice:NT?"Bonus +15% en crédits wallet":undefined},
-      ...(APPLI_CLUB_URL!=="#"?[{title:"Coaching Collectif · 2 Coachs",price:"25",unit:"€/joueur · 1h30",desc:"Journée · Format hybride",blurb:"Progresse plus vite avec 2 coachs qui alternent selon les terrains — technique, tactique, jeu. Groupe fixe, ambiance et exigence.",features:["4 joueurs (groupe complet obligatoire)","Créneaux fixes réservés pour ton groupe","Inscription en ligne sur l'appli du club","Paiement en ligne ou sur place, avec le club"],badge:"FACTURATION ENTREPRISE POSSIBLE",link:APPLI_CLUB_URL,cta:"Réserver sur l'appli du club"}]:[]),
+      ...(APPLI_CLUB_URL!=="#"?[{partner:true,title:"Coaching Collectif · 2 Coachs",price:"25",unit:"€/joueur · 1h30",desc:"Journée · Format hybride",blurb:"Progresse plus vite avec 2 coachs qui alternent selon les terrains — technique, tactique, jeu. Groupe fixe, ambiance et exigence.",features:["4 joueurs (groupe complet obligatoire)","Créneaux fixes réservés pour ton groupe","Inscription en ligne sur l'appli du club","Paiement en ligne ou sur place, avec le club"],badge:"FACTURATION ENTREPRISE POSSIBLE",link:APPLI_CLUB_URL,cta:"Réserver sur l'appli du club"}]:[]),
     ],
     académie:[
       {title:"Engagement annuel",price:"750",unit:"€/joueur/an",desc:"Septembre à juin · 28 séances",features:["Place réservée à l'année","28 séances garanties","Priorité sur les créneaux"],badge:"ANNUEL",popular:true,link:"/academie-inscription.html",isAcadémie:true},
@@ -898,15 +898,15 @@ function SeasonBanner(){
           {items.map((o,i)=>(
             <AnimatedSection key={`${tab}-${i}`} delay={i*0.18} style={{height:"100%"}}>
               <div className="mlp-card" style={{
-                background:WHITE,
-                border:`${o.popular?3:2}px solid ${o.popular?GOLD+"40":"#eee"}`,
+                background:o.partner?NAVY:WHITE,
+                border:`${o.partner?2:(o.popular?3:2)}px solid ${o.partner?GOLD:(o.popular?GOLD+"40":"#eee")}`,
                 borderRadius:18,padding:26,position:"relative",height:"100%",
                 transition:"all 0.35s cubic-bezier(0.16,1,0.3,1)",
                 opacity:o.soon?0.6:1,
                 minHeight:320,
                 display:"flex",
                 flexDirection:"column",
-                boxShadow:o.popular?`0 0 30px ${GOLD}22`:"none",
+                boxShadow:o.partner?`0 10px 34px ${NAVY}33`:(o.popular?`0 0 30px ${GOLD}22`:"none"),
               }}
               onMouseEnter={e=>{
                 if(!o.soon){
@@ -948,18 +948,18 @@ function SeasonBanner(){
                 {o.soon&&(
                   <div style={{
                     position:"absolute",top:-10,right:18,
-                    background:TEXT_LIGHT,color:WHITE,padding:"3px 12px",borderRadius:50,
+                    background:o.partner?GOLD:TEXT_LIGHT,color:o.partner?NAVY:WHITE,padding:"3px 12px",borderRadius:50,
                     fontSize:10,fontWeight:700,
                   }}>BIENTÔT</div>
                 )}
 
                 <h3 style={{
                   fontFamily:"'Playfair Display',serif",fontSize:17,
-                  fontWeight:700,marginBottom:5,color:TEXT_DARK,
+                  fontWeight:700,marginBottom:5,color:o.partner?WHITE:TEXT_DARK,
                 }}>{o.title}</h3>
-                <p style={{color:TEXT_LIGHT,fontSize:12,marginBottom:14,display:o.disabled?"none":"block"}}>{o.desc}</p>
+                <p style={{color:o.partner?`${GOLD}`:TEXT_LIGHT,fontSize:12,marginBottom:14,display:o.disabled?"none":"block",fontWeight:o.partner?700:400,letterSpacing:o.partner?1:0,textTransform:o.partner?"uppercase":"none"}}>{o.desc}</p>
                 {o.blurb&&!o.disabled&&(
-                  <p style={{color:TEXT_MED,fontSize:13,lineHeight:1.6,marginBottom:14}}>{o.blurb}</p>
+                  <p style={{color:o.partner?`${CREAM}cc`:TEXT_MED,fontSize:13,lineHeight:1.6,marginBottom:14}}>{o.blurb}</p>
                 )}
 
                 <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
@@ -967,15 +967,15 @@ function SeasonBanner(){
                     fontFamily:"'Playfair Display',serif",fontSize:o.soon?20:34,visibility:o.disabled?"hidden":"visible",
                     fontWeight:900,color:o.soon?TEXT_LIGHT:GOLD,
                   }}>{o.price}</span>
-                  {o.unit&&!o.disabled&&<span style={{color:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
+                  {o.unit&&!o.disabled&&<span style={{color:o.partner?`${CREAM}99`:TEXT_LIGHT,fontSize:12,fontWeight:500}}>{o.unit}</span>}
                 </div>
                 {false&&!o.disabled&&<p style={{color:NAVY_LIGHT,fontSize:12,fontWeight:600,marginBottom:6}}>{o.subPrice}</p>}
 
-                <div style={{flexGrow:1,margin:"14px 0 18px",borderTop:`1px solid ${GOLD}10`,paddingTop:14}}>
+                <div style={{flexGrow:1,margin:"14px 0 18px",borderTop:`1px solid ${o.partner?GOLD+"40":GOLD+"10"}`,paddingTop:14}}>
                   {o.features.map((f,fi)=>(
                     <div key={fi} style={{
                       display:"flex",alignItems:"center",gap:8,
-                      padding:"4px 0",fontSize:13,color:TEXT_MED,
+                      padding:"4px 0",fontSize:13,color:o.partner?`${CREAM}dd`:TEXT_MED,
                     }}>
                       <Icon.check/> {f}
                     </div>
@@ -997,13 +997,18 @@ function SeasonBanner(){
                   </div>
                 )}
 
+                {o.partner&&(
+                  <p style={{color:`${CREAM}88`,fontSize:11,lineHeight:1.55,marginBottom:12,fontStyle:"italic"}}>
+                    Offre proposée par le club · réservation et paiement gérés par lui · hors wallet ML Padel
+                  </p>
+                )}
                 {!o.soon&&!o.disabled&&(
                   <a href={o.link||CALCOM.general} {...((o.link||"").startsWith("#")?{}:{target:"_blank",rel:"noopener noreferrer"})} style={{
                     display:"block",textAlign:"center",padding:"16px 0",
                     borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
-                    background:o.popular?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
-                    color:o.popular?NAVY:GOLD,
-                    border:o.popular?"none":`1.5px solid ${GOLD}40`,
+                    background:(o.partner||o.popular)?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                    color:(o.partner||o.popular)?NAVY:GOLD,
+                    border:(o.partner||o.popular)?"none":`1.5px solid ${GOLD}40`,
                     transition:"all 0.3s",
                     marginTop:"auto",
                   }}
