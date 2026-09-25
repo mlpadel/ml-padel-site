@@ -1128,6 +1128,64 @@ function TransitionPricing(){
 }
 
 /* ─── Horaires & Disponibilités ─── */
+/* ─── Le club — Padel Paradise ─── */
+function LeClub(){
+  const shots=[
+    {src:"paradise-vue-aerienne-1080w.webp",alt:"Vue aérienne du complexe Padel Paradise à Saint-Pierre",cap:"Le complexe vu du ciel"},
+    {src:"paradise-terrains-1080w.webp",alt:"Terrains de padel indoor de Padel Paradise",cap:"Les terrains indoor"},
+    {src:"paradise-clubhouse-1080w.webp",alt:"Club house et terrasse de Padel Paradise",cap:"Club house & terrasse"},
+    {src:"paradise-allee-1080w.webp",alt:"Allée centrale entre les terrains de padel",cap:"L'allée centrale"},
+    {src:"paradise-allee-detente-1080w.webp",alt:"Espace détente au bord des terrains",cap:"L'espace détente"},
+    {src:"paradise-exterieur-1080w.webp",alt:"Parking et accès de Padel Paradise",cap:"Parking & accès"},
+  ];
+  return(
+    <section id="club" style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1100,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:44}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Le club</span>
+            <h2 style={{
+              fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
+              fontWeight:900,marginTop:8,color:TEXT_DARK,
+            }}>
+              Padel <span style={{color:GOLD}}>Paradise</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.65,marginTop:14,maxWidth:620,marginLeft:"auto",marginRight:"auto"}}>
+              Terrains indoor, club house et parking sur place — c'est ici que je donne tous mes cours.
+            </p>
+            <p style={{color:GOLD,fontSize:13,fontWeight:700,marginTop:10}}>
+              📍 596 allée des Béliers, 97410 Saint-Pierre
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
+          {shots.map((p,i)=>(
+            <AnimatedSection key={p.src} delay={0.08*i}>
+              <figure style={{
+                margin:0,position:"relative",borderRadius:14,overflow:"hidden",
+                border:`1px solid ${GOLD}22`,aspectRatio:"16/9",
+                boxShadow:"0 6px 22px rgba(10,22,40,0.10)",
+              }}>
+                <img src={p.src} srcSet={_ss(p.src)} sizes="(max-width:768px) 92vw, 350px"
+                  alt={p.alt} loading="lazy"
+                  style={{width:"100%",height:"100%",objectFit:"cover",display:"block",transition:"transform 0.5s"}}
+                  onMouseEnter={e=>e.target.style.transform="scale(1.06)"}
+                  onMouseLeave={e=>e.target.style.transform="scale(1)"}/>
+                <figcaption style={{
+                  position:"absolute",left:0,right:0,bottom:0,padding:"24px 14px 10px",
+                  background:"linear-gradient(to top,rgba(10,22,40,0.78),transparent)",
+                  color:"#fff",fontSize:12,fontWeight:700,letterSpacing:0.3,
+                }}>{p.cap}</figcaption>
+              </figure>
+            </AnimatedSection>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Horaires(){
   const slots=[
     {icon:"👤",label:"Cours individuels & collectifs",horaire:"Du lundi au samedi · en journée",note:"À Padel Paradise · Saint-Pierre, dès le 5 octobre",color:GOLD},
@@ -3527,6 +3585,7 @@ function MLPadel(){
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
+      <LeClub/>
       <TeamSection/>
       <InstagramSection/>
       <WhatsAppChannel/>
