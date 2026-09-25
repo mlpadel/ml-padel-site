@@ -171,6 +171,8 @@ const WALLET_API_GLOBAL = "https://script.google.com/macros/s/AKfycbzox1toN9GY7d
 
 const WHATSAPP_BASE = "https://wa.me/262692627372";
 const WHATSAPP_CHANNEL = "https://whatsapp.com/channel/0029Vb8v78WH5JLsqYqp3z1c";
+/* Groupe WhatsApp coaching Padel Paradise */
+const WHATSAPP_GROUPE = "https://chat.whatsapp.com/F5Tfs5rfsIV4faeyewdE5S";
 const wa = (msg) => `${WHATSAPP_BASE}?text=${encodeURIComponent(msg)}`;
 const WHATSAPP_LINK = wa("Bonjour Mathias, je souhaite réserver un cours de padel 🎾");
 const INSTAGRAM = "https://instagram.com/ml_padel";
@@ -600,7 +602,17 @@ function Hero(){
           }}
           onMouseEnter={e=>{e.target.style.background="#25D3661c";e.target.style.borderColor="#25D36680"}}
           onMouseLeave={e=>{e.target.style.background="#25D3660f";e.target.style.borderColor="#25D36638"}}
-          >📣 Rejoindre ma chaîne</a>
+          >📣 Ma chaîne</a>
+
+          <a href={WHATSAPP_GROUPE} target="_blank" rel="noopener noreferrer" style={{
+            background:"#25D3660f",backdropFilter:"blur(10px)",
+            color:"#8fd9ae",padding:"16px 32px",borderRadius:50,
+            textDecoration:"none",fontWeight:600,fontSize:16,
+            border:"1px solid #25D36638",transition:"all 0.3s",
+          }}
+          onMouseEnter={e=>{e.target.style.background="#25D3661c";e.target.style.borderColor="#25D36680"}}
+          onMouseLeave={e=>{e.target.style.background="#25D3660f";e.target.style.borderColor="#25D36638"}}
+          >👥 Rejoindre le groupe</a>
         </div>
 
         <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
