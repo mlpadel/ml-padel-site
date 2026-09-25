@@ -275,6 +275,8 @@ function useInView(threshold=0.08){
   return[ref,inView];
 }
 
+/* fond photo Padel Paradise : voile de couleur + image, lisibilite preservee */
+function _fond(img,voile){return{backgroundImage:"linear-gradient("+voile+","+voile+"),url("+img+")",backgroundSize:"cover",backgroundPosition:"center",backgroundRepeat:"no-repeat"};}
 function _ss(s){if(!s||!/-\d+w\.webp$/.test(s))return undefined;var ow=parseInt(s.match(/-(\d+)w\.webp$/)[1],10);var b=s.replace(/-\d+w\.webp$/,'');var o=[];[480,768].forEach(function(w){if(w<ow)o.push(b+'-'+w+'w.webp '+w+'w');});o.push(s+' '+ow+'w');return o.join(', ');}
 function AnimatedSection({children,style={},delay=0}){
   const[ref,inView]=useInView();
@@ -1281,7 +1283,9 @@ function Wallet(){
   return(
     <section id="wallet" style={{
       padding:"80px 24px 20px",
-      background:`linear-gradient(175deg,${NAVY} 0%,${NAVY_MID} 100%)`,
+      backgroundColor:NAVY,
+      backgroundImage:`linear-gradient(175deg,${NAVY}F0 0%,${NAVY_MID}F0 100%),url(paradise-terrains-768w.webp)`,
+      backgroundSize:"cover",backgroundPosition:"center",
       color:CREAM,
       position:"relative",
       zIndex:1,
@@ -1878,7 +1882,8 @@ function Gallery(){
   ];
 
   return(
-    <section id="galerie" style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+    <section id="galerie" style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
+      ..._fond("paradise-allee-768w.webp","rgba(247,243,236,0.90)")}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2053,7 +2058,8 @@ function CoursCollectifsSection(){
 
   if(loading||events.length===0)return null;
   return(
-    <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND}}>
+    <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND,
+      ..._fond("paradise-clubhouse-768w.webp","rgba(247,243,236,0.91)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2473,7 +2479,9 @@ function Contact(){
   return(
     <section id="contact" style={{
       padding:"80px 24px",
-      background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
+      backgroundColor:NAVY,
+      backgroundImage:`linear-gradient(170deg,${NAVY}F0 0%,${NAVY_MID}EF 60%,${NAVY_LIGHT}EE 100%),url(paradise-exterieur-768w.webp)`,
+      backgroundSize:"cover",backgroundPosition:"center",
       color:CREAM,
       position:"relative",
       zIndex:1,
@@ -3500,7 +3508,8 @@ function StageJuilletForm(){
 }
 function MapSection(){
   return(
-    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
+      ..._fond("paradise-vue-aerienne-768w.webp","rgba(247,243,236,0.90)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:40}}>
