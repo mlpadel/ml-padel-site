@@ -602,7 +602,7 @@ function Hero(){
           }}
           onMouseEnter={e=>{e.target.style.background="#25D3661c";e.target.style.borderColor="#25D36680"}}
           onMouseLeave={e=>{e.target.style.background="#25D3660f";e.target.style.borderColor="#25D36638"}}
-          >👥 Rejoindre le groupe</a>
+          ><span style={{display:"inline-flex",alignItems:"center",gap:9,justifyContent:"center"}}><Icon.whatsapp/> Rejoindre le groupe</span></a>
         </div>
 
         <a href={INSTAGRAM} target="_blank" rel="noopener noreferrer" style={{
@@ -772,27 +772,62 @@ function TransitionAbout(){
 
 /* ─── Tarifs / Pricing ─── */
 function SeasonBanner(){
-  const args=["Souplesse totale : seul, à 2, 3 ou 4","Zéro pack à finir sous pression","Débit automatique, rien à gérer","Tu avances à ton rythme"];
+  const args=[
+    {i:"🎾",t:"Seul, à 2, 3 ou 4",d:"Tu changes de format quand tu veux"},
+    {i:"⏳",t:"Aucune date limite",d:"Pas de pack à finir sous pression"},
+    {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
+  ];
   return (
     <div style={{maxWidth:900,margin:"0 auto 34px"}}>
-      <div style={{background:"linear-gradient(135deg,#0a1628,#162040)",borderRadius:16,padding:"26px 22px",textAlign:"center"}}>
-        <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1,padding:"4px 14px",borderRadius:50}}>NOUVEAUTÉ</span>
-        <h3 style={{fontFamily:"'Playfair Display',serif",color:"#fff",fontSize:"clamp(20px,3vw,26px)",fontWeight:900,margin:"12px 0 8px",lineHeight:1.25}}>Une nouvelle saison pour progresser à ton rythme</h3>
-        <p style={{color:GOLD_LIGHT,fontSize:14,lineHeight:1.6,maxWidth:560,margin:"0 auto"}}>Les tarifs des cours évoluent — un simple alignement sur la réalité du coaching padel à La Réunion. Et surtout, une formule bien plus souple que les anciens packs.</p>
+
+      {/* Bloc principal : promesse + action, tout en haut */}
+      <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:18,padding:"30px 24px",textAlign:"center",border:`1px solid ${GOLD}33`}}>
+        <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1.4,padding:"5px 15px",borderRadius:50}}>💳 LA WALLET</span>
+        <h3 style={{fontFamily:"'Playfair Display',serif",color:"#fff",fontSize:"clamp(22px,3.4vw,30px)",fontWeight:900,margin:"14px 0 10px",lineHeight:1.2}}>
+          Recharge une fois,<br/>joue à ton <span style={{color:GOLD}}>rythme</span>
+        </h3>
+        <p style={{color:`${CREAM}bb`,fontSize:14.5,lineHeight:1.65,maxWidth:520,margin:"0 auto 22px"}}>
+          Tu crédites ton compte, puis chaque cours est débité automatiquement.
+          Jusqu'à <b style={{color:GOLD}}>15 % de coaching offert</b> selon le montant.
+        </p>
+        <a href="#wallet" style={{
+          display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+          fontWeight:900,fontSize:17,textDecoration:"none",padding:"18px 44px",borderRadius:50,
+          boxShadow:`0 10px 30px ${GOLD}44`,
+        }}>Recharger ma wallet →</a>
+        <p style={{color:`${CREAM}66`,fontSize:12.5,margin:"14px 0 0"}}>
+          Remplace les anciens packs de 5 ou 10 séances
+        </p>
       </div>
-      <div style={{background:WHITE,border:"1px solid #eae6db",borderRadius:14,padding:"22px",marginTop:14}}>
-        <h4 style={{fontFamily:"'Playfair Display',serif",color:TEXT_DARK,fontSize:19,fontWeight:800,margin:"0 0 6px"}}>La Wallet remplace les packs de 5 ou 10 séances</h4>
-        <p style={{fontSize:14,lineHeight:1.6,color:TEXT_MED,margin:"0 0 10px"}}>Fini le carnet figé à consommer. Tu recharges <b style={{color:TEXT_DARK}}>une seule fois</b>, puis tu piochent à ton rythme : un indiv cette semaine, un duo la prochaine, un trio quand tu veux. Ton crédit t’attend — tu ne repaies pas à chaque cours.</p>
-        <p style={{textAlign:"center",color:TEXT_MED,fontSize:13,margin:"0"}}>Jusqu’à <b style={{color:GOLD}}>15 % de coaching en plus, offert</b> — paliers et rechargement juste en dessous ↓</p>
+
+      {/* Trois arguments, une ligne chacun */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10,marginTop:14}}>
+        {args.map(function(a,i){return (
+          <div key={i} style={{background:WHITE,border:"1px solid #eae6db",borderRadius:12,padding:"14px 16px",display:"flex",alignItems:"flex-start",gap:11}}>
+            <span style={{fontSize:19,lineHeight:1.2}}>{a.i}</span>
+            <div>
+              <div style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{a.t}</div>
+              <div style={{fontSize:12.5,color:TEXT_LIGHT,marginTop:2,lineHeight:1.5}}>{a.d}</div>
+            </div>
+          </div>);})}
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:8,marginTop:14}}>
-        {args.map(function(a,i){return (<div key={i} style={{background:WHITE,border:"1px solid #eae6db",borderRadius:12,padding:"12px 14px",display:"flex",alignItems:"center",gap:10}}><span style={{color:GOLD,fontWeight:900,fontSize:16}}>✓</span><span style={{fontSize:13,color:TEXT_MED}}>{a}</span></div>);})}
+
+      {/* Carte cadeau : clairement secondaire, avec sa propre action */}
+      <div style={{background:"#f6f2e8",border:`1px solid ${GOLD}33`,borderRadius:12,padding:"13px 18px",marginTop:12,display:"flex",flexWrap:"wrap",alignItems:"center",gap:12}}>
+        <span style={{fontSize:21}}>🎁</span>
+        <div style={{flex:"1 1 260px",textAlign:"left"}}>
+          <div style={{color:TEXT_DARK,fontWeight:700,fontSize:14}}>Carte cadeau</div>
+          <div style={{color:TEXT_MED,fontSize:12.5,lineHeight:1.5}}>Offre des crédits à un proche — mêmes bonus jusqu'à +15 %.</div>
+        </div>
+        <a href={wa("Bonjour Mathias, je souhaite offrir une carte cadeau ML Padel 🎁")} target="_blank" rel="noopener noreferrer" style={{
+          background:"transparent",border:`1.5px solid ${GOLD}`,color:"#8a7430",fontWeight:700,fontSize:13,
+          textDecoration:"none",padding:"10px 20px",borderRadius:50,whiteSpace:"nowrap",
+        }}>Demander</a>
       </div>
-      <div style={{background:NAVY_LIGHT,borderRadius:14,padding:"16px 20px",marginTop:14,display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:12,textAlign:"center"}}>
-        <div style={{display:"flex",alignItems:"center",gap:12,flex:"1 1 300px",textAlign:"left"}}><span style={{fontSize:26}}>🎁</span><div><div style={{color:"#fff",fontWeight:700,fontSize:15}}>Carte cadeau</div><div style={{color:GOLD_LIGHT,fontSize:13,lineHeight:1.5}}>Offre la progression à un proche — mêmes avantages, jusqu’à +15 %.</div></div></div>
-        <a href="#wallet" style={{background:GOLD,color:NAVY,fontWeight:800,fontSize:14,textDecoration:"none",padding:"12px 26px",borderRadius:50,whiteSpace:"nowrap"}}>Recharger ma wallet</a>
-      </div>
-      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>La Wallet s’utilise sur les créneaux cours particuliers uniquement (individuel, duo, trio, quatuor).</p>
+
+      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>
+        La Wallet s'utilise sur les cours particuliers (individuel, duo, trio, quatuor).
+      </p>
     </div>
   );
 }
@@ -3421,12 +3456,45 @@ function MapSection(){
 /* ─── App ─── */
 
 
-function ExperienceClient(){
+function GuidePasAPas(){
+  const[ouvert,setOuvert]=useState(false);
+  const etapes=[
+    {n:"1",t:"Choisis ta formule",d:"Individuel, duo, trio ou quatuor — les tarifs sont plus bas à plusieurs. Stages et académie ont leur propre rubrique."},
+    {n:"2",t:"Réserve ton créneau",d:"En ligne sur Cal.com, du lundi au samedi en journée. Tu vois mes disponibilités réelles et tu choisis."},
+    {n:"3",t:"Choisis ton paiement",d:"Carte bancaire en ligne, sur place avec le club, ou avec tes crédits wallet si tu en as."},
+    {n:"4",t:"Viens jouer",d:"Rendez-vous à Padel Paradise, Saint-Pierre. Raquettes de prêt disponibles si besoin."},
+  ];
   return(
-    <section style={{padding:"60px 24px",background:"linear-gradient(170deg,#0a1628 0%,#0f1f3d 60%,#162d50 100%)",textAlign:"center"}}>
-      <h2 style={{color:"#c9a84c",fontFamily:"'Playfair Display',serif",fontSize:28,marginBottom:12}}>Comment ça marche ?</h2>
-      <p style={{color:"#a8aab5",maxWidth:500,margin:"0 auto 28px",fontSize:16,lineHeight:1.6}}>Découvre en un coup d’œil tout le parcours ML Padel : de ta première visite à ta confirmation de réservation.</p>
-      <button onClick={()=>window.open("experience-client.html","_blank")} style={{background:"#c9a84c",color:"#0a1628",border:"none",padding:"14px 36px",borderRadius:50,fontWeight:700,fontSize:15,cursor:"pointer",boxShadow:"0 6px 24px "+"#c9a84c"+"44",transition:"all 0.3s"}}>Explorer le parcours interactif →</button>
+    <section style={{padding:"46px 24px",background:`linear-gradient(170deg,${NAVY} 0%,#0f1f3d 60%,${NAVY_LIGHT} 100%)`,position:"relative",zIndex:1}}>
+      <div style={{maxWidth:680,margin:"0 auto"}}>
+        <button onClick={()=>setOuvert(!ouvert)} aria-expanded={ouvert} style={{
+          width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:14,
+          background:`${GOLD}12`,border:`1.5px solid ${GOLD}40`,borderRadius:14,
+          padding:"17px 20px",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",textAlign:"left",
+        }}>
+          <span style={{display:"flex",alignItems:"center",gap:11}}>
+            <span style={{fontSize:21}}>🧭</span>
+            <span>
+              <span style={{display:"block",color:WHITE,fontWeight:800,fontSize:16}}>Première fois ? Être guidé pas à pas</span>
+              <span style={{display:"block",color:`${CREAM}88`,fontSize:12.5,marginTop:2}}>4 étapes, moins d'une minute de lecture</span>
+            </span>
+          </span>
+          <span style={{color:GOLD,fontSize:22,lineHeight:1,transition:"transform 0.3s",transform:ouvert?"rotate(45deg)":"none"}}>+</span>
+        </button>
+        {ouvert&&(
+          <div style={{marginTop:12,display:"flex",flexDirection:"column",gap:10}}>
+            {etapes.map((e,i)=>(
+              <div key={i} style={{display:"flex",gap:14,background:"#ffffff0a",border:`1px solid ${GOLD}22`,borderRadius:12,padding:"14px 16px"}}>
+                <span style={{flex:"0 0 30px",height:30,borderRadius:"50%",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,fontWeight:900,fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>{e.n}</span>
+                <div>
+                  <div style={{color:WHITE,fontWeight:700,fontSize:15}}>{e.t}</div>
+                  <div style={{color:`${CREAM}99`,fontSize:13.5,lineHeight:1.6,marginTop:3}}>{e.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -3446,7 +3514,7 @@ function MLPadel(){
       <About/>
       <DebutantStart/>
       <TransitionAbout/>
-      <ExperienceClient/>
+      <GuidePasAPas/>
       <Événements/>
       <StageJuilletForm/>
       <Pricing/>
