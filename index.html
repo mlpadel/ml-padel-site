@@ -1040,26 +1040,25 @@ function SeasonBanner(){
                   </p>
                 )}
                 {!o.soon&&!o.disabled&&(
-                  <a href={o.link||CALCOM.general} {...((o.link||"").startsWith("#")?{}:{target:"_blank",rel:"noopener noreferrer"})} style={{
+                  <a href={o.especeLink||o.link||CALCOM.general} {...(((o.especeLink||o.link)||"").startsWith("#")?{}:{target:"_blank",rel:"noopener noreferrer"})} style={{
                     display:"block",textAlign:"center",padding:"16px 0",
                     borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:13,
-                    background:(o.partner||o.popular)?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
-                    color:(o.partner||o.popular)?NAVY:GOLD,
-                    border:(o.partner||o.popular)?"none":`1.5px solid ${GOLD}40`,
+                    background:(o.partner||o.popular||o.especeLink)?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                    color:(o.partner||o.popular||o.especeLink)?NAVY:GOLD,
+                    border:(o.partner||o.popular||o.especeLink)?"none":`1.5px solid ${GOLD}40`,
                     transition:"all 0.3s",
                     marginTop:"auto",
                   }}
                   onMouseEnter={e=>{
-                    if(!o.popular){e.target.style.background=`${GOLD}10`}
+                    if(!o.popular&&!o.especeLink){e.target.style.background=`${GOLD}10`}
                     e.target.style.transform="scale(1.02)";
                   }}
                   onMouseLeave={e=>{
-                    if(!o.popular){e.target.style.background="transparent"}
+                    if(!o.popular&&!o.especeLink){e.target.style.background="transparent"}
                     e.target.style.transform="scale(1)";
                   }}
-                  >{o.cta?o.cta:(o.isAcadémie?"Liste d'attente":(o.especeLink?"💳 Payer en ligne":"Réserver"))}</a>
+                  >{o.cta?o.cta:(o.isAcadémie?"Liste d'attente":(o.especeLink?"🤝 Réserver · paiement sur place":"Réserver"))}</a>
                 )}
-              {o.especeLink && !o.disabled && (<a href={o.especeLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:"transparent",border:`1.5px solid ${NAVY}35`,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>🤝 Payer sur place</a>)}
               {o.walletLink && !o.disabled && (<a href={o.walletLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:GOLD,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>{o.especeLink?"⭐ Payer avec ma wallet":"Réserver avec ma wallet"}</a>)}
               {o.disabled&&<div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%) rotate(-25deg)",background:"rgba(201,168,76,0.92)",color:"#fff",padding:"8px 80px",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase",zIndex:5,whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(0,0,0,0.3)",pointerEvents:"none"}}>{"À VENIR"}</div>}
               </div>
