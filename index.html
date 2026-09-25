@@ -417,7 +417,7 @@ function Navbar(){
               letterSpacing:0.3,animation:"pulse 2s ease-in-out infinite",
             }}>{l.badge}</span>}</a>
           ))}
-          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+          <a href="#tarifs" style={{
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
             color:NAVY,padding:"10px 24px",borderRadius:50,
             textDecoration:"none",fontWeight:700,fontSize:13,
@@ -455,7 +455,7 @@ function Navbar(){
               padding:"10px 0",borderBottom:`1px solid ${GOLD}15`,
             }}>{l.label}</a>
           ))}
-          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" onClick={()=>setMenuOpen(false)} style={{
+          <a href="#tarifs" onClick={()=>setMenuOpen(false)} style={{
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
             color:NAVY,padding:"14px 24px",borderRadius:50,
             textDecoration:"none",fontWeight:700,fontSize:14,textAlign:"center",marginTop:8,
@@ -573,7 +573,7 @@ function Hero(){
           display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",
           animation:"fadeUp 0.8s ease-out 0.45s both",
         }}>
-          <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+          <a href="#tarifs" style={{
             background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
             color:NAVY,padding:"16px 36px",borderRadius:50,
             textDecoration:"none",fontWeight:700,fontSize:16,
@@ -847,7 +847,7 @@ function SeasonBanner(){
   const NT=(new Date()>=new Date('2000-01-01T00:00:00+04:00'));
   const data={
     individuel:[
-      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure"],link:CALCOM.indivCb,especeLink:CALCOM.indivEspece,walletLink:NT?"https://cal.com/ml-padel/indiv-wallet?duration=60&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
+      {title:"Cours individuel",price:NT?"60":"50",unit:"€/heure",desc:"1h · 1 seul joueur · Heures creuses",features:["Coaching personnalisé","Analyse technique & tactique","Programme sur-mesure","⚠️ 1 joueur uniquement — à 2, choisis le Duo"],link:CALCOM.indivCb,especeLink:CALCOM.indivEspece,walletLink:NT?"https://cal.com/ml-padel/indiv-wallet?duration=60&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
     ],
     collectif:[
       {title:"Duo",price:NT?"70":"60",unit:"€/heure",desc:NT?"1h · 2 joueurs · 35€/pers":"1h · 2 joueurs · 30€/pers",features:["Travail diagonales","Séance technico-tactique","2 vs 1 avec le coach","Le plus demandé"],popular:true,link:CALCOM.duoCb,especeLink:CALCOM.duoEspece,walletLink:NT?"https://cal.com/ml-padel/collectif-duo-wallet?duration=90&overlayCalendar=true":null,subPrice:NT?"Bonus +15% en crédits wallet":undefined},
@@ -2436,7 +2436,7 @@ function Contact(){
 
           {/* CTA buttons */}
           <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:40}}>
-            <a href={CALCOM.general} target="_blank" rel="noopener noreferrer" style={{
+            <a href="#tarifs" style={{
               display:"inline-flex",alignItems:"center",gap:10,
               background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
               color:NAVY,padding:"16px 32px",borderRadius:50,
@@ -2890,7 +2890,7 @@ function BottomNav(){
     <nav className="bottomnav" aria-label="Navigation rapide">
       {link(items[0])}
       {link(items[1])}
-      <a className="bn-a bn-fab" href={CALCOM.general} target="_blank" rel="noopener noreferrer" aria-label="Réserver un cours">
+      <a className="bn-a bn-fab" href="#tarifs" aria-label="Réserver un cours">
         <span className="bn-circ"><img src="mypadel-racket.svg" alt="" width="64" height="64"/></span><span className="bn-lbl">RÉSERVER</span>
       </a>
       {link(items[2])}
