@@ -873,7 +873,8 @@ function SeasonBanner(){
   const items=data[tab];
 
   return(
-    <section id="tarifs" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section id="tarifs" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-terrains-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -1075,7 +1076,8 @@ function SeasonBanner(){
 /* ─── Carrousel Coaching (après Pricing) ─── */
 function CoachingCarousel(){
   return(
-    <section style={{padding:"40px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"40px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-clubhouse-768w.webp","rgba(250,249,246,0.80)")}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:20}}>
@@ -1214,7 +1216,8 @@ function Horaires(){
   ];
 
   return(
-    <section style={{padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px 60px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-allee-768w.webp","rgba(250,249,246,0.80)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
@@ -1293,7 +1296,7 @@ function Wallet(){
     <section id="wallet" style={{
       padding:"80px 24px 20px",
       backgroundColor:NAVY,
-      backgroundImage:`linear-gradient(175deg,${NAVY}F0 0%,${NAVY_MID}F0 100%),url(paradise-terrains-768w.webp)`,
+      backgroundImage:`linear-gradient(175deg,${NAVY}DE 0%,${NAVY_MID}DE 100%),url(paradise-terrains-768w.webp)`,
       backgroundSize:"cover",backgroundPosition:"center",
       color:CREAM,
       position:"relative",
@@ -1539,7 +1542,7 @@ function WalletClient(){
   const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
 
   return(
-    <section style={{padding:"60px 24px 0",background:"linear-gradient(175deg,"+NAVY+" 0%,"+NAVY_MID+" 100%)",position:"relative",zIndex:1}}>
+    <section style={{padding:"60px 24px 0",backgroundColor:NAVY,backgroundImage:"linear-gradient(175deg,"+NAVY+"DE 0%,"+NAVY_MID+"DE 100%),url(paradise-allee-768w.webp)",backgroundSize:"cover",backgroundPosition:"center",position:"relative",zIndex:1}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{
@@ -1762,7 +1765,7 @@ function WhatsAppChannel(){
   const WA_GREEN="#25D366";
   const CHANNEL=WHATSAPP_GROUPE;
   return(
-    <section style={{padding:"80px 24px",background:`linear-gradient(160deg,${NAVY} 0%,#0d1d3a 60%,${NAVY} 100%)`,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",backgroundColor:NAVY,backgroundImage:`linear-gradient(160deg,${NAVY}CC 0%,#0d1d3aCC 60%,${NAVY}CC 100%),url(paradise-vue-aerienne-768w.webp)`,backgroundSize:"cover",backgroundPosition:"center",position:"relative",zIndex:1}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:36,justifyContent:"center"}}>
@@ -1799,7 +1802,8 @@ function WhatsAppChannel(){
 }
 function InstagramSection(){
   return(
-    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
+      ..._fond("paradise-allee-768w.webp","rgba(247,243,236,0.80)")}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:40}}>
@@ -1892,7 +1896,7 @@ function Gallery(){
 
   return(
     <section id="galerie" style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
-      ..._fond("paradise-allee-768w.webp","rgba(247,243,236,0.90)")}}>
+      ..._fond("paradise-allee-768w.webp","rgba(247,243,236,0.80)")}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2068,7 +2072,7 @@ function CoursCollectifsSection(){
   if(loading||events.length===0)return null;
   return(
     <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND,
-      ..._fond("paradise-clubhouse-768w.webp","rgba(247,243,236,0.91)")}}>
+      ..._fond("paradise-clubhouse-768w.webp","rgba(247,243,236,0.87)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2190,7 +2194,8 @@ function PallapShop(){
   ];
 
   return(
-    <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section id="boutique" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-vue-aerienne-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2306,7 +2311,8 @@ function Testimonials(){
   ];
 
   return(
-    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
+      ..._fond("paradise-vue-aerienne-768w.webp","rgba(247,243,236,0.80)")}}>
       <div style={{maxWidth:1100,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2368,7 +2374,8 @@ function HowItWorks(){
   ];
 
   return(
-    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-terrains-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2426,7 +2433,8 @@ function FAQ(){
   ];
 
   return(
-    <section id="faq" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section id="faq" style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-terrains-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:720,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -2489,7 +2497,7 @@ function Contact(){
     <section id="contact" style={{
       padding:"80px 24px",
       backgroundColor:NAVY,
-      backgroundImage:`linear-gradient(170deg,${NAVY}F0 0%,${NAVY_MID}EF 60%,${NAVY_LIGHT}EE 100%),url(paradise-exterieur-768w.webp)`,
+      backgroundImage:`linear-gradient(170deg,${NAVY}CC 0%,${NAVY_MID}CC 60%,${NAVY_LIGHT}CC 100%),url(paradise-exterieur-768w.webp)`,
       backgroundSize:"cover",backgroundPosition:"center",
       color:CREAM,
       position:"relative",
@@ -2664,7 +2672,7 @@ function Reviews(){
   const displayed=showAll?reviews:reviews.slice(0,3);
 
   return(
-    <section id="reviews" style={{padding:"60px 24px 80px",background:"linear-gradient(175deg,"+NAVY_MID+" 0%,"+NAVY+" 100%)",color:CREAM,position:"relative",zIndex:1}}>
+    <section id="reviews" style={{padding:"60px 24px 80px",backgroundColor:NAVY,backgroundImage:"linear-gradient(175deg,"+NAVY_MID+"DE 0%,"+NAVY+"DE 100%),url(paradise-terrains-768w.webp)",backgroundSize:"cover",backgroundPosition:"center",color:CREAM,position:"relative",zIndex:1}}>
       <div style={{maxWidth:800,margin:"0 auto",textAlign:"center"}}>
         <AnimatedSection>
           <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Avis Clients</span>
@@ -3009,7 +3017,7 @@ function CounterStats(){
     {end:2000,suffix:"+",label:"Heures de coaching",icon:"⏱️"},
   ];
   return(
-    <section style={{padding:"60px 24px",background:`linear-gradient(135deg,${NAVY} 0%,${NAVY_MID} 100%)`,position:"relative",zIndex:1}}>
+    <section style={{padding:"60px 24px",backgroundColor:NAVY,backgroundImage:`linear-gradient(135deg,${NAVY}CC 0%,${NAVY_MID}CC 100%),url(paradise-clubhouse-768w.webp)`,backgroundSize:"cover",backgroundPosition:"center",position:"relative",zIndex:1}}>
       <div style={{maxWidth:1000,margin:"0 auto"}}>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:24,textAlign:"center"}}>
           {stats.map((s,i)=>{
@@ -3044,7 +3052,8 @@ function TeamSection(){
     },
   ];
   return(
-    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section style={{padding:"80px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-clubhouse-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:48}}>
@@ -3518,7 +3527,7 @@ function StageJuilletForm(){
 function MapSection(){
   return(
     <section style={{padding:"80px 24px",background:SAND,position:"relative",zIndex:1,
-      ..._fond("paradise-vue-aerienne-768w.webp","rgba(247,243,236,0.90)")}}>
+      ..._fond("paradise-vue-aerienne-768w.webp","rgba(247,243,236,0.80)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:40}}>
@@ -3545,7 +3554,7 @@ function GuidePasAPas(){
     {n:"4",t:"Viens jouer",d:"Rendez-vous à Padel Paradise, Saint-Pierre. Raquettes de prêt disponibles si besoin."},
   ];
   return(
-    <section style={{padding:"46px 24px",background:`linear-gradient(170deg,${NAVY} 0%,#0f1f3d 60%,${NAVY_LIGHT} 100%)`,position:"relative",zIndex:1}}>
+    <section style={{padding:"46px 24px",backgroundColor:NAVY,backgroundImage:`linear-gradient(170deg,${NAVY}DE 0%,#0f1f3dDE 60%,${NAVY_LIGHT}DE 100%),url(paradise-allee-768w.webp)`,backgroundSize:"cover",backgroundPosition:"center",position:"relative",zIndex:1}}>
       <div style={{maxWidth:680,margin:"0 auto"}}>
         <button onClick={()=>setOuvert(!ouvert)} aria-expanded={ouvert} style={{
           width:"100%",display:"flex",alignItems:"center",justifyContent:"space-between",gap:14,
@@ -3631,7 +3640,8 @@ function DebutantStart(){
     {icon:"\u{1F3C6}",title:"Compétition",desc:"Objectif tournois et classement : académie et coaching ciblé.",cta:"L'académie",href:"/academie-inscription.html"},
   ];
   return(
-    <section id="debuter" style={{padding:"72px 24px",background:WARM_WHITE,position:"relative",zIndex:1}}>
+    <section id="debuter" style={{padding:"72px 24px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-clubhouse-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:1000,margin:"0 auto"}}>
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:40}}>
