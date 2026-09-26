@@ -190,6 +190,7 @@ const fontLink = (
     ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
     ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes mlpRecap { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
     /* retour tactile sur les boutons des cartes tarifs */
     .mlp-card a{transition:transform .12s cubic-bezier(0.16,1,0.3,1),background .3s,box-shadow .3s}
     .mlp-card a:active{transform:scale(.97)}
@@ -290,6 +291,37 @@ function AnimatedSection({children,style={},delay=0}){
       transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
       ...style,
     }}>{children}</div>
+  );
+}
+
+/* ─── Pastille glissante : suit le bouton actif, y compris sur plusieurs lignes ─── */
+function usePilule(cle){
+  const ref=useRef(null);
+  const[box,setBox]=useState({x:0,y:0,w:0,h:0});
+  const mesurer=useCallback(function(){
+    const c=ref.current; if(!c) return;
+    const b=c.querySelector('[data-pilule="'+cle+'"]'); if(!b) return;
+    setBox({x:b.offsetLeft,y:b.offsetTop,w:b.offsetWidth,h:b.offsetHeight});
+  },[cle]);
+  useEffect(function(){
+    mesurer();
+    const t=setTimeout(mesurer,350); // apres chargement des polices
+    window.addEventListener("resize",mesurer);
+    return function(){clearTimeout(t);window.removeEventListener("resize",mesurer);};
+  },[mesurer]);
+  return[ref,box];
+}
+
+function Pilule({box,fond,rayon=50}){
+  const EXP="cubic-bezier(0.16,1,0.3,1)";
+  return(
+    <span aria-hidden="true" style={{
+      position:"absolute",top:0,left:0,width:box.w,height:box.h,
+      transform:`translate(${box.x}px,${box.y}px)`,
+      background:fond,borderRadius:rayon,zIndex:1,pointerEvents:"none",
+      opacity:box.w?1:0,
+      transition:`transform .42s ${EXP}, width .42s ${EXP}, height .42s ${EXP}, opacity .2s linear`,
+    }}/>
   );
 }
 
@@ -871,8 +903,7 @@ function SeasonBanner(){
   /* transition des onglets : sortie en fondu puis entrée en levé de rideau */
   const[sortie,setSortie]=useState(false);
   const[dir,setDir]=useState(0);
-  const ongletsRef=useRef(null);
-  const[pilule,setPilule]=useState({x:0,w:0});
+  const[ongletsRef,pilule]=usePilule(tab);
 
   const changerOnglet=(key)=>{
     if(key===tab||sortie) return;
@@ -882,18 +913,6 @@ function SeasonBanner(){
     setTimeout(()=>{setTab(key);setSortie(false);},130);
   };
 
-  const mesurerPilule=useCallback(()=>{
-    const c=ongletsRef.current; if(!c) return;
-    const b=c.querySelector('[data-onglet="'+tab+'"]'); if(!b) return;
-    setPilule({x:b.offsetLeft,w:b.offsetWidth});
-  },[tab]);
-
-  useEffect(()=>{
-    mesurerPilule();
-    const t=setTimeout(mesurerPilule,350); // après chargement des polices
-    window.addEventListener("resize",mesurerPilule);
-    return()=>{clearTimeout(t);window.removeEventListener("resize",mesurerPilule);};
-  },[mesurerPilule]);
 
     // ── Tarifs SEPTEMBRE 2026 (a activer le moment venu — NE PAS afficher avant) ──
     // Individuel: 55 EUR/h · Duo: 70 EUR/h (35/pers) · Trio: 75 EUR/h (25/pers) · Quatuor: 80 EUR/h (20/pers)
@@ -951,15 +970,9 @@ function SeasonBanner(){
             overflowX:"auto",maxWidth:"100%",WebkitOverflowScrolling:"touch",
             position:"relative",
           }} ref={ongletsRef}>
-            <span aria-hidden="true" style={{
-              position:"absolute",top:4,left:0,height:"calc(100% - 8px)",
-              width:pilule.w,transform:`translateX(${pilule.x}px)`,
-              background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-              borderRadius:50,zIndex:1,pointerEvents:"none",
-              transition:"transform 0.42s cubic-bezier(0.16,1,0.3,1), width 0.42s cubic-bezier(0.16,1,0.3,1)",
-            }}/>
+            <Pilule box={pilule} fond={`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`}/>
             {tabs.map(t=>(
-              <button key={t.key} data-onglet={t.key} onClick={()=>changerOnglet(t.key)}
+              <button key={t.key} data-pilule={t.key} onClick={()=>changerOnglet(t.key)}
                 aria-selected={tab===t.key} style={{
                 padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
                 background:"transparent",
@@ -1601,6 +1614,8 @@ function WalletClient(){
   const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false);setReserved(false)};
 
   const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:"1.5px solid "+GOLD+"25",background:CREAM+"06",color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
+  const[typeRef,typeBox]=usePilule(type);
+  const[dureeRef,dureeBox]=usePilule(duree);
   const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
 
   return(
@@ -1707,13 +1722,16 @@ function WalletClient(){
                 </h4>
 
                 <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Type de cours</label>
-                <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16}}>
+                <div ref={typeRef} style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16,position:"relative"}}>
+                  <Pilule box={typeBox} fond={"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")"} rayon={20}/>
                   {types.map(function(t){return(
-                    <button key={t.key} onClick={function(){setType(t.key);if(!t.hasDuree)setDuree("1h");setCalcomDone(false);setError("");setSuccess("")}}
+                    <button key={t.key} data-pilule={t.key} onClick={function(){setType(t.key);if(!t.hasDuree)setDuree("1h");setCalcomDone(false);setError("");setSuccess("")}}
                       style={{...pillActive,
-                        background:type===t.key?"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")":CREAM+"08",
+                        background:type===t.key?"transparent":CREAM+"08",
                         color:type===t.key?NAVY:CREAM+"60",
-                        border:type===t.key?"none":"1px solid "+CREAM+"15",
+                        border:"1px solid "+(type===t.key?"transparent":CREAM+"15"),
+                        transition:"color .25s ease, background .25s ease",
+                        position:"relative",zIndex:2,
                       }}>
                       {t.label}
                     </button>
@@ -1722,13 +1740,16 @@ function WalletClient(){
 
                 {sel.hasDuree&&(<div style={{marginBottom:16}}>
                   <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Durée</label>
-                  <div style={{display:"flex",gap:8}}>
+                  <div ref={dureeRef} style={{display:"flex",gap:8,position:"relative"}}>
+                    <Pilule box={dureeBox} fond={"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")"} rayon={20}/>
                     {durees.map(function(d){return(
-                      <button key={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
+                      <button key={d.key} data-pilule={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
                         style={{...pillActive,flex:1,textAlign:"center",
-                          background:duree===d.key?"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")":CREAM+"08",
+                          background:duree===d.key?"transparent":CREAM+"08",
                           color:duree===d.key?NAVY:CREAM+"60",
-                          border:duree===d.key?"none":"1px solid "+CREAM+"15",
+                          border:"1px solid "+(duree===d.key?"transparent":CREAM+"15"),
+                          transition:"color .25s ease, background .25s ease",
+                          position:"relative",zIndex:2,
                         }}>
                         {d.label}
                       </button>
@@ -1736,9 +1757,10 @@ function WalletClient(){
                   </div>
                 </div>)}
 
-                <div style={{
+                <div key={type+"-"+duree} style={{
                   display:"flex",justifyContent:"space-between",alignItems:"center",
                   padding:"14px 18px",borderRadius:12,background:CREAM+"04",marginBottom:16,
+                  animation:"mlpRecap .38s cubic-bezier(0.16,1,0.3,1) both",
                 }}>
                   <span style={{fontSize:13,color:CREAM+"60"}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
                   <span style={{fontSize:13,color:CREAM+"60"}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
