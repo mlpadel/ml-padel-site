@@ -190,6 +190,9 @@ const fontLink = (
     ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
     ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    /* retour tactile sur les boutons des cartes tarifs */
+    .mlp-card a{transition:transform .12s cubic-bezier(0.16,1,0.3,1),background .3s,box-shadow .3s}
+    .mlp-card a:active{transform:scale(.97)}
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
     @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
     @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
@@ -286,6 +289,28 @@ function AnimatedSection({children,style={},delay=0}){
       transform:inView?"translateY(0)":"translateY(40px)",
       transition:`all 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
       ...style,
+    }}>{children}</div>
+  );
+}
+
+/* ─── Carte tarif : entrée en levé de rideau, sortie en fondu ─── */
+function TarifCard({children,delay=0,dir=0,sortie=false}){
+  const[ref,inView]=useInView();
+  const visible=inView&&!sortie;
+  const EXP="cubic-bezier(0.16,1,0.3,1)";
+  return(
+    <div ref={ref} style={{
+      height:"100%",
+      opacity:visible?1:0,
+      transform:visible
+        ?"none"
+        :(sortie
+            ?"translateY(-8px) scale(0.985)"
+            :`translateY(26px) translateX(${dir*16}px) scale(0.99)`),
+      transition:sortie
+        ?"opacity 0.13s ease-in, transform 0.13s ease-in"
+        :`opacity 0.55s ${EXP} ${delay}s, transform 0.55s ${EXP} ${delay}s`,
+      willChange:"opacity, transform",
     }}>{children}</div>
   );
 }
@@ -843,6 +868,33 @@ function SeasonBanner(){
     {key:"académie",label:"Académie"},
   ];
 
+  /* transition des onglets : sortie en fondu puis entrée en levé de rideau */
+  const[sortie,setSortie]=useState(false);
+  const[dir,setDir]=useState(0);
+  const ongletsRef=useRef(null);
+  const[pilule,setPilule]=useState({x:0,w:0});
+
+  const changerOnglet=(key)=>{
+    if(key===tab||sortie) return;
+    const ordre=tabs.map(t=>t.key);
+    setDir(ordre.indexOf(key)>ordre.indexOf(tab)?1:-1);
+    setSortie(true);
+    setTimeout(()=>{setTab(key);setSortie(false);},130);
+  };
+
+  const mesurerPilule=useCallback(()=>{
+    const c=ongletsRef.current; if(!c) return;
+    const b=c.querySelector('[data-onglet="'+tab+'"]'); if(!b) return;
+    setPilule({x:b.offsetLeft,w:b.offsetWidth});
+  },[tab]);
+
+  useEffect(()=>{
+    mesurerPilule();
+    const t=setTimeout(mesurerPilule,350); // après chargement des polices
+    window.addEventListener("resize",mesurerPilule);
+    return()=>{clearTimeout(t);window.removeEventListener("resize",mesurerPilule);};
+  },[mesurerPilule]);
+
     // ── Tarifs SEPTEMBRE 2026 (a activer le moment venu — NE PAS afficher avant) ──
     // Individuel: 55 EUR/h · Duo: 70 EUR/h (35/pers) · Trio: 75 EUR/h (25/pers) · Quatuor: 80 EUR/h (20/pers)
     // + retirer disabled:true sur Trio/Quatuor et reactiver l'affichage du bonus Wallet -15% (compense la hausse).
@@ -897,14 +949,24 @@ function SeasonBanner(){
             boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 40px",
             border:`1px solid ${GOLD}15`,
             overflowX:"auto",maxWidth:"100%",WebkitOverflowScrolling:"touch",
-          }}>
+            position:"relative",
+          }} ref={ongletsRef}>
+            <span aria-hidden="true" style={{
+              position:"absolute",top:4,left:0,height:"calc(100% - 8px)",
+              width:pilule.w,transform:`translateX(${pilule.x}px)`,
+              background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+              borderRadius:50,zIndex:1,pointerEvents:"none",
+              transition:"transform 0.42s cubic-bezier(0.16,1,0.3,1), width 0.42s cubic-bezier(0.16,1,0.3,1)",
+            }}/>
             {tabs.map(t=>(
-              <button key={t.key} onClick={()=>setTab(t.key)} style={{
+              <button key={t.key} data-onglet={t.key} onClick={()=>changerOnglet(t.key)}
+                aria-selected={tab===t.key} style={{
                 padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
-                background:tab===t.key?`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`:"transparent",
+                background:"transparent",
                 color:tab===t.key?NAVY:TEXT_MED,
                 fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",
-                transition:"all 0.3s",
+                transition:"color 0.25s ease",
+                position:"relative",zIndex:2,whiteSpace:"nowrap",
               }}>{t.label}</button>
             ))}
           </div>
@@ -936,7 +998,7 @@ function SeasonBanner(){
           gap:18,
         }}>
           {items.map((o,i)=>(
-            <AnimatedSection key={`${tab}-${i}`} delay={i*0.18} style={{height:"100%"}}>
+            <TarifCard key={`${tab}-${i}`} delay={i*0.115} dir={dir} sortie={sortie}>
               <div className="mlp-card" style={{
                 background:o.partner?NAVY:WHITE,
                 border:`${o.partner?2:(o.popular?3:2)}px solid ${o.partner?GOLD:(o.popular?GOLD+"40":"#eee")}`,
@@ -1065,7 +1127,7 @@ function SeasonBanner(){
               {o.walletLink && !o.disabled && (<a href={o.walletLink} target="_blank" rel="noopener noreferrer" style={{display:"block",textAlign:"center",marginTop:8,padding:"15px",borderRadius:50,background:GOLD,color:NAVY,fontWeight:700,fontSize:13,textDecoration:"none"}}>{o.especeLink?"⭐ Payer avec ma wallet":"Réserver avec ma wallet"}</a>)}
               {o.disabled&&<div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%) rotate(-25deg)",background:"rgba(201,168,76,0.92)",color:"#fff",padding:"8px 80px",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase",zIndex:5,whiteSpace:"nowrap",boxShadow:"0 2px 12px rgba(0,0,0,0.3)",pointerEvents:"none"}}>{"À VENIR"}</div>}
               </div>
-            </AnimatedSection>
+            </TarifCard>
           ))}
         </div>
       </div>
