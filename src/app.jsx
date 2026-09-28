@@ -751,6 +751,31 @@ function chargerCal(){
   })(window, "https://app.cal.com/embed/embed.js", "init");
 }
 
+/* Palette du calendrier Cal.com, alignée sur le site.
+   Elle est déclarée pour les deux thèmes : si l'appareil du visiteur est en
+   mode sombre et que le thème forcé n'est pas pris en compte, le calendrier
+   reste malgré tout aux couleurs du site plutôt que noir. */
+const PALETTE_CAL={
+  "cal-brand":GOLD,
+  "cal-brand-emphasis":"#b8973f",
+  "cal-brand-text":NAVY,
+  "cal-brand-subtle":GOLD_LIGHT,
+  "cal-brand-accent":NAVY,
+  "cal-bg":WHITE,
+  "cal-bg-emphasis":CREAM,
+  "cal-bg-subtle":WARM_WHITE,
+  "cal-bg-muted":WARM_WHITE,
+  "cal-text":TEXT_DARK,
+  "cal-text-emphasis":NAVY,
+  "cal-text-subtle":TEXT_MED,
+  "cal-text-muted":TEXT_LIGHT,
+  "cal-border":"#e8e4da",
+  "cal-border-default":"#e8e4da",
+  "cal-border-subtle":"#efece4",
+  "cal-border-emphasis":GOLD,
+  "cal-border-booker":GOLD+"33",
+};
+
 function Disponibilites(){
   const formats=[
     {key:"indiv",   label:"Individuel", espece:CALCOM.indivEspece,   wallet:CALCOM.indivWallet,
@@ -795,7 +820,8 @@ function Disponibilites(){
       chargerCal();
       window.Cal("init");
       window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"column_view"});
-      window.Cal("ui",{theme:"light",hideEventTypeDetails:true,cssVarsPerTheme:{light:{"cal-brand":GOLD}}});
+      window.Cal("ui",{theme:"light",hideEventTypeDetails:true,
+        cssVarsPerTheme:{light:PALETTE_CAL,dark:PALETTE_CAL}});
     }catch(e){ /* le lien de secours reste affiché */ }
     /* l'iframe arrive de façon asynchrone : on le guette sans bloquer */
     const t=setInterval(function(){
