@@ -727,6 +727,55 @@ function TransitionAbout(){
   );
 }
 
+/* ─── Section repliable ───────────────────────────────────────────────
+   Le contenu reste dans la page (display:none et non démontage) : il demeure
+   donc lisible par les moteurs de recherche, et ses images, en chargement
+   différé, ne se téléchargent qu'une fois la section ouverte. */
+function Repliable({titre,resume,ancre,children}){
+  const[ouvert,setOuvert]=useState(false);
+
+  /* un lien de menu vers une section repliée doit l'ouvrir */
+  useEffect(function(){
+    if(!ancre) return;
+    const verifier=function(){
+      if(window.location.hash==="#"+ancre){
+        setOuvert(true);
+        setTimeout(function(){
+          const el=document.getElementById(ancre);
+          if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+        },60);
+      }
+    };
+    verifier();
+    window.addEventListener("hashchange",verifier);
+    return function(){window.removeEventListener("hashchange",verifier);};
+  },[ancre]);
+
+  return(
+    <div style={{background:WARM_WHITE,position:"relative",zIndex:1}}>
+      <button onClick={function(){setOuvert(function(o){return !o})}} aria-expanded={ouvert} style={{
+        width:"100%",border:"none",cursor:"pointer",textAlign:"left",
+        background:"transparent",padding:"22px 24px",
+        borderTop:`1px solid ${GOLD}22`,
+        display:"flex",alignItems:"center",gap:14,
+        fontFamily:"'DM Sans',sans-serif",
+      }}>
+        <div style={{flex:1,minWidth:0}}>
+          <div style={{fontFamily:"'Playfair Display',serif",fontSize:19,fontWeight:700,color:TEXT_DARK}}>{titre}</div>
+          {resume&&<div style={{fontSize:13,color:TEXT_LIGHT,marginTop:2}}>{resume}</div>}
+        </div>
+        <span style={{
+          flexShrink:0,width:34,height:34,borderRadius:"50%",
+          border:`1.5px solid ${GOLD}55`,color:GOLD,
+          display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,fontWeight:800,
+          transform:ouvert?"rotate(180deg)":"none",transition:"transform .3s cubic-bezier(0.16,1,0.3,1)",
+        }}>⌄</span>
+      </button>
+      <div style={{display:ouvert?"block":"none"}}>{children}</div>
+    </div>
+  );
+}
+
 /* ─── Disponibilités en direct : calendrier Cal.com intégré ─── */
 /* Cal.com impose son amorce : elle définit window.Cal et met les appels en
    file d'attente avant même que embed.js soit téléchargé. Charger embed.js
@@ -3619,15 +3668,29 @@ function MLPadel(){
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
-      <LeClub/>
       <TeamSection/>
       <InstagramSection/>
       <WhatsAppChannel/>
-      <Gallery/>
       <CoursCollectifsSection/>
-      <PallapShop/>
-      <Testimonials/>
-      <HowItWorks/>
+      <div style={{background:WARM_WHITE,padding:"46px 24px 4px",textAlign:"center",position:"relative",zIndex:1}}>
+        <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Pour aller plus loin</span>
+        <p style={{color:TEXT_LIGHT,fontSize:13.5,marginTop:6}}>Ouvre ce qui t'intéresse</p>
+      </div>
+      <Repliable titre="Le club" resume="Padel Paradise en images" ancre="club" >
+        <LeClub/>
+      </Repliable>
+      <Repliable titre="Galerie" resume="Photos sur le terrain" ancre="galerie" >
+        <Gallery/>
+      </Repliable>
+      <Repliable titre="La boutique Pallap" resume="Raquettes, textile et accessoires" ancre="boutique" >
+        <PallapShop/>
+      </Repliable>
+      <Repliable titre="Ils ont progressé" resume="Les retours de mes élèves" >
+        <Testimonials/>
+      </Repliable>
+      <Repliable titre="Comment ça marche" resume="Réserver, jouer, progresser en 3 étapes" >
+        <HowItWorks/>
+      </Repliable>
       <FAQ/>
       <MapSection/>
       <Contact/>
