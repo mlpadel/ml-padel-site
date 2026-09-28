@@ -751,21 +751,55 @@ function chargerCal(){
   })(window, "https://app.cal.com/embed/embed.js", "init");
 }
 
+/* Palette du calendrier Cal.com, alignée sur le site.
+   Elle est déclarée pour les deux thèmes : si l'appareil du visiteur est en
+   mode sombre et que le thème forcé n'est pas pris en compte, le calendrier
+   reste malgré tout aux couleurs du site plutôt que noir. */
+const PALETTE_CAL={
+  "cal-brand":GOLD,
+  "cal-brand-emphasis":"#b8973f",
+  "cal-brand-text":NAVY,
+  "cal-brand-subtle":GOLD_LIGHT,
+  "cal-brand-accent":NAVY,
+  "cal-bg":WHITE,
+  "cal-bg-emphasis":CREAM,
+  "cal-bg-subtle":WARM_WHITE,
+  "cal-bg-muted":WARM_WHITE,
+  "cal-text":TEXT_DARK,
+  "cal-text-emphasis":NAVY,
+  "cal-text-subtle":TEXT_MED,
+  "cal-text-muted":TEXT_LIGHT,
+  "cal-border":"#e8e4da",
+  "cal-border-default":"#e8e4da",
+  "cal-border-subtle":"#efece4",
+  "cal-border-emphasis":GOLD,
+  "cal-border-booker":GOLD+"33",
+};
+
 function Disponibilites(){
   const formats=[
-    {key:"indiv",   label:"Individuel", lien:CALCOM.indivEspece,    note:"1 joueur · 60 €/h"},
-    {key:"duo",     label:"Duo",        lien:CALCOM.duoEspece,      note:"2 joueurs · 35 €/pers"},
-    {key:"trio",    label:"Trio",       lien:CALCOM.trioEspece,     note:"3 joueurs · 25 €/pers"},
-    {key:"quatuor", label:"Quatuor",    lien:CALCOM.quatuorEspece,  note:"4 joueurs · 20 €/pers"},
+    {key:"indiv",   label:"Individuel", espece:CALCOM.indivEspece,   wallet:CALCOM.indivWallet,
+     noteEspece:"1 joueur · 60 €/h",        noteWallet:"1 joueur · 60 crédits"},
+    {key:"duo",     label:"Duo",        espece:CALCOM.duoEspece,     wallet:CALCOM.collectifDuoWallet,
+     noteEspece:"2 joueurs · 35 €/pers",    noteWallet:"2 joueurs · 35 crédits/pers"},
+    {key:"trio",    label:"Trio",       espece:CALCOM.trioEspece,    wallet:CALCOM.collectifTrioWallet,
+     noteEspece:"3 joueurs · 25 €/pers",    noteWallet:"3 joueurs · 25 crédits/pers"},
+    {key:"quatuor", label:"Quatuor",    espece:CALCOM.quatuorEspece, wallet:CALCOM.collectifQuatuorWallet,
+     noteEspece:"4 joueurs · 20 €/pers",    noteWallet:"4 joueurs · 20 crédits/pers"},
   ];
+  const modes=[{key:"espece",label:"💶 Sur place"},{key:"wallet",label:"⭐ Avec ma wallet"}];
   const[actif,setActif]=useState("indiv");
+  const[mode,setMode]=useState("espece");
+  const[modeRef,pilMode]=usePilule(mode);
   const[visible,setVisible]=useState(false);
   const[affiche,setAffiche]=useState(false);   // un iframe est bien apparu
   const[ongletsRef,pilule]=usePilule(actif);
   const zone=useRef(null);
   const sectionRef=useRef(null);
   const fmt=formats.find(f=>f.key===actif)||formats[0];
-  const slug=(fmt.lien||"").replace(/^https?:\/\/cal\.com\//,"").split("?")[0];
+  const lien=mode==="wallet"?fmt.wallet:fmt.espece;
+  const note=mode==="wallet"?fmt.noteWallet:fmt.noteEspece;
+  const slug=(lien||"").replace(/^https?:\/\/cal\.com\//,"").split("?")[0];
 
   /* on n'agit qu'à l'approche de la section */
   useEffect(function(){
@@ -785,8 +819,9 @@ function Disponibilites(){
     try{
       chargerCal();
       window.Cal("init");
-      window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"month_view"});
-      window.Cal("ui",{theme:"light",cssVarsPerTheme:{light:{"cal-brand":GOLD}}});
+      window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"column_view"});
+      window.Cal("ui",{theme:"light",hideEventTypeDetails:true,
+        cssVarsPerTheme:{light:PALETTE_CAL,dark:PALETTE_CAL}});
     }catch(e){ /* le lien de secours reste affiché */ }
     /* l'iframe arrive de façon asynchrone : on le guette sans bloquer */
     const t=setInterval(function(){
@@ -796,6 +831,7 @@ function Disponibilites(){
     const stop=setTimeout(function(){clearInterval(t);},12000);
     return function(){vivant=false;clearInterval(t);clearTimeout(stop);};
   },[visible,slug]);
+
 
   return(
     <section id="disponibilites" ref={sectionRef} style={{
@@ -810,7 +846,7 @@ function Disponibilites(){
               Mes prochains <span style={{color:GOLD}}>créneaux</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.65,marginTop:12,maxWidth:560,marginLeft:"auto",marginRight:"auto"}}>
-              Choisis ton format, prends ton créneau. Paiement sur place.
+              Choisis ton format et ton règlement, puis prends ton créneau.
             </p>
           </div>
         </AnimatedSection>
@@ -829,7 +865,21 @@ function Disponibilites(){
             }}>{f.label}</button>
           ))}
         </div>
-        <p style={{textAlign:"center",fontSize:13,color:TEXT_LIGHT,margin:"0 0 22px"}}>{fmt.note}</p>
+        <div className="pricing-tabs" style={{
+          display:"flex",justifyContent:"center",gap:4,background:WHITE,borderRadius:50,padding:4,
+          boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 10px",
+          border:`1px solid ${GOLD}15`,position:"relative",
+        }} ref={modeRef}>
+          <Pilule box={pilMode} fond={`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`}/>
+          {modes.map(m=>(
+            <button key={m.key} data-pilule={m.key} onClick={()=>setMode(m.key)} aria-selected={mode===m.key} style={{
+              padding:"13px 24px",borderRadius:50,border:"none",cursor:"pointer",background:"transparent",
+              color:mode===m.key?NAVY:TEXT_MED,fontWeight:800,fontSize:14,fontFamily:"'DM Sans',sans-serif",
+              transition:"color 0.25s ease",position:"relative",zIndex:2,whiteSpace:"nowrap",
+            }}>{m.label}</button>
+          ))}
+        </div>
+        <p style={{textAlign:"center",fontSize:13,color:TEXT_LIGHT,margin:"0 0 22px"}}>{note}</p>
 
         <div style={{background:WHITE,borderRadius:18,border:`1px solid ${GOLD}22`,
           boxShadow:"0 10px 34px rgba(10,22,40,0.08)",overflow:"hidden",position:"relative",minHeight:affiche?0:300}}>
@@ -839,7 +889,7 @@ function Disponibilites(){
               <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.6,marginBottom:18}}>
                 Chargement de mes disponibilités…
               </p>
-              <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{
+              <a href={lien} target="_blank" rel="noopener noreferrer" style={{
                 display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
                 fontWeight:800,fontSize:15,textDecoration:"none",padding:"15px 32px",borderRadius:50,
               }}>Voir mes créneaux →</a>
@@ -848,7 +898,7 @@ function Disponibilites(){
         </div>
 
         <p style={{textAlign:"center",fontSize:12.5,color:TEXT_LIGHT,marginTop:14,lineHeight:1.6}}>
-          {affiche&&(<span>Un souci d'affichage ? <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Ouvrir le calendrier →</a> · </span>)}
+          {affiche&&(<span>Un souci d'affichage ? <a href={lien} target="_blank" rel="noopener noreferrer" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Ouvrir le calendrier →</a> · </span>)}
           Un stage ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
         </p>
       </div>
