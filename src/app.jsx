@@ -1402,7 +1402,7 @@ function WalletClient(){
   const[calcomDone,setCalcomDone]=useState(false);
   const[reserved,setReserved]=useState(false);
 
-  const[showHistory,setShowHistory]=useState(false);
+  const[showHistory,setShowHistory]=useState(true);
   const[history,setHistory]=useState([]);
   const[loadingHist,setLoadingHist]=useState(false);
 
@@ -1441,14 +1441,15 @@ function WalletClient(){
     try{
       const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"verifyOtp",email,otp})});
       const d=await r.json();
-      if(d.success){setClient(d.client);setError("")}
+      if(d.success){setClient(d.client);setError("");fetchHistory(true)}
       else setError(d.error||"Code invalide")
     }catch(err){setError("Erreur de connexion")}
     setLoading(false);
   };
 
-  const fetchHistory=async()=>{
-    if(showHistory){setShowHistory(false);return}
+  /* auto=true : appel au moment de la connexion, sans basculer l'affichage */
+  const fetchHistory=async(auto)=>{
+    if(!auto&&showHistory){setShowHistory(false);return}
     setLoadingHist(true);
     try{
       const r=await fetch(WALLET_API,{method:"POST",body:JSON.stringify({action:"history",email})});
@@ -1564,25 +1565,42 @@ function WalletClient(){
               </div>
 
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:20}}>
-                <button onClick={fetchHistory} style={{background:"transparent",border:"none",color:CREAM+"45",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontWeight:600}}>
-                  {loadingHist?"...":showHistory?"Masquer l'historique":"Voir l'historique"}
+                <button onClick={function(){fetchHistory(false)}} style={{background:"transparent",border:"none",color:CREAM+"45",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontWeight:600}}>
+                  {loadingHist?"…":showHistory?"Masquer mes mouvements":"Voir mes mouvements"}
                 </button>
                 <button onClick={disconnect} style={{background:"transparent",border:"none",color:CREAM+"30",fontSize:12,cursor:"pointer",fontFamily:"'DM Sans',sans-serif"}}>
                   Déconnexion
                 </button>
               </div>
 
-              {showHistory&&history.length>0&&(
-                <div style={{marginBottom:20,padding:"14px 16px",borderRadius:12,background:CREAM+"04",border:"1px solid "+CREAM+"08"}}>
-                  {history.map(function(h,i){return(
-                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:i<history.length-1?"1px solid "+CREAM+"08":"none"}}>
-                      <div>
-                        <div style={{fontSize:13,fontWeight:600,color:h.type==="recharge"?"#4ecdc4":"#ff6666"}}>
-                          {h.type==="recharge"?"+":""}{h.montant} cr.
+              {showHistory&&(
+                <div style={{marginBottom:20,padding:"16px 18px",borderRadius:12,background:CREAM+"05",border:"1px solid "+CREAM+"0e"}}>
+                  <div style={{fontSize:12,fontWeight:800,letterSpacing:1.2,textTransform:"uppercase",color:GOLD,marginBottom:12}}>
+                    Mes mouvements
+                  </div>
+                  {loadingHist&&<div style={{fontSize:13,color:CREAM+"50",padding:"6px 0"}}>Chargement…</div>}
+                  {!loadingHist&&history.length===0&&(
+                    <div style={{fontSize:13,color:CREAM+"50",lineHeight:1.6}}>
+                      Aucun mouvement pour le moment. Tes recharges et tes cours apparaîtront ici.
+                    </div>
+                  )}
+                  {history.map(function(h,i){
+                    var recharge=h.type==="recharge";
+                    return(
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",gap:12,
+                      padding:"11px 0",borderBottom:i<history.length-1?"1px solid "+CREAM+"0c":"none"}}>
+                      <div style={{minWidth:0}}>
+                        <div style={{fontSize:13.5,fontWeight:600,color:CREAM,lineHeight:1.4}}>
+                          {h.detail||(recharge?"Recharge":"Cours")}
                         </div>
-                        <div style={{fontSize:11,color:CREAM+"35",marginTop:2}}>{h.detail}</div>
+                        <div style={{fontSize:11.5,color:CREAM+"45",marginTop:3}}>
+                          {h.date?new Date(h.date).toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short",year:"numeric"}):""}
+                        </div>
                       </div>
-                      <div style={{fontSize:11,color:CREAM+"30"}}>{h.date?new Date(h.date).toLocaleDateString("fr-FR"):""}</div>
+                      <div style={{fontSize:14,fontWeight:800,whiteSpace:"nowrap",
+                        color:recharge?"#4ecdc4":GOLD}}>
+                        {recharge?"+":"−"}{Math.abs(h.montant)} cr.
+                      </div>
                     </div>
                   )})}
                 </div>
@@ -2383,7 +2401,7 @@ function FAQ(){
     {q:"Faut-il amener son matériel ?",a:"Non, le matériel (raquette + balles) peut être fourni. Si tu as ta propre raquette, amène-la pour un coaching optimal."},
     {q:"Comment fonctionne le système Wallet ?",a:"Vous chargez votre wallet ML_Padel (via Stripe ou en direct). Selon le montant : +5% (100€), +10% (200€) ou +15% (300€) de crédits bonus. 1 crédit = 1€. Cumulable à chaque palier. Pour réserver, rendez-vous dans la section 'Mon Wallet' du site, entrez votre email, validez avec le code de sécurité reçu, choisissez votre prestation et la date : vos crédits sont débités automatiquement. Crédits valables 12 mois."},
     {q:"Sur quoi puis-je utiliser mes crédits wallet ?",a:"Les crédits sont utilisables sur : cours individuels à l'unité (60 cr.), cours collectifs à l'unité (20 à 35 cr./pers.), stages vacances (100 à 150 cr. selon format) et masterclass week-end (30 à 100 cr. selon format). Les crédits ne sont PAS utilisables sur : l'académie annuelle (750€), l'académie semestrielle (420€), ou toute autre promotion en cours."},
-    {q:"Quels moyens de paiement ?",a:"Espèces, CB, chèque. Pour le wallet, paiement en 1 fois."},
+    {q:"Quels moyens de paiement ?",a:"Espèces sur place (le plus simple), chèque ou Wero. Les crédits wallet s'utilisent sur les cours particuliers. Pour un règlement par carte, dites-le-moi et je vous envoie un lien de paiement."},
     {q:"Des cours pour les enfants ?",a:"Oui, à partir de 10 ans. Séances adaptées avec pédagogie ludique et progressive."},
     {q:"Comment annuler ou reporter ?",a:"Annulation gratuite jusqu'à 24h avant le créneau. Au-delà, le cours est dû. Report facile via Cal.com."},
   ];
