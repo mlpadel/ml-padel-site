@@ -727,6 +727,123 @@ function TransitionAbout(){
   );
 }
 
+/* ─── Disponibilités en direct : calendrier Cal.com intégré ─── */
+/* Le script Cal.com n'est chargé qu'à l'approche de la section : un visiteur
+   qui ne descend pas jusqu'ici ne paie pas son téléchargement. */
+function Disponibilites(){
+  const formats=[
+    {key:"indiv",   label:"Individuel", lien:CALCOM.indivEspece,    note:"1 joueur · 60 €/h"},
+    {key:"duo",     label:"Duo",        lien:CALCOM.duoEspece,      note:"2 joueurs · 35 €/pers"},
+    {key:"trio",    label:"Trio",       lien:CALCOM.trioEspece,     note:"3 joueurs · 25 €/pers"},
+    {key:"quatuor", label:"Quatuor",    lien:CALCOM.quatuorEspece,  note:"4 joueurs · 20 €/pers"},
+  ];
+  const[actif,setActif]=useState("indiv");
+  const[visible,setVisible]=useState(false);   // section approchée
+  const[pret,setPret]=useState(false);         // script chargé
+  const[echec,setEchec]=useState(false);
+  const[ongletsRef,pilule]=usePilule(actif);
+  const zone=useRef(null);
+  const sectionRef=useRef(null);
+  const fmt=formats.find(f=>f.key===actif)||formats[0];
+  const slug=(fmt.lien||"").replace(/^https?:\/\/cal\.com\//,"").split("?")[0];
+
+  /* 1. on n'agit qu'une fois la section proche de l'écran */
+  useEffect(function(){
+    const el=sectionRef.current; if(!el) return;
+    if(typeof IntersectionObserver==="undefined"){setVisible(true);return;}
+    const o=new IntersectionObserver(function(e){
+      if(e[0].isIntersecting){setVisible(true);o.disconnect();}
+    },{rootMargin:"400px"});
+    o.observe(el);
+    return function(){o.disconnect();};
+  },[]);
+
+  /* 2. chargement du script Cal.com, une seule fois */
+  useEffect(function(){
+    if(!visible||window.Cal) { if(window.Cal) setPret(true); return; }
+    const t=setTimeout(function(){ if(!window.Cal) setEchec(true); },8000);
+    const sc=document.createElement("script");
+    sc.src="https://app.cal.com/embed/embed.js";
+    sc.async=true;
+    sc.onload=function(){ clearTimeout(t); try{ window.Cal("init",{origin:"https://cal.com"}); setPret(true);}catch(e){ setEchec(true);} };
+    sc.onerror=function(){ clearTimeout(t); setEchec(true); };
+    document.head.appendChild(sc);
+    return function(){clearTimeout(t);};
+  },[visible]);
+
+  /* 3. (re)construction du calendrier au changement de format */
+  useEffect(function(){
+    if(!pret||!zone.current) return;
+    zone.current.innerHTML="";
+    try{
+      window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"month_view"});
+      window.Cal("ui",{theme:"light",cssVarsPerTheme:{light:{"cal-brand":GOLD}},hideEventTypeDetails:false});
+    }catch(e){ setEchec(true); }
+  },[pret,slug]);
+
+  return(
+    <section id="disponibilites" ref={sectionRef} style={{
+      padding:"70px 24px",background:WARM_WHITE,position:"relative",zIndex:1,scrollMarginTop:92,
+      ..._fond("paradise-terrains-768w.webp","rgba(250,249,246,0.90)"),
+    }}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:26}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>En direct</span>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
+              Mes prochains <span style={{color:GOLD}}>créneaux</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.65,marginTop:12,maxWidth:560,marginLeft:"auto",marginRight:"auto"}}>
+              Choisis ton format, prends ton créneau. Paiement sur place.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div className="pricing-tabs" style={{
+          display:"flex",justifyContent:"center",gap:4,background:WHITE,borderRadius:50,padding:4,
+          boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 10px",
+          border:`1px solid ${GOLD}15`,position:"relative",
+        }} ref={ongletsRef}>
+          <Pilule box={pilule} fond={`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`}/>
+          {formats.map(f=>(
+            <button key={f.key} data-pilule={f.key} onClick={()=>setActif(f.key)} aria-selected={actif===f.key} style={{
+              padding:"15px 28px",borderRadius:50,border:"none",cursor:"pointer",background:"transparent",
+              color:actif===f.key?NAVY:TEXT_MED,fontWeight:800,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+              transition:"color 0.25s ease",position:"relative",zIndex:2,whiteSpace:"nowrap",
+            }}>{f.label}</button>
+          ))}
+        </div>
+        <p style={{textAlign:"center",fontSize:13,color:TEXT_LIGHT,margin:"0 0 22px"}}>{fmt.note}</p>
+
+        <div style={{background:WHITE,borderRadius:18,border:`1px solid ${GOLD}22`,
+          boxShadow:"0 10px 34px rgba(10,22,40,0.08)",overflow:"hidden",
+          minHeight:echec?0:560}}>
+          {!echec&&<div ref={zone} style={{width:"100%",minHeight:560}}/>}
+          {(!pret||echec)&&(
+            <div style={{padding:"60px 24px",textAlign:"center"}}>
+              <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.6,marginBottom:18}}>
+                {echec
+                  ? "Le calendrier ne s'affiche pas ici — ouvre-le directement, tout y est à jour."
+                  : "Chargement de mes disponibilités…"}
+              </p>
+              {echec&&(
+                <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{
+                  display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                  fontWeight:800,fontSize:15,textDecoration:"none",padding:"15px 32px",borderRadius:50,
+                }}>Voir mes créneaux →</a>
+              )}
+            </div>
+          )}
+        </div>
+
+        <p style={{textAlign:"center",fontSize:12.5,color:TEXT_LIGHT,marginTop:14,lineHeight:1.6}}>
+          Un stage, une masterclass ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Tarifs / Pricing ─── */
  function Pricing(){
   const[tab,setTab]=useState("individuel");
@@ -3426,6 +3543,7 @@ function MLPadel(){
       <Navbar/>
       <Hero/>
       <Marquee/>
+      <Disponibilites/>
       <CounterStats/>
       <About/>
       <DebutantStart/>
