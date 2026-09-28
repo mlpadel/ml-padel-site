@@ -999,8 +999,8 @@ function Disponibilites(){
       {title:"Engagement semestriel",price:"420",unit:"€/joueur/semestre",desc:"Août à décembre et/ou janvier à mai · 14 séances",features:["Flexibilité semestrielle","14 séances garanties","Idéal pour découvrir"],badge:"SEMESTRE",isAcadémie:true,link:"/academie-inscription.html"},
     ],
     stages:[
-      {title:"Stage Soirée",price:"120",unit:"€/joueur",desc:"Séances d'1h30 · heures pleines",features:["4 jours — 120€","5 jours — 150€","Tous niveaux · groupes par niveau"],popular:true,badge:"SOIRÉE",link:"#stage-juillet-form",spotsLeft:null,spotsTotal:4},
-      {title:"Stage Matin",disabled:true,price:"100",unit:"€/joueur",desc:"Séances d'1h30 · heures creuses",features:["4 jours — 100€","5 jours — 125€","Tarif réduit heures creuses"],badge:"HEURES CREUSES",link:"#stage-juillet-form",spotsLeft:null,spotsTotal:4},
+      {title:"Stage Soirée",disabled:true,price:"120",unit:"€/joueur",desc:"Séances d'1h30 · heures pleines",features:["4 jours — 120€","5 jours — 150€","Tous niveaux · groupes par niveau"],badge:"SOIRÉE",link:"#stage-juillet-form",spotsLeft:null,spotsTotal:4},
+      {title:"Stage Matin",price:"125",unit:"€/joueur",desc:"5 séances d'1h30 · 7h – 10h · heures creuses",features:["Du 19 au 23 octobre","5 jours — 125€","Tous niveaux · groupes par niveau"],popular:true,badge:"VACANCES D'OCTOBRE",link:"#stage-juillet-form",spotsLeft:null,spotsTotal:4},
       {title:"Masterclass · 4 joueurs",disabled:true,price:"50",unit:"€/joueur",desc:"Week-end · 2 × 1h30 / jour · heures creuses",features:["1 jour — 50€","2 jours — 100€","Petit groupe (4)"],link:CALCOM.masterclass4},
       {title:"Masterclass · 8 joueurs",disabled:true,price:"30",unit:"€/joueur",desc:"Week-end · 2 × 1h30 / jour · heures creuses",features:["1 jour — 30€","2 jours — 60€","Grand groupe (8)"],link:CALCOM.masterclass8},
       {title:"Stage Océan Indien",price:"Bientôt",unit:"",desc:"Multi-jours · Réunion, Maurice, Afrique du Sud",features:["Expérience immersive","Destinations paradisiaques","Padel & découverte"],soon:true},
@@ -3161,15 +3161,15 @@ function Événements(){
   const offers=[
     {
       id:"stage-oct",
-      title:"Stage Soirée",
-      emoji:"🌙",
-      price:120,
-      sessions:"4 × 1h30",
-      days:"Lundi · Mardi · Mercredi · Jeudi",
-      slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],
-      complet:true,
-      semaines:"12 – 15 oct.",
+      title:"Stage Matin",
+      emoji:"🌅",
+      price:125,
+      sessions:"5 × 1h30",
+      days:"Du lundi au vendredi",
+      slots:["7h – 8h30","8h30 – 10h"],
+      fullSlots:[],
+      complet:false,
+      semaines:"19 – 23 oct.",
       badge:"TOUS NIVEAUX",
       popular:true,
       color:GOLD,
@@ -3223,11 +3223,10 @@ function Événements(){
             Stage <span style={{color:GOLD}}>Octobre 2026</span>
           </h2>
           <p style={{color:`${CREAM}90`,fontSize:15,marginBottom:8,lineHeight:1.6}}>
-            4 soirs intensifs à Padel Paradise · tous niveaux acceptés
-          </p>
+            5 matinées intensives à Padel Paradise · tous niveaux acceptés</p>
           <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap",marginBottom:32}}>
             <span style={{background:`${GOLD}20`,color:GOLD,padding:"6px 16px",borderRadius:50,fontSize:12,fontWeight:700}}>
-              12 → 15 octobre
+              19 → 23 octobre
             </span>
           </div>
         </AnimatedSection>
@@ -3328,7 +3327,7 @@ function Événements(){
   );
 }
 /* Passe à false pour rouvrir les pré-inscriptions du stage */
-const STAGE_COMPLET = true;
+const STAGE_COMPLET = false;
 
 function StageJuilletForm(){
   if(STAGE_COMPLET){
@@ -3356,12 +3355,12 @@ function StageJuilletForm(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
   const offres=[
-    {id:"stage-oct",label:"Stage Octobre — 120€",price:120,slots:["17h – 18h30","18h30 – 20h","20h – 21h30"],fullSlots:["17h – 18h30","18h30 – 20h","20h – 21h30"],semaines:["12 – 15 octobre"],days:"Lu/Ma/Me/Je"},
+    {id:"stage-oct",label:"Stage Octobre — 125€",price:125,slots:["7h – 8h30","8h30 – 10h"],fullSlots:[],semaines:["19 – 23 octobre"],days:"Du lundi au vendredi"},
   ];
 
   const[form,setForm]=useState({
     nom:"",prenom:"",email:"",tel:"",niveau:"3",
-    offre:"stage-oct",creneau:[],semaine:"12 – 15 octobre",
+    offre:"stage-oct",creneau:[],semaine:"19 – 23 octobre",
     groupe:"",commentaire:"",
   });
   const[sending,setSending]=useState(false);
@@ -3448,7 +3447,7 @@ function StageJuilletForm(){
               Formulaire de <span style={{color:GOLD}}>pré-inscription</span>
             </h2>
             <p style={{color:TEXT_MED,fontSize:14,marginTop:8,maxWidth:500,margin:"8px auto 0"}}>
-              Il reste une place sur le créneau 20h – 21h30, pour compléter un groupe de niveau 5/6.
+              Je constitue les groupes par niveau après les inscriptions. Indique tes créneaux possibles, j'en tiens compte.
             </p>
             <div style={{maxWidth:560,margin:"22px auto 0",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,borderRadius:14,padding:"14px 20px",display:"flex",alignItems:"center",gap:12,boxShadow:`0 8px 26px ${GOLD}33`}}>
               <span style={{fontSize:26,lineHeight:1}}>👥</span>
@@ -3534,7 +3533,7 @@ function StageJuilletForm(){
 
                 <div style={{display:"flex",alignItems:"center",gap:8,padding:"12px 16px",borderRadius:12,background:`${GOLD}0c`,border:`1.5px solid ${GOLD}25`}}>
                   <span style={{fontSize:16}}>📅</span>
-                  <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>Du 12 au 15 octobre 2026 · Lundi · Mardi · Mercredi · Jeudi</span>
+                  <span style={{fontSize:13,fontWeight:600,color:TEXT_DARK}}>Du 19 au 23 octobre 2026 · du lundi au vendredi · 7h – 10h</span>
                 </div>
               </div>
             )}
