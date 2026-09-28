@@ -728,8 +728,29 @@ function TransitionAbout(){
 }
 
 /* ─── Disponibilités en direct : calendrier Cal.com intégré ─── */
-/* Le script Cal.com n'est chargé qu'à l'approche de la section : un visiteur
-   qui ne descend pas jusqu'ici ne paie pas son téléchargement. */
+/* Cal.com impose son amorce : elle définit window.Cal et met les appels en
+   file d'attente avant même que embed.js soit téléchargé. Charger embed.js
+   seul ne définit rien et le premier appel échoue. */
+function chargerCal(){
+  if(window.Cal) return;
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1]; api.q = api.q || [];
+        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+        else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+}
+
 function Disponibilites(){
   const formats=[
     {key:"indiv",   label:"Individuel", lien:CALCOM.indivEspece,    note:"1 joueur · 60 €/h"},
@@ -738,48 +759,43 @@ function Disponibilites(){
     {key:"quatuor", label:"Quatuor",    lien:CALCOM.quatuorEspece,  note:"4 joueurs · 20 €/pers"},
   ];
   const[actif,setActif]=useState("indiv");
-  const[visible,setVisible]=useState(false);   // section approchée
-  const[pret,setPret]=useState(false);         // script chargé
-  const[echec,setEchec]=useState(false);
+  const[visible,setVisible]=useState(false);
+  const[affiche,setAffiche]=useState(false);   // un iframe est bien apparu
   const[ongletsRef,pilule]=usePilule(actif);
   const zone=useRef(null);
   const sectionRef=useRef(null);
   const fmt=formats.find(f=>f.key===actif)||formats[0];
   const slug=(fmt.lien||"").replace(/^https?:\/\/cal\.com\//,"").split("?")[0];
 
-  /* 1. on n'agit qu'une fois la section proche de l'écran */
+  /* on n'agit qu'à l'approche de la section */
   useEffect(function(){
     const el=sectionRef.current; if(!el) return;
     if(typeof IntersectionObserver==="undefined"){setVisible(true);return;}
-    const o=new IntersectionObserver(function(e){
-      if(e[0].isIntersecting){setVisible(true);o.disconnect();}
-    },{rootMargin:"400px"});
+    const o=new IntersectionObserver(function(e){ if(e[0].isIntersecting){setVisible(true);o.disconnect();} },{rootMargin:"400px"});
     o.observe(el);
     return function(){o.disconnect();};
   },[]);
 
-  /* 2. chargement du script Cal.com, une seule fois */
+  /* construction, puis reconstruction à chaque changement de format */
   useEffect(function(){
-    if(!visible||window.Cal) { if(window.Cal) setPret(true); return; }
-    const t=setTimeout(function(){ if(!window.Cal) setEchec(true); },8000);
-    const sc=document.createElement("script");
-    sc.src="https://app.cal.com/embed/embed.js";
-    sc.async=true;
-    sc.onload=function(){ clearTimeout(t); try{ window.Cal("init",{origin:"https://cal.com"}); setPret(true);}catch(e){ setEchec(true);} };
-    sc.onerror=function(){ clearTimeout(t); setEchec(true); };
-    document.head.appendChild(sc);
-    return function(){clearTimeout(t);};
-  },[visible]);
-
-  /* 3. (re)construction du calendrier au changement de format */
-  useEffect(function(){
-    if(!pret||!zone.current) return;
+    if(!visible||!zone.current) return;
+    setAffiche(false);
     zone.current.innerHTML="";
+    let vivant=true;
     try{
+      chargerCal();
+      window.Cal("init");
       window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"month_view"});
-      window.Cal("ui",{theme:"light",cssVarsPerTheme:{light:{"cal-brand":GOLD}},hideEventTypeDetails:false});
-    }catch(e){ setEchec(true); }
-  },[pret,slug]);
+      window.Cal("ui",{theme:"light",cssVarsPerTheme:{light:{"cal-brand":GOLD}}});
+    }catch(e){ /* le lien de secours reste affiché */ }
+    /* l'iframe arrive de façon asynchrone : on le guette sans bloquer */
+    const t=setInterval(function(){
+      if(!vivant) return;
+      if(zone.current&&zone.current.querySelector("iframe")){ setAffiche(true); clearInterval(t); }
+    },300);
+    const stop=setTimeout(function(){clearInterval(t);},12000);
+    return function(){vivant=false;clearInterval(t);clearTimeout(stop);};
+  },[visible,slug]);
 
   return(
     <section id="disponibilites" ref={sectionRef} style={{
@@ -816,28 +832,24 @@ function Disponibilites(){
         <p style={{textAlign:"center",fontSize:13,color:TEXT_LIGHT,margin:"0 0 22px"}}>{fmt.note}</p>
 
         <div style={{background:WHITE,borderRadius:18,border:`1px solid ${GOLD}22`,
-          boxShadow:"0 10px 34px rgba(10,22,40,0.08)",overflow:"hidden",
-          minHeight:echec?0:560}}>
-          {!echec&&<div ref={zone} style={{width:"100%",minHeight:560}}/>}
-          {(!pret||echec)&&(
-            <div style={{padding:"60px 24px",textAlign:"center"}}>
+          boxShadow:"0 10px 34px rgba(10,22,40,0.08)",overflow:"hidden",position:"relative",minHeight:affiche?0:300}}>
+          <div ref={zone} style={{width:"100%",minHeight:affiche?600:0}}/>
+          {!affiche&&(
+            <div style={{padding:"46px 24px",textAlign:"center"}}>
               <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.6,marginBottom:18}}>
-                {echec
-                  ? "Le calendrier ne s'affiche pas ici — ouvre-le directement, tout y est à jour."
-                  : "Chargement de mes disponibilités…"}
+                Chargement de mes disponibilités…
               </p>
-              {echec&&(
-                <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-                  fontWeight:800,fontSize:15,textDecoration:"none",padding:"15px 32px",borderRadius:50,
-                }}>Voir mes créneaux →</a>
-              )}
+              <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{
+                display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                fontWeight:800,fontSize:15,textDecoration:"none",padding:"15px 32px",borderRadius:50,
+              }}>Voir mes créneaux →</a>
             </div>
           )}
         </div>
 
         <p style={{textAlign:"center",fontSize:12.5,color:TEXT_LIGHT,marginTop:14,lineHeight:1.6}}>
-          Un stage, une masterclass ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
+          {affiche&&(<span>Un souci d'affichage ? <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Ouvrir le calendrier →</a> · </span>)}
+          Un stage ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
         </p>
       </div>
     </section>
