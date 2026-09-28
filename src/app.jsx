@@ -1396,32 +1396,11 @@ function WalletClient(){
   const[error,setError]=useState("");
   const[success,setSuccess]=useState("");
 
-  const[type,setType]=useState("indiv");
-  const[duree,setDuree]=useState("1h");
-  const[booking,setBooking]=useState(false);
-  const[calcomDone,setCalcomDone]=useState(false);
-  const[reserved,setReserved]=useState(false);
 
   const[showHistory,setShowHistory]=useState(true);
   const[history,setHistory]=useState([]);
   const[loadingHist,setLoadingHist]=useState(false);
 
-  const types=[
-    {key:"indiv",label:"Individuel",base:60,calcom:CALCOM.indivWallet,hasDuree:true},
-    {key:"duo",label:"Duo (2 joueurs)",base:35,calcom:CALCOM.collectifDuoWallet,hasDuree:true,perPers:true},
-    {key:"trio",label:"Trio (3 joueurs)",base:25,calcom:CALCOM.collectifTrioWallet,hasDuree:true,perPers:true},
-    {key:"quatuor",label:"Quatuor (4 joueurs)",base:20,calcom:CALCOM.collectifQuatuorWallet,hasDuree:true,perPers:true},
-    {key:"stage",label:"Stage vacances",base:150,calcom:CALCOM.stageWallet,hasDuree:false},
-    {key:"masterclass4",label:"Masterclass WE 4j",base:100,calcom:CALCOM.masterclass4Wallet,hasDuree:false},
-    {key:"masterclass8",label:"Masterclass WE 8j",base:80,calcom:CALCOM.masterclass8Wallet,hasDuree:false},
-  ];
-  const durees=[{key:"1h",label:"1h",mult:1},{key:"1h30",label:"1h30",mult:1.5},{key:"2h",label:"2h",mult:2}];
-
-  const sel=types.find(t=>t.key===type);
-  const selD=durees.find(d=>d.key===duree);
-  const credits=sel.hasDuree?Math.floor(sel.base*selD.mult):sel.base;
-  const prestationKey=sel.hasDuree?type+"_"+duree:type;
-  const prestationLabel=sel.label+(sel.hasDuree?" "+selD.label:"")+(sel.perPers?" /pers.":"");
 
   const sendOtp=async()=>{
     if(!email||!email.includes("@")){setError("Entrez un email valide");return}
@@ -1459,31 +1438,10 @@ function WalletClient(){
     setLoadingHist(false);
   };
 
-  const bookWithWallet=async()=>{
-    if(!client){setError("Client non connecté");return}
-    if(client.solde<credits){setError("Solde insuffisant ("+client.solde.toFixed(1)+" cr. < "+credits+" cr.)");return}
-    setBooking(true);setError("");setSuccess("");
-    var today=new Date().toISOString().split("T")[0];
-    try{
-      const r=await fetch(WALLET_API,{method:"POST",
-        body:JSON.stringify({action:"debit",email:email,prestation:prestationKey,date:today,creneau:"",nbPersonnes:1})});
-      const d=await r.json();
-      if(d.success){
-        setSuccess("Réservation confirmée ! "+prestationLabel+" — "+d.debit+" cr. débités. Nouveau solde : "+d.nouveauSolde.toFixed(1)+" cr.");
-        setClient({...client,solde:d.nouveauSolde});
-        setCalcomDone(false);
-        setReserved(true);
-      }else setError(d.error||"Erreur lors du débit");
-    }catch(err){setError("Erreur de connexion")}
-    setBooking(false);
-  };
 
-  const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([]);setCalcomDone(false);setReserved(false)};
+  const disconnect=()=>{setClient(null);setOtpSent(false);setOtp("");setEmail("");setError("");setSuccess("");setShowHistory(false);setHistory([])};
 
   const inputStyle={width:"100%",padding:"12px 14px",borderRadius:10,border:"1.5px solid "+GOLD+"25",background:CREAM+"06",color:CREAM,fontSize:14,fontFamily:"'DM Sans',sans-serif",outline:"none"};
-  const[typeRef,typeBox]=usePilule(type);
-  const[dureeRef,dureeBox]=usePilule(duree);
-  const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
 
   return(
     <section id="mon-compte" style={{padding:"70px 24px",scrollMarginTop:92,background:WARM_WHITE,position:"relative",zIndex:1,
@@ -1491,7 +1449,7 @@ function WalletClient(){
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
           <p style={{textAlign:"center",color:TEXT_MED,fontSize:14,margin:"0 0 20px",lineHeight:1.6}}>
-            Déjà des crédits ? Connecte-toi pour voir ton solde et réserver.
+            Déjà des crédits ? Connecte-toi pour consulter ton solde et l'historique de tes cours.
           </p>
         </AnimatedSection>
         <AnimatedSection delay={0.1}>
@@ -1509,7 +1467,7 @@ function WalletClient(){
             </div>
 
             {error&&<div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"10px 14px",marginBottom:14,color:"#ff6666",fontSize:13}}>{error}</div>}
-            {success&&!reserved&&<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
+            {success&&<div style={{background:GOLD+"15",border:"1px solid "+GOLD+"33",borderRadius:10,padding:"10px 14px",marginBottom:14,color:GOLD,fontSize:13,fontWeight:600}}>{success}</div>}
 
             {!client&&(<div>
               {!otpSent?(
@@ -1606,114 +1564,6 @@ function WalletClient(){
                 </div>
               )}
 
-              {!reserved?(<div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:20}}>
-                <h4 style={{fontSize:14,fontWeight:700,color:CREAM,marginBottom:16}}>
-                  Réserver avec mes crédits
-                </h4>
-
-                <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Type de cours</label>
-                <div ref={typeRef} style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:16,position:"relative"}}>
-                  <Pilule box={typeBox} fond={"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")"} rayon={20}/>
-                  {types.map(function(t){return(
-                    <button key={t.key} data-pilule={t.key} onClick={function(){setType(t.key);if(!t.hasDuree)setDuree("1h");setCalcomDone(false);setError("");setSuccess("")}}
-                      style={{...pillActive,
-                        background:type===t.key?"transparent":CREAM+"08",
-                        color:type===t.key?NAVY:CREAM+"60",
-                        border:"1px solid "+(type===t.key?"transparent":CREAM+"15"),
-                        transition:"color .25s ease, background .25s ease",
-                        position:"relative",zIndex:2,
-                      }}>
-                      {t.label}
-                    </button>
-                  )})}
-                </div>
-
-                {sel.hasDuree&&(<div style={{marginBottom:16}}>
-                  <label style={{fontSize:12,color:CREAM+"50",display:"block",marginBottom:8}}>Durée</label>
-                  <div ref={dureeRef} style={{display:"flex",gap:8,position:"relative"}}>
-                    <Pilule box={dureeBox} fond={"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")"} rayon={20}/>
-                    {durees.map(function(d){return(
-                      <button key={d.key} data-pilule={d.key} onClick={function(){setDuree(d.key);setCalcomDone(false);setError("");setSuccess("")}}
-                        style={{...pillActive,flex:1,textAlign:"center",
-                          background:duree===d.key?"transparent":CREAM+"08",
-                          color:duree===d.key?NAVY:CREAM+"60",
-                          border:"1px solid "+(duree===d.key?"transparent":CREAM+"15"),
-                          transition:"color .25s ease, background .25s ease",
-                          position:"relative",zIndex:2,
-                        }}>
-                        {d.label}
-                      </button>
-                    )})}
-                  </div>
-                </div>)}
-
-                <div key={type+"-"+duree} style={{
-                  display:"flex",justifyContent:"space-between",alignItems:"center",
-                  padding:"14px 18px",borderRadius:12,background:CREAM+"04",marginBottom:16,
-                  animation:"mlpRecap .38s cubic-bezier(0.16,1,0.3,1) both",
-                }}>
-                  <span style={{fontSize:13,color:CREAM+"60"}}>{prestationLabel} — <strong style={{color:GOLD}}>{credits} cr.</strong></span>
-                  <span style={{fontSize:13,color:CREAM+"60"}}>Reste : <strong style={{color:client.solde>=credits?GOLD:"#ff6666"}}>{(client.solde-credits).toFixed(1)} cr.</strong></span>
-                </div>
-
-                {client.solde<credits?(
-                  <div style={{background:"#ff444418",border:"1px solid #ff444444",borderRadius:10,padding:"12px 14px",color:"#ff6666",fontSize:13,fontWeight:600,textAlign:"center",marginBottom:16}}>
-                    Solde insuffisant pour cette prestation
-                  </div>
-                ):!calcomDone?(
-                  <div>
-                    <a href={sel.calcom} target="_blank" rel="noopener noreferrer"
-                      style={{
-                        display:"block",textAlign:"center",padding:"16px",borderRadius:14,
-                        background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
-                        color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                        textDecoration:"none",transition:"all 0.3s",marginBottom:10,
-                      }}>
-                      Réserver mon créneau sur Cal.com
-                    </a>
-                    <p style={{fontSize:11,color:CREAM+"45",textAlign:"center",marginTop:6,marginBottom:4,fontStyle:"italic"}}>Vous pourrez choisir la durée souhaitée sur Cal.com</p>
-                    <button onClick={function(){setCalcomDone(true);setError("");setSuccess("")}} style={{
-                      width:"100%",padding:"12px",borderRadius:12,border:"1.5px solid "+GOLD+"40",
-                      background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
-                      fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
-                    }}>
-                      J'ai réservé mon créneau
-                    </button>
-                  </div>
-                ):(
-                  <div style={{animation:"fadeUp 0.4s ease-out"}}>
-                    <button onClick={bookWithWallet} disabled={booking} style={{
-                      width:"100%",padding:"16px",borderRadius:14,border:"none",cursor:"pointer",
-                      background:"linear-gradient(135deg,"+GOLD+","+GOLD_LIGHT+")",
-                      color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-                      transition:"all 0.3s",opacity:booking?0.6:1,marginBottom:8,
-                    }}>
-                      {booking?"Débit en cours...":"Valider et débiter "+credits+" crédits"}
-                    </button>
-                    <button onClick={function(){setCalcomDone(false);setError("");setSuccess("")}} style={{
-                      width:"100%",padding:"10px",borderRadius:10,border:"none",
-                      background:"transparent",color:CREAM+"40",fontSize:12,
-                      fontFamily:"'DM Sans',sans-serif",cursor:"pointer",
-                    }}>
-                      Modifier ma prestation
-                    </button>
-                  </div>
-                )}
-              </div>
-              ):(
-              <div style={{borderTop:"1px solid "+CREAM+"10",paddingTop:30,textAlign:"center"}}>
-                <div style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:64,height:64,borderRadius:"50%",background:"#22c55e20",marginBottom:16}}>
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </div>
-                <h4 style={{fontSize:16,fontWeight:700,color:"#22c55e",marginBottom:8,fontFamily:"'DM Sans',sans-serif"}}>Réservation confirmée !</h4>
-                <p style={{fontSize:13,color:CREAM+"70",marginBottom:20,lineHeight:1.6}}>{success}</p>
-                <button onClick={function(){setReserved(false);setSuccess("");setCalcomDone(false)}} style={{
-                  padding:"12px 28px",borderRadius:12,border:"1.5px solid "+GOLD+"40",
-                  background:"transparent",color:GOLD,fontWeight:600,fontSize:13,
-                  fontFamily:"'DM Sans',sans-serif",cursor:"pointer",transition:"all 0.3s",
-                }}>Nouvelle réservation</button>
-              </div>
-              )}
             </div>
             )}
 
