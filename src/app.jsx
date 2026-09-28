@@ -332,6 +332,7 @@ function Navbar(){
     {label:"À la une",href:"#événements"},
     {label:"Tarifs",href:"#tarifs"},
     {label:"Wallet",href:"#wallet"},
+    {label:"Mon compte",href:"#mon-compte"},
     {label:"À la carte",href:"#cours-collectifs"},
     {label:"Galerie",href:"#galerie"},
     {label:"Boutique",href:"#boutique"},
@@ -1316,11 +1317,6 @@ function Wallet(){
                 <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
                   Tu obtiens <strong style={{color:GOLD}}>{t.credits} crédits</strong>
                 </p>
-                {t.best&&(
-                  <p style={{fontSize:12,color:GOLD,fontWeight:700,marginTop:6,lineHeight:1.45}}>
-                    9 fois plus de bonus qu'au palier 100 €
-                  </p>
-                )}
                 <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8,marginBottom:14}}>
                   Payable en 1 fois
                 </p>
@@ -1489,12 +1485,18 @@ function WalletClient(){
   const pillActive={padding:"10px 18px",borderRadius:20,border:"none",cursor:"pointer",fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",transition:"all 0.3s"};
 
   return(
-    <section style={{padding:"60px 24px 0",backgroundColor:NAVY,backgroundImage:"linear-gradient(175deg,"+NAVY+"DE 0%,"+NAVY_MID+"DE 100%),url(paradise-allee-768w.webp)",backgroundSize:"cover",backgroundPosition:"center",position:"relative",zIndex:1}}>
+    <section id="mon-compte" style={{padding:"70px 24px",scrollMarginTop:92,background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-vue-aerienne-768w.webp","rgba(250,249,246,0.87)")}}>
       <div style={{maxWidth:700,margin:"0 auto"}}>
         <AnimatedSection>
+          <p style={{textAlign:"center",color:TEXT_MED,fontSize:14,margin:"0 0 20px",lineHeight:1.6}}>
+            Déjà des crédits ? Connecte-toi pour voir ton solde et réserver.
+          </p>
+        </AnimatedSection>
+        <AnimatedSection delay={0.1}>
           <div style={{
-            background:CREAM+"06",borderRadius:20,border:"1.5px solid "+GOLD+"25",
-            padding:"32px 28px",boxShadow:"0 8px 32px "+GOLD+"10",
+            background:`linear-gradient(150deg,${NAVY},${NAVY_MID})`,borderRadius:20,border:"1.5px solid "+GOLD+"33",
+            padding:"32px 28px",boxShadow:"0 14px 44px rgba(10,22,40,0.28)",
           }}>
             <div style={{textAlign:"center",marginBottom:24}}>
               <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>
@@ -3589,7 +3591,7 @@ function MLPadel(){
 
 function DebutantStart(){
   const cards=[
-    {icon:"\u{1F331}",title:"Je débute",desc:"Jamais ou presque joué ? On part des bases, en petit groupe et sans pression.",cta:"Cours Découverte",href:"#cours-collectifs"},
+    {icon:"\u{1F331}",title:"Je débute",desc:"Jamais ou presque joué ? On part des bases, en petit groupe et sans pression.",cta:"Voir les cours collectifs",href:"#cours-collectifs"},
     {icon:"\u{1F4C8}",title:"Je progresse",desc:"Tu joues déjà et veux structurer ton jeu : individuel, duo ou académie.",cta:"Voir les formules",href:"#tarifs"},
     {icon:"\u{1F3C6}",title:"Compétition",desc:"Objectif tournois et classement : académie et coaching ciblé.",cta:"L'académie",href:"/academie-inscription.html"},
   ];
@@ -3618,16 +3620,6 @@ function DebutantStart(){
             </AnimatedSection>
           ))}
         </div>
-        <AnimatedSection>
-          <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:20,padding:"28px 26px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:20,boxShadow:`0 10px 30px ${NAVY}22`}}>
-            <div style={{flex:"1 1 280px"}}>
-              <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1,textTransform:"uppercase",borderRadius:50,padding:"4px 12px",marginBottom:10}}>Offre découverte</span>
-              <h3 style={{fontFamily:"'Playfair Display',serif",fontSize:22,fontWeight:900,color:WHITE,margin:"0 0 8px"}}>Ta première séance à <span style={{color:GOLD}}>15&euro;</span></h3>
-              <p style={{color:WHITE+"cc",fontSize:14,lineHeight:1.6,margin:0}}>Cours Découverte débutant·e, à 4 joueurs (60&euro; la séance · 15&euro;/pers · 1h). <strong style={{color:WHITE}}>Matériel prêté par le club</strong> — viens juste en baskets. Aucun niveau requis.</p>
-            </div>
-            <a href="#cours-collectifs" style={{flex:"0 0 auto",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,padding:"15px 28px",borderRadius:50,textDecoration:"none",fontWeight:700,fontSize:15,boxShadow:`0 6px 22px ${GOLD}44`,whiteSpace:"nowrap"}}>Voir les cours Découverte →</a>
-          </div>
-        </AnimatedSection>
       </div>
     </section>
   );
