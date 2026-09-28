@@ -190,6 +190,8 @@ const fontLink = (
     ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
     ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    /* les ancres ne doivent pas atterrir sous la barre de navigation fixe */
+    section[id]{scroll-margin-top:92px}
     @keyframes mlpRecap { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
     /* retour tactile sur les boutons des cartes tarifs */
     .mlp-card a{transition:transform .12s cubic-bezier(0.16,1,0.3,1),background .3s,box-shadow .3s}
@@ -413,8 +415,7 @@ function Logo({size=36, scrolled=false}) {
         background: scrolled ? WHITE : "transparent",
         padding: scrolled ? 2 : 0,
         transition: "background 0.3s, padding 0.3s"
-      }}
-    />
+      }} width="1024" height="1024"/>
   );
 }
 
@@ -839,7 +840,9 @@ function SeasonBanner(){
     {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
   ];
   return (
-    <div style={{maxWidth:900,margin:"0 auto 34px"}}>
+    <section style={{padding:"10px 24px 70px",background:WARM_WHITE,position:"relative",zIndex:1,
+      ..._fond("paradise-clubhouse-768w.webp","rgba(250,249,246,0.87)")}}>
+    <div style={{maxWidth:900,margin:"0 auto"}}>
 
       {/* Bloc principal : promesse + action, tout en haut */}
       <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:18,padding:"30px 24px",textAlign:"center",border:`1px solid ${GOLD}33`}}>
@@ -890,6 +893,7 @@ function SeasonBanner(){
         La Wallet s'utilise sur les cours particuliers (individuel, duo, trio, quatuor).
       </p>
     </div>
+    </section>
   );
 }
  function Pricing(){
@@ -963,7 +967,6 @@ function SeasonBanner(){
           </div>
           {false && (tab==="individuel"||tab==="collectif") && (<div style={{maxWidth:760,margin:"0 auto 28px",background:"linear-gradient(135deg,#0a1628,#162040)",borderRadius:16,padding:"18px 22px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:14}}><div style={{textAlign:"left",flex:"1 1 320px"}}><div style={{color:GOLD,fontWeight:800,fontSize:15,marginBottom:4}}>Envie de plusieurs cours ?</div><div style={{color:"#ffffffcc",fontSize:13,lineHeight:1.5}}>Recharge ta wallet et profite jusqu’à <b style={{color:GOLD}}>+15%</b> de bonus crédit.</div></div><a href="#wallet" style={{background:GOLD,color:"#0a1628",fontWeight:700,fontSize:13,textDecoration:"none",padding:"11px 22px",borderRadius:50,whiteSpace:"nowrap"}}>Recharger ma wallet</a></div>)}
 
-          <SeasonBanner/>
           <div className="pricing-tabs" style={{
             display:"flex",justifyContent:"center",gap:4,marginBottom:40,
             background:WHITE,borderRadius:50,padding:4,
@@ -991,7 +994,7 @@ function SeasonBanner(){
         {tab==="stages"&&(
           <AnimatedSection>
             <div style={{textAlign:"center",marginBottom:28}}>
-              <img src="offre-stages-2026.webp" alt="Offre stages & masterclass ML Padel 2026-2027 — Stage soirée 120/150€, matin heures creuses 100/125€, masterclass week-end 4 joueurs 50/100€, 8 joueurs 30/60€" loading="lazy" style={{width:"100%",maxWidth:560,height:"auto",borderRadius:16,boxShadow:`0 10px 34px ${NAVY}22`,border:`1px solid ${GOLD}25`}}/>
+              <img src="offre-stages-2026.webp" alt="Offre stages & masterclass ML Padel 2026-2027 — Stage soirée 120/150€, matin heures creuses 100/125€, masterclass week-end 4 joueurs 50/100€, 8 joueurs 30/60€" loading="lazy" style={{width:"100%",maxWidth:560,height:"auto",borderRadius:16,boxShadow:`0 10px 34px ${NAVY}22`,border:`1px solid ${GOLD}25`}} width="1080" height="1030"/>
               <p style={{color:TEXT_MED,fontSize:13,marginTop:12,lineHeight:1.6}}>
                 Tarifs par joueur · tous niveaux · les groupes sont formés selon ton niveau. <a href="#stage-juillet-form" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Pré-inscription stage →</a>
               </p>
@@ -1920,7 +1923,7 @@ function InstagramSection(){
               <img src="./photo-profil-480w.webp" alt="Mathias Laval, coach padel" loading="lazy" style={{
                 width:84,height:84,borderRadius:"50%",objectFit:"cover",objectPosition:"50% 25%",
                 border:`2.5px solid ${GOLD}`,flex:"0 0 auto",
-              }}/>
+              }} width="480" height="600"/>
               <div style={{flex:"1 1 200px",textAlign:"left",minWidth:0}}>
                 <div style={{color:WHITE,fontWeight:800,fontSize:17}}>Mathias Laval</div>
                 <div style={{color:GOLD,fontWeight:700,fontSize:13.5,marginTop:1}}>@ml_padel</div>
@@ -2302,7 +2305,7 @@ function PallapShop(){
         <AnimatedSection delay={0.1}>
           <div style={{marginBottom:36,borderRadius:20,overflow:"hidden",border:`2px solid ${PALLAP_CYAN}30`,boxShadow:`0 8px 30px ${NAVY}15`}}>
             <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer">
-              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP — Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}}/>
+              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP — Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}} width="1918" height="871"/>
             </a>
           </div>
         </AnimatedSection>
@@ -3234,7 +3237,7 @@ function Événements(){
               Cours particuliers à Saint-Pierre <strong style={{color:WHITE}}>dès le 5 octobre</strong> · du lundi au samedi, en journée
             </p>
             <img src="affiche-padel-paradise.webp" alt="Mathias Laval, coach padel diplômé d'État, rejoint Padel Paradise à Saint-Pierre — cours particuliers dès le 5 octobre"
-              loading="lazy" style={{width:"100%",maxWidth:460,height:"auto",borderRadius:18,border:`2px solid ${GOLD}55`,boxShadow:`0 14px 44px rgba(0,0,0,0.42)`}}/>
+              loading="lazy" style={{width:"100%",maxWidth:460,height:"auto",borderRadius:18,border:`2px solid ${GOLD}55`,boxShadow:`0 14px 44px rgba(0,0,0,0.42)`}} width="1080" height="1080"/>
           </div>
         </AnimatedSection>
         <AnimatedSection>
@@ -3693,6 +3696,7 @@ function MLPadel(){
       <Événements/>
       <StageJuilletForm/>
       <Pricing/>
+      <SeasonBanner/>
       <Wallet/>
       <WalletClient/>
       <CoachingCarousel/>
