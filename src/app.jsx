@@ -3355,7 +3355,7 @@ function StageJuilletForm(){
   const WALLET_API="https://script.google.com/macros/s/AKfycbzox1toN9GY7dMob2NP71ldDNYM93ZRzcTo4M4zTae8RjAk9tqs8bvuStNsedltQ3pibw/exec";
 
   const offres=[
-    {id:"stage-oct",label:"Stage Octobre — 125€",price:125,slots:["7h – 8h30","8h30 – 10h"],fullSlots:[],semaines:["19 – 23 octobre"],days:"Du lundi au vendredi"},
+    {id:"stage-oct",emoji:"🌅",label:"Stage Octobre — 125€",price:125,slots:["7h – 8h30","8h30 – 10h"],fullSlots:[],semaines:["19 – 23 octobre"],days:"Du lundi au vendredi"},
   ];
 
   const[form,setForm]=useState({
@@ -3363,6 +3363,8 @@ function StageJuilletForm(){
     offre:"stage-oct",creneau:[],semaine:"19 – 23 octobre",
     groupe:"",commentaire:"",
   });
+  const offreActive=offres.find(function(o){return o.id===form.offre})||offres[0];
+
   const[sending,setSending]=useState(false);
   const[success,setSuccess]=useState(false);
   const[error,setError]=useState("");
@@ -3498,7 +3500,7 @@ function StageJuilletForm(){
               <div>
                 <label style={labelStyle}>Stage</label>
                 <div style={{...inputStyle,display:"flex",alignItems:"center",gap:8,background:`${GOLD}0c`,borderColor:`${GOLD}40`,fontWeight:700}}>
-                  <span style={{fontSize:16}}>🌙</span> Stage Octobre — 120€
+                  <span style={{fontSize:16}}>{offreActive.emoji}</span> {offreActive.label}
                 </div>
               </div>
             </div>
