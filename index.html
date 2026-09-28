@@ -214,6 +214,8 @@ const fontLink = (
       .bn-a.on{color:#e8d48b}
       .bn-a.on .bn-ic{transform:translateY(-3px) scale(1.15)}
       .bn-fab{flex:0 0 82px;margin-top:-30px;gap:0}
+      /* le bandeau cookies ne doit jamais masquer le bouton RÉSERVER */
+      .mlp-cookie{bottom:calc(86px + env(safe-area-inset-bottom)) !important}
       .bn-circ{width:64px;height:64px;border-radius:19px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2.5px solid #c9a84c;box-shadow:0 0 0 4px #0a1628,0 8px 22px rgba(201,168,76,.5);animation:pulseFab 2.8s ease-in-out infinite;transition:transform .25s}
       .bn-circ img{width:100%;height:100%;display:block}
       .bn-fab:active .bn-circ{transform:scale(.92);animation:none}
@@ -2852,7 +2854,7 @@ function CookieBanner(){
   var refuse=function(){try{localStorage.setItem("ml_cookies_consent","refused")}catch(e){}setVisible(false)};
   if(!visible) return null;
   return(
-    <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
+    <div className="mlp-cookie" style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
       <p style={{flex:"1 1 400px",margin:0,lineHeight:1.5}}>
         Ce site utilise des cookies (Google Analytics, Firebase) pour améliorer votre expérience.{" "}
         <a href="#mentions-legales" style={{color:GOLD,textDecoration:"underline"}} onClick={function(){setVisible(false)}}>En savoir plus</a>
@@ -3056,7 +3058,7 @@ function BottomNav(){
     <nav className="bottomnav" aria-label="Navigation rapide">
       {link(items[0])}
       {link(items[1])}
-      <a className="bn-a bn-fab" href="#tarifs" aria-label="Réserver un cours">
+      <a className="bn-a bn-fab" href={CALCOM.general} target="_blank" rel="noopener noreferrer" aria-label="Réserver un cours">
         <span className="bn-circ"><img src="mypadel-racket.svg" alt="" width="64" height="64"/></span><span className="bn-lbl">RÉSERVER</span>
       </a>
       {link(items[2])}
