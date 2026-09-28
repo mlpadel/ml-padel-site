@@ -833,69 +833,6 @@ function TransitionAbout(){
 }
 
 /* ─── Tarifs / Pricing ─── */
-function SeasonBanner(){
-  const args=[
-    {i:"🎾",t:"Seul, à 2, 3 ou 4",d:"Tu changes de format quand tu veux"},
-    {i:"⏳",t:"Aucune date limite",d:"Pas de pack à finir sous pression"},
-    {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
-  ];
-  return (
-    <section style={{padding:"10px 24px 70px",background:WARM_WHITE,position:"relative",zIndex:1,
-      ..._fond("paradise-clubhouse-768w.webp","rgba(250,249,246,0.87)")}}>
-    <div style={{maxWidth:900,margin:"0 auto"}}>
-
-      {/* Bloc principal : promesse + action, tout en haut */}
-      <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:18,padding:"30px 24px",textAlign:"center",border:`1px solid ${GOLD}33`}}>
-        <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1.4,padding:"5px 15px",borderRadius:50}}>💳 LA WALLET</span>
-        <h3 style={{fontFamily:"'Playfair Display',serif",color:"#fff",fontSize:"clamp(22px,3.4vw,30px)",fontWeight:900,margin:"14px 0 10px",lineHeight:1.2}}>
-          Recharge une fois,<br/>joue à ton <span style={{color:GOLD}}>rythme</span>
-        </h3>
-        <p style={{color:`${CREAM}bb`,fontSize:14.5,lineHeight:1.65,maxWidth:520,margin:"0 auto 22px"}}>
-          Tu crédites ton compte, puis chaque cours est débité automatiquement.
-          Jusqu'à <b style={{color:GOLD}}>15 % de coaching offert</b> selon le montant.
-        </p>
-        <a href="#wallet" style={{
-          display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-          fontWeight:900,fontSize:17,textDecoration:"none",padding:"18px 44px",borderRadius:50,
-          boxShadow:`0 10px 30px ${GOLD}44`,
-        }}>Recharger ma wallet →</a>
-        <p style={{color:`${CREAM}66`,fontSize:12.5,margin:"14px 0 0"}}>
-          Remplace les anciens packs de 5 ou 10 séances
-        </p>
-      </div>
-
-      {/* Trois arguments, une ligne chacun */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10,marginTop:14}}>
-        {args.map(function(a,i){return (
-          <div key={i} style={{background:WHITE,border:"1px solid #eae6db",borderRadius:12,padding:"14px 16px",display:"flex",alignItems:"flex-start",gap:11}}>
-            <span style={{fontSize:19,lineHeight:1.2}}>{a.i}</span>
-            <div>
-              <div style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{a.t}</div>
-              <div style={{fontSize:12.5,color:TEXT_LIGHT,marginTop:2,lineHeight:1.5}}>{a.d}</div>
-            </div>
-          </div>);})}
-      </div>
-
-      {/* Carte cadeau : clairement secondaire, avec sa propre action */}
-      <div style={{background:"#f6f2e8",border:`1px solid ${GOLD}33`,borderRadius:12,padding:"13px 18px",marginTop:12,display:"flex",flexWrap:"wrap",alignItems:"center",gap:12}}>
-        <span style={{fontSize:21}}>🎁</span>
-        <div style={{flex:"1 1 260px",textAlign:"left"}}>
-          <div style={{color:TEXT_DARK,fontWeight:700,fontSize:14}}>Carte cadeau</div>
-          <div style={{color:TEXT_MED,fontSize:12.5,lineHeight:1.5}}>Offre des crédits à un proche — mêmes bonus jusqu'à +15 %.</div>
-        </div>
-        <a href={wa("Bonjour Mathias, je souhaite offrir une carte cadeau ML Padel 🎁")} target="_blank" rel="noopener noreferrer" style={{
-          background:"transparent",border:`1.5px solid ${GOLD}`,color:"#8a7430",fontWeight:700,fontSize:13,
-          textDecoration:"none",padding:"10px 20px",borderRadius:50,whiteSpace:"nowrap",
-        }}>Demander</a>
-      </div>
-
-      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>
-        La Wallet s'utilise sur les cours particuliers (individuel, duo, trio, quatuor).
-      </p>
-    </div>
-    </section>
-  );
-}
  function Pricing(){
   const[tab,setTab]=useState("individuel");
 
@@ -1392,35 +1329,39 @@ function Wallet(){
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:CREAM,
             }}>
-              Chargez. Jouez. <span style={{color:GOLD}}>Économisez.</span>
+              Recharge une fois, joue à ton <span style={{color:GOLD}}>rythme</span>
             </h2>
             <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
-              1 crédit = 1€ — Plus vous chargez, plus vous gagnez de crédits bonus.
-              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
+              1 crédit = 1 €. Tu crédites ton compte, puis chaque cours est débité automatiquement —
+              jusqu'à <b style={{color:GOLD}}>15 % de coaching offert</b> selon le montant.
+              Utilisables sur les cours unitaires et les stages, en remplacement des anciens packs de 5 ou 10 séances.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* How it works */}
+        {/* Action principale, puis les trois arguments qui lèvent les objections */}
         <AnimatedSection delay={0.1}>
-          <div style={{
-            display:"flex",justifyContent:"center",gap:28,marginBottom:48,flexWrap:"wrap",
-          }}>
+          <div style={{textAlign:"center",marginBottom:26}}>
+            <a href="#wallet-paliers" style={{
+              display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+              fontWeight:900,fontSize:17,textDecoration:"none",padding:"18px 44px",borderRadius:50,
+              boxShadow:`0 10px 30px ${GOLD}44`,
+            }}>Recharger ma wallet →</a>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10,marginBottom:40}}>
             {[
-              {n:"1",t:"Chargez votre wallet avec le montant de votre choix"},
-              {n:"2",t:"Recevez vos crédits bonus immédiatement selon le palier"},
-              {n:"3",t:"Utilisez vos crédits sur toutes les prestations"},
-            ].map((s,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:12,maxWidth:250}}>
-                <div style={{
-                  width:30,height:30,borderRadius:"50%",flexShrink:0,
-                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  fontWeight:800,fontSize:14,color:NAVY,
-                }}>{s.n}</div>
-                <span style={{fontSize:13,color:`${CREAM}88`,lineHeight:1.5}}>{s.t}</span>
-              </div>
-            ))}
+              {i:"🎾",t:"Seul, à 2, 3 ou 4",d:"Tu changes de format quand tu veux"},
+              {i:"⏳",t:"Aucune date limite",d:"Pas de pack à finir sous pression"},
+              {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
+            ].map(function(a,i){return (
+              <div key={i} style={{background:`${CREAM}06`,border:`1px solid ${CREAM}12`,borderRadius:12,
+                padding:"14px 16px",display:"flex",alignItems:"flex-start",gap:11}}>
+                <span style={{fontSize:19,lineHeight:1.2}}>{a.i}</span>
+                <div>
+                  <div style={{fontSize:14,fontWeight:700,color:CREAM}}>{a.t}</div>
+                  <div style={{fontSize:12.5,color:`${CREAM}70`,marginTop:2,lineHeight:1.5}}>{a.d}</div>
+                </div>
+              </div>);})}
           </div>
         </AnimatedSection>
 
@@ -1437,7 +1378,8 @@ function Wallet(){
         </AnimatedSection>
 
         {/* Tier cards */}
-        <div className="wallet-cards" style={{
+        <div id="wallet-paliers" className="wallet-cards" style={{
+          scrollMarginTop:92,
           display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,
         }}>
           {tiers.map((t,i)=>(
@@ -1516,6 +1458,22 @@ function Wallet(){
             <p style={{fontSize:11,color:`${CREAM}60`,marginTop:14,textAlign:"center"}}>
               Crédits valables 12 mois &middot; Non remboursables &middot; Non transférables &middot; Non cumulable avec toute réduction ou promotion &middot; Paiement en 1 fois
             </p>
+          </div>
+        </AnimatedSection>
+
+        {/* Carte cadeau : action secondaire */}
+        <AnimatedSection delay={0.2}>
+          <div style={{background:`${GOLD}0e`,border:`1px solid ${GOLD}33`,borderRadius:12,
+            padding:"13px 18px",marginTop:14,display:"flex",flexWrap:"wrap",alignItems:"center",gap:12}}>
+            <span style={{fontSize:21}}>🎁</span>
+            <div style={{flex:"1 1 260px",textAlign:"left"}}>
+              <div style={{color:CREAM,fontWeight:700,fontSize:14}}>Carte cadeau</div>
+              <div style={{color:`${CREAM}70`,fontSize:12.5,lineHeight:1.5}}>Offre des crédits à un proche — mêmes bonus jusqu'à +15 %.</div>
+            </div>
+            <a href={wa("Bonjour Mathias, je souhaite offrir une carte cadeau ML Padel 🎁")} target="_blank" rel="noopener noreferrer" style={{
+              background:"transparent",border:`1.5px solid ${GOLD}`,color:GOLD,fontWeight:700,fontSize:13,
+              textDecoration:"none",padding:"10px 20px",borderRadius:50,whiteSpace:"nowrap",
+            }}>Demander</a>
           </div>
         </AnimatedSection>
       </div>
@@ -3696,7 +3654,6 @@ function MLPadel(){
       <Événements/>
       <StageJuilletForm/>
       <Pricing/>
-      <SeasonBanner/>
       <Wallet/>
       <WalletClient/>
       <CoachingCarousel/>
