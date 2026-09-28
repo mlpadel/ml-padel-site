@@ -252,8 +252,8 @@ const fontLink = (
       .hero-cta-row{flex-direction:column!important;align-items:stretch!important}
       .about-grid{flex-direction:column!important}
       .about-photo{min-height:260px!important;flex:auto!important}
-      .pricing-tabs{gap:2px!important;padding:3px!important}
-      .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
+      .pricing-tabs{flex-wrap:wrap!important;gap:6px!important;padding:6px!important;border-radius:20px!important;width:100%!important;max-width:430px!important;overflow:visible!important}
+      .pricing-tabs button{flex:1 1 44%!important;padding:14px 8px!important;font-size:14px!important}
       .wallet-cards{grid-template-columns:1fr!important}
       .stats-grid{grid-template-columns:1fr!important}
       .gallery-slide{aspect-ratio:3/2 !important;min-height:220px !important}
@@ -904,6 +904,10 @@ function TransitionAbout(){
           </div>
           {false && (tab==="individuel"||tab==="collectif") && (<div style={{maxWidth:760,margin:"0 auto 28px",background:"linear-gradient(135deg,#0a1628,#162040)",borderRadius:16,padding:"18px 22px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:14}}><div style={{textAlign:"left",flex:"1 1 320px"}}><div style={{color:GOLD,fontWeight:800,fontSize:15,marginBottom:4}}>Envie de plusieurs cours ?</div><div style={{color:"#ffffffcc",fontSize:13,lineHeight:1.5}}>Recharge ta wallet et profite jusqu’à <b style={{color:GOLD}}>+15%</b> de bonus crédit.</div></div><a href="#wallet" style={{background:GOLD,color:"#0a1628",fontWeight:700,fontSize:13,textDecoration:"none",padding:"11px 22px",borderRadius:50,whiteSpace:"nowrap"}}>Recharger ma wallet</a></div>)}
 
+          <p style={{textAlign:"center",fontSize:13,fontWeight:700,letterSpacing:1.4,
+            textTransform:"uppercase",color:GOLD,margin:"0 0 12px"}}>
+            Choisis ton format ↓
+          </p>
           <div className="pricing-tabs" style={{
             display:"flex",justifyContent:"center",gap:4,marginBottom:40,
             background:WHITE,borderRadius:50,padding:4,
@@ -916,10 +920,10 @@ function TransitionAbout(){
             {tabs.map(t=>(
               <button key={t.key} data-pilule={t.key} onClick={()=>changerOnglet(t.key)}
                 aria-selected={tab===t.key} style={{
-                padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
+                padding:"15px 28px",borderRadius:50,border:"none",cursor:"pointer",
                 background:"transparent",
                 color:tab===t.key?NAVY:TEXT_MED,
-                fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",
+                fontWeight:800,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                 transition:"color 0.25s ease",
                 position:"relative",zIndex:2,whiteSpace:"nowrap",
               }}>{t.label}</button>
@@ -1380,17 +1384,19 @@ function Wallet(){
         {/* Tier cards */}
         <div id="wallet-paliers" className="wallet-cards" style={{
           scrollMarginTop:92,
-          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,
+          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,alignItems:"stretch",
         }}>
           {tiers.map((t,i)=>(
             <AnimatedSection key={i} delay={i*0.1}>
               <div style={{
-                background:`${CREAM}06`,border:`1.5px solid ${t.best?GOLD+"55":`${CREAM}12`}`,
-                borderRadius:18,padding:"28px 20px",textAlign:"center",
-                position:"relative",transition:"all 0.3s",
+                background:t.best?`${GOLD}16`:`${CREAM}0e`,
+                border:`${t.best?2.5:1.5}px solid ${t.best?GOLD:`${CREAM}26`}`,
+                borderRadius:18,padding:t.best?"34px 20px":"28px 20px",textAlign:"center",
+                position:"relative",transition:"all 0.3s",height:"100%",
+                boxShadow:t.best?`0 14px 40px ${GOLD}33`:"none",
               }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-4px)"}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD+"55":`${CREAM}12`;e.currentTarget.style.transform="translateY(0)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD:`${CREAM}26`;e.currentTarget.style.transform="translateY(0)"}}
               >
                 {t.best&&(
                   <div style={{
@@ -1405,22 +1411,31 @@ function Wallet(){
                 <div style={{fontSize:11,color:`${CREAM}45`,marginBottom:14,textTransform:"uppercase",letterSpacing:1}}>Chargement</div>
 
                 <div style={{
-                  background:`${GOLD}20`,borderRadius:10,padding:"10px 0",marginBottom:14,
+                  background:t.best?`${GOLD}30`:`${GOLD}18`,borderRadius:10,padding:"12px 0",marginBottom:14,
                 }}>
-                  <span style={{fontSize:18,fontWeight:800,color:GOLD}}>+{t.bonus}%</span>
-                  <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de crédits bonus</span>
+                  <div style={{fontSize:t.best?28:22,fontWeight:900,color:GOLD,lineHeight:1.1}}>
+                    +{t.credits-t.amount} €
+                  </div>
+                  <div style={{fontSize:12,color:`${CREAM}88`,marginTop:2}}>
+                    offerts · soit +{t.bonus} %
+                  </div>
                 </div>
 
                 <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
-                  Vous obtenez <strong style={{color:GOLD}}>{t.credits} crédits</strong>
+                  Tu obtiens <strong style={{color:GOLD}}>{t.credits} crédits</strong>
                 </p>
+                {t.best&&(
+                  <p style={{fontSize:12,color:GOLD,fontWeight:700,marginTop:6,lineHeight:1.45}}>
+                    9 fois plus de bonus qu'au palier 100 €
+                  </p>
+                )}
                 <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8,marginBottom:14}}>
                   Payable en 1 fois
                 </p>
                 <a href={t.stripe} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-block",padding:"10px 28px",
+                  display:"inline-block",padding:t.best?"14px 34px":"10px 28px",
                   background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                  color:NAVY,borderRadius:50,fontSize:13,fontWeight:800,
+                  color:NAVY,borderRadius:50,fontSize:t.best?15:13,fontWeight:800,
                   textDecoration:"none",letterSpacing:0.5,
                   transition:"all 0.3s",
                 }}
