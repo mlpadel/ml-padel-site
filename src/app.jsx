@@ -137,6 +137,8 @@ const fontLink = (
     .veg-bl{bottom:0;left:0;transform-origin:0 100%}
     .veg-br{bottom:0;right:0;transform-origin:100% 100%}
     @media(max-width:600px){.veg-cn{width:56vw;max-width:230px}}
+    /* sous 620 px la grille des contacts passe à 2 colonnes : la dernière carte, seule, s'étire */
+    @media(max-width:620px){.contact-cards>a:last-child{grid-column:1 / -1}}
     @media(prefers-reduced-motion:reduce){.veg-cn{transform:none!important}}
     @media(max-width:768px){
       .nav-desktop{display:none!important}
@@ -2368,7 +2370,7 @@ function Contact(){
           </div>
 
           {/* Contact info cards */}
-          <div style={{
+          <div className="contact-cards" style={{
             display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:12,
             marginBottom:32,
           }}>
@@ -2383,8 +2385,9 @@ function Contact(){
               onMouseLeave={e=>{e.currentTarget.style.borderColor=`${CREAM}10`;e.currentTarget.style.background=`${CREAM}06`}}
               >
                 <div style={{color:GOLD,display:"flex",flexShrink:0}}>{c.icon}</div>
-                <div style={{textAlign:"center"}}>
-                  <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3}}>{c.label}</div>
+                <div style={{textAlign:"center",minWidth:0}}>
+                  <div style={{fontSize:13,fontWeight:600,color:CREAM,lineHeight:1.3,
+                    overflowWrap:"anywhere"}}>{c.label}</div>
                   <div style={{fontSize:11,color:`${CREAM}45`}}>{c.sub}</div>
                 </div>
               </a>
