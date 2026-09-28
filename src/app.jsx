@@ -727,6 +727,135 @@ function TransitionAbout(){
   );
 }
 
+/* ─── Disponibilités en direct : calendrier Cal.com intégré ─── */
+/* Cal.com impose son amorce : elle définit window.Cal et met les appels en
+   file d'attente avant même que embed.js soit téléchargé. Charger embed.js
+   seul ne définit rien et le premier appel échoue. */
+function chargerCal(){
+  if(window.Cal) return;
+  (function (C, A, L) {
+    let p = function (a, ar) { a.q.push(ar); };
+    let d = C.document;
+    C.Cal = C.Cal || function () {
+      let cal = C.Cal; let ar = arguments;
+      if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+      if (ar[0] === L) {
+        const api = function () { p(api, arguments); };
+        const namespace = ar[1]; api.q = api.q || [];
+        if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+        else p(cal, ar);
+        return;
+      }
+      p(cal, ar);
+    };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+}
+
+function Disponibilites(){
+  const formats=[
+    {key:"indiv",   label:"Individuel", lien:CALCOM.indivEspece,    note:"1 joueur · 60 €/h"},
+    {key:"duo",     label:"Duo",        lien:CALCOM.duoEspece,      note:"2 joueurs · 35 €/pers"},
+    {key:"trio",    label:"Trio",       lien:CALCOM.trioEspece,     note:"3 joueurs · 25 €/pers"},
+    {key:"quatuor", label:"Quatuor",    lien:CALCOM.quatuorEspece,  note:"4 joueurs · 20 €/pers"},
+  ];
+  const[actif,setActif]=useState("indiv");
+  const[visible,setVisible]=useState(false);
+  const[affiche,setAffiche]=useState(false);   // un iframe est bien apparu
+  const[ongletsRef,pilule]=usePilule(actif);
+  const zone=useRef(null);
+  const sectionRef=useRef(null);
+  const fmt=formats.find(f=>f.key===actif)||formats[0];
+  const slug=(fmt.lien||"").replace(/^https?:\/\/cal\.com\//,"").split("?")[0];
+
+  /* on n'agit qu'à l'approche de la section */
+  useEffect(function(){
+    const el=sectionRef.current; if(!el) return;
+    if(typeof IntersectionObserver==="undefined"){setVisible(true);return;}
+    const o=new IntersectionObserver(function(e){ if(e[0].isIntersecting){setVisible(true);o.disconnect();} },{rootMargin:"400px"});
+    o.observe(el);
+    return function(){o.disconnect();};
+  },[]);
+
+  /* construction, puis reconstruction à chaque changement de format */
+  useEffect(function(){
+    if(!visible||!zone.current) return;
+    setAffiche(false);
+    zone.current.innerHTML="";
+    let vivant=true;
+    try{
+      chargerCal();
+      window.Cal("init");
+      window.Cal("inline",{elementOrSelector:zone.current,calLink:slug,layout:"month_view"});
+      window.Cal("ui",{theme:"light",cssVarsPerTheme:{light:{"cal-brand":GOLD}}});
+    }catch(e){ /* le lien de secours reste affiché */ }
+    /* l'iframe arrive de façon asynchrone : on le guette sans bloquer */
+    const t=setInterval(function(){
+      if(!vivant) return;
+      if(zone.current&&zone.current.querySelector("iframe")){ setAffiche(true); clearInterval(t); }
+    },300);
+    const stop=setTimeout(function(){clearInterval(t);},12000);
+    return function(){vivant=false;clearInterval(t);clearTimeout(stop);};
+  },[visible,slug]);
+
+  return(
+    <section id="disponibilites" ref={sectionRef} style={{
+      padding:"70px 24px",background:WARM_WHITE,position:"relative",zIndex:1,scrollMarginTop:92,
+      ..._fond("paradise-terrains-768w.webp","rgba(250,249,246,0.90)"),
+    }}>
+      <div style={{maxWidth:900,margin:"0 auto"}}>
+        <AnimatedSection>
+          <div style={{textAlign:"center",marginBottom:26}}>
+            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>En direct</span>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",fontWeight:900,marginTop:8,color:TEXT_DARK}}>
+              Mes prochains <span style={{color:GOLD}}>créneaux</span>
+            </h2>
+            <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.65,marginTop:12,maxWidth:560,marginLeft:"auto",marginRight:"auto"}}>
+              Choisis ton format, prends ton créneau. Paiement sur place.
+            </p>
+          </div>
+        </AnimatedSection>
+
+        <div className="pricing-tabs" style={{
+          display:"flex",justifyContent:"center",gap:4,background:WHITE,borderRadius:50,padding:4,
+          boxShadow:"0 2px 12px rgba(0,0,0,0.05)",width:"fit-content",margin:"0 auto 10px",
+          border:`1px solid ${GOLD}15`,position:"relative",
+        }} ref={ongletsRef}>
+          <Pilule box={pilule} fond={`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`}/>
+          {formats.map(f=>(
+            <button key={f.key} data-pilule={f.key} onClick={()=>setActif(f.key)} aria-selected={actif===f.key} style={{
+              padding:"15px 28px",borderRadius:50,border:"none",cursor:"pointer",background:"transparent",
+              color:actif===f.key?NAVY:TEXT_MED,fontWeight:800,fontSize:15,fontFamily:"'DM Sans',sans-serif",
+              transition:"color 0.25s ease",position:"relative",zIndex:2,whiteSpace:"nowrap",
+            }}>{f.label}</button>
+          ))}
+        </div>
+        <p style={{textAlign:"center",fontSize:13,color:TEXT_LIGHT,margin:"0 0 22px"}}>{fmt.note}</p>
+
+        <div style={{background:WHITE,borderRadius:18,border:`1px solid ${GOLD}22`,
+          boxShadow:"0 10px 34px rgba(10,22,40,0.08)",overflow:"hidden",position:"relative",minHeight:affiche?0:300}}>
+          <div ref={zone} style={{width:"100%",minHeight:affiche?600:0}}/>
+          {!affiche&&(
+            <div style={{padding:"46px 24px",textAlign:"center"}}>
+              <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.6,marginBottom:18}}>
+                Chargement de mes disponibilités…
+              </p>
+              <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{
+                display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+                fontWeight:800,fontSize:15,textDecoration:"none",padding:"15px 32px",borderRadius:50,
+              }}>Voir mes créneaux →</a>
+            </div>
+          )}
+        </div>
+
+        <p style={{textAlign:"center",fontSize:12.5,color:TEXT_LIGHT,marginTop:14,lineHeight:1.6}}>
+          {affiche&&(<span>Un souci d'affichage ? <a href={fmt.lien} target="_blank" rel="noopener noreferrer" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Ouvrir le calendrier →</a> · </span>)}
+          Un stage ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Tarifs / Pricing ─── */
  function Pricing(){
   const[tab,setTab]=useState("individuel");
@@ -3426,6 +3555,7 @@ function MLPadel(){
       <Navbar/>
       <Hero/>
       <Marquee/>
+      <Disponibilites/>
       <CounterStats/>
       <About/>
       <DebutantStart/>
