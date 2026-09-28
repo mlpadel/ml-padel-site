@@ -3668,16 +3668,20 @@ function MLPadel(){
       <CoachingCarousel/>
       <TransitionPricing/>
       <Horaires/>
-      <Repliable titre="Le club" resume="Padel Paradise en images" ancre="club" >
-        <LeClub/>
-      </Repliable>
       <TeamSection/>
       <InstagramSection/>
       <WhatsAppChannel/>
+      <CoursCollectifsSection/>
+      <div style={{background:WARM_WHITE,padding:"46px 24px 4px",textAlign:"center",position:"relative",zIndex:1}}>
+        <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Pour aller plus loin</span>
+        <p style={{color:TEXT_LIGHT,fontSize:13.5,marginTop:6}}>Ouvre ce qui t'intéresse</p>
+      </div>
+      <Repliable titre="Le club" resume="Padel Paradise en images" ancre="club" >
+        <LeClub/>
+      </Repliable>
       <Repliable titre="Galerie" resume="Photos sur le terrain" ancre="galerie" >
         <Gallery/>
       </Repliable>
-      <CoursCollectifsSection/>
       <Repliable titre="La boutique Pallap" resume="Raquettes, textile et accessoires" ancre="boutique" >
         <PallapShop/>
       </Repliable>
