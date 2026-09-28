@@ -82,6 +82,8 @@ const fontLink = (
     ::-webkit-scrollbar-track { background:${WARM_WHITE}; }
     ::-webkit-scrollbar-thumb { background:${GOLD}; border-radius:3px; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    /* les ancres ne doivent pas atterrir sous la barre de navigation fixe */
+    section[id]{scroll-margin-top:92px}
     @keyframes mlpRecap { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
     /* retour tactile sur les boutons des cartes tarifs */
     .mlp-card a{transition:transform .12s cubic-bezier(0.16,1,0.3,1),background .3s,box-shadow .3s}
@@ -106,6 +108,8 @@ const fontLink = (
       .bn-a.on{color:#e8d48b}
       .bn-a.on .bn-ic{transform:translateY(-3px) scale(1.15)}
       .bn-fab{flex:0 0 82px;margin-top:-30px;gap:0}
+      /* le bandeau cookies ne doit jamais masquer le bouton RÉSERVER */
+      .mlp-cookie{bottom:calc(86px + env(safe-area-inset-bottom)) !important}
       .bn-circ{width:64px;height:64px;border-radius:19px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;overflow:hidden;border:2.5px solid #c9a84c;box-shadow:0 0 0 4px #0a1628,0 8px 22px rgba(201,168,76,.5);animation:pulseFab 2.8s ease-in-out infinite;transition:transform .25s}
       .bn-circ img{width:100%;height:100%;display:block}
       .bn-fab:active .bn-circ{transform:scale(.92);animation:none}
@@ -140,8 +144,8 @@ const fontLink = (
       .hero-cta-row{flex-direction:column!important;align-items:stretch!important}
       .about-grid{flex-direction:column!important}
       .about-photo{min-height:260px!important;flex:auto!important}
-      .pricing-tabs{gap:2px!important;padding:3px!important}
-      .pricing-tabs button{padding:8px 12px!important;font-size:11px!important}
+      .pricing-tabs{flex-wrap:wrap!important;gap:6px!important;padding:6px!important;border-radius:20px!important;width:100%!important;max-width:430px!important;overflow:visible!important}
+      .pricing-tabs button{flex:1 1 44%!important;padding:14px 8px!important;font-size:14px!important}
       .wallet-cards{grid-template-columns:1fr!important}
       .stats-grid{grid-template-columns:1fr!important}
       .gallery-slide{aspect-ratio:3/2 !important;min-height:220px !important}
@@ -303,8 +307,7 @@ function Logo({size=36, scrolled=false}) {
         background: scrolled ? WHITE : "transparent",
         padding: scrolled ? 2 : 0,
         transition: "background 0.3s, padding 0.3s"
-      }}
-    />
+      }} width="1024" height="1024"/>
   );
 }
 
@@ -722,66 +725,6 @@ function TransitionAbout(){
 }
 
 /* ─── Tarifs / Pricing ─── */
-function SeasonBanner(){
-  const args=[
-    {i:"🎾",t:"Seul, à 2, 3 ou 4",d:"Tu changes de format quand tu veux"},
-    {i:"⏳",t:"Aucune date limite",d:"Pas de pack à finir sous pression"},
-    {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
-  ];
-  return (
-    <div style={{maxWidth:900,margin:"0 auto 34px"}}>
-
-      {/* Bloc principal : promesse + action, tout en haut */}
-      <div style={{background:`linear-gradient(135deg,${NAVY},#162040)`,borderRadius:18,padding:"30px 24px",textAlign:"center",border:`1px solid ${GOLD}33`}}>
-        <span style={{display:"inline-block",background:GOLD,color:NAVY,fontSize:11,fontWeight:800,letterSpacing:1.4,padding:"5px 15px",borderRadius:50}}>💳 LA WALLET</span>
-        <h3 style={{fontFamily:"'Playfair Display',serif",color:"#fff",fontSize:"clamp(22px,3.4vw,30px)",fontWeight:900,margin:"14px 0 10px",lineHeight:1.2}}>
-          Recharge une fois,<br/>joue à ton <span style={{color:GOLD}}>rythme</span>
-        </h3>
-        <p style={{color:`${CREAM}bb`,fontSize:14.5,lineHeight:1.65,maxWidth:520,margin:"0 auto 22px"}}>
-          Tu crédites ton compte, puis chaque cours est débité automatiquement.
-          Jusqu'à <b style={{color:GOLD}}>15 % de coaching offert</b> selon le montant.
-        </p>
-        <a href="#wallet" style={{
-          display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
-          fontWeight:900,fontSize:17,textDecoration:"none",padding:"18px 44px",borderRadius:50,
-          boxShadow:`0 10px 30px ${GOLD}44`,
-        }}>Recharger ma wallet →</a>
-        <p style={{color:`${CREAM}66`,fontSize:12.5,margin:"14px 0 0"}}>
-          Remplace les anciens packs de 5 ou 10 séances
-        </p>
-      </div>
-
-      {/* Trois arguments, une ligne chacun */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10,marginTop:14}}>
-        {args.map(function(a,i){return (
-          <div key={i} style={{background:WHITE,border:"1px solid #eae6db",borderRadius:12,padding:"14px 16px",display:"flex",alignItems:"flex-start",gap:11}}>
-            <span style={{fontSize:19,lineHeight:1.2}}>{a.i}</span>
-            <div>
-              <div style={{fontSize:14,fontWeight:700,color:TEXT_DARK}}>{a.t}</div>
-              <div style={{fontSize:12.5,color:TEXT_LIGHT,marginTop:2,lineHeight:1.5}}>{a.d}</div>
-            </div>
-          </div>);})}
-      </div>
-
-      {/* Carte cadeau : clairement secondaire, avec sa propre action */}
-      <div style={{background:"#f6f2e8",border:`1px solid ${GOLD}33`,borderRadius:12,padding:"13px 18px",marginTop:12,display:"flex",flexWrap:"wrap",alignItems:"center",gap:12}}>
-        <span style={{fontSize:21}}>🎁</span>
-        <div style={{flex:"1 1 260px",textAlign:"left"}}>
-          <div style={{color:TEXT_DARK,fontWeight:700,fontSize:14}}>Carte cadeau</div>
-          <div style={{color:TEXT_MED,fontSize:12.5,lineHeight:1.5}}>Offre des crédits à un proche — mêmes bonus jusqu'à +15 %.</div>
-        </div>
-        <a href={wa("Bonjour Mathias, je souhaite offrir une carte cadeau ML Padel 🎁")} target="_blank" rel="noopener noreferrer" style={{
-          background:"transparent",border:`1.5px solid ${GOLD}`,color:"#8a7430",fontWeight:700,fontSize:13,
-          textDecoration:"none",padding:"10px 20px",borderRadius:50,whiteSpace:"nowrap",
-        }}>Demander</a>
-      </div>
-
-      <p style={{fontSize:12,color:TEXT_LIGHT,textAlign:"center",margin:"14px 0 0"}}>
-        La Wallet s'utilise sur les cours particuliers (individuel, duo, trio, quatuor).
-      </p>
-    </div>
-  );
-}
  function Pricing(){
   const[tab,setTab]=useState("individuel");
 
@@ -853,7 +796,10 @@ function SeasonBanner(){
           </div>
           {false && (tab==="individuel"||tab==="collectif") && (<div style={{maxWidth:760,margin:"0 auto 28px",background:"linear-gradient(135deg,#0a1628,#162040)",borderRadius:16,padding:"18px 22px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",gap:14}}><div style={{textAlign:"left",flex:"1 1 320px"}}><div style={{color:GOLD,fontWeight:800,fontSize:15,marginBottom:4}}>Envie de plusieurs cours ?</div><div style={{color:"#ffffffcc",fontSize:13,lineHeight:1.5}}>Recharge ta wallet et profite jusqu’à <b style={{color:GOLD}}>+15%</b> de bonus crédit.</div></div><a href="#wallet" style={{background:GOLD,color:"#0a1628",fontWeight:700,fontSize:13,textDecoration:"none",padding:"11px 22px",borderRadius:50,whiteSpace:"nowrap"}}>Recharger ma wallet</a></div>)}
 
-          <SeasonBanner/>
+          <p style={{textAlign:"center",fontSize:13,fontWeight:700,letterSpacing:1.4,
+            textTransform:"uppercase",color:GOLD,margin:"0 0 12px"}}>
+            Choisis ton format ↓
+          </p>
           <div className="pricing-tabs" style={{
             display:"flex",justifyContent:"center",gap:4,marginBottom:40,
             background:WHITE,borderRadius:50,padding:4,
@@ -866,10 +812,10 @@ function SeasonBanner(){
             {tabs.map(t=>(
               <button key={t.key} data-pilule={t.key} onClick={()=>changerOnglet(t.key)}
                 aria-selected={tab===t.key} style={{
-                padding:"10px 20px",borderRadius:50,border:"none",cursor:"pointer",
+                padding:"15px 28px",borderRadius:50,border:"none",cursor:"pointer",
                 background:"transparent",
                 color:tab===t.key?NAVY:TEXT_MED,
-                fontWeight:700,fontSize:13,fontFamily:"'DM Sans',sans-serif",
+                fontWeight:800,fontSize:15,fontFamily:"'DM Sans',sans-serif",
                 transition:"color 0.25s ease",
                 position:"relative",zIndex:2,whiteSpace:"nowrap",
               }}>{t.label}</button>
@@ -881,7 +827,7 @@ function SeasonBanner(){
         {tab==="stages"&&(
           <AnimatedSection>
             <div style={{textAlign:"center",marginBottom:28}}>
-              <img src="offre-stages-2026.webp" alt="Offre stages & masterclass ML Padel 2026-2027 — Stage soirée 120/150€, matin heures creuses 100/125€, masterclass week-end 4 joueurs 50/100€, 8 joueurs 30/60€" loading="lazy" style={{width:"100%",maxWidth:560,height:"auto",borderRadius:16,boxShadow:`0 10px 34px ${NAVY}22`,border:`1px solid ${GOLD}25`}}/>
+              <img src="offre-stages-2026.webp" alt="Offre stages & masterclass ML Padel 2026-2027 — Stage soirée 120/150€, matin heures creuses 100/125€, masterclass week-end 4 joueurs 50/100€, 8 joueurs 30/60€" loading="lazy" style={{width:"100%",maxWidth:560,height:"auto",borderRadius:16,boxShadow:`0 10px 34px ${NAVY}22`,border:`1px solid ${GOLD}25`}} width="1080" height="1030"/>
               <p style={{color:TEXT_MED,fontSize:13,marginTop:12,lineHeight:1.6}}>
                 Tarifs par joueur · tous niveaux · les groupes sont formés selon ton niveau. <a href="#stage-juillet-form" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Pré-inscription stage →</a>
               </p>
@@ -1279,35 +1225,39 @@ function Wallet(){
               fontFamily:"'Playfair Display',serif",fontSize:"clamp(26px,4vw,38px)",
               fontWeight:900,marginTop:8,color:CREAM,
             }}>
-              Chargez. Jouez. <span style={{color:GOLD}}>Économisez.</span>
+              Recharge une fois, joue à ton <span style={{color:GOLD}}>rythme</span>
             </h2>
             <p style={{color:`${CREAM}70`,fontSize:14,marginTop:12,maxWidth:540,margin:"12px auto 0",lineHeight:1.6}}>
-              1 crédit = 1€ — Plus vous chargez, plus vous gagnez de crédits bonus.
-              Utilisables sur tous les cours unitaires (individuels, collectifs) et stages. Non cumulable avec toute réduction ou promotion.
+              1 crédit = 1 €. Tu crédites ton compte, puis chaque cours est débité automatiquement —
+              jusqu'à <b style={{color:GOLD}}>15 % de coaching offert</b> selon le montant.
+              Utilisables sur les cours unitaires et les stages, en remplacement des anciens packs de 5 ou 10 séances.
             </p>
           </div>
         </AnimatedSection>
 
-        {/* How it works */}
+        {/* Action principale, puis les trois arguments qui lèvent les objections */}
         <AnimatedSection delay={0.1}>
-          <div style={{
-            display:"flex",justifyContent:"center",gap:28,marginBottom:48,flexWrap:"wrap",
-          }}>
+          <div style={{textAlign:"center",marginBottom:26}}>
+            <a href="#wallet-paliers" style={{
+              display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,color:NAVY,
+              fontWeight:900,fontSize:17,textDecoration:"none",padding:"18px 44px",borderRadius:50,
+              boxShadow:`0 10px 30px ${GOLD}44`,
+            }}>Recharger ma wallet →</a>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(210px,1fr))",gap:10,marginBottom:40}}>
             {[
-              {n:"1",t:"Chargez votre wallet avec le montant de votre choix"},
-              {n:"2",t:"Recevez vos crédits bonus immédiatement selon le palier"},
-              {n:"3",t:"Utilisez vos crédits sur toutes les prestations"},
-            ].map((s,i)=>(
-              <div key={i} style={{display:"flex",alignItems:"center",gap:12,maxWidth:250}}>
-                <div style={{
-                  width:30,height:30,borderRadius:"50%",flexShrink:0,
-                  background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                  display:"flex",alignItems:"center",justifyContent:"center",
-                  fontWeight:800,fontSize:14,color:NAVY,
-                }}>{s.n}</div>
-                <span style={{fontSize:13,color:`${CREAM}88`,lineHeight:1.5}}>{s.t}</span>
-              </div>
-            ))}
+              {i:"🎾",t:"Seul, à 2, 3 ou 4",d:"Tu changes de format quand tu veux"},
+              {i:"⏳",t:"Aucune date limite",d:"Pas de pack à finir sous pression"},
+              {i:"⚡",t:"Débit automatique",d:"Rien à gérer au moment de jouer"},
+            ].map(function(a,i){return (
+              <div key={i} style={{background:`${CREAM}06`,border:`1px solid ${CREAM}12`,borderRadius:12,
+                padding:"14px 16px",display:"flex",alignItems:"flex-start",gap:11}}>
+                <span style={{fontSize:19,lineHeight:1.2}}>{a.i}</span>
+                <div>
+                  <div style={{fontSize:14,fontWeight:700,color:CREAM}}>{a.t}</div>
+                  <div style={{fontSize:12.5,color:`${CREAM}70`,marginTop:2,lineHeight:1.5}}>{a.d}</div>
+                </div>
+              </div>);})}
           </div>
         </AnimatedSection>
 
@@ -1324,18 +1274,21 @@ function Wallet(){
         </AnimatedSection>
 
         {/* Tier cards */}
-        <div className="wallet-cards" style={{
-          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,
+        <div id="wallet-paliers" className="wallet-cards" style={{
+          scrollMarginTop:92,
+          display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:18,marginBottom:36,alignItems:"stretch",
         }}>
           {tiers.map((t,i)=>(
             <AnimatedSection key={i} delay={i*0.1}>
               <div style={{
-                background:`${CREAM}06`,border:`1.5px solid ${t.best?GOLD+"55":`${CREAM}12`}`,
-                borderRadius:18,padding:"28px 20px",textAlign:"center",
-                position:"relative",transition:"all 0.3s",
+                background:t.best?`${GOLD}16`:`${CREAM}0e`,
+                border:`${t.best?2.5:1.5}px solid ${t.best?GOLD:`${CREAM}26`}`,
+                borderRadius:18,padding:t.best?"34px 20px":"28px 20px",textAlign:"center",
+                position:"relative",transition:"all 0.3s",height:"100%",
+                boxShadow:t.best?`0 14px 40px ${GOLD}33`:"none",
               }}
               onMouseEnter={e=>{e.currentTarget.style.borderColor=GOLD;e.currentTarget.style.transform="translateY(-4px)"}}
-              onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD+"55":`${CREAM}12`;e.currentTarget.style.transform="translateY(0)"}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=t.best?GOLD:`${CREAM}26`;e.currentTarget.style.transform="translateY(0)"}}
               >
                 {t.best&&(
                   <div style={{
@@ -1350,22 +1303,31 @@ function Wallet(){
                 <div style={{fontSize:11,color:`${CREAM}45`,marginBottom:14,textTransform:"uppercase",letterSpacing:1}}>Chargement</div>
 
                 <div style={{
-                  background:`${GOLD}20`,borderRadius:10,padding:"10px 0",marginBottom:14,
+                  background:t.best?`${GOLD}30`:`${GOLD}18`,borderRadius:10,padding:"12px 0",marginBottom:14,
                 }}>
-                  <span style={{fontSize:18,fontWeight:800,color:GOLD}}>+{t.bonus}%</span>
-                  <span style={{fontSize:12,color:`${CREAM}66`,marginLeft:6}}>de crédits bonus</span>
+                  <div style={{fontSize:t.best?28:22,fontWeight:900,color:GOLD,lineHeight:1.1}}>
+                    +{t.credits-t.amount} €
+                  </div>
+                  <div style={{fontSize:12,color:`${CREAM}88`,marginTop:2}}>
+                    offerts · soit +{t.bonus} %
+                  </div>
                 </div>
 
                 <p style={{fontSize:15,fontWeight:600,color:CREAM}}>
-                  Vous obtenez <strong style={{color:GOLD}}>{t.credits} crédits</strong>
+                  Tu obtiens <strong style={{color:GOLD}}>{t.credits} crédits</strong>
                 </p>
+                {t.best&&(
+                  <p style={{fontSize:12,color:GOLD,fontWeight:700,marginTop:6,lineHeight:1.45}}>
+                    9 fois plus de bonus qu'au palier 100 €
+                  </p>
+                )}
                 <p style={{fontSize:11,color:`${CREAM}35`,marginTop:8,marginBottom:14}}>
                   Payable en 1 fois
                 </p>
                 <a href={t.stripe} target="_blank" rel="noopener noreferrer" style={{
-                  display:"inline-block",padding:"10px 28px",
+                  display:"inline-block",padding:t.best?"14px 34px":"10px 28px",
                   background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-                  color:NAVY,borderRadius:50,fontSize:13,fontWeight:800,
+                  color:NAVY,borderRadius:50,fontSize:t.best?15:13,fontWeight:800,
                   textDecoration:"none",letterSpacing:0.5,
                   transition:"all 0.3s",
                 }}
@@ -1403,6 +1365,22 @@ function Wallet(){
             <p style={{fontSize:11,color:`${CREAM}60`,marginTop:14,textAlign:"center"}}>
               Crédits valables 12 mois &middot; Non remboursables &middot; Non transférables &middot; Non cumulable avec toute réduction ou promotion &middot; Paiement en 1 fois
             </p>
+          </div>
+        </AnimatedSection>
+
+        {/* Carte cadeau : action secondaire */}
+        <AnimatedSection delay={0.2}>
+          <div style={{background:`${GOLD}0e`,border:`1px solid ${GOLD}33`,borderRadius:12,
+            padding:"13px 18px",marginTop:14,display:"flex",flexWrap:"wrap",alignItems:"center",gap:12}}>
+            <span style={{fontSize:21}}>🎁</span>
+            <div style={{flex:"1 1 260px",textAlign:"left"}}>
+              <div style={{color:CREAM,fontWeight:700,fontSize:14}}>Carte cadeau</div>
+              <div style={{color:`${CREAM}70`,fontSize:12.5,lineHeight:1.5}}>Offre des crédits à un proche — mêmes bonus jusqu'à +15 %.</div>
+            </div>
+            <a href={wa("Bonjour Mathias, je souhaite offrir une carte cadeau ML Padel 🎁")} target="_blank" rel="noopener noreferrer" style={{
+              background:"transparent",border:`1.5px solid ${GOLD}`,color:GOLD,fontWeight:700,fontSize:13,
+              textDecoration:"none",padding:"10px 20px",borderRadius:50,whiteSpace:"nowrap",
+            }}>Demander</a>
           </div>
         </AnimatedSection>
       </div>
@@ -1810,7 +1788,7 @@ function InstagramSection(){
               <img src="./photo-profil-480w.webp" alt="Mathias Laval, coach padel" loading="lazy" style={{
                 width:84,height:84,borderRadius:"50%",objectFit:"cover",objectPosition:"50% 25%",
                 border:`2.5px solid ${GOLD}`,flex:"0 0 auto",
-              }}/>
+              }} width="480" height="600"/>
               <div style={{flex:"1 1 200px",textAlign:"left",minWidth:0}}>
                 <div style={{color:WHITE,fontWeight:800,fontSize:17}}>Mathias Laval</div>
                 <div style={{color:GOLD,fontWeight:700,fontSize:13.5,marginTop:1}}>@ml_padel</div>
@@ -2192,7 +2170,7 @@ function PallapShop(){
         <AnimatedSection delay={0.1}>
           <div style={{marginBottom:36,borderRadius:20,overflow:"hidden",border:`2px solid ${PALLAP_CYAN}30`,boxShadow:`0 8px 30px ${NAVY}15`}}>
             <a href={PALLAP_URL} target="_blank" rel="noopener noreferrer">
-              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP — Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}}/>
+              <img src="./Bandeau-plus-large-Pallap.png" alt="PALLAP — Partenaire officiel ML Padel" loading="lazy" style={{width:"100%",display:"block"}} width="1918" height="871"/>
             </a>
           </div>
         </AnimatedSection>
@@ -2744,7 +2722,7 @@ function CookieBanner(){
   var refuse=function(){try{localStorage.setItem("ml_cookies_consent","refused")}catch(e){}setVisible(false)};
   if(!visible) return null;
   return(
-    <div style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
+    <div className="mlp-cookie" style={{position:"fixed",bottom:0,left:0,right:0,zIndex:10000,background:NAVY,borderTop:"2px solid "+GOLD,padding:"18px 24px",display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:16,fontFamily:"'DM Sans',sans-serif",fontSize:13,color:CREAM}}>
       <p style={{flex:"1 1 400px",margin:0,lineHeight:1.5}}>
         Ce site utilise des cookies (Google Analytics, Firebase) pour améliorer votre expérience.{" "}
         <a href="#mentions-legales" style={{color:GOLD,textDecoration:"underline"}} onClick={function(){setVisible(false)}}>En savoir plus</a>
@@ -3124,7 +3102,7 @@ function Événements(){
               Cours particuliers à Saint-Pierre <strong style={{color:WHITE}}>dès le 5 octobre</strong> · du lundi au samedi, en journée
             </p>
             <img src="affiche-padel-paradise.webp" alt="Mathias Laval, coach padel diplômé d'État, rejoint Padel Paradise à Saint-Pierre — cours particuliers dès le 5 octobre"
-              loading="lazy" style={{width:"100%",maxWidth:460,height:"auto",borderRadius:18,border:`2px solid ${GOLD}55`,boxShadow:`0 14px 44px rgba(0,0,0,0.42)`}}/>
+              loading="lazy" style={{width:"100%",maxWidth:460,height:"auto",borderRadius:18,border:`2px solid ${GOLD}55`,boxShadow:`0 14px 44px rgba(0,0,0,0.42)`}} width="1080" height="1080"/>
           </div>
         </AnimatedSection>
         <AnimatedSection>
