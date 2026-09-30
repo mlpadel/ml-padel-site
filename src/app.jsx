@@ -3149,7 +3149,7 @@ function BottomNav(){
     <nav className="bottomnav" aria-label="Navigation rapide">
       {link(items[0])}
       {link(items[1])}
-      <a className="bn-a bn-fab" href="#tarifs" aria-label="Réserver un cours">
+      <a className="bn-a bn-fab" href="#disponibilites" aria-label="Voir mes créneaux disponibles">
         <span className="bn-circ"><img src="mypadel-racket.svg" alt="" width="64" height="64"/></span><span className="bn-lbl">RÉSERVER</span>
       </a>
       {link(items[2])}
