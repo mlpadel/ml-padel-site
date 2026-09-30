@@ -963,21 +963,25 @@ function Disponibilites(){
   );
 }
 
-/* ─── Pack 10 heures : l'offre d'octobre, mise à la une ─── */
+/* ─── Pack 10 heures : l'offre de lancement Padel Paradise, mise à la une ─── */
 function PackOctobre(){
-  /* Tarifs heures creuses de la grille, remisés de 20 % sur 10 heures. */
+  /* Tarifs heures creuses de la grille (60/70/75/80 €), remisés de 20 % sur 10 heures. */
   const packs=[
     {nom:"Individuel",joueurs:"1 joueur", pack:480,plein:600,parJoueur:48},
     {nom:"Duo",       joueurs:"2 joueurs",pack:560,plein:700,parJoueur:28},
     {nom:"Trio",      joueurs:"3 joueurs",pack:600,plein:750,parJoueur:20},
     {nom:"Quatuor",   joueurs:"4 joueurs",pack:640,plein:800,parJoueur:16},
   ];
+  /* Chaque formule ouvre WhatsApp avec son propre message déjà rédigé. */
+  const message=p=>`Bonjour Mathias, je suis intéressé(e) par le Pack 10 heures ${p.nom} `
+    +`(${p.joueurs}) à ${p.pack} € au lieu de ${p.plein} €, soit ${p.parJoueur} € de l'heure par joueur. `
+    +`Offre de lancement Padel Paradise. Peut-on en parler ? 🎾`;
   return(
     <section id="pack" style={{
       padding:"72px 24px",position:"relative",zIndex:1,scrollMarginTop:92,
       background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
     }}>
-      <div style={{maxWidth:900,margin:"0 auto",textAlign:"center"}}>
+      <div style={{maxWidth:820,margin:"0 auto",textAlign:"center"}}>
         <AnimatedSection>
           <div style={{
             display:"inline-flex",alignItems:"center",gap:8,
@@ -987,72 +991,82 @@ function PackOctobre(){
           }}>
             <span style={{fontSize:16}}>⭐</span>
             <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:GOLD_PALE,textTransform:"uppercase"}}>
-              À la une · Offre d'octobre
+              Offre de lancement · Padel Paradise
             </span>
           </div>
           <h2 style={{
-            fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",
-            fontWeight:900,color:WHITE,marginBottom:14,lineHeight:1.12,
+            fontFamily:"'Playfair Display',serif",fontSize:"clamp(32px,6.4vw,54px)",
+            fontWeight:900,color:WHITE,lineHeight:1.04,
           }}>
             Pack <span style={{color:GOLD}}>10 heures</span>
           </h2>
+          <p style={{color:`${CREAM}b0`,fontSize:"clamp(14px,2.8vw,19px)",fontWeight:700,marginTop:10}}>
+            Individuel ou collectif · Saison 2026-2027
+          </p>
           <div style={{
-            display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-            color:NAVY,fontWeight:900,fontSize:"clamp(15px,2.6vw,19px)",
-            borderRadius:50,padding:"12px 28px",marginBottom:30,
+            fontFamily:"'Playfair Display',serif",fontSize:"clamp(82px,17vw,150px)",
+            fontWeight:900,color:GOLD,lineHeight:.9,letterSpacing:"-0.035em",marginTop:22,
           }}>
-            −20 % sur tous les formats
+            −20<span style={{marginLeft:"0.07em"}}>%</span>
           </div>
+          <p style={{
+            color:`${CREAM}8a`,fontSize:"clamp(12px,2.4vw,17px)",fontWeight:800,
+            letterSpacing:2,textTransform:"uppercase",marginTop:10,marginBottom:34,
+          }}>
+            sur votre Pack 10H
+          </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.1}>
-          <div style={{display:"flex",flexDirection:"column",gap:10,textAlign:"left",
-            marginBottom:28,maxWidth:720,marginLeft:"auto",marginRight:"auto"}}>
+          <div style={{display:"flex",flexDirection:"column",gap:11,textAlign:"left"}}>
             {packs.map(p=>(
-              <div key={p.nom} className="pack-ligne" style={{
-                background:`${CREAM}12`,border:`1.5px solid ${GOLD}40`,borderRadius:18,
-                padding:"16px 22px",display:"flex",alignItems:"center",gap:16,
+              <a key={p.nom} href={wa(message(p))} target="_blank" rel="noopener noreferrer"
+                className="pack-ligne" style={{
+                background:`${CREAM}14`,border:`2px solid ${GOLD}4d`,borderRadius:20,
+                padding:"18px 22px",display:"flex",alignItems:"center",gap:14,
+                textDecoration:"none",transition:"background 0.25s ease,border-color 0.25s ease",
               }}>
-                <div style={{flex:"1 1 140px",minWidth:0}}>
-                  <div style={{color:WHITE,fontWeight:900,fontSize:"clamp(17px,2.6vw,21px)"}}>{p.nom}</div>
-                  <div style={{color:`${CREAM}80`,fontWeight:600,fontSize:13}}>{p.joueurs}</div>
+                <div style={{flex:"1 1 110px",minWidth:0}}>
+                  <div style={{color:WHITE,fontWeight:900,fontSize:"clamp(21px,4vw,32px)",lineHeight:1.05}}>{p.nom}</div>
+                  <div style={{color:`${CREAM}85`,fontWeight:600,fontSize:"clamp(12px,2.2vw,16px)",marginTop:2}}>{p.joueurs}</div>
                 </div>
-                <div style={{flex:"0 0 auto",textAlign:"center",whiteSpace:"nowrap"}}>
-                  <span style={{color:WHITE,fontWeight:900,fontSize:"clamp(19px,3.2vw,25px)"}}>{p.pack} €</span>
-                  <s style={{color:`${CREAM}70`,fontWeight:600,fontSize:14,marginLeft:9}}>{p.plein} €</s>
+                <div style={{flex:"0 0 33%",textAlign:"center",whiteSpace:"nowrap"}}>
+                  <div style={{fontFamily:"'Playfair Display',serif",color:WHITE,fontWeight:900,
+                    fontSize:"clamp(32px,7vw,56px)",lineHeight:1,letterSpacing:"-0.02em"}}>{p.pack} €</div>
+                  <s style={{display:"block",color:`${CREAM}66`,fontWeight:600,
+                    fontSize:"clamp(13px,2.4vw,19px)",marginTop:3}}>{p.plein} €</s>
                 </div>
-                <div style={{flex:"0 0 118px",textAlign:"right",whiteSpace:"nowrap"}}>
+                <div style={{flex:"0 0 24%",textAlign:"right",whiteSpace:"nowrap"}}>
                   <div style={{fontFamily:"'Playfair Display',serif",color:GOLD,fontWeight:900,
-                    fontSize:"clamp(20px,3.4vw,27px)",lineHeight:1}}>{p.parJoueur} €</div>
-                  <div style={{color:`${CREAM}75`,fontWeight:700,fontSize:10,letterSpacing:1,
-                    textTransform:"uppercase",marginTop:3}}>par joueur / h</div>
+                    fontSize:"clamp(29px,6.4vw,52px)",lineHeight:1,letterSpacing:"-0.02em"}}>{p.parJoueur} €</div>
+                  <div style={{color:`${CREAM}80`,fontWeight:700,fontSize:10,letterSpacing:1.2,
+                    textTransform:"uppercase",marginTop:4}}>l'heure</div>
                 </div>
-              </div>
+                <span aria-hidden="true" style={{
+                  flex:"0 0 auto",width:34,height:34,borderRadius:"50%",
+                  border:`2px solid ${GOLD}`,color:GOLD,fontWeight:900,fontSize:16,
+                  display:"flex",alignItems:"center",justifyContent:"center",
+                }}>→</span>
+              </a>
             ))}
           </div>
+          <p style={{color:`${CREAM}90`,fontSize:13.5,marginTop:16}}>
+            Touche ta formule pour m'écrire sur WhatsApp — le message est déjà prêt.
+          </p>
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
           <div style={{
-            background:`${CREAM}0f`,border:`1px solid ${GOLD}33`,borderRadius:18,
-            padding:"20px 24px",textAlign:"left",marginBottom:26,
+            display:"inline-block",border:`2px solid ${GOLD}80`,borderRadius:50,
+            padding:"13px 30px",marginTop:30,
+            color:GOLD_PALE,fontWeight:800,fontSize:"clamp(12px,2.4vw,16px)",
+            letterSpacing:1.6,textTransform:"uppercase",
           }}>
-            <p style={{color:`${CREAM}dd`,fontSize:14.5,lineHeight:1.8,margin:0}}>
-              <b style={{color:GOLD}}>Paiement en une seule fois</b> — c'est l'engagement qui fait le tarif.<br/>
-              <b style={{color:GOLD}}>À souscrire en octobre</b> — l'offre s'arrête le 31 octobre.<br/>
-              <b style={{color:GOLD}}>Valable toute la saison</b> 2026-2027 — aucune pression pour consommer.
-            </p>
+            Heures creuses uniquement
           </div>
-          <a href="#contact" style={{
-            display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
-            color:NAVY,fontWeight:800,fontSize:15,textDecoration:"none",
-            padding:"15px 34px",borderRadius:50,boxShadow:`0 8px 26px ${GOLD}35`,
-          }}>
-            Je réserve mon pack →
-          </a>
-          <p style={{color:`${CREAM}70`,fontSize:12,lineHeight:1.6,marginTop:20}}>
-            Heures creuses 7h – 16h30 · un pack vaut pour un format · non cumulable avec une autre
-            promotion · heures utilisables jusqu'au 31 août 2027.
+          <p style={{color:`${CREAM}70`,fontSize:12.5,lineHeight:1.7,marginTop:22}}>
+            7h – 16h30 · paiement en une seule fois · un pack vaut pour un format ·
+            heures utilisables jusqu'au 31 août 2027.
           </p>
         </AnimatedSection>
       </div>
