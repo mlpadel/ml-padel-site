@@ -56,13 +56,33 @@
   },
   "sport": "Padel",
   "image": "https://www.mlpadel.fr/LOGO%20ML%20PADEL%202025%20(1).png",
-  "priceRange": "20€ - 150€",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "07:00",
-    "closes": "21:00"
-  },
+  "priceRange": "20€ - 750€",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Thursday"],
+      "opens": "07:00",
+      "closes": "21:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Wednesday"],
+      "opens": "07:00",
+      "closes": "16:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Friday"],
+      "opens": "07:00",
+      "closes": "12:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Saturday"],
+      "opens": "09:00",
+      "closes": "13:00"
+    }
+  ],
   "sameAs": [
     "https://www.instagram.com/ml_padel/"
   ],
@@ -70,20 +90,51 @@
     {
       "@type": "Offer",
       "name": "Cours individuel",
-      "price": "50",
-      "priceCurrency": "EUR"
+      "price": "60",
+      "priceCurrency": "EUR",
+      "description": "1 heure, 1 joueur, en heures creuses"
     },
     {
       "@type": "Offer",
-      "name": "Cours collectif",
-      "price": "30",
-      "priceCurrency": "EUR"
+      "name": "Cours collectif Duo",
+      "price": "70",
+      "priceCurrency": "EUR",
+      "description": "1 heure, 2 joueurs, soit 35 € par joueur"
+    },
+    {
+      "@type": "Offer",
+      "name": "Cours collectif Trio",
+      "price": "75",
+      "priceCurrency": "EUR",
+      "description": "1 heure, 3 joueurs, soit 25 € par joueur"
+    },
+    {
+      "@type": "Offer",
+      "name": "Cours collectif Quatuor",
+      "price": "80",
+      "priceCurrency": "EUR",
+      "description": "1 heure, 4 joueurs, soit 20 € par joueur"
     },
     {
       "@type": "Offer",
       "name": "Stage vacances",
-      "price": "150",
-      "priceCurrency": "EUR"
+      "price": "125",
+      "priceCurrency": "EUR",
+      "description": "5 séances d'1h30 sur une semaine, par joueur"
+    },
+    {
+      "@type": "Offer",
+      "name": "Académie - engagement annuel",
+      "price": "750",
+      "priceCurrency": "EUR",
+      "description": "28 séances de septembre à juin, par joueur"
+    },
+    {
+      "@type": "Offer",
+      "name": "Académie - engagement semestriel",
+      "price": "420",
+      "priceCurrency": "EUR",
+      "description": "14 séances sur un semestre, par joueur"
     }
   ]
 }
