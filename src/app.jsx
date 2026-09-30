@@ -1067,7 +1067,8 @@ function PackOctobre(){
             Heures creuses uniquement
           </div>
           <p style={{color:`${CREAM}70`,fontSize:12.5,lineHeight:1.7,marginTop:22}}>
-            7h – 16h30 · paiement en une seule fois · un pack vaut pour un format ·
+            Lun – Jeu 7h – 16h30 · Ven 7h – 12h30 · Sam 9h – 13h<br/>
+            Paiement en une seule fois · un pack vaut pour un format ·
             heures utilisables jusqu'au 31 août 2027.
           </p>
         </AnimatedSection>
