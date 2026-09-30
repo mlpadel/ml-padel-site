@@ -3491,6 +3491,7 @@ function StageJuilletForm(){
   const[success,setSuccess]=useState(false);
   const[error,setError]=useState("");
   const[bloque,setBloque]=useState(false);
+  const[dejaEnvoye,setDejaEnvoye]=useState(false);
 
   const selectedOffre=offres.find(o=>o.id===form.offre);
 
@@ -3502,11 +3503,37 @@ function StageJuilletForm(){
       +"Écris ou appelle Mathias au 0692 62 73 72 pour qu'il vérifie.");
   };
 
+  /* Mémoire d'envoi, côté navigateur.
+     Fermer le bouton ne protège que la page en cours : un rechargement remet
+     tout à zéro et le formulaire repart. On garde donc une trace locale de ce
+     qui vient d'être envoyé, pour reconnaître un renvoi à l'identique. */
+  const CLE_ENVOI="mlp_stage_envoi";
+  const FENETRE_MS=30*60*1000;
+  const empreinte=()=>[form.email.trim().toLowerCase(),
+    selectedOffre?selectedOffre.label:"",form.semaine,form.creneau.join(", ")].join("|");
+  const lireEnvoi=()=>{
+    try{
+      const b=JSON.parse(localStorage.getItem(CLE_ENVOI)||"null");
+      if(b&&b.cle===empreinte()&&Date.now()-b.ts<FENETRE_MS) return b;
+    }catch(e){/* navigation privée, stockage bloqué : on continue sans */}
+    return null;
+  };
+  const noterEnvoi=()=>{
+    try{localStorage.setItem(CLE_ENVOI,JSON.stringify({cle:empreinte(),ts:Date.now()}))}
+    catch(e){/* idem */}
+  };
+
   const handleSubmit=async(e)=>{
     if(document.getElementById("hp-stage")&&document.getElementById("hp-stage").value)return;
     e.preventDefault();
     if(!form.nom||!form.prenom||!form.email||!form.tel||!form.offre||!form.creneau.length||!form.semaine){
       setError("Merci de remplir tous les champs obligatoires.");return;
+    }
+    /* Même demande déjà partie il y a moins de 30 min, depuis ce navigateur :
+       on affiche la confirmation sans rappeler le script. */
+    if(lireEnvoi()){setDejaEnvoye(true);setSuccess(true);return}
+    if(typeof navigator!=="undefined"&&navigator.onLine===false){
+      setError("Tu sembles hors connexion. Vérifie ton réseau puis réessaie.");return;
     }
     setSending(true);setError("");
     try{
@@ -3520,6 +3547,9 @@ function StageJuilletForm(){
         groupe:form.groupe,
         attentes:form.commentaire,
       });
+      /* Noté avant d'attendre la réponse : dès que la requête part, le script
+         peut l'avoir traitée même si rien ne nous revient. */
+      noterEnvoi();
       const r=await fetch(WALLET_API+"?"+params.toString(),{redirect:"follow"});
       const d=await r.json();
       /* stage_inscription renvoie {status:"ok"}, mais d'autres actions du même
@@ -3548,7 +3578,9 @@ function StageJuilletForm(){
             Pré-inscription <span style={{color:GOLD}}>enregistrée</span> !
           </h3>
           <p style={{color:TEXT_MED,fontSize:15,lineHeight:1.7,marginBottom:24}}>
-            Merci {form.prenom}, ta demande a bien été prise en compte. ✅
+            {dejaEnvoye
+              ? <>Merci {form.prenom}, cette demande était <strong>déjà enregistrée</strong> — inutile de la renvoyer. ✅</>
+              : <>Merci {form.prenom}, ta demande a bien été prise en compte. ✅</>}
           </p>
           <div style={{textAlign:"left",background:WARM_WHITE,borderRadius:14,padding:"16px 22px",marginBottom:22,border:`1px solid ${GOLD}20`}}>
             <div style={{fontSize:11,fontWeight:700,color:GOLD,letterSpacing:1.5,textTransform:"uppercase",marginBottom:8}}>Récapitulatif</div>
