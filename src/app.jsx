@@ -153,7 +153,14 @@ const fontLink = (
       .gallery-slide{aspect-ratio:3/2 !important;min-height:220px !important}
       #galerie .gallery-grid{grid-template-columns:repeat(2,1fr)!important}
     }
-  
+    /* Sous 560 px les trois colonnes du pack ne tiennent plus côte à côte :
+       le nom passe sur sa propre ligne, les deux prix se partagent la seconde. */
+    @media(max-width:560px){
+      .pack-ligne{flex-wrap:wrap!important;gap:10px!important;padding:14px 18px!important}
+      .pack-ligne>div:first-child{flex:1 1 100%!important}
+      .pack-ligne>div:nth-child(2){flex:1 1 auto!important;text-align:left!important}
+    }
+
   .hide-scrollbar::-webkit-scrollbar{display:none}
   .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
   `}
@@ -331,6 +338,7 @@ function Navbar(){
   },[]);
 
   const links=[
+    {label:"Pack 10h −20%",href:"#pack"},
     {label:"À la une",href:"#événements"},
     {label:"Tarifs",href:"#tarifs"},
     {label:"Wallet",href:"#wallet"},
@@ -950,6 +958,103 @@ function Disponibilites(){
           {affiche&&(<span>Un souci d'affichage ? <a href={lien} target="_blank" rel="noopener noreferrer" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Ouvrir le calendrier →</a> · </span>)}
           Un stage ou l'académie ? <a href="#tarifs" style={{color:GOLD,fontWeight:700,textDecoration:"none"}}>Voir toutes les formules →</a>
         </p>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Pack 10 heures : l'offre d'octobre, mise à la une ─── */
+function PackOctobre(){
+  /* Tarifs heures creuses de la grille, remisés de 20 % sur 10 heures. */
+  const packs=[
+    {nom:"Individuel",joueurs:"1 joueur", pack:480,plein:600,parJoueur:48},
+    {nom:"Duo",       joueurs:"2 joueurs",pack:560,plein:700,parJoueur:28},
+    {nom:"Trio",      joueurs:"3 joueurs",pack:600,plein:750,parJoueur:20},
+    {nom:"Quatuor",   joueurs:"4 joueurs",pack:640,plein:800,parJoueur:16},
+  ];
+  return(
+    <section id="pack" style={{
+      padding:"72px 24px",position:"relative",zIndex:1,scrollMarginTop:92,
+      background:`linear-gradient(170deg,${NAVY} 0%,${NAVY_MID} 60%,${NAVY_LIGHT} 100%)`,
+    }}>
+      <div style={{maxWidth:900,margin:"0 auto",textAlign:"center"}}>
+        <AnimatedSection>
+          <div style={{
+            display:"inline-flex",alignItems:"center",gap:8,
+            background:`${GOLD}20`,border:`1px solid ${GOLD}40`,
+            borderRadius:50,padding:"8px 20px",marginBottom:20,
+            boxShadow:`0 0 20px ${GOLD}15`,
+          }}>
+            <span style={{fontSize:16}}>⭐</span>
+            <span style={{fontSize:11,fontWeight:800,letterSpacing:2,color:GOLD_PALE,textTransform:"uppercase"}}>
+              À la une · Offre d'octobre
+            </span>
+          </div>
+          <h2 style={{
+            fontFamily:"'Playfair Display',serif",fontSize:"clamp(28px,5vw,42px)",
+            fontWeight:900,color:WHITE,marginBottom:14,lineHeight:1.12,
+          }}>
+            Pack <span style={{color:GOLD}}>10 heures</span>
+          </h2>
+          <div style={{
+            display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            color:NAVY,fontWeight:900,fontSize:"clamp(15px,2.6vw,19px)",
+            borderRadius:50,padding:"12px 28px",marginBottom:30,
+          }}>
+            −20 % sur tous les formats
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.1}>
+          <div style={{display:"flex",flexDirection:"column",gap:10,textAlign:"left",
+            marginBottom:28,maxWidth:720,marginLeft:"auto",marginRight:"auto"}}>
+            {packs.map(p=>(
+              <div key={p.nom} className="pack-ligne" style={{
+                background:`${CREAM}12`,border:`1.5px solid ${GOLD}40`,borderRadius:18,
+                padding:"16px 22px",display:"flex",alignItems:"center",gap:16,
+              }}>
+                <div style={{flex:"1 1 140px",minWidth:0}}>
+                  <div style={{color:WHITE,fontWeight:900,fontSize:"clamp(17px,2.6vw,21px)"}}>{p.nom}</div>
+                  <div style={{color:`${CREAM}80`,fontWeight:600,fontSize:13}}>{p.joueurs}</div>
+                </div>
+                <div style={{flex:"0 0 auto",textAlign:"center",whiteSpace:"nowrap"}}>
+                  <span style={{color:WHITE,fontWeight:900,fontSize:"clamp(19px,3.2vw,25px)"}}>{p.pack} €</span>
+                  <s style={{color:`${CREAM}70`,fontWeight:600,fontSize:14,marginLeft:9}}>{p.plein} €</s>
+                </div>
+                <div style={{flex:"0 0 118px",textAlign:"right",whiteSpace:"nowrap"}}>
+                  <div style={{fontFamily:"'Playfair Display',serif",color:GOLD,fontWeight:900,
+                    fontSize:"clamp(20px,3.4vw,27px)",lineHeight:1}}>{p.parJoueur} €</div>
+                  <div style={{color:`${CREAM}75`,fontWeight:700,fontSize:10,letterSpacing:1,
+                    textTransform:"uppercase",marginTop:3}}>par joueur / h</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
+
+        <AnimatedSection delay={0.2}>
+          <div style={{
+            background:`${CREAM}0f`,border:`1px solid ${GOLD}33`,borderRadius:18,
+            padding:"20px 24px",textAlign:"left",marginBottom:26,
+          }}>
+            <p style={{color:`${CREAM}dd`,fontSize:14.5,lineHeight:1.8,margin:0}}>
+              <b style={{color:GOLD}}>Paiement en une seule fois</b> — c'est l'engagement qui fait le tarif.<br/>
+              <b style={{color:GOLD}}>À souscrire en octobre</b> — l'offre s'arrête le 31 octobre.<br/>
+              <b style={{color:GOLD}}>Valable toute la saison</b> 2026-2027 — aucune pression pour consommer.
+            </p>
+          </div>
+          <a href="#contact" style={{
+            display:"inline-block",background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
+            color:NAVY,fontWeight:800,fontSize:15,textDecoration:"none",
+            padding:"15px 34px",borderRadius:50,boxShadow:`0 8px 26px ${GOLD}35`,
+          }}>
+            Je réserve mon pack →
+          </a>
+          <p style={{color:`${CREAM}70`,fontSize:12,lineHeight:1.6,marginTop:20}}>
+            Heures creuses 7h – 16h30 · un pack vaut pour un format · non cumulable avec une autre
+            promotion · heures utilisables jusqu'au 31 août 2027.
+          </p>
+        </AnimatedSection>
       </div>
     </section>
   );
@@ -3656,6 +3761,7 @@ function MLPadel(){
       <Hero/>
       <Marquee/>
       <Disponibilites/>
+      <PackOctobre/>
       <CounterStats/>
       <About/>
       <DebutantStart/>
