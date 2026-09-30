@@ -1036,11 +1036,13 @@ function PackOctobre(){
                   <s style={{display:"block",color:`${CREAM}66`,fontWeight:600,
                     fontSize:"clamp(13px,2.4vw,19px)",marginTop:3}}>{p.plein} €</s>
                 </div>
-                <div style={{flex:"0 0 24%",textAlign:"right",whiteSpace:"nowrap"}}>
+                <div style={{flex:"0 0 27%",textAlign:"right",whiteSpace:"nowrap"}}>
                   <div style={{fontFamily:"'Playfair Display',serif",color:GOLD,fontWeight:900,
-                    fontSize:"clamp(29px,6.4vw,52px)",lineHeight:1,letterSpacing:"-0.02em"}}>{p.parJoueur} €</div>
+                    fontSize:"clamp(29px,6.4vw,52px)",lineHeight:1,letterSpacing:"-0.02em"}}>
+                    {p.parJoueur} €<span style={{fontSize:"0.52em",fontWeight:800}}>/h</span>
+                  </div>
                   <div style={{color:`${CREAM}80`,fontWeight:700,fontSize:10,letterSpacing:1.2,
-                    textTransform:"uppercase",marginTop:4}}>l'heure</div>
+                    textTransform:"uppercase",marginTop:4}}>par joueur</div>
                 </div>
                 <span aria-hidden="true" style={{
                   flex:"0 0 auto",width:34,height:34,borderRadius:"50%",
