@@ -3522,15 +3522,15 @@ function StageJuilletForm(){
       });
       const r=await fetch(WALLET_API+"?"+params.toString(),{redirect:"follow"});
       const d=await r.json();
-      /* Le script répond {status:"ok"} sur certaines actions et {success:true} sur
-         d'autres. N'en accepter qu'une seule affichait une erreur alors que
-         l'inscription était bien enregistrée — et le visiteur renvoyait. */
+      /* stage_inscription renvoie {status:"ok"}, mais d'autres actions du même
+         script renvoient {success:true} : on accepte les deux par précaution. */
       if(d.status==="ok"||d.success===true||d.result==="ok"){setSuccess(true)}
       else if(d.message){setError(d.message)}
       else{bloquerRenvoi()}
     }catch(err){
-      /* La requête est partie : l'inscription est peut-être déjà passée.
-         Mieux vaut bloquer que produire un doublon. */
+      /* Cas constaté : le script enregistre et envoie les mails, mais la réponse
+         n'arrive jamais au navigateur. L'ancien message disait « Réessayez » —
+         d'où trois inscriptions identiques. On bloque désormais le renvoi. */
       bloquerRenvoi();
     }
     setSending(false);
