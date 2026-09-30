@@ -3490,8 +3490,17 @@ function StageJuilletForm(){
   const[sending,setSending]=useState(false);
   const[success,setSuccess]=useState(false);
   const[error,setError]=useState("");
+  const[bloque,setBloque]=useState(false);
 
   const selectedOffre=offres.find(o=>o.id===form.offre);
+
+  /* Réponse illisible : on ne sait pas si l'inscription est passée. On le dit et
+     on ferme le bouton, plutôt que d'inviter à un renvoi qui ferait un doublon. */
+  const bloquerRenvoi=()=>{
+    setBloque(true);
+    setError("Ta demande est peut-être déjà enregistrée : ne la renvoie pas. "
+      +"Écris ou appelle Mathias au 0692 62 73 72 pour qu'il vérifie.");
+  };
 
   const handleSubmit=async(e)=>{
     if(document.getElementById("hp-stage")&&document.getElementById("hp-stage").value)return;
@@ -3513,9 +3522,17 @@ function StageJuilletForm(){
       });
       const r=await fetch(WALLET_API+"?"+params.toString(),{redirect:"follow"});
       const d=await r.json();
-      if(d.status==="ok"){setSuccess(true)}
-      else{setError(d.message||"Erreur lors de l'inscription.")}
-    }catch(err){setError("Erreur réseau. Réessayez.")}
+      /* Le script répond {status:"ok"} sur certaines actions et {success:true} sur
+         d'autres. N'en accepter qu'une seule affichait une erreur alors que
+         l'inscription était bien enregistrée — et le visiteur renvoyait. */
+      if(d.status==="ok"||d.success===true||d.result==="ok"){setSuccess(true)}
+      else if(d.message){setError(d.message)}
+      else{bloquerRenvoi()}
+    }catch(err){
+      /* La requête est partie : l'inscription est peut-être déjà passée.
+         Mieux vaut bloquer que produire un doublon. */
+      bloquerRenvoi();
+    }
     setSending(false);
   };
 
@@ -3683,15 +3700,18 @@ function StageJuilletForm(){
 
             {error&&<p style={{color:"#e74c3c",fontSize:13,marginBottom:16,fontWeight:600}}>{error}</p>}
 
-            <button type="submit" disabled={sending} style={{
-              width:"100%",padding:"14px 0",borderRadius:50,border:"none",cursor:sending?"wait":"pointer",
+            <button type="submit" disabled={sending||bloque} style={{
+              width:"100%",padding:"14px 0",borderRadius:50,border:"none",
+              cursor:sending?"wait":(bloque?"not-allowed":"pointer"),
               background:`linear-gradient(135deg,${GOLD},${GOLD_LIGHT})`,
               color:NAVY,fontWeight:700,fontSize:15,fontFamily:"'DM Sans',sans-serif",
-              transition:"all 0.3s",opacity:sending?0.7:1,
+              transition:"all 0.3s",opacity:(sending||bloque)?0.55:1,
             }}
-            onMouseEnter={e=>{if(!sending)e.target.style.transform="scale(1.02)"}}
+            onMouseEnter={e=>{if(!sending&&!bloque)e.target.style.transform="scale(1.02)"}}
             onMouseLeave={e=>e.target.style.transform="scale(1)"}
-            >{sending?"Envoi en cours...":"Valider ma pré-inscription"}</button>
+            >{sending?"Envoi en cours..."
+              :bloque?"Vérification nécessaire — contacte Mathias"
+              :"Valider ma pré-inscription"}</button>
 
             <p style={{textAlign:"center",fontSize:11,color:TEXT_LIGHT,marginTop:12}}>
               Pré-inscription · Paiement après confirmation · Tous niveaux acceptés
