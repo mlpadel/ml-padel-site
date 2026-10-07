@@ -599,7 +599,7 @@ function About(){
   const stats=[
     {num:"500+",label:"élèves en 1 an"},
     {num:"10 ans",label:"d'expérience coaching"},
-    {num:"N°754",label:"Top 1% classement"},
+    {num:"N°749",label:"Top 1% classement"},
   ];
 
   return(
@@ -631,7 +631,7 @@ function About(){
               Mathias Laval
             </h2>
             <p style={{color:TEXT_MED,lineHeight:1.8,fontSize:15,marginBottom:20}}>
-              Joueur classé <strong>Top 1% en France</strong> (N°754 <span style={{display:"inline-flex",gap:"3px",verticalAlign:"-2px",margin:"0 4px"}}><svg width="17" height="11" viewBox="0 0 3 2" style={{borderRadius:2}}><rect width="3" height="2" fill="#fff"/><rect width="1" height="2" fill="#0055A4"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg><svg width="17" height="11" viewBox="0 0 30 20" style={{borderRadius:2}}><rect width="30" height="20" fill="#0a3d91"/><path d="M0 20 L30 6 L30 20 Z" fill="#d21034"/><path d="M0 20 L30 12 L30 15 Z" fill="#f9d616"/><path d="M0 20 L18 0 L22 0 Z" fill="#f9d616"/><path d="M0 20 L8 0 L12 0 Z" fill="#f9d616"/></svg></span> FrMF DFMP), je mets mon expertise
+              Joueur classé <strong>Top 1% en France</strong> (N°749 <span style={{display:"inline-flex",gap:"3px",verticalAlign:"-2px",margin:"0 4px"}}><svg width="17" height="11" viewBox="0 0 3 2" style={{borderRadius:2}}><rect width="3" height="2" fill="#fff"/><rect width="1" height="2" fill="#0055A4"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg><svg width="17" height="11" viewBox="0 0 30 20" style={{borderRadius:2}}><rect width="30" height="20" fill="#0a3d91"/><path d="M0 20 L30 6 L30 20 Z" fill="#d21034"/><path d="M0 20 L30 12 L30 15 Z" fill="#f9d616"/><path d="M0 20 L18 0 L22 0 Z" fill="#f9d616"/><path d="M0 20 L8 0 L12 0 Z" fill="#f9d616"/></svg></span> FrMF DFMP), je mets mon expertise
               au service de ta progression. Méthode structurée, coaching individualisé — du débutant
               au compétiteur confirmé. Base à <strong>Padel Paradise, Saint-Pierre</strong> (La Réunion).
             </p>
@@ -667,7 +667,7 @@ function About(){
             Mon <span style={{color:GOLD}}>approche</span>
           </h3>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15}}>
-            Bienvenue à toutes et à tous sur mon site ML_PADEL avec comme coach diplômé d'État depuis plus de <strong>10 ans</strong> Laval Mathias. Classé au mieux à la <strong>754ème place nationale</strong>, j'ai toujours à cœur l'enseignement et la transmission de compétences dans de nombreux domaines. Aujourd'hui c'est avec une passion immense que je me mets à votre disposition pour vous faire évoluer dans votre projet padel.
+            Bienvenue à toutes et à tous sur mon site ML_PADEL avec comme coach diplômé d'État depuis plus de <strong>10 ans</strong> Laval Mathias. Classé au mieux à la <strong>749ème place nationale</strong>, j'ai toujours à cœur l'enseignement et la transmission de compétences dans de nombreux domaines. Aujourd'hui c'est avec une passion immense que je me mets à votre disposition pour vous faire évoluer dans votre projet padel.
           </p>
           <p style={{color:TEXT_MED,lineHeight:1.9,fontSize:15,marginTop:12}}>
             Mon obsession ? Donner du <strong>sens</strong> à votre progression. Chaque exercice, chaque conseil a un objectif clair. Installé sur l'île depuis plus d'un an, je suis à votre entière disposition pour avancer <strong>ensemble</strong> vers votre objectif padelistique.
@@ -2016,7 +2016,7 @@ function InstagramSection(){
                 <div style={{color:GOLD,fontWeight:700,fontSize:13.5,marginTop:1}}>@ml_padel</div>
                 <div style={{color:`${CREAM}aa`,fontSize:13,lineHeight:1.65,marginTop:8}}>
                   🎾 Coach padel diplômé d'État<br/>
-                  🏆 N°754 FR · Top 1 %<br/>
+                  🏆 N°749 FR · Top 1 %<br/>
                   📍 Padel Paradise, Saint-Pierre
                 </div>
               </div>
