@@ -3131,10 +3131,13 @@ function BottomNav(){
   useEffect(()=>{
     const fn=()=>{
       const y=window.scrollY+170;
-      let best=items[0].id;
+      // On retient la section la plus BASSE encore au-dessus du point de
+      // lecture. Comparer les positions, et non l'ordre du tableau, rend la
+      // detection juste quel que soit l'ordre des sections dans la page.
+      let best=items[0].id,bestTop=-1;
       items.forEach(it=>{
         const el=document.getElementById(it.id);
-        if(el&&el.offsetTop<=y)best=it.id;
+        if(el&&el.offsetTop<=y&&el.offsetTop>bestTop){bestTop=el.offsetTop;best=it.id;}
       });
       setActive(best);
     };
@@ -3833,6 +3836,7 @@ function MLPadel(){
       <Marquee/>
       <Disponibilites/>
       <PackOctobre/>
+      <CoursCollectifsSection/>
       <CounterStats/>
       <About/>
       <DebutantStart/>
@@ -3849,7 +3853,6 @@ function MLPadel(){
       <TeamSection/>
       <InstagramSection/>
       <WhatsAppChannel/>
-      <CoursCollectifsSection/>
       <div style={{background:WARM_WHITE,padding:"46px 24px 4px",textAlign:"center",position:"relative",zIndex:1}}>
         <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:2.5,textTransform:"uppercase"}}>Pour aller plus loin</span>
         <p style={{color:TEXT_LIGHT,fontSize:13.5,marginTop:6}}>Ouvre ce qui t'intéresse</p>
