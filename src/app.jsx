@@ -2251,12 +2251,17 @@ function CoursCollectifsSection(){
       ..._fond("paradise-clubhouse-768w.webp","rgba(247,243,236,0.87)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
         <AnimatedSection>
-          <div style={{textAlign:"center",marginBottom:48}}>
-            <span style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:3,textTransform:"uppercase"}}>REJOIGNEZ UN GROUPE</span>
-            <h2 style={{fontSize:28,fontWeight:800,color:NAVY,marginTop:8}}>Cours <span style={{color:GOLD}}>À la carte</span></h2>
+          <div style={{textAlign:"center",marginBottom:44}}>
+            <div style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:4,textTransform:"uppercase"}}>Lundi &amp; jeudi · entre midi et deux</div>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,fontWeight:900,color:NAVY,margin:"10px 0 0",letterSpacing:1}}>La Carte</h2>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:12,margin:"14px auto 0",maxWidth:280}}>
+              <span style={{flex:1,height:1,background:`linear-gradient(90deg,transparent,${GOLD})`}}/>
+              <span style={{fontSize:15}}>🎾</span>
+              <span style={{flex:1,height:1,background:`linear-gradient(90deg,${GOLD},transparent)`}}/>
+            </div>
             <p style={{color:NAVY+"99",fontSize:15,maxWidth:560,margin:"16px auto 0",lineHeight:1.7}}>
-              Choisissez votre thème, inscrivez-vous individuellement — on forme le groupe pour vous.<br/>
-              Le cours est confirmé dès qu'un nombre minimum de joueurs est atteint (indiqué sur chaque carte).
+              Choisissez votre thème, inscrivez-vous seul — je forme le groupe.<br/>
+              Chaque séance est confirmée dès <strong style={{color:NAVY}}>3 joueurs</strong>, et limitée à 4.
             </p>
           </div>
         </AnimatedSection>
@@ -2269,24 +2274,21 @@ function CoursCollectifsSection(){
             return(
               <AnimatedSection key={ev.id}>
                 <div style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
-                  {/* Header */}
-                  <div style={{padding:"20px 24px",display:"flex",flexWrap:"wrap",gap:16,alignItems:"center",justifyContent:"space-between"}}>
-                    <div style={{flex:"1 1 200px"}}>
-                      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
-                        <span style={{fontSize:22}}>&#x1F3BE;</span>
-                        <h3 style={{margin:0,fontSize:18,fontWeight:700,color:NAVY}}>{ev.theme}</h3>
-                      </div>
-                      <div style={{display:"flex",flexWrap:"wrap",gap:8,fontSize:13,color:NAVY+"99"}}>
-                        <span>&#x1F4C5; {fmtDate(ev.date)}</span>
-                        <span>&#x23F0; {fmtH(ev.date)} — {fmtH(ev.dateFin)}</span>
-                        <span>&#x23F1;️ {ev.dureeH}h</span>
-                      </div>
-                      {ev.niveau&&(<div style={{display:"inline-block",marginTop:8,background:`${GOLD}15`,border:`1px solid ${GOLD}30`,borderRadius:20,padding:"4px 12px",fontSize:12,color:GOLD,fontWeight:600}}>{ev.niveau}</div>)}
+                  {/* La ligne de carte : le plat, les pointilles, le prix */}
+                  <div style={{padding:"22px 26px 14px"}}>
+                    <div style={{display:"flex",alignItems:"baseline",gap:10}}>
+                      <h3 style={{margin:0,fontFamily:"'Playfair Display',serif",fontSize:21,fontWeight:800,color:NAVY,textTransform:"capitalize"}}>{ev.theme}</h3>
+                      <span style={{flex:"1 1 16px",minWidth:16,borderBottom:`2px dotted ${NAVY}2e`,transform:"translateY(-5px)"}}/>
+                      <span style={{fontFamily:"'Playfair Display',serif",fontSize:23,fontWeight:800,color:NAVY,whiteSpace:"nowrap"}}>
+                        {ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}&nbsp;€
+                      </span>
                     </div>
-                    <div style={{textAlign:"center",minWidth:120}}>
-                      <div style={{fontSize:12,color:NAVY+"80",marginBottom:4}}>{ev.heureCreuse?"\u2600\uFE0F Heures creuses":"\uD83C\uDF19 Heures pleines"}</div>
-                      <div style={{fontSize:22,fontWeight:800,color:NAVY}}>{ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}{"€"}<span style={{fontSize:13,fontWeight:400}}>/pers</span></div>
-                      <div style={{fontSize:11,color:NAVY+"70"}}>{ev.maxPlaces>4?(ev.maxPlaces+" places"):("à 4 joueurs · "+ev.prixPar3+"€ à 3")}</div>
+                    <div style={{marginTop:7,fontSize:13.5,color:NAVY+"99",fontStyle:"italic",lineHeight:1.6}}>
+                      {ev.niveau?ev.niveau+" · ":""}{fmtDate(ev.date)} · {fmtH(ev.date)} — {fmtH(ev.dateFin)} · {ev.dureeH}h
+                    </div>
+                    <div style={{marginTop:6,fontSize:12,color:NAVY+"70"}}>
+                      {ev.heureCreuse?"\u2600\uFE0F heures creuses":"\uD83C\uDF19 heures pleines"}
+                      {ev.maxPlaces>4?" \u00b7 "+ev.maxPlaces+" places":" \u00b7 par personne \u00e0 4 joueurs \u00b7 "+ev.prixPar3+" \u20ac \u00e0 3"}
                     </div>
                   </div>
                   {/* Jauge */}
@@ -3122,7 +3124,7 @@ function BottomNav(){
   const items=[
     {id:"événements",icon:"⭐",label:"À la une"},
     {id:"tarifs",icon:"💶",label:"Tarifs"},
-    {id:"wallet",icon:"💳",label:"Wallet"},
+    {id:"cours-collectifs",icon:"🍽️",label:"À la carte"},
     {id:"contact",icon:"💬",label:"Contact"},
   ];
   const[active,setActive]=useState("événements");
