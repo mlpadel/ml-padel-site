@@ -2275,16 +2275,21 @@ function CoursCollectifsSection(){
               <AnimatedSection key={ev.id}>
                 <div style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
                   {/* La ligne de carte : le plat, les pointilles, le prix */}
-                  <div style={{padding:"22px 26px 14px"}}>
-                    <div style={{display:"flex",alignItems:"baseline",gap:10}}>
-                      <h3 style={{margin:0,fontFamily:"'Playfair Display',serif",fontSize:21,fontWeight:800,color:NAVY,textTransform:"capitalize"}}>{ev.theme}</h3>
-                      <span style={{flex:"1 1 16px",minWidth:16,borderBottom:`2px dotted ${NAVY}2e`,transform:"translateY(-5px)"}}/>
-                      <span style={{fontFamily:"'Playfair Display',serif",fontSize:23,fontWeight:800,color:NAVY,whiteSpace:"nowrap"}}>
+                  <div style={{padding:"24px 26px 14px"}}>
+                    <div style={{display:"flex",alignItems:"baseline",gap:10,flexWrap:"wrap"}}>
+                      <div style={{display:"flex",alignItems:"baseline",gap:11,flexWrap:"wrap",minWidth:0}}>
+                        <h3 style={{margin:0,fontFamily:"'Playfair Display',serif",fontSize:26,lineHeight:1.15,fontWeight:900,color:NAVY,textTransform:"capitalize",letterSpacing:-0.2}}>{ev.theme}</h3>
+                        {ev.niveau&&(
+                          <span style={{fontSize:14,fontWeight:700,color:GOLD,background:`${GOLD}18`,border:`1px solid ${GOLD}4d`,borderRadius:20,padding:"4px 13px",whiteSpace:"nowrap"}}>{ev.niveau}</span>
+                        )}
+                      </div>
+                      <span style={{flex:"1 1 16px",minWidth:16,borderBottom:`2px dotted ${NAVY}2e`,transform:"translateY(-6px)"}}/>
+                      <span style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:NAVY,whiteSpace:"nowrap"}}>
                         {ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}&nbsp;€
                       </span>
                     </div>
-                    <div style={{marginTop:7,fontSize:13.5,color:NAVY+"99",fontStyle:"italic",lineHeight:1.6}}>
-                      {ev.niveau?ev.niveau+" · ":""}{fmtDate(ev.date)} · {fmtH(ev.date)} — {fmtH(ev.dateFin)} · {ev.dureeH}h
+                    <div style={{marginTop:10,fontSize:14.5,color:NAVY+"aa",fontStyle:"italic",lineHeight:1.6}}>
+                      {fmtDate(ev.date)} · {fmtH(ev.date)} — {fmtH(ev.dateFin)} · {ev.dureeH}h
                     </div>
                     <div style={{marginTop:6,fontSize:12,color:NAVY+"70"}}>
                       {ev.heureCreuse?"\u2600\uFE0F heures creuses":"\uD83C\uDF19 heures pleines"}
