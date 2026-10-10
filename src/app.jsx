@@ -2405,7 +2405,7 @@ function CoursCollectifsSection(){
         {/* ── L'entête : le concept, en une respiration ── */}
         <AnimatedSection>
           <div style={{textAlign:"center",marginBottom:38}}>
-            <div style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:4,textTransform:"uppercase"}}>Lundi &amp; jeudi · entre midi et deux</div>
+            <div style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:4,textTransform:"uppercase"}}>Cours collectifs thématiques</div>
             <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,fontWeight:900,color:NAVY,margin:"10px 0 0",letterSpacing:1}}>Les cours à la carte</h2>
             <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:12,margin:"14px auto 0",maxWidth:280}}>
               <span style={{flex:1,height:1,background:`linear-gradient(90deg,transparent,${GOLD})`}}/>
@@ -2413,17 +2413,20 @@ function CoursCollectifsSection(){
               <span style={{flex:1,height:1,background:`linear-gradient(90deg,${GOLD},transparent)`}}/>
             </div>
             <p style={{color:NAVY,fontSize:17,fontWeight:700,maxWidth:600,margin:"18px auto 0",lineHeight:1.5}}>
-              Votre menu sur mesure, qui change toutes les semaines.
+              Pour bien manger entre midi et deux ?
             </p>
-            <p style={{color:NAVY+"99",fontSize:15,maxWidth:600,margin:"10px auto 0",lineHeight:1.75}}>
-              Une thématique express en 1 h, à 3 ou 4 joueurs.<br/>
-              Du panier comme au marché — et de la répétition, parce qu'on adore ça et parce qu'il n'y a pas de secret.
+            <p style={{color:NAVY+"99",fontSize:15,maxWidth:620,margin:"10px auto 0",lineHeight:1.75}}>
+              Une thématique express en 1 h, à 3 ou 4 joueurs à partir de 20 €.<br/>
+              Beaucoup de panier comme chez le primeur — et de la répétition, car on adore ça et parce qu'il n'y a pas de secret pour progresser rapidement.
+            </p>
+            <p style={{color:NAVY,fontSize:15.5,fontWeight:700,maxWidth:600,margin:"12px auto 0",lineHeight:1.6}}>
+              Viens nous rejoindre sur ta pause Dej' ! 🎾
             </p>
             <div className="cct-pills">
               <span>📅 Lundi &amp; jeudi</span>
               <span>⏱️ 1 h express</span>
               <span>👥 3 à 4 joueurs</span>
-              <span>💶 à partir de 20 €</span>
+              <span>💶 règlement sur place</span>
             </div>
           </div>
         </AnimatedSection>
