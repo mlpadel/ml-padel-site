@@ -161,6 +161,55 @@ const fontLink = (
       .pack-ligne>div:nth-child(2){flex:1 1 auto!important;text-align:left!important}
     }
 
+    /* ── Les cours à la carte : le calendrier du mois ── */
+    .cct-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:22px}
+    .cct-pills span{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#0a1628;background:rgba(255,255,255,.78);border:1px solid rgba(201,168,76,.32);border-radius:30px;padding:7px 14px}
+    .cct-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px}
+    .cct-nav button{width:34px;height:34px;flex:0 0 34px;border-radius:50%;border:1px solid rgba(10,22,40,.12);background:#fff;color:#0a1628;font-size:15px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s}
+    .cct-nav button:hover:not(:disabled){border-color:#c9a84c;background:rgba(201,168,76,.1)}
+    .cct-nav button:disabled{opacity:.25;cursor:default}
+    .cct-nav strong{font-family:'Playfair Display',serif;font-size:21px;font-weight:900;color:#0a1628;text-transform:capitalize;min-width:168px;text-align:center;letter-spacing:.3px}
+    .cct-dow,.cct-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+    .cct-dow{margin-bottom:7px}
+    .cct-dow span{text-align:center;font-size:10px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;color:rgba(10,22,40,.38)}
+    .cct-cell{min-height:76px;border-radius:10px;padding:5px 4px;display:flex;flex-direction:column;gap:4px;background:#fbf9f5;border:1px solid rgba(10,22,40,.05);transition:border-color .2s,box-shadow .2s,transform .2s}
+    .cct-cell.hors{background:transparent;border-color:transparent}
+    .cct-cell.dispo{background:#fff;border-color:rgba(201,168,76,.3);cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .cct-cell.dispo:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(10,22,40,.1)}
+    .cct-cell.sel{border-color:#c9a84c;box-shadow:0 0 0 2px rgba(201,168,76,.3)}
+    .cct-num{font-size:11.5px;font-weight:700;line-height:1.5;padding-left:2px;color:rgba(10,22,40,.32)}
+    .cct-cell.dispo .cct-num{color:#0a1628}
+    .cct-num i{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;border:1.5px solid #c9a84c;color:#0a1628;font-style:normal;font-weight:900}
+    .cct-chip{position:relative;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:800;color:#fff;text-align:left;letter-spacing:.2px;line-height:1.35}
+    /* l'ellipse est portée par le texte, pas par la pastille : sinon elle
+       rognerait le point d'exclamation posé dans le coin. */
+    .cct-chip .cct-txt{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cct-chip.der .cct-txt{padding-right:9px}
+    .cct-chip .cct-th{font-weight:600;opacity:.92}
+    .cct-bang{position:absolute;top:-6px;right:-5px;width:15px;height:15px;border-radius:50%;background:#e67e22;color:#fff;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}
+    .cct-leg{display:flex;flex-wrap:wrap;gap:9px 16px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(10,22,40,.08)}
+    .cct-leg span{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:rgba(10,22,40,.62)}
+    .cct-leg i{width:11px;height:11px;border-radius:3px;display:inline-block;flex:0 0 11px}
+    .cct-leg b{width:15px;height:15px;flex:0 0 15px;border-radius:50%;background:#e67e22;color:#fff;font-size:10px;font-weight:900;display:inline-flex;align-items:center;justify-content:center}
+    /* sous 760 px la case est trop étroite pour le thème : la couleur du
+       niveau et l'horaire suffisent, le détail arrive dans le panneau. */
+    @media(max-width:760px){
+      .cct-chip{text-align:center;padding:3px 1px}
+      .cct-chip .cct-th{display:none}
+    }
+    @media(max-width:600px){
+      .cct-dow,.cct-grid{gap:4px}
+      .cct-cell{min-height:60px;padding:3px 2px;border-radius:8px;gap:3px}
+      .cct-num{font-size:10.5px;line-height:1.3;padding-left:1px}
+      .cct-num i{width:17px;height:17px}
+      .cct-chip{font-size:8.5px;padding:2px 0;border-radius:5px}
+      .cct-chip.full{font-size:7px;letter-spacing:-.1px}
+      .cct-chip.der .cct-txt{padding-right:6px}
+      .cct-bang{width:13px;height:13px;top:-5px;right:-4px;font-size:9px}
+      .cct-dow span{font-size:9px;letter-spacing:.4px}
+      .cct-nav strong{font-size:19px;min-width:150px}
+    }
+
   .hide-scrollbar::-webkit-scrollbar{display:none}
   .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
   `}
@@ -2207,6 +2256,40 @@ function MiniStageForm(){
   );
 }
 
+/* ── Les cours à la carte : la lecture des niveaux ──
+   Le niveau est du texte libre, saisi dans le titre de l'événement agenda.
+   On le ramène à l'une des cinq familles pour en faire une couleur, et la
+   légende du calendrier n'affiche que les familles réellement présentes :
+   pas de sapin de Noël quand il n'y a que deux niveaux à l'affiche. */
+const CCT_NIV=[
+  {k:"d",label:"Débutant · niv 1-2",c:"#5a9e6f"},
+  {k:"i",label:"Intermédiaire · niv 2-3",c:"#3e7cb1"},
+  {k:"a",label:"Avancé · niv 3-4",c:"#8c6bb1"},
+  {k:"c",label:"Compétition · niv 4-5",c:"#b4533e"},
+  {k:"t",label:"Tous niveaux",c:GOLD},
+];
+const CCT_GRIS="#9aa3ad";
+function cctNiv(s){
+  const t=String(s||"").toLowerCase();
+  if(!t)return CCT_NIV[4];
+  if(t.indexOf("tous")!==-1||t.indexOf("ouvert")!==-1)return CCT_NIV[4];
+  if(t.indexOf("compét")!==-1||t.indexOf("compet")!==-1)return CCT_NIV[3];
+  if(t.indexOf("avanc")!==-1)return CCT_NIV[2];
+  if(t.indexOf("interm")!==-1||t.indexOf("confirm")!==-1)return CCT_NIV[1];
+  if(t.indexOf("débu")!==-1||t.indexOf("debu")!==-1||t.indexOf("initi")!==-1||t.indexOf("faux")!==-1)return CCT_NIV[0];
+  const n=(t.match(/[1-5]/g)||[]).map(Number);
+  if(!n.length)return CCT_NIV[4];
+  const mx=Math.max.apply(null,n);
+  return mx>=5?CCT_NIV[3]:mx===4?CCT_NIV[2]:mx===3?CCT_NIV[1]:CCT_NIV[0];
+}
+const CCT_JOURS=["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+const CCT_MOIS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const CCT_DOW=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+const cctCle=(d)=>d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);
+/* « bandeja & sortie de vitre » → « Bandeja & sortie de vitre ».
+   capitalize en CSS écrivait « Sortie De Vitre » : une seule majuscule suffit. */
+const cctCap=(s)=>{const t=String(s||"").trim();return t?t.charAt(0).toUpperCase()+t.slice(1):t;};
+
 function CoursCollectifsSection(){
   const[events,setEvents]=React.useState([]);
   const[loading,setLoading]=React.useState(true);
@@ -2214,6 +2297,10 @@ function CoursCollectifsSection(){
   const[formData,setFormData]=React.useState({prenom:"",email:"",telephone:"",niveau:"",commentaire:""});
   const[submitting,setSubmitting]=React.useState(false);
   const[feedback,setFeedback]=React.useState(null);
+  const[mois,setMois]=React.useState(null);      // 1er du mois affiché
+  const[jourSel,setJourSel]=React.useState(null); // "AAAA-MM-JJ"
+  const amorce=React.useRef(false);
+  const panneau=React.useRef(null);
 
   React.useEffect(()=>{
     fetch(CCT_API+"?action=events")
@@ -2222,8 +2309,56 @@ function CoursCollectifsSection(){
       .catch(()=>setLoading(false));
   },[]);
 
-  const fmtDate=(iso)=>{const d=new Date(iso);const j=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];const m=["jan","fév","mar","avr","mai","juin","juil","août","sep","oct","nov","déc"];return j[d.getDay()]+" "+d.getDate()+" "+m[d.getMonth()];};
+  // Les séances, triées. L'API n'en renvoie que les trente prochains jours :
+  // le calendrier couvre donc un ou deux mois, jamais plus.
+  const seances=React.useMemo(
+    ()=>events.slice().sort((a,b)=>new Date(a.date)-new Date(b.date)),[events]);
+
+  const parJour=React.useMemo(()=>{
+    const m={};
+    seances.forEach(e=>{const k=cctCle(new Date(e.date));(m[k]=m[k]||[]).push(e);});
+    return m;
+  },[seances]);
+
+  const bornes=React.useMemo(()=>{
+    if(!seances.length)return null;
+    const a=new Date(seances[0].date),b=new Date(seances[seances.length-1].date);
+    return{min:a.getFullYear()*12+a.getMonth(),max:b.getFullYear()*12+b.getMonth()};
+  },[seances]);
+
+  // On ouvre sur le mois de la prochaine séance, et on la présélectionne :
+  // le panneau n'est jamais vide à l'arrivée. L'amorce ne joue qu'une fois —
+  // une inscription réécrit « events », elle ne doit pas rejouer le mois.
+  React.useEffect(()=>{
+    if(amorce.current||!seances.length)return;
+    amorce.current=true;
+    const d=new Date(seances[0].date);
+    setMois(new Date(d.getFullYear(),d.getMonth(),1));
+    setJourSel(cctCle(d));
+  },[seances]);
+
+  const cases=React.useMemo(()=>{
+    if(!mois)return[];
+    const y=mois.getFullYear(),m=mois.getMonth();
+    const decalage=(new Date(y,m,1).getDay()+6)%7; // semaine qui commence le lundi
+    const nbJours=new Date(y,m+1,0).getDate();
+    const out=[];
+    for(let i=0;i<decalage;i++)out.push(null);
+    for(let j=1;j<=nbJours;j++)out.push(new Date(y,m,j));
+    while(out.length%7)out.push(null);
+    return out;
+  },[mois]);
+
+  const nivPresents=React.useMemo(()=>{
+    const vus=[],out=[];
+    seances.forEach(e=>{const n=cctNiv(e.niveau);if(vus.indexOf(n.k)===-1){vus.push(n.k);out.push(n);}});
+    return out;
+  },[seances]);
+  const aComplet=seances.some(e=>e.complet);
+  const aDerniere=seances.some(e=>!e.complet&&e.maxPlaces-e.nbInscrits===1);
+
   const fmtH=(iso)=>{const d=new Date(iso);return d.getHours()+"h"+(d.getMinutes()<10?"0":"")+d.getMinutes();};
+  const fmtHc=(iso)=>{const d=new Date(iso),m=d.getMinutes();return d.getHours()+"h"+(m?("0"+m).slice(-2):"");};
   const doSubmit=(evId)=>{
     if(!formData.prenom||!formData.email||!formData.telephone){setFeedback({t:"e",m:"Prénom, email et téléphone requis"});return;}
     setSubmitting(true);setFeedback(null);
@@ -2245,121 +2380,225 @@ function CoursCollectifsSection(){
     }).catch(()=>{setSubmitting(false);setFeedback({t:"e",m:"Erreur réseau"});});
   };
 
+  const choisir=(d)=>{
+    setJourSel(cctCle(d));setOpenForm(null);setFeedback(null);
+    setTimeout(()=>{if(panneau.current&&panneau.current.scrollIntoView)
+      panneau.current.scrollIntoView({behavior:"smooth",block:"nearest"});},70);
+  };
+  const glisser=(pas)=>{
+    if(!mois)return;
+    setMois(new Date(mois.getFullYear(),mois.getMonth()+pas,1));
+  };
+
   if(loading||events.length===0)return null;
+
+  const duJour=jourSel?(parJour[jourSel]||[]):[];
+  const dSel=jourSel?new Date(+jourSel.slice(0,4),+jourSel.slice(5,7)-1,+jourSel.slice(8,10)):null;
+  const index=mois?mois.getFullYear()*12+mois.getMonth():0;
+  const auj=cctCle(new Date());
+
   return(
     <section id="cours-collectifs" style={{padding:"80px 24px",position:"relative",zIndex:1,background:SAND,
       ..._fond("paradise-clubhouse-768w.webp","rgba(247,243,236,0.87)")}}>
       <div style={{maxWidth:900,margin:"0 auto"}}>
+
+        {/* ── L'entête : le concept, en une respiration ── */}
         <AnimatedSection>
-          <div style={{textAlign:"center",marginBottom:44}}>
+          <div style={{textAlign:"center",marginBottom:38}}>
             <div style={{color:GOLD,fontSize:11,fontWeight:700,letterSpacing:4,textTransform:"uppercase"}}>Lundi &amp; jeudi · entre midi et deux</div>
-            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,fontWeight:900,color:NAVY,margin:"10px 0 0",letterSpacing:1}}>La Carte</h2>
+            <h2 style={{fontFamily:"'Playfair Display',serif",fontSize:40,fontWeight:900,color:NAVY,margin:"10px 0 0",letterSpacing:1}}>Les cours à la carte</h2>
             <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:12,margin:"14px auto 0",maxWidth:280}}>
               <span style={{flex:1,height:1,background:`linear-gradient(90deg,transparent,${GOLD})`}}/>
               <span style={{fontSize:15}}>🎾</span>
               <span style={{flex:1,height:1,background:`linear-gradient(90deg,${GOLD},transparent)`}}/>
             </div>
-            <p style={{color:NAVY+"99",fontSize:15,maxWidth:560,margin:"16px auto 0",lineHeight:1.7}}>
-              Choisissez votre thème, inscrivez-vous seul — je forme le groupe.<br/>
-              Chaque séance est confirmée dès <strong style={{color:NAVY}}>3 joueurs</strong>, et limitée à 4.
+            <p style={{color:NAVY,fontSize:17,fontWeight:700,maxWidth:600,margin:"18px auto 0",lineHeight:1.5}}>
+              Votre menu sur mesure, qui change toutes les semaines.
             </p>
+            <p style={{color:NAVY+"99",fontSize:15,maxWidth:600,margin:"10px auto 0",lineHeight:1.75}}>
+              Une thématique express en 1 h, à 3 ou 4 joueurs.<br/>
+              Du panier comme au marché — et de la répétition, parce qu'on adore ça et parce qu'il n'y a pas de secret.
+            </p>
+            <div className="cct-pills">
+              <span>📅 Lundi &amp; jeudi</span>
+              <span>⏱️ 1 h express</span>
+              <span>👥 3 à 4 joueurs</span>
+              <span>💶 à partir de 20 €</span>
+            </div>
           </div>
         </AnimatedSection>
-        <div style={{display:"flex",flexDirection:"column",gap:20}}>
-          {events.map(ev=>{
-            const isOpen=openForm===ev.id;
-            const left=ev.maxPlaces-ev.nbInscrits;
-            const pct=(ev.nbInscrits/ev.maxPlaces)*100;
-            const minToValidate=Math.min(ev.maxPlaces,Math.max(3,Math.ceil(ev.maxPlaces*0.75)));
-            return(
-              <AnimatedSection key={ev.id}>
-                <div style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
-                  {/* La ligne de carte : le plat, les pointilles, le prix */}
-                  <div style={{padding:"24px 26px 14px"}}>
-                    <div style={{display:"flex",alignItems:"baseline",gap:10,flexWrap:"wrap"}}>
-                      <div style={{display:"flex",alignItems:"baseline",gap:11,flexWrap:"wrap",minWidth:0}}>
-                        <h3 style={{margin:0,fontFamily:"'Playfair Display',serif",fontSize:26,lineHeight:1.15,fontWeight:900,color:NAVY,textTransform:"capitalize",letterSpacing:-0.2}}>{ev.theme}</h3>
-                        {ev.niveau&&(
-                          <span style={{fontSize:14,fontWeight:700,color:GOLD,background:`${GOLD}18`,border:`1px solid ${GOLD}4d`,borderRadius:20,padding:"4px 13px",whiteSpace:"nowrap"}}>{ev.niveau}</span>
+
+        {/* ── Le calendrier ── */}
+        <AnimatedSection>
+          <div style={{background:"#fff",borderRadius:18,border:`1px solid ${GOLD}33`,boxShadow:"0 4px 24px rgba(10,22,40,0.07)",padding:"18px 16px 16px"}}>
+            <div className="cct-nav">
+              <button onClick={()=>glisser(-1)} disabled={!bornes||index<=bornes.min} aria-label="Mois précédent">‹</button>
+              <strong>{mois?CCT_MOIS[mois.getMonth()]+" "+mois.getFullYear():""}</strong>
+              <button onClick={()=>glisser(1)} disabled={!bornes||index>=bornes.max} aria-label="Mois suivant">›</button>
+            </div>
+            <div className="cct-dow">{CCT_DOW.map(j=><span key={j}>{j}</span>)}</div>
+            <div className="cct-grid">
+              {cases.map((d,i)=>{
+                if(!d)return<div key={"v"+i} className="cct-cell hors"/>;
+                const k=cctCle(d);
+                const liste=parJour[k]||[];
+                const cls="cct-cell"+(liste.length?" dispo":"")+(k===jourSel&&liste.length?" sel":"");
+                return(
+                  <div key={k} className={cls}
+                    onClick={liste.length?()=>choisir(d):undefined}
+                    role={liste.length?"button":undefined}
+                    tabIndex={liste.length?0:undefined}
+                    onKeyDown={liste.length?(e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choisir(d);}}):undefined}>
+                    <div className="cct-num">{k===auj?<i>{d.getDate()}</i>:d.getDate()}</div>
+                    {liste.map(ev=>{
+                      const n=cctNiv(ev.niveau);
+                      const reste=ev.maxPlaces-ev.nbInscrits;
+                      return(
+                        <div key={ev.id} className={"cct-chip"+(ev.complet?" full":"")+(!ev.complet&&reste===1?" der":"")}
+                          style={{background:ev.complet?CCT_GRIS:n.c}}
+                          title={cctCap(ev.theme)+" · "+(ev.niveau||"tous niveaux")+" · "+fmtH(ev.date)}>
+                          <span className="cct-txt">
+                            {ev.complet?"COMPLET":fmtHc(ev.date)}
+                            <span className="cct-th"> · {cctCap(ev.theme)}</span>
+                          </span>
+                          {!ev.complet&&reste===1&&<span className="cct-bang">!</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="cct-leg">
+              {nivPresents.map(n=><span key={n.k}><i style={{background:n.c}}/>{n.label}</span>)}
+              {aComplet&&<span><i style={{background:CCT_GRIS}}/>Complet</span>}
+              {aDerniere&&<span><b>!</b>Dernière place</span>}
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* ── Le panneau du jour choisi ── */}
+        <div ref={panneau} style={{marginTop:28,scrollMarginTop:100}}>
+          {duJour.length===0?(
+            <div style={{textAlign:"center",padding:"28px 22px",borderRadius:16,border:`1px dashed ${NAVY}1f`,color:NAVY+"80",fontSize:14,lineHeight:1.6,background:"rgba(255,255,255,.5)"}}>
+              Cliquez une date du calendrier pour découvrir le thème, le niveau et vous inscrire.
+            </div>
+          ):(
+            <React.Fragment>
+              <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:14}}>
+                <span style={{flex:"0 0 auto",fontFamily:"'Playfair Display',serif",fontSize:20,fontWeight:900,color:NAVY}}>
+                  {dSel?CCT_JOURS[dSel.getDay()]+" "+dSel.getDate()+" "+CCT_MOIS[dSel.getMonth()]:""}
+                </span>
+                <span style={{flex:1,height:1,background:`linear-gradient(90deg,${GOLD}80,transparent)`}}/>
+                <span style={{flex:"0 0 auto",fontSize:10.5,fontWeight:800,color:GOLD,letterSpacing:1.6,textTransform:"uppercase"}}>
+                  {duJour.length>1?duJour.length+" séances":"1 séance"}
+                </span>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:18}}>
+                {duJour.map(ev=>{
+                  const n=cctNiv(ev.niveau);
+                  const isOpen=openForm===ev.id;
+                  const left=ev.maxPlaces-ev.nbInscrits;
+                  const pct=(ev.nbInscrits/ev.maxPlaces)*100;
+                  const minToValidate=Math.min(ev.maxPlaces,Math.max(3,Math.ceil(ev.maxPlaces*0.75)));
+                  return(
+                    <div key={ev.id} style={{background:"#fff",borderRadius:16,overflow:"hidden",border:`1px solid ${GOLD}30`,borderLeft:`4px solid ${ev.complet?CCT_GRIS:n.c}`,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                      {/* La ligne de carte : le plat, les pointillés, le prix */}
+                      <div style={{padding:"22px 26px 14px"}}>
+                        <div style={{display:"flex",alignItems:"baseline",gap:10,flexWrap:"wrap"}}>
+                          <div style={{display:"flex",alignItems:"baseline",gap:11,flexWrap:"wrap",minWidth:0}}>
+                            <h3 style={{margin:0,fontFamily:"'Playfair Display',serif",fontSize:26,lineHeight:1.15,fontWeight:900,color:NAVY,letterSpacing:-0.2}}>{cctCap(ev.theme)}</h3>
+                            {ev.niveau&&(
+                              <span style={{fontSize:14,fontWeight:700,color:n.c,background:n.c+"18",border:`1px solid ${n.c}55`,borderRadius:20,padding:"4px 13px",whiteSpace:"nowrap"}}>{ev.niveau}</span>
+                            )}
+                          </div>
+                          <span style={{flex:"1 1 16px",minWidth:16,borderBottom:`2px dotted ${NAVY}2e`,transform:"translateY(-6px)"}}/>
+                          <span style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:NAVY,whiteSpace:"nowrap"}}>
+                            {ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}&nbsp;€
+                          </span>
+                        </div>
+                        <div style={{marginTop:10,fontSize:14.5,color:NAVY+"aa",fontStyle:"italic",lineHeight:1.6}}>
+                          {fmtH(ev.date)} — {fmtH(ev.dateFin)} · {ev.dureeH}h
+                        </div>
+                        {/* chaque fragment reste d'un bloc : « 25 € à 3 » ne se coupe jamais en deux */}
+                        <div style={{marginTop:6,fontSize:12,color:NAVY+"70",display:"flex",flexWrap:"wrap",gap:"2px 7px"}}>
+                          <span style={{whiteSpace:"nowrap"}}>{ev.heureCreuse?"☀️ heures creuses":"🌙 heures pleines"}</span>
+                          {ev.maxPlaces>4?(
+                            <span style={{whiteSpace:"nowrap"}}>· {ev.maxPlaces} places</span>
+                          ):(
+                            <React.Fragment>
+                              <span style={{whiteSpace:"nowrap"}}>· par personne à 4 joueurs</span>
+                              <span style={{whiteSpace:"nowrap"}}>· {ev.prixPar3} € à 3</span>
+                            </React.Fragment>
+                          )}
+                        </div>
+                      </div>
+                      {/* Jauge */}
+                      <div style={{padding:"0 24px 16px"}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                          <span style={{fontSize:13,fontWeight:600,color:NAVY}}>{ev.nbInscrits}/{ev.maxPlaces} inscrits</span>
+                          {ev.complet?(<span style={{fontSize:11,fontWeight:700,color:"#e74c3c",background:"#e74c3c18",padding:"2px 10px",borderRadius:20}}>COMPLET</span>)
+                          :(<span style={{fontSize:11,fontWeight:600,color:left===1?"#e67e22":"#27ae60",background:left===1?"#e67e2218":"#27ae6018",padding:"2px 10px",borderRadius:20}}>{left===1?"! Dernière place":left+" places restantes"}</span>)}
+                        </div>
+                        <div style={{height:8,borderRadius:4,background:NAVY+"12",overflow:"hidden"}}>
+                          <div style={{height:"100%",borderRadius:4,width:pct+"%",background:ev.complet?"linear-gradient(90deg,#e74c3c,#c0392b)":`linear-gradient(90deg,${GOLD},${GOLD}cc)`,transition:"width 0.5s ease"}}/>
+                        </div>
+                        <div style={{marginTop:8,fontSize:11,color:NAVY+"80",display:"flex",alignItems:"center",gap:6}}>
+                          <span>{ev.nbInscrits>=minToValidate?"✅":"⏳"}</span>
+                          <span>{ev.nbInscrits>=minToValidate?"Cours confirmé":"Confirmé à partir de "+minToValidate+" inscrits"}</span>
+                        </div>
+                        {ev.inscrits.length>0&&(
+                          <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
+                            {ev.inscrits.map((p,i)=>(<span key={i} style={{fontSize:11,background:NAVY+"0a",border:`1px solid ${NAVY}15`,borderRadius:20,padding:"3px 10px",color:NAVY+"cc"}}>{p.prenom} {"·"} Niv {p.niveau}</span>))}
+                          </div>
                         )}
                       </div>
-                      <span style={{flex:"1 1 16px",minWidth:16,borderBottom:`2px dotted ${NAVY}2e`,transform:"translateY(-6px)"}}/>
-                      <span style={{fontFamily:"'Playfair Display',serif",fontSize:26,fontWeight:900,color:NAVY,whiteSpace:"nowrap"}}>
-                        {ev.maxPlaces>4?(ev.prixPerPlayer||ev.prixPar4):ev.prixPar4}&nbsp;€
-                      </span>
-                    </div>
-                    <div style={{marginTop:10,fontSize:14.5,color:NAVY+"aa",fontStyle:"italic",lineHeight:1.6}}>
-                      {fmtDate(ev.date)} · {fmtH(ev.date)} — {fmtH(ev.dateFin)} · {ev.dureeH}h
-                    </div>
-                    <div style={{marginTop:6,fontSize:12,color:NAVY+"70"}}>
-                      {ev.heureCreuse?"\u2600\uFE0F heures creuses":"\uD83C\uDF19 heures pleines"}
-                      {ev.maxPlaces>4?" \u00b7 "+ev.maxPlaces+" places":" \u00b7 par personne \u00e0 4 joueurs \u00b7 "+ev.prixPar3+" \u20ac \u00e0 3"}
-                    </div>
-                  </div>
-                  {/* Jauge */}
-                  <div style={{padding:"0 24px 16px"}}>
-                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                      <span style={{fontSize:13,fontWeight:600,color:NAVY}}>{ev.nbInscrits}/{ev.maxPlaces} inscrits</span>
-                      {ev.complet?(<span style={{fontSize:11,fontWeight:700,color:"#e74c3c",background:"#e74c3c18",padding:"2px 10px",borderRadius:20}}>COMPLET</span>)
-                      :(<span style={{fontSize:11,fontWeight:600,color:"#27ae60",background:"#27ae6018",padding:"2px 10px",borderRadius:20}}>{left} place{left>1?"s":""} restante{left>1?"s":""}</span>)}
-                    </div>
-                    <div style={{height:8,borderRadius:4,background:NAVY+"12",overflow:"hidden"}}>
-                      <div style={{height:"100%",borderRadius:4,width:pct+"%",background:ev.complet?"linear-gradient(90deg,#e74c3c,#c0392b)":`linear-gradient(90deg,${GOLD},${GOLD}cc)`,transition:"width 0.5s ease"}}/>
-                    </div>
-                    <div style={{marginTop:8,fontSize:11,color:NAVY+"80",display:"flex",alignItems:"center",gap:6}}>
-                      <span>{ev.nbInscrits>=minToValidate?"✅":"⏳"}</span>
-                      <span>{ev.nbInscrits>=minToValidate?"Cours confirmé":"Confirmé à partir de "+minToValidate+" inscrits"}</span>
-                    </div>
-                    {ev.inscrits.length>0&&(
-                      <div style={{display:"flex",flexWrap:"wrap",gap:6,marginTop:10}}>
-                        {ev.inscrits.map((p,i)=>(<span key={i} style={{fontSize:11,background:NAVY+"0a",border:`1px solid ${NAVY}15`,borderRadius:20,padding:"3px 10px",color:NAVY+"cc"}}>{p.prenom} {"·"} Niv {p.niveau}</span>))}
-                      </div>
-                    )}
-                  </div>
-                  {/* Bouton */}
-                  {!isOpen&&(
-                    <div style={{padding:"0 24px 20px"}}>
-                      <button onClick={()=>{if((ev.theme||"").toLowerCase().indexOf("americana")!==-1){window.location.href="/americana-inscription.html";return;}setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
-                        {(ev.theme||"").toLowerCase().indexOf("americana")!==-1?"\uD83C\uDFBE S'inscrire \u00e0 l'Americana \u2192":(ev.complet?"\uD83D\uDD14 Liste d'attente":"\u270D\uFE0F S'inscrire")}
-                      </button>
-                    </div>
-                  )}
-                  {/* Formulaire */}
-                  {isOpen&&(
-                    <div style={{padding:"0 24px 24px",borderTop:`1px solid ${NAVY}10`}}>
-                      <div style={{paddingTop:16,display:"flex",flexDirection:"column",gap:12}}>
-                        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
-                          <input placeholder="Prénom *" required value={formData.prenom} onChange={e=>setFormData({...formData,prenom:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
-                          <input placeholder="Email *" type="email" required value={formData.email} onChange={e=>setFormData({...formData,email:e.target.value})} style={{flex:"1 1 180px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
-                        </div>
-                        <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
-                          <input placeholder="Téléphone *" type="tel" required value={formData.telephone} onChange={e=>setFormData({...formData,telephone:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
-                          <select value={formData.niveau} onChange={e=>setFormData({...formData,niveau:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",color:formData.niveau?NAVY:NAVY+"60"}}>
-                            <option value="">Niveau</option>
-                            <option value="1">Niv 1 — Débutant</option>
-                            <option value="2">Niv 2 — Initié</option>
-                            <option value="3">Niv 3 — Intermédiaire</option>
-                            <option value="4">Niv 4 — Avancé</option>
-                            <option value="5">Niv 5 — Compétition</option>
-                          </select>
-                        </div>
-                        <textarea placeholder="Commentaire (optionnel)" value={formData.commentaire} onChange={e=>setFormData({...formData,commentaire:e.target.value})} rows={2} style={{width:"100%",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
-                        {feedback&&(
-                          <div style={{padding:"10px 16px",borderRadius:8,fontSize:13,fontWeight:600,background:feedback.t==="s"?"#27ae6018":"#e74c3c18",color:feedback.t==="s"?"#27ae60":"#e74c3c",border:`1px solid ${feedback.t==="s"?"#27ae6030":"#e74c3c30"}`}}>{feedback.m}</div>
-                        )}
-                        <div style={{display:"flex",gap:10}}>
-                          <button onClick={()=>{setOpenForm(null);setFeedback(null);}} style={{flex:1,padding:"12px",border:`1px solid ${NAVY}20`,borderRadius:10,background:"transparent",color:NAVY+"80",fontWeight:600,fontSize:14,cursor:"pointer"}}>Annuler</button>
-                          <button onClick={()=>doSubmit(ev.id)} disabled={submitting} style={{flex:2,padding:"12px",border:"none",borderRadius:10,background:`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:NAVY,fontWeight:700,fontSize:14,cursor:"pointer",opacity:submitting?0.6:1}}>
-                            {submitting?"Envoi...":(ev.complet?"Rejoindre la liste d'attente":"Confirmer l'inscription")}
+                      {/* Bouton */}
+                      {!isOpen&&(
+                        <div style={{padding:"0 24px 20px"}}>
+                          <button onClick={()=>{if((ev.theme||"").toLowerCase().indexOf("americana")!==-1){window.location.href="/americana-inscription.html";return;}setOpenForm(ev.id);setFeedback(null);}} style={{width:"100%",padding:"12px",border:"none",borderRadius:10,background:ev.complet?NAVY+"15":`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:ev.complet?NAVY+"80":NAVY,fontWeight:700,fontSize:14,cursor:"pointer"}}>
+                            {(ev.theme||"").toLowerCase().indexOf("americana")!==-1?"🎾 S'inscrire à l'Americana →":(ev.complet?"🔔 Liste d'attente":"✍️ S'inscrire")}
                           </button>
                         </div>
-                      </div>
+                      )}
+                      {/* Formulaire */}
+                      {isOpen&&(
+                        <div style={{padding:"0 24px 24px",borderTop:`1px solid ${NAVY}10`}}>
+                          <div style={{paddingTop:16,display:"flex",flexDirection:"column",gap:12}}>
+                            <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                              <input placeholder="Prénom *" required value={formData.prenom} onChange={e=>setFormData({...formData,prenom:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                              <input placeholder="Email *" type="email" required value={formData.email} onChange={e=>setFormData({...formData,email:e.target.value})} style={{flex:"1 1 180px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                            </div>
+                            <div style={{display:"flex",gap:12,flexWrap:"wrap"}}>
+                              <input placeholder="Téléphone *" type="tel" required value={formData.telephone} onChange={e=>setFormData({...formData,telephone:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none"}}/>
+                              <select value={formData.niveau} onChange={e=>setFormData({...formData,niveau:e.target.value})} style={{flex:"1 1 140px",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",color:formData.niveau?NAVY:NAVY+"60"}}>
+                                <option value="">Niveau</option>
+                                <option value="1">Niv 1 — Débutant</option>
+                                <option value="2">Niv 2 — Initié</option>
+                                <option value="3">Niv 3 — Intermédiaire</option>
+                                <option value="4">Niv 4 — Avancé</option>
+                                <option value="5">Niv 5 — Compétition</option>
+                              </select>
+                            </div>
+                            <textarea placeholder="Commentaire (optionnel)" value={formData.commentaire} onChange={e=>setFormData({...formData,commentaire:e.target.value})} rows={2} style={{width:"100%",padding:"10px 14px",borderRadius:8,border:`1px solid ${NAVY}20`,fontSize:14,background:"#fff",outline:"none",resize:"vertical",fontFamily:"inherit",boxSizing:"border-box"}}/>
+                            {feedback&&(
+                              <div style={{padding:"10px 16px",borderRadius:8,fontSize:13,fontWeight:600,background:feedback.t==="s"?"#27ae6018":"#e74c3c18",color:feedback.t==="s"?"#27ae60":"#e74c3c",border:`1px solid ${feedback.t==="s"?"#27ae6030":"#e74c3c30"}`}}>{feedback.m}</div>
+                            )}
+                            <div style={{display:"flex",gap:10}}>
+                              <button onClick={()=>{setOpenForm(null);setFeedback(null);}} style={{flex:1,padding:"12px",border:`1px solid ${NAVY}20`,borderRadius:10,background:"transparent",color:NAVY+"80",fontWeight:600,fontSize:14,cursor:"pointer"}}>Annuler</button>
+                              <button onClick={()=>doSubmit(ev.id)} disabled={submitting} style={{flex:2,padding:"12px",border:"none",borderRadius:10,background:`linear-gradient(135deg,${GOLD},${GOLD}dd)`,color:NAVY,fontWeight:700,fontSize:14,cursor:"pointer",opacity:submitting?0.6:1}}>
+                                {submitting?"Envoi...":(ev.complet?"Rejoindre la liste d'attente":"Confirmer l'inscription")}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </AnimatedSection>
-            );
-          })}
+                  );
+                })}
+              </div>
+            </React.Fragment>
+          )}
         </div>
       </div>
     </section>
