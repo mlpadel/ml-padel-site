@@ -2419,8 +2419,10 @@ function CoursCollectifsSection(){
               Une thématique express en 1 h, à 3 ou 4 joueurs à partir de 20 €.<br/>
               Beaucoup de panier comme chez le primeur — et de la répétition, car on adore ça et parce qu'il n'y a pas de secret pour progresser rapidement.
             </p>
-            <p style={{color:NAVY,fontSize:15.5,fontWeight:700,maxWidth:600,margin:"12px auto 0",lineHeight:1.6}}>
-              Viens nous rejoindre sur ta pause Dej' ! 🎾
+            <p style={{color:NAVY,fontSize:15.5,fontWeight:700,maxWidth:780,margin:"14px auto 0",lineHeight:1.65}}>
+              {/* insécables : ni l'étoile ni la raquette ne doivent tomber seules en bas de ligne */}
+              Je me charge de créer le groupe, inscrivez-vous et je m'occupe de tout, service 5&nbsp;étoiles&nbsp;⭐<br/>
+              Viens nous rejoindre sur ta pause Dej'&nbsp;!&nbsp;🎾
             </p>
             <div className="cct-pills">
               <span>📅 Lundi &amp; jeudi</span>
